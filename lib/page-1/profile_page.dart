@@ -82,11 +82,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             const EditProfileDetailScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                 const EditProfileDetailScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

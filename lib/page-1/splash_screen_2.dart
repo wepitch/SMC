@@ -63,7 +63,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
           Container(
             width: 300,
             height: 200,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
                     "assets/page-1/images/preview-32x_1595344376024-webp-2112×4000- 1.png"),
@@ -75,7 +75,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
             TextSpan(
               children: [
                 TextSpan(
-                  text: 'Welcome to SortMyCollege India’s First',
+                  text: 'Welcome to SortMyCollege India’s First ',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -90,12 +90,12 @@ class _SplashScreen2State extends State<SplashScreen2> {
                     color: Colors.black,
                     fontSize: 16,
                     fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     height: 0,
                   ),
                 ),
                 TextSpan(
-                  text: 'for Students',
+                  text: ' for Students',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -210,9 +210,6 @@ class _SplashScreen2State extends State<SplashScreen2> {
           //         });
           //       },
           //     )),
-          const SizedBox(
-            height: 10,
-          ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -341,7 +338,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                         MaterialPageRoute(builder: (context) => const Login()));
                   },
                   child: Text(
-                    'Sign in',
+                    'Log in',
                     style: SafeGoogleFont(
                       'Roboto',
                       fontSize: 14,

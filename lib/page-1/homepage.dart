@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:myapp/page-1/help_screen.dart';
 
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
 // import 'package:myapp/page-1/webinar.dart';
@@ -88,6 +89,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       drawer: Drawer(
         width: 261,
+        backgroundColor: Colors.white,
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,23 +181,31 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   children: [
-                    ListTile(
-                      leading: Image.asset(
-                        "assets/page-1/images/drawerHelp.png",
-                        height: 20,
-                      ),
-                      title: Text(
-                        "Help?",
-                        style: SafeGoogleFont(
-                          "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HelpScreen()));
+                      },
+                      child: ListTile(
+                        leading: Image.asset(
+                          "assets/page-1/images/drawerHelp.png",
+                          height: 20,
                         ),
+                        title: Text(
+                          "Help?",
+                          style: SafeGoogleFont(
+                            "Inter",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        shape: Border(
+                            bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.09),
+                        )),
                       ),
-                      shape: Border(
-                          bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.09),
-                      )),
                     ),
                   ],
                 ),
@@ -293,7 +303,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        backgroundColor: Colors.white,
       ),
       appBar: AppBar(
         title: Row(

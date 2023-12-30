@@ -16,6 +16,7 @@ class BookingToday extends StatefulWidget {
 class _BookingTodayState extends State<BookingToday> {
   late var apiTime;
   late var todayTime;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -811,6 +812,3 @@ class _BookingTodayState extends State<BookingToday> {
 //       img: "assets/page-1/images/profile_booking.png",
 //       isAttended: false),
 // ];
-
-
-
