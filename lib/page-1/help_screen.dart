@@ -34,58 +34,60 @@ class _HelpScreenState extends State<HelpScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Sumbit a ticket',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+        padding: const EdgeInsets.only(left: 30, right: 30, top: 20,bottom: 1),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Sumbit a ticket',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            const Text(
-              'Love something or facing on issue? Share your feedback or report a problem. Your insights help shape our future updates!',
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Subject',
+              const SizedBox(
+                height: 16,
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Description',
+              const Text(
+                'Love something or facing on issue? Share your feedback or report a problem. Your insights help shape our future updates!',
+                style: TextStyle(fontSize: 18),
               ),
-              maxLines: 4,
-            ),
-             SizedBox(
-              height: MediaQuery.of(context).size.height *0.1,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () {
-                  },
-                  style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.all(15),
-                      backgroundColor: const Color(0xff1F0A68)),
-                  child: const Text('Submit Ticket')),
-            ),
-          ],
+              const SizedBox(
+                height: 30,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Subject',
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Description',
+                ),
+                maxLines: 4,
+              ),
+               SizedBox(
+                height: MediaQuery.of(context).size.height *0.1,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {
+                    },
+                    style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.all(15),
+                        backgroundColor: const Color(0xff1F0A68)),
+                    child: const Text('Submit Ticket')),
+              ),
+            ],
+          ),
         ),
       ),
     );
