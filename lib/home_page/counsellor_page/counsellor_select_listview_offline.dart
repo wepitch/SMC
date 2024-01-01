@@ -4,17 +4,17 @@ import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
 
-import '../other/api_service.dart';
+import '../../other/api_service.dart';
 
 // import 'counselor-detailed-full-view.dart';
 // import 'counselor-detailed-select-full-view.dart';
 
-import '../other/listcontroler.dart';
+import '../../other/listcontroler.dart';
 import 'package:get/get.dart';
 
 import 'counsellor_details_page.dart';
 
-import 'homepagecontainer.dart';
+import '../homepagecontainer.dart';
 
 class CounsellorListPage_offline extends StatefulWidget {
   const CounsellorListPage_offline({super.key});

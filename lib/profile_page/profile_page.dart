@@ -2,13 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/page-1/edit_profile_detail_screen.dart';
+import 'package:myapp/profile_page/edit_profile_detail_screen.dart';
 import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'homepagecontainer.dart';
+import '../home_page/homepagecontainer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

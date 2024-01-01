@@ -6,7 +6,7 @@ import 'filter_location.dart';
 import 'filter_course.dart';
 import 'filter_experince.dart';
 
-import 'homepagecontainer_2.dart';
+import '../home_page/homepagecontainer_2.dart';
 
 class Filter_Degree extends StatefulWidget {
   const Filter_Degree({super.key});

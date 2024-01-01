@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/page-1/webinar_past_page.dart';
+import 'package:myapp/webinar_page/webinar_past_page.dart';
 
 class WebinarUpcomingPage extends StatelessWidget {
   const WebinarUpcomingPage({super.key});

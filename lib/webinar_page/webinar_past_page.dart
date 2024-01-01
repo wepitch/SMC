@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:myapp/page-1/webinar_details_page.dart';
+import 'package:myapp/webinar_page/webinar_details_page.dart';
 import 'package:myapp/utils.dart';
 
 class WebinarPastPage extends StatefulWidget {
@@ -89,7 +89,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
+      height: MediaQuery.of(context).size.height * 0.5,
       child: PageView(
         //controller: _pageController,
         // onPageChanged: (index){
@@ -162,7 +162,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                               ),
                               Text(
                                 widget.showDuration
-                                    ? "Duration : ${widget.duration}"
+                                    ? "Career Institute : ${widget.duration}"
                                     : "Allen career institute,\n by Anshika Mehra - ${widget.participants}",
                                 style: SafeGoogleFont(
                                   "Inter",

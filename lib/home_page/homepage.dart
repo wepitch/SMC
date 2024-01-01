@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:myapp/page-1/help_screen.dart';
+import 'package:myapp/home_page/help_screen.dart';
 
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
 // import 'package:myapp/page-1/webinar.dart';
-import 'package:myapp/page-1/homepagecontainer_2.dart';
-import 'package:myapp/page-1/notification_page.dart';
-import 'package:myapp/page-1/profile_page.dart';
+import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/home_page/notification_page/notification_page.dart';
+import 'package:myapp/profile_page/profile_page.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
-import 'package:myapp/page-1/webinar_page.dart';
-import 'package:myapp/page-1/webinar_past_page.dart';
+import 'package:myapp/webinar_page/webinar_page.dart';
+import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,23 +131,28 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   children: [
-                    ListTile(
-                      leading: Image.asset(
-                        "assets/page-1/images/drawerHomeIcon.png",
-                        height: 20,
-                      ),
-                      title: Text(
-                        "Home",
-                        style: SafeGoogleFont(
-                          "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: ListTile(
+                        leading: Image.asset(
+                          "assets/page-1/images/drawerHomeIcon.png",
+                          height: 20,
                         ),
+                        title: Text(
+                          "Home",
+                          style: SafeGoogleFont(
+                            "Inter",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        shape: Border(
+                            bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.09),
+                        )),
                       ),
-                      shape: Border(
-                          bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.09),
-                      )),
                     ),
                   ],
                 ),
@@ -991,8 +996,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Image.asset(
                     'assets/page-1/images/operator 1.png',
-                    height: 20,
-                    width: 20,
+                    height: 16,
+                    width: 16,
                   ),
                   const SizedBox(
                     width: 16,
@@ -1038,8 +1043,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Image.asset(
                     'assets/page-1/images/mobile 1.png',
-                    height: 20,
-                    width: 20,
+                    height: 16,
+                    width: 16,
                   ),
                   const SizedBox(
                     width: 16,

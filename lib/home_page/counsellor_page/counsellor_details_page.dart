@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:myapp/other/counsellor_details_provider.dart';
+import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/page-1/payment_gateaway.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';

@@ -20,6 +20,7 @@ class _Login extends State<Login> {
   // final _nameController = TextEditingController();
   final phonecontroller = TextEditingController();
   final emailcontroller = TextEditingController();
+
   // final String _errorMessage = '';
 
   @override
@@ -205,6 +206,9 @@ class _Login extends State<Login> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   Container(
                     // autogroupb1cmwGM (AXyDxzGKdcnpJKxVY5B1cM)
                     margin: EdgeInsets.fromLTRB(
@@ -249,59 +253,59 @@ class _Login extends State<Login> {
                       ),
                     ),
                   ),
-                  Container(
-                    // rectangle64brh (437:119)
-                    margin: EdgeInsets.fromLTRB(80 * fem, 0 * fem, 80 * fem, 0),
-                    width: double.infinity,
-                    height: 1 * fem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10 * fem),
-                      color: const Color(0xff000000),
-                    ),
-                  ),
+                  // Container(
+                  //   // rectangle64brh (437:119)
+                  //   margin: EdgeInsets.fromLTRB(80 * fem, 0 * fem, 80 * fem, 0),
+                  //   width: double.infinity,
+                  //   height: 1 * fem,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(10 * fem),
+                  //     color: const Color(0xff000000),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 11,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     SizedBox(
+                  //       height: 45,
+                  //       width: 45,
+                  //       child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               shape: const CircleBorder(),
+                  //               backgroundColor: Colors.white),
+                  //           onPressed: () async {},
+                  //           child: Image.asset(
+                  //             "assets/page-1/images/google.png",
+                  //             // fit: BoxFit.cover,
+                  //             height: 50,
+                  //             width: 50,
+                  //           )),
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     SizedBox(
+                  //       height: 45,
+                  //       width: 45,
+                  //       child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               shape: const CircleBorder(),
+                  //               backgroundColor: Colors.white),
+                  //           onPressed: () {},
+                  //           child: Image.asset(
+                  //             "assets/page-1/images/facebook.png",
+                  //             // fit: BoxFit.fill,
+                  //             height: 30,
+                  //             width: 30,
+                  //           )),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(
-                    height: 11,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                backgroundColor: Colors.white),
-                            onPressed: () async {},
-                            child: Image.asset(
-                              "assets/page-1/images/google.png",
-                              // fit: BoxFit.cover,
-                              height: 50,
-                              width: 50,
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                backgroundColor: Colors.white),
-                            onPressed: () {},
-                            child: Image.asset(
-                              "assets/page-1/images/facebook.png",
-                              // fit: BoxFit.fill,
-                              height: 30,
-                              width: 30,
-                            )),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 11,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -417,9 +421,9 @@ class _Login extends State<Login> {
     return isvaluevalid;
   }
 
-  // @override
-  // State<StatefulWidget> createState() {
-  //   // TODO: implement createState
-  //   throw UnimplementedError();
-  // }
+// @override
+// State<StatefulWidget> createState() {
+//   // TODO: implement createState
+//   throw UnimplementedError();
+// }
 }

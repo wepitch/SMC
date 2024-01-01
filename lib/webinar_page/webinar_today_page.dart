@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/page-1/webinar_past_page.dart';
+import 'package:myapp/webinar_page/webinar_past_page.dart';
 
 class WebinarTodayPage extends StatelessWidget {
   const WebinarTodayPage({super.key});
@@ -7,11 +7,11 @@ class WebinarTodayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: 2,
+        itemCount: 10,
         itemBuilder: (context, index) {
           return Padding(
             padding:
-                EdgeInsets.only(top: index == 0 ? 30 : 27, right: 16, left: 16),
+                EdgeInsets.only(top: index == 0 ? 15 : 27, right: 16, left: 16),
             child: CustomWebinarCard(
                 showDuration: true,
                 title: "Learn more about CUET and IPMAT",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/page-1/dashboard-session-group-new.dart';
-import 'package:myapp/page-1/homepagecontainer_2.dart';
+import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/utils.dart';
 
 import 'dashboard-session-personnel-new.dart';

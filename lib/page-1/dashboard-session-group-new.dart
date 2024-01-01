@@ -4,14 +4,14 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:myapp/page-1/homepagecontainer_2.dart';
+import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/utils.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
 import 'package:provider/provider.dart';
 
 import '../model/counsellor_sessions.dart';
-import '../other/counsellor_details_provider.dart';
+import '../other/provider/counsellor_details_provider.dart';
 import 'dart:developer' as console show log;
 
 class Counseling_Session_group extends StatefulWidget {

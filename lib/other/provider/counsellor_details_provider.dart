@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/model/counsellor_detail.dart';
 import 'package:myapp/model/counsellor_sessions.dart';
 
-import 'api_service.dart';
+import '../api_service.dart';
 
 class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorDetail> cousnellorlist_detail = [];

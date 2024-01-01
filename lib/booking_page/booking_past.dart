@@ -3,7 +3,7 @@ import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
 
-import '../other/user_booking_provider.dart';
+import '../other/provider/user_booking_provider.dart';
 import 'booking_confirmatoin_page.dart';
 
 class BookingPast extends StatefulWidget {

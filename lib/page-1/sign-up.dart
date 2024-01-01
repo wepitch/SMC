@@ -281,54 +281,54 @@ class _Signup extends State<Signup> {
                         ),
                       ),
                     ),
-                    Container(
-                      // autogroupeuimZoF (AXy8Lu8ff6DGS2BgJsEUiM)
-                      margin: EdgeInsets.fromLTRB(
-                          13 * fem, 0 * fem, 20 * fem, 28 * fem),
-                      width: double.infinity,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            // rectangle63hPf (437:39)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 3 * fem, 14 * fem, 0 * fem),
-                            width: 70 * fem,
-                            height: 1 * fem,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10 * fem),
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
-                          Container(
-                            // orcontinuewithE8h (437:37)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 16 * fem, 0 * fem),
-                            child: Text(
-                              'or continue with',
-                              style: SafeGoogleFont(
-                                'Roboto',
-                                fontSize: 15 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.1725 * ffem / fem,
-                                color: const Color(0xff000000),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            // rectangle64wJ1 (437:41)
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 3 * fem, 0 * fem, 0 * fem),
-                            width: 40 * fem,
-                            height: 1 * fem,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10 * fem),
-                              color: const Color(0xffffffff),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   // autogroupeuimZoF (AXy8Lu8ff6DGS2BgJsEUiM)
+                    //   margin: EdgeInsets.fromLTRB(
+                    //       13 * fem, 0 * fem, 20 * fem, 28 * fem),
+                    //   width: double.infinity,
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Container(
+                    //         // rectangle63hPf (437:39)
+                    //         margin: EdgeInsets.fromLTRB(
+                    //             0 * fem, 3 * fem, 14 * fem, 0 * fem),
+                    //         width: 70 * fem,
+                    //         height: 1 * fem,
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(10 * fem),
+                    //           color: const Color(0xffffffff),
+                    //         ),
+                    //       ),
+                    //       // Container(
+                    //       //   // orcontinuewithE8h (437:37)
+                    //       //   margin: EdgeInsets.fromLTRB(
+                    //       //       0 * fem, 0 * fem, 16 * fem, 0 * fem),
+                    //       //   child: Text(
+                    //       //     'or continue with',
+                    //       //     style: SafeGoogleFont(
+                    //       //       'Roboto',
+                    //       //       fontSize: 15 * ffem,
+                    //       //       fontWeight: FontWeight.w400,
+                    //       //       height: 1.1725 * ffem / fem,
+                    //       //       color: const Color(0xff000000),
+                    //       //     ),
+                    //       //   ),
+                    //       // ),
+                    //       Container(
+                    //         // rectangle64wJ1 (437:41)
+                    //         margin: EdgeInsets.fromLTRB(
+                    //             0 * fem, 3 * fem, 0 * fem, 0 * fem),
+                    //         width: 40 * fem,
+                    //         height: 1 * fem,
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(10 * fem),
+                    //           color: const Color(0xffffffff),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     // Container(
                     //   // autogroupzamprA5 (AXy8VtsgJeezWcGv1dZamP)
                     //   margin: EdgeInsets.fromLTRB(

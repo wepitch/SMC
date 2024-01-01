@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:myapp/other/counsellor_details_provider.dart';
+import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/dependency_injection.dart';
-import 'package:myapp/other/user_booking_provider.dart';
+import 'package:myapp/other/provider/user_booking_provider.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';

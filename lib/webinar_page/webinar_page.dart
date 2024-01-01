@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/page-1/webinar_past_page.dart';
-import 'package:myapp/page-1/webinar_today_page.dart';
-import 'package:myapp/page-1/webinar_upcoming_page.dart';
+import 'package:myapp/webinar_page/webinar_past_page.dart';
+import 'package:myapp/webinar_page/webinar_today_page.dart';
+import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
 import 'package:myapp/utils.dart';
 
-import 'homepagecontainer.dart';
+import '../home_page/homepagecontainer.dart';
 
 class WebinarPage extends StatefulWidget {
   const WebinarPage({super.key});
@@ -32,25 +32,11 @@ class _WebinarPageState extends State<WebinarPage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xff1F0A68),
         foregroundColor: Colors.white,
-        // leading: Padding(
-        //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       Navigator.pushReplacement(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => const HomePageContainer()));
-        //     },
-        //     child: Image.asset(
-        //       'assets/page-1/images/back.png',
-        //     ),
-        //   ),
-        // ),
         titleSpacing: -10,
         title: Padding(
           padding: const EdgeInsets.only(left: 40),
           child: Text(
-            "Webinar",
+            "My Webinar",
             style: SafeGoogleFont("Inter",
                 fontSize: 20, fontWeight: FontWeight.w600),
           ),

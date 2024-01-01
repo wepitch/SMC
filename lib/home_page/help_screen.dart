@@ -40,7 +40,7 @@ class _HelpScreenState extends State<HelpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Sumbit a ticket',
+                'Submit a query',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
@@ -84,7 +84,7 @@ class _HelpScreenState extends State<HelpScreen> {
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.all(15),
                         backgroundColor: const Color(0xff1F0A68)),
-                    child: const Text('Submit Ticket')),
+                    child: const Text('Submit Query')),
               ),
             ],
           ),

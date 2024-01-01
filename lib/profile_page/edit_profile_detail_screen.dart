@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:myapp/page-1/profile_page.dart';
+import 'package:myapp/profile_page/profile_page.dart';
 import 'package:myapp/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileDetailScreen extends StatefulWidget {
   const EditProfileDetailScreen({super.key});
@@ -18,8 +19,30 @@ class _EditProfileDetailScreenState extends State<EditProfileDetailScreen> {
   final DateFormat _dateFormatter = DateFormat('MMM/dd/yyyy');
   DateTime _date = DateTime.now();
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedData();
+  }
+
+  _loadSavedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      String savedDOB = prefs.getString('dob') ?? '';
+      if (savedDOB.isNotEmpty) {
+        _date = DateTime.parse(savedDOB);
+        dobController.text = _dateFormatter.format(_date);
+      }
+    });
+  }
+
+  _saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('dob', _dateFormatter.format(_date));
+  }
+
   handleDatePicker() async {
-    final DateTime? date = await showDatePicker(barrierColor: Colors.white,
+    final DateTime? date = await showDatePicker(
       context: context,
       initialDate: _date,
       firstDate: DateTime(2000),
@@ -30,6 +53,7 @@ class _EditProfileDetailScreenState extends State<EditProfileDetailScreen> {
         _date = date;
       });
       dobController.text = _dateFormatter.format(date);
+      _saveData();
     }
   }
 

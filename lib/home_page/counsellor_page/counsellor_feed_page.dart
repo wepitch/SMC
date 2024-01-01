@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/model/counsellor_feed_model.dart';
 import 'package:myapp/other/constants.dart';
-import 'package:myapp/page-1/counsellor_details_page.dart';
+import 'package:myapp/home_page/counsellor_page/counsellor_details_page.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 class CounsellorFeedPage extends StatefulWidget {
   const CounsellorFeedPage({super.key, required this.name, required this.id});
