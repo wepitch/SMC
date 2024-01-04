@@ -148,7 +148,7 @@ class _Signup extends State<Signup> {
                           decoration: const InputDecoration(
                             hintStyle:
                                 TextStyle(color: Colors.black, fontSize: 15.0),
-                            hintText: "Enter Your Name",
+                            hintText: "Enter Your Full Name",
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
                           ),
@@ -187,7 +187,7 @@ class _Signup extends State<Signup> {
                           decoration: const InputDecoration(
                             hintStyle:
                                 TextStyle(color: Colors.black, fontSize: 15.0),
-                            hintText: "Enter your Email",
+                            hintText: "Enter Your Email",
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
                           ),

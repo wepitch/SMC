@@ -97,13 +97,13 @@ class _CounsellorListPage_offlineState
                               child: Container(
                                 // backpwB (730:9)
                                 margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0.08 * fem, 18.99 * fem, 0 * fem),
-                                width: 11.01 * fem,
-                                height: 20 * fem,
+                                    16 * fem, 0.08 * fem, 18.99 * fem, 0 * fem),
+                                width: 12 * fem,
+                                height: 34 * fem,
                                 child: Image.asset(
                                   'assets/page-1/images/back.png',
-                                  width: 11.01 * fem,
-                                  height: 20 * fem,
+                                  width: 24 * fem,
+                                  height: 24 * fem,
                                 ),
                               ),
                             ),
@@ -111,12 +111,12 @@ class _CounsellorListPage_offlineState
                           Container(
                             // counselor8BB (730:7)
                             margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 154.08 * fem, 0 * fem),
+                                0 * fem, 0 * fem, 148 * fem, 0 * fem),
                             child: const Text(
                               'Counsellor',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                                 height: 0,
@@ -126,7 +126,7 @@ class _CounsellorListPage_offlineState
                           Container(
                             // layer2oHK (730:5)
                             margin: EdgeInsets.fromLTRB(
-                                30 * fem, 0 * fem, 0 * fem, 0 * fem),
+                                14 * fem, 0 * fem, 0 * fem, 0 * fem),
                             width: 70.39 * fem,
                             height: 25 * fem,
                             child: Image.asset(

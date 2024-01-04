@@ -75,7 +75,11 @@ class _HomePageContainerState extends State<HomePageContainer> {
           BottomNavigationBarItem(
             label: "Booking",
             icon: ImageIcon(
-              AssetImage("assets/page-1/images/booking.png"),
+              size: 27,
+              color: Colors.black,
+              AssetImage(
+                "assets/page-1/images/booking_4812872.png",
+              ),
             ),
           ),
           BottomNavigationBarItem(

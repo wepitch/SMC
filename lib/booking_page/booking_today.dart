@@ -92,6 +92,8 @@ class _BookingTodayState extends State<BookingToday> {
                                 alignment: Alignment.bottomCenter,
                                 children: [
                                   Card(
+                                    surfaceTintColor: Colors.white,
+                                    color: Colors.white,
                                     // semanticContainer: false,
                                     margin: const EdgeInsets.only(top: 5),
                                     elevation: 5,

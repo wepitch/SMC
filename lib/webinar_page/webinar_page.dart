@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/home_page/homepage.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
@@ -32,14 +33,25 @@ class _WebinarPageState extends State<WebinarPage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xff1F0A68),
         foregroundColor: Colors.white,
-        titleSpacing: -10,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 40),
-          child: Text(
-            "My Webinar",
-            style: SafeGoogleFont("Inter",
-                fontSize: 20, fontWeight: FontWeight.w600),
-          ),
+        titleSpacing: 40,
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       Navigator.pushReplacement(
+        //           context,
+        //           MaterialPageRoute(
+        //               builder: (context) => const HomePageContainer()));
+        //     },
+        //     child: Image.asset(
+        //       'assets/page-1/images/back.png',
+        //     ),
+        //   ),
+        // ),
+        title: Text(
+          "Webinar",
+          style: SafeGoogleFont("Inter",
+              fontSize: 19, fontWeight: FontWeight.w600),
         ),
         actions: [
           Image.asset(
@@ -68,7 +80,7 @@ class _WebinarPageState extends State<WebinarPage> {
                       });
                       pageController.jumpToPage(selectedIndex);
                     },
-                    title: "Past",
+                    title: "My Webinar",
                     isPressed: selectedIndex == 0),
                 customButton(
                     onPressed: () {
@@ -86,7 +98,7 @@ class _WebinarPageState extends State<WebinarPage> {
                       });
                       pageController.jumpToPage(selectedIndex);
                     },
-                    title: "Coming",
+                    title: "UpComing",
                     isPressed: selectedIndex == 2),
               ],
             ),
@@ -107,26 +119,58 @@ class _WebinarPageState extends State<WebinarPage> {
   }
 }
 
-Widget customButton(
-    {required VoidCallback onPressed,
-    required String title,
-    required bool isPressed}) {
-  return SizedBox(
-    height: 35,
-    width: 110,
-    child: OutlinedButton(
+Widget customButton({
+  required VoidCallback onPressed,
+  required String title,
+  required bool isPressed,
+}) {
+  return Card(
+    elevation: 10,
+    child: SizedBox(
+      height: 35,
+      width: 100,
+      child: TextButton(
         onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3),
-            ),
-            backgroundColor: const Color(0xffE7E7EB),
-            foregroundColor:
-                isPressed ? Colors.black : const Color(0xff747474)),
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3),
+          ),
+          backgroundColor: Colors.white,
+          foregroundColor: isPressed ? Colors.black : const Color(0xff747474),
+        ),
         child: Text(
           title,
-          style: SafeGoogleFont("Inter",
-              fontSize: 14, fontWeight: FontWeight.w500),
-        )),
+          style: SafeGoogleFont(
+            "Inter",
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    ),
   );
 }
+
+// Widget customButton(
+//     {required VoidCallback onPressed,
+//     required String title,
+//     required bool isPressed}) {
+//   return SizedBox(
+//     height: 35,
+//     width: 110,
+//     child: OutlinedButton(
+//         onPressed: onPressed,
+//         style: OutlinedButton.styleFrom(
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(3),
+//             ),
+//             backgroundColor: const Color(0xffE7E7EB),
+//             foregroundColor:
+//                 isPressed ? Colors.black : const Color(0xff747474)),
+//         child: Text(
+//           title,
+//           style: SafeGoogleFont("Inter",
+//               fontSize: 12, fontWeight: FontWeight.w500),
+//         )),
+//   );
+// }

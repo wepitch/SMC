@@ -55,7 +55,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
         title: Text(
           "My Booking",
           style: SafeGoogleFont("Inter",
-              fontSize: 20, fontWeight: FontWeight.w600),
+              fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
       body: Container(

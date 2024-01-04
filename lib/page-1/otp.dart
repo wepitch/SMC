@@ -160,7 +160,7 @@ class _OtpState extends State<Otp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Did’t receive an OTP? ',
+                          'Don’t receive an OTP? ',
                           style: SafeGoogleFont(
                             'Roboto',
                             fontSize: 15 * ffem,

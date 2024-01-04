@@ -50,7 +50,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 height: 16,
               ),
               const Text(
-                'Love something or facing on issue? Share your feedback or report a problem. Your insights help shape our future updates!',
+                'Love something or facing an issue? Share your feedback or report a problem. Your insights help shape our future updates!',
                 style: TextStyle(fontSize: 18),
               ),
               const SizedBox(

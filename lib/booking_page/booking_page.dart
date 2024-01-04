@@ -15,6 +15,7 @@ class BookingPage extends StatefulWidget {
 class _BookingPageState extends State<BookingPage> {
   int selectedIndex = 1;
   late PageController _controller;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -53,14 +54,11 @@ class _BookingPageState extends State<BookingPage> {
           //     ),
           //   ),
           // ),
-          titleSpacing: -10,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: Text(
-              "My Booking",
-              style: SafeGoogleFont("Inter",
-                  fontSize: 20, fontWeight: FontWeight.w600),
-            ),
+          titleSpacing: 20,
+          title: Text(
+            "My Booking",
+            style: SafeGoogleFont("Inter",
+                fontSize: 18, fontWeight: FontWeight.w600),
           ),
           actions: [
             Image.asset(
@@ -146,34 +144,56 @@ class _BookingPageState extends State<BookingPage> {
   }
 }
 
+// ElevatedButton(
+// onPressed: onPressed,
+// style: ElevatedButton.styleFrom(
+// elevation: 5,
+// textStyle: SafeGoogleFont('Inter',
+// fontSize: mWidth * 0.034, fontWeight: FontWeight.w600,),
+// foregroundColor: isSelected
+// ? const Color(0xffFFFFFF)
+//     : const Color(0xff747474),
+// backgroundColor: isSelected
+// ? const Color(0xffE9599F)
+//     : const Color(0xffFFFFFF),
+// ),
+//child: Text(title)),
+
 class CustomTab extends StatelessWidget {
   const CustomTab(
       {super.key,
       required this.title,
       required this.isSelected,
       required this.onPressed});
+
   final String title;
   final bool isSelected;
   final VoidCallback onPressed;
+
   @override
   Widget build(BuildContext context) {
-    // var mHeight = MediaQuery.sizeOf(context).height;
+    //var mHeight = MediaQuery.sizeOf(context).height;
     var mWidth = MediaQuery.sizeOf(context).width;
     return SizedBox(
-      height: 60,
-      width: mWidth * 0.28,
+      height: 58,
+      width: mWidth * 0.29,
       child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-              elevation: 5,
-              textStyle: SafeGoogleFont('Inter',
-                  fontSize: mWidth * 0.035, fontWeight: FontWeight.w600),
-              foregroundColor: isSelected
-                  ? const Color(0xffFFFFFF)
-                  : const Color(0xff747474),
-              backgroundColor: isSelected
-                  ? const Color(0xffE9599F)
-                  : const Color(0xffFFFFFF)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 5,
+            textStyle: SafeGoogleFont(
+              'Inter',
+              fontSize: mWidth * 0.030,
+              fontWeight: FontWeight.w600,
+            ),
+            foregroundColor:
+                isSelected ? const Color(0xffFFFFFF) : const Color(0xff747474),
+            backgroundColor:
+                isSelected ? const Color(0xffE9599F) : const Color(0xffFFFFFF),
+          ),
           child: Text(title)),
     );
   }

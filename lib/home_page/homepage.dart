@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:myapp/home_page/email_sender.dart';
 import 'package:myapp/home_page/help_screen.dart';
 
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
@@ -15,7 +16,9 @@ import 'package:myapp/webinar_page/webinar_page.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:myapp/widget/custom_webniar_card_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // import 'counsellor-select-new.dart';
 // import 'counsellor_select_listview_offline.dart';
@@ -36,16 +39,24 @@ class _HomePageState extends State<HomePage> {
   String name = "";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentIndex = 0;
-  final PageController _pageController = PageController(initialPage: 0);
+   PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _startTimer();
+    //_startTimer();
     setName();
     getAllInfo();
+    _pageController = PageController(initialPage: _currentIndex);
+
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   String username = "";
@@ -66,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (_currentIndex < 2) {
         _pageController.nextPage(
-          duration: const Duration(seconds: 2),
+          duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
       } else {
@@ -115,13 +126,16 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 11,
                     ),
-                    Text(
-                      name,
-                      style: SafeGoogleFont(
-                        "Inter",
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12,right: 12),
+                      child: Text(
+                        name,
+                        style: SafeGoogleFont(
+                          "Inter",
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),maxLines: 1,
                       ),
                     )
                   ],
@@ -315,9 +329,13 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               width: 26,
             ),
-            Text(
-              'Hey, $username',
-              style: const TextStyle(fontSize: 20),
+            Expanded(
+              child: Text(
+                'Hello, $username',
+                style: const TextStyle(fontSize: 18),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
             ),
           ],
         ),
@@ -349,8 +367,8 @@ class _HomePageState extends State<HomePage> {
             },
             child: Image.asset(
               'assets/page-1/images/bell.png',
-              width: 20,
-              height: 20,
+              width: 18,
+              height: 18,
             ),
           ),
           const SizedBox(
@@ -992,17 +1010,22 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.only(left: 28.0 * fem),
-              child: Row(
+              child: const Row(
                 children: [
-                  Image.asset(
-                    'assets/page-1/images/operator 1.png',
-                    height: 16,
+                  Icon(
+                    Icons.person_2_outlined,
+                    size: 20,
+                  ),
+                  // Image.asset(
+                  //   'assets/page-1/images/person_icon.png',
+                  //   fit: BoxFit.fill,
+                  //   height: 16,
+                  //   width: 16,
+                  // ),
+                  SizedBox(
                     width: 16,
                   ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  const Text(
+                  Text(
                     'Popular Workshops',
                     style: TextStyle(
                       color: Color(0xFF1F0A68),
@@ -1021,12 +1044,12 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.28,
               child: PageView(
-                // controller: _pageController,
-                // onPageChanged: (index) {
-                //   setState(() {
-                //     _currentIndex = index;
-                //   });
-                // },
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
                 children: [
                   profileCard(),
                   profileCard(),
@@ -1039,18 +1062,23 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.only(left: 28.0 * fem),
-              child: Row(
+              child: const Row(
                 children: [
-                  Image.asset(
-                    'assets/page-1/images/mobile 1.png',
-                    height: 16,
+                  Icon(
+                    Icons.person_pin_outlined,
+                    size: 18,
+                  ),
+                  // Image.asset(
+                  //   'assets/page-1/images/person_mes.png',
+                  //   fit: BoxFit.cover,
+                  //   height: 18,
+                  //   width: 18,
+                  // ),
+                  SizedBox(
                     width: 16,
                   ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  const Text(
-                    'Trending Webinar',
+                  Text(
+                    'Trending Webinars',
                     style: TextStyle(
                       color: Color(0xFF1F0A68),
                       fontSize: 18,
@@ -1068,6 +1096,7 @@ class _HomePageState extends State<HomePage> {
                   padding:
                       EdgeInsets.only(left: 14, right: 14, bottom: 16, top: 8),
                   child: CustomWebinarCard(
+                      enableAutoScroll: true,
                       showDuration: false,
                       title: "Learn more about CUET and IPMAT",
                       isRegisterNow: true,
@@ -1079,41 +1108,51 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Container(
-              height: 60,
-              decoration: const BoxDecoration(
-                color: Color(0xBAE3398C),
-              ),
-              child: const Center(
-                child: SizedBox(
-                  width: 370,
-                  height: 44,
-                  child: Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Need Help? ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+            InkWell(
+              onTap: () async {
+                const email = 'mailto :nsheoran2005@gmail.com';
+                final Uri emailLaunchUri = Uri(
+                  scheme: 'mailto',
+                  path: email,
+                );
+                await launch(emailLaunchUri.toString());
+              },
+              child: Container(
+                height: 60,
+                decoration: const BoxDecoration(
+                  color: Color(0xBAE3398C),
+                ),
+                child: const Center(
+                  child: SizedBox(
+                    width: 370,
+                    height: 44,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Need Help? ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: '           mail us at help@sortmycollege.com',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                          TextSpan(
+                            text: ' mail us at help@sortmycollege.com',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -1127,256 +1166,286 @@ class _HomePageState extends State<HomePage> {
   Widget profileCard() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
-      child: Card(
-        color: Colors.white,
-        surfaceTintColor: Colors.white,
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    radius: 38,
-                    backgroundImage: AssetImage(
-                      "assets/page-1/images/Rectangle 101.png",
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Anshika Mehra',
-                            style: TextStyle(
-                              color: Color(0xFF1F0A68),
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              height: 0,
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.10,
-                          ),
-                          CircleAvatar(
-                            backgroundColor: const Color(0xff7F90F7),
-                            child: Center(
-                              child: Image.asset(
-                                "assets/page-1/images/group-38-oFX.png",
-                                color: Colors.white,
-                                height: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      const SizedBox(
-                        width: 190.25,
-                        child: Text(
-                          'Importance of CUET',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
+      child: Row(
+        children: [
+          Expanded(
+            child: Card(
+              color: Colors.white,
+              surfaceTintColor: Colors.white,
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const CircleAvatar(
+                          radius: 38,
+                          backgroundImage: AssetImage(
+                            "assets/page-1/images/Rectangle 101.png",
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/page-1/images/clock-circular-outline-Ra1.png",
-                            // color: Colors.black,
-                            height: 12,
-                            width: 12,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          const SizedBox(
-                            width: 121.13,
-                            child: Text(
-                              ' Session at 8:00pm',
-                              style: TextStyle(
-                                color: Color(0xFF414040),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                height: 0.08,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 12,
-                            height: 12,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    "assets/page-1/images/Calendar.png"),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          const SizedBox(
-                            width: 121.13,
-                            child: Text(
-                              '27th Dec 2023',
-                              style: TextStyle(
-                                color: Color(0xFF414040),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                height: 0.08,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 12,
-                            height: 12,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    "assets/page-1/images/Rupee.png"),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          const SizedBox(
-                            width: 121.13,
-                            child: Text(
-                              ' 10/-',
-                              style: TextStyle(
-                                color: Color(0xFF414040),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                height: 0.08,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 0.47,
-                width: double.infinity,
-                color: const Color(0xffAFAFAF).withOpacity(.78),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 120.14,
-                    height: 36.09,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 0.50,
-                          color: Colors.black.withOpacity(0.7400000095367432),
+                        const SizedBox(
+                          width: 8,
                         ),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const SizedBox(
-                      width: 119.09,
-                      height: 16.05,
-                      child: Center(
-                        child: Text(
-                          'Visit Profile',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF262626),
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0.07,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'Anshika Mehra',
+                                  style: TextStyle(
+                                    color: Color(0xFF1F0A68),
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                    height: 0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.08,
+                                ),
+                                CircleAvatar(
+                                  backgroundColor: const Color(0xff7F90F7),
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/page-1/images/group-38-oFX.png",
+                                      color: Colors.white,
+                                      height: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            const SizedBox(
+                              width: 190.25,
+                              child: Text(
+                                'Importance of CUET',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  "assets/page-1/images/clock-circular-outline-Ra1.png",
+                                  // color: Colors.black,
+                                  height: 12,
+                                  width: 12,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                const SizedBox(
+                                  width: 121.13,
+                                  child: Text(
+                                    ' Session at 8:00pm',
+                                    style: TextStyle(
+                                      color: Color(0xFF414040),
+                                      fontSize: 12,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.08,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 13,
+                                  height: 13,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/page-1/images/calender.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 6,
+                                ),
+                                const SizedBox(
+                                  width: 121.13,
+                                  child: Text(
+                                    '27th Dec 2023',
+                                    style: TextStyle(
+                                      color: Color(0xFF414040),
+                                      fontSize: 12,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.08,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/page-1/images/rate.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                const SizedBox(
+                                  width: 121.13,
+                                  child: Text(
+                                    ' 10/-',
+                                    style: TextStyle(
+                                      color: Color(0xFF414040),
+                                      fontSize: 12,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.08,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                  Container(
-                    width: 120.14,
-                    height: 36.09,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFFB1A0EB),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                    const SizedBox(
+                      height: 10,
                     ),
-                    child: const SizedBox(
-                      width: 119.09,
-                      height: 16.05,
-                      child: Center(
-                        child: Text(
-                          'Book Now',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                    Container(
+                      height: 0.47,
+                      width: double.infinity,
+                      color: const Color(0xffAFAFAF).withOpacity(.78),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: 120.14,
+                          height: 36.09,
+                          decoration: ShapeDecoration(
                             color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0.07,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 0.50,
+                                color: Colors.black
+                                    .withOpacity(0.7400000095367432),
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: const SizedBox(
+                            width: 119.09,
+                            height: 16.05,
+                            child: Center(
+                              child: Text(
+                                'Visit Profile',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF262626),
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0.07,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Container(
+                          width: 120,
+                          height: 36,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFB1A0EB),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: const SizedBox(
+                            width: 119.09,
+                            height: 16.05,
+                            child: Center(
+                              child: Text(
+                                'Book Now',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0.07,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
-        ),
+          GestureDetector(
+              onTap: () {
+                if (_currentIndex < 2) {
+                  _pageController.animateToPage(
+                    _currentIndex + 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+              child: const Icon(Icons.arrow_forward_ios)),
+        ],
       ),
     );
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $url')),
+      );
+    }
   }
 
   Future _logout() async {
@@ -1390,17 +1459,6 @@ class _HomePageState extends State<HomePage> {
       );
     }
   }
-
-  // Future _logout() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.remove("token");
-  //   if (mounted) {
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const SplashScreen2()),
-  //     );
-  //   }
-  // }
 
   void onTapgotocounsellor(BuildContext context) {
     Navigator.pushReplacement(context,

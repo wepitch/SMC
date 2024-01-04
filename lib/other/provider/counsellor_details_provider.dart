@@ -41,4 +41,10 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  String currentGender = 'Male';
+  String currentEducation = 'Bachelor';
+
+  List<String> genderList = ['Male', 'Female', 'Other'];
+  List<String> educationList = ['Bachelor', 'Master', 'PhD', 'Other'];
 }

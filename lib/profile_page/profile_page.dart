@@ -1,14 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/profile_page/edit_profile_detail_screen.dart';
-import 'package:myapp/page-1/sign-up.dart';
-import 'package:myapp/page-1/splash_screen_2.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:myapp/profile_page/edit_user_detail_screen.dart';
+import 'package:myapp/profile_page/widget/edit_user_detail_widget.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../home_page/homepagecontainer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -18,6 +17,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  String? path;
   String username = "";
 
   String email = "";
@@ -42,7 +43,13 @@ class _ProfilePageState extends State<ProfilePage> {
     dob = prefs.getString("date") ?? "N/A";
     gender = prefs.getString("gender") ?? "N/A";
     edulevel = prefs.getString("edu_level") ?? "N/A";
+    path = prefs.getString("profile_image_path");
     setState(() {});
+  }
+
+  void saveImagePathToPrefs(String path) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("profile_image_path", path);
   }
 
   @override
@@ -52,11 +59,25 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xff1F0A68),
         foregroundColor: Colors.white,
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       Navigator.pushReplacement(
+        //           context,
+        //           MaterialPageRoute(
+        //               builder: (context) => const HomePageContainer()));
+        //     },
+        //     child: Image.asset(
+        //       'assets/page-1/images/back.png',
+        //     ),
+        //   ),
+        // ),
         titleSpacing: 20,
         title: Text(
           "My Profile",
           style: SafeGoogleFont("Inter",
-              fontSize: 20, fontWeight: FontWeight.w600),
+              fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(
@@ -65,16 +86,62 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const CircleAvatar(
-                radius: 70,
-                backgroundImage: NetworkImage(
-                    "https://media.gettyimages.com/id/1334712074/vector/coming-soon-message.jpg?s=612x612&w=0&k=20&c=0GbpL-k_lXkXC4LidDMCFGN_Wo8a107e5JzTwYteXaw="),
+              Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Container(
+                      height: 140,
+                      width: 140,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: path != null
+                            ? Image.file(File(path!), fit: BoxFit.cover)
+                            : const Icon(
+                          Icons.person,
+                          size: 100,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? xFile = await imagePicker.pickImage(
+                            source: ImageSource.gallery,
+                          );
+                          if (xFile != null) {
+                            path = xFile.path;
+                            saveImagePathToPrefs(path!);
+                            setState(() {});
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.blue,
+                          ),
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              itemProfile('Name', username, CupertinoIcons.person, false),
-              itemProfile('Email', email, CupertinoIcons.mail, false),
-              itemProfile('DOB', dob, CupertinoIcons.calendar, true),
-              itemProfile('Gender', gender, CupertinoIcons.person, true),
-              itemProfile('Edu-Level', edulevel, CupertinoIcons.book, true),
+
+              itemProfile('Name', username, CupertinoIcons.person),
+              itemProfile('Email', email, CupertinoIcons.mail),
+              itemProfile('DOB', dob, CupertinoIcons.calendar),
+              itemProfile('Gender', gender, CupertinoIcons.person),
+              itemProfile('Edu-Level', edulevel, CupertinoIcons.book),
               const SizedBox(
                 height: 16,
               ),
@@ -82,11 +149,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                 const EditProfileDetailScreen()));
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AddDetail.buildAddDialog(context);
+                          });
                     },
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -102,7 +169,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   itemProfile(
-      String title, String subtitle, IconData iconData, bool showEditIcon) {
+    String title,
+    String subtitle,
+    IconData iconData,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Container(
@@ -110,26 +180,21 @@ class _ProfilePageState extends State<ProfilePage> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          // boxShadow: [
-          //   BoxShadow(
-          //       offset: const Offset(0, 5),
-          //       color: const Color(0xff1F0A68).withOpacity(.2),
-          //       spreadRadius: 2,
-          //       blurRadius: 10)
-          // ]),
         ),
         child: ListTile(
           title: Text(title),
           subtitle: Text(subtitle),
           leading: Icon(iconData),
-          trailing: showEditIcon
-              ? IconButton(
-                  icon: const Icon(Icons.edit),
-                  color: Colors.grey.shade400,
-                  onPressed: () {},
-                )
-              : null,
-          tileColor: Colors.white,
+          // trailing: showEditIcon
+          //     ? IconButton(
+          //         icon: const Icon(Icons.edit),
+          //         color: Colors.grey.shade400,
+          //         onPressed: () {
+          //           _editProfileField(title, subtitle);
+          //         },
+          //       )
+          //     : null,
+          // tileColor: Colors.white,
         ),
       ),
     );
