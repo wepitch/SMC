@@ -22,7 +22,7 @@ class NotificationPage extends StatelessWidget {
             ),
           ),
         ),
-        titleSpacing: -5,
+        titleSpacing: 70,
         title: Text(
           "Notifications",
           style: SafeGoogleFont("Inter",

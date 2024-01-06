@@ -74,7 +74,7 @@ class _CounsellorListPage_offlineState
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 0.5 * fem),
                       padding: EdgeInsets.fromLTRB(
-                          20 * fem, 60.79 * fem, 30 * fem, 15.71 * fem),
+                          20 * fem, 60.79 * fem, 2 * fem, 12.40 * fem),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: const Color(0xff1f0a68),
@@ -94,16 +94,12 @@ class _CounsellorListPage_offlineState
                                         builder: (context) =>
                                             const HomePageContainer()));
                               },
-                              child: Container(
-                                // backpwB (730:9)
-                                margin: EdgeInsets.fromLTRB(
-                                    16 * fem, 0.08 * fem, 18.99 * fem, 0 * fem),
-                                width: 12 * fem,
-                                height: 34 * fem,
-                                child: Image.asset(
-                                  'assets/page-1/images/back.png',
-                                  width: 24 * fem,
-                                  height: 24 * fem,
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.white,
+                                  size: 25,
                                 ),
                               ),
                             ),
@@ -111,7 +107,7 @@ class _CounsellorListPage_offlineState
                           Container(
                             // counselor8BB (730:7)
                             margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 148 * fem, 0 * fem),
+                                108 * fem, 0 * fem, 88 * fem, 0 * fem),
                             child: const Text(
                               'Counsellor',
                               style: TextStyle(

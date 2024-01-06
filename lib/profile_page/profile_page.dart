@@ -74,10 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
         //   ),
         // ),
         titleSpacing: 20,
-        title: Text(
-          "My Profile",
-          style: SafeGoogleFont("Inter",
-              fontSize: 18, fontWeight: FontWeight.w600),
+        title: Center(
+          child: Text(
+            "My Profile",
+            style: SafeGoogleFont("Inter",
+                fontSize: 18, fontWeight: FontWeight.w600),
+          ),
         ),
       ),
       body: Padding(

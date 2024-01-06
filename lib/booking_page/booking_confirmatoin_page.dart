@@ -51,7 +51,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
             ),
           ),
         ),
-        titleSpacing: -5,
+         titleSpacing: 72,
         title: Text(
           "My Booking",
           style: SafeGoogleFont("Inter",

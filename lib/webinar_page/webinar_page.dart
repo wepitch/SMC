@@ -33,7 +33,7 @@ class _WebinarPageState extends State<WebinarPage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xff1F0A68),
         foregroundColor: Colors.white,
-        titleSpacing: 40,
+        // titleSpacing: 60,
         // leading: Padding(
         //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
         //   child: GestureDetector(
@@ -48,10 +48,13 @@ class _WebinarPageState extends State<WebinarPage> {
         //     ),
         //   ),
         // ),
-        title: Text(
-          "Webinar",
-          style: SafeGoogleFont("Inter",
-              fontSize: 19, fontWeight: FontWeight.w600),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 124),
+          child: Text(
+            "Webinar",
+            style: SafeGoogleFont("Inter",
+                fontSize: 18, fontWeight: FontWeight.w600),
+          ),
         ),
         actions: [
           Image.asset(

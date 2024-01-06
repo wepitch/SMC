@@ -196,8 +196,7 @@ class WebinarDetailsPage extends StatelessWidget {
                             Text(
                               "\u2022 Lorem Ipsum is simply dummy text of the printing\n\u2022 Typesetting industry. Lorem Ipsum has been the\n\u2022 Industry's standard dummy text ever since the 1500s\n\u2022 When an unknown printer took a galley of type and",
                               style: SafeGoogleFont("Inter",
-                                  fontSize: 16,
-                                  color: fontColor,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                   height: 1.64),
                             )

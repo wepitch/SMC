@@ -54,11 +54,14 @@ class _BookingPageState extends State<BookingPage> {
           //     ),
           //   ),
           // ),
-          titleSpacing: 20,
-          title: Text(
-            "My Booking",
-            style: SafeGoogleFont("Inter",
-                fontSize: 18, fontWeight: FontWeight.w600),
+          //titleSpacing: 108,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 110),
+            child: Text(
+              "My Booking",
+              style: SafeGoogleFont("Inter",
+                  fontSize: 18, fontWeight: FontWeight.w600),
+            ),
           ),
           actions: [
             Image.asset(
@@ -67,7 +70,7 @@ class _BookingPageState extends State<BookingPage> {
               height: 20,
             ),
             const SizedBox(
-              width: 28,
+              width: 22,
             )
           ],
         ),

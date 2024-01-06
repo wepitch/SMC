@@ -3,9 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddDetail {
-  String username = '';
-  String email = '';
-
   static AlertDialog buildAddDialog(BuildContext context) {
     return AlertDialog(
       title: const Text('Edit User Detail'),
@@ -37,7 +34,6 @@ class AddDetail {
             prefs.setString('education', dropdownWidget.currentEducation);
             prefs.setString('gender', dropdownWidget.currentGender);
             prefs.setString('dob', dobWidget._dateController.toString());
-
           },
           child: const Text('Save'),
         ),

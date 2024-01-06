@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:myapp/home_page/drawer/image_saved_screen.dart';
 import 'package:myapp/home_page/email_sender.dart';
 import 'package:myapp/home_page/help_screen.dart';
 
@@ -10,6 +13,7 @@ import 'package:myapp/home_page/help_screen.dart';
 // import 'package:myapp/page-1/webinar.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/home_page/notification_page/notification_page.dart';
+import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/profile_page/profile_page.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
 import 'package:myapp/webinar_page/webinar_page.dart';
@@ -17,6 +21,7 @@ import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:myapp/widget/custom_webniar_card_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,8 +44,12 @@ class _HomePageState extends State<HomePage> {
   String name = "";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentIndex = 0;
-   PageController _pageController = PageController(initialPage: 0);
+  PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
+  //String value = '';
+
+  CounsellorDetailsProvider counsellorDetailsProvider =
+      CounsellorDetailsProvider();
 
   @override
   void initState() {
@@ -50,7 +59,8 @@ class _HomePageState extends State<HomePage> {
     setName();
     getAllInfo();
     _pageController = PageController(initialPage: _currentIndex);
-
+    counsellorDetailsProvider =
+        Provider.of<CounsellorDetailsProvider>(context, listen: false);
   }
 
   @override
@@ -60,11 +70,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   String username = "";
+  String path = '';
 
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     username = prefs.getString("name") ?? "N/A";
+    path = prefs.getString("profile_image_path") ?? "N/A";
     setState(() {});
+  }
+  void saveImagePathToPrefs(String path) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("profile_image_path", path);
   }
 
   void setName() async {
@@ -99,7 +115,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       drawer: Drawer(
-        width: 261,
+        width: 262,
         backgroundColor: Colors.white,
         child: Center(
           child: Column(
@@ -117,25 +133,43 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 28,
                     ),
-                    const CircleAvatar(
-                      radius: 32,
-                      backgroundColor: Colors.white,
-                      backgroundImage:
-                          AssetImage("assets/page-1/images/user-1-1-J3b.png"),
+                    Center(
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(
+                              child: path != null
+                                  ? Image.file(File(path), fit: BoxFit.cover)
+                                  : const Icon(
+                                Icons.person,
+                                size: 100,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 11,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 12,right: 12),
+                      padding: const EdgeInsets.only(left: 38, right: 26),
                       child: Text(
                         name,
                         style: SafeGoogleFont(
                           "Inter",
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
-                        ),maxLines: 1,
+                        ),
+                        maxLines: 1,
                       ),
                     )
                   ],
@@ -152,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                       child: ListTile(
                         leading: Image.asset(
                           "assets/page-1/images/drawerHomeIcon.png",
-                          height: 20,
+                          height: 19,
                         ),
                         title: Text(
                           "Home",
@@ -210,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                       child: ListTile(
                         leading: Image.asset(
                           "assets/page-1/images/drawerHelp.png",
-                          height: 20,
+                          height: 19,
                         ),
                         title: Text(
                           "Help?",
@@ -236,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                     ListTile(
                       leading: Image.asset(
                         "assets/page-1/images/drawerPhsychoTest.png",
-                        height: 20,
+                        height: 19,
                       ),
                       title: Text(
                         "Psychometric Test",
@@ -250,6 +284,40 @@ class _HomePageState extends State<HomePage> {
                           bottom: BorderSide(
                         color: Colors.black.withOpacity(0.09),
                       )),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Column(
+                  children: [
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                const FeedScreen(
+                                  name: '',id: '',
+                                )));
+                      },
+                      leading: const Icon(
+                        Icons.save_alt,
+                        size: 18,
+                      ),
+                      title: Text(
+                        "Saved",
+                        style: SafeGoogleFont(
+                          "Inter",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      shape: Border(
+                          bottom: BorderSide(
+                            color: Colors.black.withOpacity(0.09),
+                          )),
                     ),
                   ],
                 ),
@@ -310,6 +378,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+
               const Spacer(),
               Image.asset(
                 "assets/page-1/images/sortmycollege-logo-1.png",
@@ -327,16 +396,19 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           children: [
             const SizedBox(
-              width: 26,
+              width: 18,
             ),
             Expanded(
               child: Text(
                 'Hello, $username',
-                style: const TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 16),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
             ),
+            const SizedBox(
+              width: 30,
+            )
           ],
         ),
         backgroundColor: const Color(0xff1F0A68),
@@ -1392,7 +1464,7 @@ class _HomePageState extends State<HomePage> {
                           width: 120,
                           height: 36,
                           decoration: ShapeDecoration(
-                            color: const Color(0xFFB1A0EB),
+                            color: const Color(0xff1F0A68),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),

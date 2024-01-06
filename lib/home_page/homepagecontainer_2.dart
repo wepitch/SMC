@@ -67,9 +67,10 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
           ),
           BottomNavigationBarItem(
             label: "Booking",
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/booking.png"),
-            ),
+              icon: Icon(Icons.calendar_month_outlined,size: 24,)
+            // icon: ImageIcon(
+            //   AssetImage("assets/page-1/images/booking.png"),
+            // ),
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(
