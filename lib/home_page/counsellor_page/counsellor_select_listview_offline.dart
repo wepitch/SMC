@@ -276,7 +276,7 @@ class _CounsellorListPage_offlineState
                                                   child: CarouselSlider(
                                                     items: [
                                                       Text(
-                                                        'follow your favourite experts',
+                                                        'Follow your favourite experts',
                                                         style: SafeGoogleFont(
                                                           'Inter',
                                                           fontSize: 14 * ffem,
@@ -290,7 +290,7 @@ class _CounsellorListPage_offlineState
                                                         ),
                                                       ),
                                                       Text(
-                                                        "attend popular workshops on various topics",
+                                                        "Attend popular workshops on various topics",
                                                         textAlign:
                                                             TextAlign.left,
                                                         style: SafeGoogleFont(
@@ -306,7 +306,7 @@ class _CounsellorListPage_offlineState
                                                         ),
                                                       ),
                                                       Text(
-                                                        'confused about your career? Book a counsellor now!',
+                                                        'Confused about your career? Book a counsellor now!',
                                                         style: SafeGoogleFont(
                                                           'Inter',
                                                           fontSize: 14 * ffem,
@@ -416,13 +416,14 @@ class _CounsellorListPage_offlineState
                                           Positioned(
                                             // graduationhataoB (742:114)
                                             left: 290.75 * fem,
-                                            top: 0 * fem,
+                                            top: 6 * fem,
+                                            bottom: 7,
                                             child: Align(
                                               child: SizedBox(
                                                 width: 88.5 * fem,
-                                                height: 91.5 * fem,
+                                                height: 120.5 * fem,
                                                 child: Image.asset(
-                                                  'assets/page-1/images/graduation-hat.png',
+                                                  'assets/page-1/images/girl_img.jpeg',
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),

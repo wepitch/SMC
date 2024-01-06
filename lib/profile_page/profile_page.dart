@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myapp/profile_page/edit_user_detail_screen.dart';
-import 'package:myapp/profile_page/widget/edit_user_detail_widget.dart';
+import 'package:myapp/page-1/selectgender.dart';
+import 'package:myapp/profile_page/widget/profile_edit_dialog.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +17,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   String? path;
   String username = "";
 
@@ -102,10 +101,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: path != null
                             ? Image.file(File(path!), fit: BoxFit.cover)
                             : const Icon(
-                          Icons.person,
-                          size: 100,
-                          color: Colors.grey,
-                        ),
+                                Icons.person,
+                                size: 100,
+                                color: Colors.grey,
+                              ),
                       ),
                     ),
                     Padding(
@@ -138,7 +137,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-
               itemProfile('Name', username, CupertinoIcons.person),
               itemProfile('Email', email, CupertinoIcons.mail),
               itemProfile('DOB', dob, CupertinoIcons.calendar),
@@ -150,12 +148,13 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
+                    onPressed: () async {
+                      await showDialog(
                           context: context,
                           builder: (context) {
-                            return AddDetail.buildAddDialog(context);
+                            return const ProfileEditDialog();
                           });
+                      getAllInfo();
                     },
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
@@ -200,5 +199,21 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _editGender(context) async {
+    String? selectedGender = await showDialog(
+      context: context,
+      builder: (context) {
+        return SelectGender();
+      },
+    );
+
+    if (selectedGender != null) {
+      // Update the gender in SharedPreferences or perform any other actions
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("gender", selectedGender);
+      getAllInfo(); // Refresh the profile information
+    }
   }
 }
