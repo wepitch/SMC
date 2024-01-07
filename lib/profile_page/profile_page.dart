@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myapp/page-1/selectgender.dart';
 import 'package:myapp/profile_page/widget/profile_edit_dialog.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,18 +18,13 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String? path;
   String username = "";
-
   String email = "";
-
   String dob = "";
-
   String gender = "";
-
-  String edulevel = "";
+  String eduLevel = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAllInfo();
   }
@@ -41,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
     email = prefs.getString("email") ?? "N/A";
     dob = prefs.getString("date") ?? "N/A";
     gender = prefs.getString("gender") ?? "N/A";
-    edulevel = prefs.getString("edu_level") ?? "N/A";
+    eduLevel = prefs.getString("edu_level") ?? "N/A";
     path = prefs.getString("profile_image_path");
     setState(() {});
   }
@@ -125,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: const EdgeInsets.all(8),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.blue,
+                            color: Color(0xff1F0A68),
                           ),
                           child: const Icon(
                             Icons.edit,
@@ -139,9 +133,9 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               itemProfile('Name', username, CupertinoIcons.person),
               itemProfile('Email', email, CupertinoIcons.mail),
-              itemProfile('DOB', dob, CupertinoIcons.calendar),
+              itemProfile('Date Of Birth', dob, CupertinoIcons.calendar),
               itemProfile('Gender', gender, CupertinoIcons.person),
-              itemProfile('Edu-Level', edulevel, CupertinoIcons.book),
+              itemProfile('Education', eduLevel, CupertinoIcons.book),
               const SizedBox(
                 height: 16,
               ),
@@ -199,21 +193,5 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
-  }
-
-  Future<void> _editGender(context) async {
-    String? selectedGender = await showDialog(
-      context: context,
-      builder: (context) {
-        return SelectGender();
-      },
-    );
-
-    if (selectedGender != null) {
-      // Update the gender in SharedPreferences or perform any other actions
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("gender", selectedGender);
-      getAllInfo(); // Refresh the profile information
-    }
   }
 }

@@ -14,7 +14,7 @@ class EditDobWidget extends StatefulWidget {
 class _EditDobWidgetState extends State<EditDobWidget> {
   DateTime _date = DateTime.now();
 
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
   final DateFormat _dateFormatter = DateFormat('MMM/dd/yyyy');
 
