@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/profile_page/widget/drop_down_dialog.dart';
 import 'package:myapp/profile_page/widget/edit_dob_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +15,19 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   String? currentEducation;
   String? currentGender;
   String? currentDob;
-
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   loadInitialValues();
+  // }
+  // Future<void> loadInitialValues() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     currentEducation = prefs.getString('edu_level');
+  //     currentGender = prefs.getString('gender');
+  //     currentDob = prefs.getString('date');
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -54,7 +67,9 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
               setState(() {
                 currentDob = dob;
               });
-            }),
+            },
+
+            ),
           ],
         ),
       ),
@@ -66,7 +81,7 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: allValuesSelected() ? saveDetails : null,
+          onPressed: saveDetails,
           child: const Text('Save'),
         ),
       ],
@@ -75,26 +90,41 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
 
   Future<void> saveDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (allValuesSelected()) {
+
+    if (currentEducation != null) {
       prefs.setString('edu_level', currentEducation!);
-      prefs.setString('gender', currentGender!);
-      prefs.setString('date', currentDob!);
-      if (mounted) {
-        Navigator.pop(context);
-      }
-    } else {
-      //show toast here: Select all items
     }
+
+    if (currentGender != null) {
+      prefs.setString('gender', currentGender!);
+    }
+
+    if (currentDob != null) {
+      prefs.setString('date', currentDob!);
+    }
+
+    if (mounted) {
+      Navigator.pop(context);
+    }
+
+    Fluttertoast.showToast(
+      msg: "Update Successfully",
+    );
   }
 
-  bool allValuesSelected() {
-    return currentEducation != null &&
-        currentGender != null &&
-        currentDob != null;
-  }
+
+  // bool allValuesSelected() {
+  //   return currentEducation != null &&
+  //       currentGender != null &&
+  //       currentDob != null;
+  // }
 
   void showEducationDropdown(BuildContext context) async {
-    List<String> educationList = ['Bachelor', 'Master', 'PhD', 'Other'];
+    List<String> educationList = [
+      "I'm in School",
+      "I'm in College",
+      "I Graduated",
+    ];
 
     showDialog<String>(
       context: context,

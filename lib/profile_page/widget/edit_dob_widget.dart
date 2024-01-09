@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EditDobWidget extends StatefulWidget {
-  const EditDobWidget({
-    required this.callback,
-    super.key});
+  const EditDobWidget({required this.callback, super.key});
+
   final Function(String dob) callback;
+
 
   @override
   State<EditDobWidget> createState() => _EditDobWidgetState();
@@ -18,18 +18,25 @@ class _EditDobWidgetState extends State<EditDobWidget> {
 
   final DateFormat _dateFormatter = DateFormat('MMM/dd/yyyy');
 
+
   @override
   void dispose() {
     _dateController.dispose();
     super.dispose();
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _date = widget.callback != null ? _dateFormatter.parse(widget.callback()) : DateTime.now();
+  //   _dateController.text = _dateFormatter.format(_date);
+  // }
   _handleDatePicker() async {
     final DateTime? date = await showDatePicker(
       context: context,
       initialDate: _date,
       firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now(),
     );
     if (date != null && date != _date) {
       setState(() {
@@ -39,6 +46,7 @@ class _EditDobWidgetState extends State<EditDobWidget> {
       widget.callback(_dateController.text);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(

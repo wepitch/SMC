@@ -132,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               itemProfile('Name', username, CupertinoIcons.person),
-              itemProfile('Email', email, CupertinoIcons.mail),
+              itemProfile('Gmail', email, CupertinoIcons.mail),
               itemProfile('Date Of Birth', dob, CupertinoIcons.calendar),
               itemProfile('Gender', gender, CupertinoIcons.person),
               itemProfile('Education', eduLevel, CupertinoIcons.book),

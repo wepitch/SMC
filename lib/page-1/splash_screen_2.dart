@@ -61,6 +61,9 @@ class _SplashScreen2State extends State<SplashScreen2> {
             //     ),
             //   ),
             // ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.06,
+            ),
             Container(
               width: 300,
               height: 200,
@@ -287,7 +290,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
-                    onTapGettingstarted(context);
+                    onTapGettingStarted(context);
                   },
                   child: Text(
                     'Getting Started',
@@ -335,8 +338,10 @@ class _SplashScreen2State extends State<SplashScreen2> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Login()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()));
                     },
                     child: Text(
                       'Log in',
@@ -352,9 +357,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                 ],
               ),
             ),
-            SizedBox(
-              height: mHeight * 0.05,
-            ),
+            const Spacer(),
             GestureDetector(
               onTap: () {
                 launchUrlString(
@@ -369,6 +372,9 @@ class _SplashScreen2State extends State<SplashScreen2> {
                 ),
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.06,
+            ),
           ],
         ),
       ),
@@ -376,7 +382,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
   }
 }
 
-void onTapGettingstarted(BuildContext context) async {
+void onTapGettingStarted(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString("token");
 
