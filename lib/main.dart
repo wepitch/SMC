@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:myapp/news_page/news_service/news_api_service.dart';
-import 'package:myapp/news_page/provider/news_provider.dart';
-import 'package:myapp/news_page/ui/news_screen.dart';
+import 'package:myapp/news/provider/news_provider.dart';
+import 'package:myapp/news/service/news_api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/dependency_injection.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
@@ -98,7 +97,9 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => UserBookingProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => NewsProvider()),
+        ChangeNotifierProvider(
+            create: (context) =>
+                NewsProvider(newsApiService: NewsApiService())),
       ],
       child: const MyApp(),
     ),

@@ -1,22 +1,23 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/webinar_page/webinar_details_page.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 
 class CustomWebinarCard extends StatefulWidget {
-  const CustomWebinarCard(
-      {super.key,
-        required this.isRegisterNow,
-        required this.btnTitle,
-        required this.time,
-        required this.duration,
-        required this.participants,
-        required this.bannerImg,
-        required this.title,
-        required this.showDuration,
-        this.enableAutoScroll = false,
-      });
+  const CustomWebinarCard({
+    super.key,
+    required this.isRegisterNow,
+    required this.btnTitle,
+    required this.time,
+    required this.duration,
+    required this.participants,
+    required this.bannerImg,
+    required this.title,
+    required this.showDuration,
+    this.enableAutoScroll = false,
+  });
 
   final bool isRegisterNow;
   final String btnTitle;
@@ -27,31 +28,30 @@ class CustomWebinarCard extends StatefulWidget {
   final String bannerImg;
   final bool showDuration;
   final bool enableAutoScroll;
+
   @override
   State<CustomWebinarCard> createState() => _CustomWebinarCardState();
 }
 
 class _CustomWebinarCardState extends State<CustomWebinarCard> {
-    int _currentIndex = 0;
-   PageController _pageController = PageController(initialPage: 0);
+  int _currentIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
-    if(widget.enableAutoScroll) {
+    if (widget.enableAutoScroll) {
       //_startTimer();
       _pageController = PageController(initialPage: _currentIndex);
-
     }
   }
 
-
-@override
-void dispose() {
-  _pageController.dispose();
-  super.dispose();
-}
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
@@ -69,17 +69,18 @@ void dispose() {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.6,
       child: PageView(
-      controller: _pageController,
-      onPageChanged: (index) {
-    setState(() {
-    _currentIndex = index;
-    });
-    },
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         children: [
           cardView(context),
           cardView(context),
@@ -111,7 +112,8 @@ void dispose() {
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                              image: AssetImage(widget.bannerImg), fit: BoxFit.fill),
+                              image: AssetImage(widget.bannerImg),
+                              fit: BoxFit.fill),
                         ),
                       ),
                       Padding(
@@ -189,13 +191,13 @@ void dispose() {
                                     ),
                                   ),
                                 ),
-                                customRegisterNowBtn(
+                                registerNowWidget(
                                     onPressed: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                          const WebinarDetailsPage(),
+                                              const WebinarDetailsPage(),
                                         ),
                                       );
                                     },
@@ -210,15 +212,15 @@ void dispose() {
               ),
             ),
             GestureDetector(
-              onTap: (){
-                if (_currentIndex < 2) {
-                  _pageController.animateToPage(
-                    _currentIndex + 1,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                }
-              },
+                onTap: () {
+                  if (_currentIndex < 2) {
+                    _pageController.animateToPage(
+                      _currentIndex + 1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                },
                 child: const Icon(Icons.arrow_forward_ios)),
           ],
         ),
@@ -227,20 +229,53 @@ void dispose() {
   }
 }
 
+Widget registerNowWidget({
+  required VoidCallback onPressed,
+  required String title,
+  required bool isRegisterNow,
+}) {
+  Color buttonColor = isRegisterNow
+      ? const Color.fromARGB(255, 189, 173, 241)
+      : const Color.fromARGB(255, 189, 173, 241);
+  Color textColor = isRegisterNow ? Colors.white : Colors.white;
+
+  return SizedBox(
+    height: 42,
+    width: 200,
+    child: ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        foregroundColor: textColor,
+        backgroundColor: buttonColor,
+      ),
+      child: Text(
+        title,
+        style: SafeGoogleFont(
+          "Inter",
+          fontSize: 15,
+          fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
+        ),
+      ),
+    ),
+  );
+}
 
 class CustomWebinarCard1 extends StatefulWidget {
-  const CustomWebinarCard1(
-      {super.key,
-        required this.isRegisterNow,
-        required this.btnTitle,
-        required this.time,
-        required this.duration,
-        required this.participants,
-        required this.bannerImg,
-        required this.title,
-        required this.showDuration,
-        this.enableAutoScroll = false,
-      });
+  const CustomWebinarCard1({
+    super.key,
+    required this.isRegisterNow,
+    required this.btnTitle,
+    required this.time,
+    required this.duration,
+    required this.participants,
+    required this.bannerImg,
+    required this.title,
+    required this.showDuration,
+    this.enableAutoScroll = false,
+  });
 
   final bool isRegisterNow;
   final String btnTitle;
@@ -251,12 +286,12 @@ class CustomWebinarCard1 extends StatefulWidget {
   final String bannerImg;
   final bool showDuration;
   final bool enableAutoScroll;
+
   @override
   State<CustomWebinarCard1> createState() => _CustomWebinarCard1State();
 }
 
 class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -266,15 +301,24 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Widget cardView(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          color: Colors.white,
-          surfaceTintColor: Colors.white,
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)),
-          child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const WebinarDetailsPage(),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Card(
+            color: Colors.white,
+            surfaceTintColor: Colors.white,
+            elevation: 4,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -362,26 +406,61 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                               ),
                             ),
                           ),
-                          customRegisterNowBtn(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                    const WebinarDetailsPage(),
-                                  ),
-                                );
-                              },
-                              title: widget.btnTitle,
-                              isRegisterNow: widget.isRegisterNow)
+                          customRegisterNow(
+                            onPressed: () {
+                              Fluttertoast.showToast(
+                                msg:
+                                    'Thankyou for registering your session will start soon',
+                                gravity: ToastGravity.CENTER,
+                              );
+                            },
+                            title: widget.btnTitle,
+                            isRegisterNow: widget.isRegisterNow,
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
-              ]),
-        ),
-      ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
+}
+
+Widget customRegisterNow({
+  required VoidCallback onPressed,
+  required String title,
+  required bool isRegisterNow,
+}) {
+  Color buttonColor = isRegisterNow
+      ? const Color.fromARGB(255, 189, 173, 241)
+      : const Color.fromARGB(255, 189, 173, 241);
+  Color textColor = isRegisterNow ? Colors.white : Colors.white;
+
+  return SizedBox(
+    height: 42,
+    width: 200,
+    child: ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        foregroundColor: textColor,
+        backgroundColor: buttonColor,
+      ),
+      child: Text(
+        title,
+        style: SafeGoogleFont(
+          "Inter",
+          fontSize: 15,
+          fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
+        ),
+      ),
+    ),
+  );
 }

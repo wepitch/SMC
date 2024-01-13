@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/utils.dart';
+import 'package:myapp/webinar_page/webinar_details_page.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/widget/custom_webniar_card_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WebinarUpcomingPage extends StatelessWidget {
   const WebinarUpcomingPage({super.key});
@@ -25,4 +29,250 @@ class WebinarUpcomingPage extends StatelessWidget {
           );
         });
   }
+}
+class WebinarUpComingWidget extends StatefulWidget {
+  const WebinarUpComingWidget({
+    super.key,
+    required this.isRegisterNow,
+    required this.btnTitle,
+    required this.time,
+    required this.duration,
+    required this.participants,
+    required this.bannerImg,
+    required this.title,
+    required this.showDuration,
+    this.enableAutoScroll = false,
+  });
+
+  final bool isRegisterNow;
+  final String btnTitle;
+  final String title;
+  final String time;
+  final String duration;
+  final String participants;
+  final String bannerImg;
+  final bool showDuration;
+  final bool enableAutoScroll;
+
+  @override
+  State<WebinarUpComingWidget> createState() => _WebinarUpComingWidgetState();
+}
+
+class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
+
+  late SharedPreferences _prefs;
+  bool _isRegistrationStarting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeSharedPreferences();
+  }
+
+  Future<void> _initializeSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
+
+    if (isStarting) {
+      DateTime savedTime = DateTime.fromMillisecondsSinceEpoch(
+        _prefs.getInt('startingTimestamp') ?? 0,
+      );
+
+      DateTime currentTime = DateTime.now();
+      if (currentTime.difference(savedTime).inDays >= 3) {
+        await _updateRegistrationStatus(false);
+      } else {
+        setState(() {
+          _isRegistrationStarting = true;
+        });
+      }
+    }
+  }
+
+  Future<void> _updateRegistrationStatus(bool isStarting) async {
+    setState(() {
+      _isRegistrationStarting = isStarting;
+    });
+
+    if (isStarting) {
+      await _prefs.setInt('startingTimestamp', DateTime.now().millisecondsSinceEpoch);
+    } else {
+      await _prefs.remove('startingTimestamp');
+    }
+
+    await _prefs.setBool('isRegistrationStarting', isStarting);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: cardView(context),
+    );
+  }
+
+  Widget cardView(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const WebinarDetailsPage(),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Card(
+            color: Colors.white,
+            surfaceTintColor: Colors.white,
+            elevation: 4,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 190,
+                  // width: 390,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        image: AssetImage(widget.bannerImg), fit: BoxFit.fill),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.title,
+                        style: SafeGoogleFont(
+                          "Inter",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.time,
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                widget.showDuration
+                                    ? "Career Institute : ${widget.duration}"
+                                    : "Allen career institute,\n by Anshika Mehra - ${widget.participants}",
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          customEnrollButton(
+                              onPresssed: () {},
+                              title: "Free Enroll",
+                              context: context)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: const Color(0xffAFAFAF),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: const Color(0xff7F90F7),
+                            child: Center(
+                              child: Image.asset(
+                                "assets/page-1/images/group-38-oFX.png",
+                                width: 17,
+                                height: 17,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          customRegisterNow(
+                            onPressed: () async{
+                              await _updateRegistrationStatus(true);
+
+                              Fluttertoast.showToast(msg: 'Starting in 2 days');
+                            },
+                            title: widget.btnTitle,
+                            isRegisterNow: widget.isRegisterNow,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget customRegisterNow({
+    required VoidCallback onPressed,
+    required String title,
+    required bool isRegisterNow,
+  }) {
+    Color buttonColor = isRegisterNow
+        ? const Color.fromARGB(255, 189, 173, 241)
+        : const Color.fromARGB(255, 189, 173, 241);
+    Color textColor = isRegisterNow ? Colors.white : Colors.white;
+
+    return SizedBox(
+      height: 42,
+      width: 200,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          foregroundColor: textColor,
+          backgroundColor: buttonColor,
+        ),
+        child: Text(
+          title,
+          style: SafeGoogleFont(
+            "Inter",
+            fontSize: 15,
+            fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
 }

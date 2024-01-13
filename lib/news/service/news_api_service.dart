@@ -56,30 +56,54 @@
 // //
 // //
 // // }
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'package:myapp/news_page/model/news_response.dart';
+// import 'package:myapp/news_page/shared/api_end_point.dart';
+//
+// class NewsApiService {
+//   Future<List<NewsArticle>> fetchTeslaNews() async {
+//     final response = await http.get(
+//       Uri.parse(ApiEndPoint.newsUrl),
+//     );
+//
+//     if (response.statusCode == 200) {
+//       final Map<String, dynamic> data = json.decode(response.body);
+//
+//       if (data['status'] == "ok") {
+//         List<dynamic> articles = data['articles'];
+//         return articles
+//             .map((article) => NewsArticle.fromJson(article))
+//             .toList();
+//       } else {
+//         throw Exception("Failed to load articles");
+//       }
+//     } else {
+//       throw Exception("Failed to load articles");
+//     }
+//   }
+// }
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:myapp/news_page/model/articles_model.dart';
-import 'package:myapp/news_page/shared/api_end_point.dart';
+import 'package:myapp/news/model/news_response.dart';
+import 'package:myapp/shared/api_end_point.dart';
+import 'package:myapp/shared/string_const.dart';
 
 class NewsApiService {
-  Future<List<NewsArticle>> fetchTeslaNews() async {
+  final String apiKey = '608162a7221647ee988aae17953ad92f';
+
+  Future<List<NewsArticle>> fetchCollegeNews() async {
     final response = await http.get(
-      Uri.parse(ApiEndPoint.newsUrl),
+      Uri.parse('${ApiEndPoint.newsUrl}=$apiKey'),
     );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-
-      if (data['status'] == "ok") {
-        List<dynamic> articles = data['articles'];
-        return articles
-            .map((article) => NewsArticle.fromJson(article))
-            .toList();
-      } else {
-        throw Exception("Failed to load articles");
-      }
+      List<dynamic> data = json.decode(response.body)['articles'];
+      List<NewsArticle> articles =
+          data.map((item) => NewsArticle.fromJson(item)).toList();
+      return articles;
     } else {
-      throw Exception("Failed to load articles");
+      throw Exception(StringConst.exceptionText);
     }
   }
 }

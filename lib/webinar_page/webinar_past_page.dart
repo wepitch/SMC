@@ -12,7 +12,6 @@ class WebinarPastPage extends StatefulWidget {
 }
 
 class _WebinarPastPageState extends State<WebinarPastPage> {
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -25,7 +24,7 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
                 showDuration: false,
                 title: "Learn more about CUET and IPMAT",
                 isRegisterNow: false,
-                btnTitle: "Happend 3 Days ago",
+                btnTitle: "Happend 2 Days ago",
                 time: "15 Sep @ 2:00 PM Onwards",
                 duration: "60",
                 participants: "Unlimited",
@@ -34,7 +33,6 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
         });
   }
 }
-
 
 Widget customEnrollButton(
     {required VoidCallback onPresssed,
@@ -71,32 +69,34 @@ Widget customEnrollButton(
   );
 }
 
-Widget customRegisterNowBtn(
-    {required VoidCallback onPressed,
-    required String title,
-    required bool isRegisterNow}) {
+Widget customRegisterNowBtn({
+  required VoidCallback onPressed,
+  required String title,
+  required bool isRegisterNow,
+}) {
+  Color buttonColor = isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+  Color textColor = isRegisterNow ? Colors.black : Colors.white;
+
   return SizedBox(
     height: 42,
     width: 200,
     child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          elevation: 8,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          foregroundColor: isRegisterNow ? Colors.white : Colors.black,
-          backgroundColor: isRegisterNow
-              ? const Color.fromARGB(255, 189, 173, 241)
-              : const Color.fromARGB(255, 214, 205, 247),
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
         ),
-        child: Text(
-          title,
-          style: SafeGoogleFont(
-            "Inter",
-            fontSize: 15,
-            fontWeight: isRegisterNow ? FontWeight.bold : FontWeight.w500,
-          ),
-        )),
+        foregroundColor: textColor,
+        backgroundColor: buttonColor,
+      ),
+      child: Text(
+        title,
+        style: SafeGoogleFont(
+          "Inter",
+          fontSize: 15,
+          fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
+        ),
+      ),
+    ),
   );
 }

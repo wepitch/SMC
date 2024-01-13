@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/booking_page/booking_page.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_select_listview_offline.dart';
-import 'package:myapp/news_page/news_service/news_api_service.dart';
-import 'package:myapp/news_page/ui/news_screen.dart';
+import 'package:myapp/news/ui/news_screen.dart';
 import 'package:myapp/profile_page/profile_page.dart';
 
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
@@ -37,7 +36,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
   final Widget _booking = const BookingPage();
 
   // final Widget _news = CollegeNewsWidget();
-  final Widget _news = Newsscreen();
+  final Widget _news = NewsScreen();
 
   final Widget _profile = const ProfilePage();
 

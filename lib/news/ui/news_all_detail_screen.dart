@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:myapp/news_page/model/articles_model.dart';
-import 'package:myapp/news_page/shared/colors_const.dart';
-import 'package:myapp/news_page/shared/string_const.dart';
+import 'package:myapp/news/model/news_response.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class NewsAllDetailScreen extends StatefulWidget {
   const NewsAllDetailScreen({required this.newsArticle, super.key});
@@ -30,8 +30,8 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
             ),
           ),
         ),
-        backgroundColor: const Color(0xff1F0A68),
-        foregroundColor: Colors.white,
+        backgroundColor: ColorsConst.appBarColor,
+        foregroundColor: ColorsConst.whiteColor,
         titleSpacing: 70,
         title: Text(
           "News Detail",
@@ -49,33 +49,20 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                 borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(70),
                     bottomLeft: Radius.circular(10),
-                    topLeft: Radius.circular(70),
+                    topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
                 child: Image.network(
-                  widget.newsArticle.urlToImage,
+                  widget.newsArticle.urlToImage ?? '',
                   fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(
                 height: 12,
               ),
-              const Center(
-                child: Text(
-                  StringConst.headline,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: ColorsConst.redColor,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
               Text(
-                formatTime(widget.newsArticle.publishedAt),
+                formatTime(widget.newsArticle.publishedAt!),
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   color: Colors.black87,
                 ),
               ),
@@ -83,26 +70,9 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                 height: 12,
               ),
               Text(
-                widget.newsArticle.title,
+                widget.newsArticle.title!,
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const Divider(),
-              const Text(
-                'Content -',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Text(
-                widget.newsArticle.content,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
               ),
               const SizedBox(
                 height: 12,
@@ -116,10 +86,9 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                 height: 12,
               ),
               Text(
-                widget.newsArticle.description,
+                widget.newsArticle.description!,
                 style: const TextStyle(
                   fontSize: 16,
-
                 ),
               ),
             ],
@@ -131,7 +100,7 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
 
   String formatTime(String timestamp) {
     DateTime dateTime = DateTime.parse(timestamp);
-    String formattedTime = DateFormat('MMM dd, yyyy - HH:mm').format(dateTime);
+    String formattedTime = DateFormat('MMM dd, yyyy').format(dateTime);
     return formattedTime;
   }
 }

@@ -119,16 +119,18 @@ class _CounsellorListPage_offlineState
                               ),
                             ),
                           ),
-                          Container(
-                            // layer2oHK (730:5)
-                            margin: EdgeInsets.fromLTRB(
-                                14 * fem, 0 * fem, 0 * fem, 0 * fem),
-                            width: 70.39 * fem,
-                            height: 25 * fem,
-                            child: Image.asset(
-                              'assets/page-1/images/layer-3.png',
-                              width: 26.39 * fem,
+                          Expanded(
+                            child: Container(
+                              // layer2oHK (730:5)
+                              margin: EdgeInsets.fromLTRB(
+                                  8 * fem, 0 * fem, 0 * fem, 0 * fem),
+                              width: 70.39 * fem,
                               height: 25 * fem,
+                              child: Image.asset(
+                                'assets/page-1/images/layer-3.png',
+                                width: 26.39 * fem,
+                                height: 25 * fem,
+                              ),
                             ),
                           ),
                         ],

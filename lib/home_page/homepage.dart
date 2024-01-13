@@ -341,7 +341,6 @@ class _HomePageState extends State<HomePage> {
                             TextButton(
                               onPressed: () async {
                                 await _logout();
-
                                 if (mounted) {
                                   Navigator.pushReplacement(
                                       context,
@@ -1166,7 +1165,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 14, right: 14, bottom: 16, top: 8),
+                      EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
                   child: CustomWebinarCard(
                       enableAutoScroll: true,
                       showDuration: false,
@@ -1180,55 +1179,55 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            InkWell(
-              onTap: () async {
-                const email = 'mailto :nsheoran2005@gmail.com';
-                final Uri emailLaunchUri = Uri(
-                  scheme: 'mailto',
-                  path: email,
-                );
-                await launch(emailLaunchUri.toString());
-              },
-              child: Container(
-                height: 60,
-                decoration: const BoxDecoration(
-                  color: Color(0xBAE3398C),
-                ),
-                child: const Center(
-                  child: SizedBox(
-                    width: 370,
-                    height: 44,
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Need Help? ',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' mail us at help@sortmycollege.com',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () async {
+            //     const email = 'mailto :nsheoran2005@gmail.com';
+            //     final Uri emailLaunchUri = Uri(
+            //       scheme: 'mailto',
+            //       path: email,
+            //     );
+            //     await launch(emailLaunchUri.toString());
+            //   },
+            //   child: Container(
+            //     height: 60,
+            //     decoration: const BoxDecoration(
+            //       color: Color(0xBAE3398C),
+            //     ),
+            //     child: const Center(
+            //       child: SizedBox(
+            //         width: 370,
+            //         height: 44,
+            //         child: Text.rich(
+            //           TextSpan(
+            //             children: [
+            //               TextSpan(
+            //                 text: 'Need Help? ',
+            //                 style: TextStyle(
+            //                   color: Colors.white,
+            //                   fontSize: 18,
+            //                   fontFamily: 'Inter',
+            //                   fontWeight: FontWeight.w700,
+            //                   height: 0,
+            //                 ),
+            //               ),
+            //               TextSpan(
+            //                 text: ' mail us at help@sortmycollege.com',
+            //                 style: TextStyle(
+            //                   color: Colors.white,
+            //                   fontSize: 16,
+            //                   fontFamily: 'Inter',
+            //                   fontWeight: FontWeight.w700,
+            //                   height: 0,
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //           textAlign: TextAlign.center,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

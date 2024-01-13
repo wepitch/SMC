@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
 
-class WebinarDetailsPage extends StatelessWidget {
+class WebinarDetailsPage extends StatefulWidget {
   const WebinarDetailsPage({super.key});
 
+  @override
+  State<WebinarDetailsPage> createState() => _WebinarDetailsPageState();
+}
+
+class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
+  // late SharedPreferences _prefs;
+  // bool _isRegistrationStarting = false;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _initializeSharedPreferences();
+  // }
+  //
+  // Future<void> _initializeSharedPreferences() async {
+  //   _prefs = await SharedPreferences.getInstance();
+  //   bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
+  //
+  //   setState(() {
+  //     _isRegistrationStarting = isStarting;
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +144,7 @@ class WebinarDetailsPage extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                   fontStyle: FontStyle.italic,
                                   color: fontColor),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -218,67 +240,66 @@ class WebinarDetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 88,
                         child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(
-                                  left: index == 0 ? 20 : 17,
-                                ),
-                                height: 88,
-                                width: 144,
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color(0xffD9D9D9).withOpacity(0.65),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(14, 11, 0, 11),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 20,
-                                        width: 20,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "${index + 1}",
-                                            style: SafeGoogleFont(
-                                              "Inter",
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.only(
+                                left: index == 0 ? 20 : 17,
+                              ),
+                              height: 88,
+                              width: 144,
+                              decoration: BoxDecoration(
+                                color:
+                                    const Color(0xffD9D9D9).withOpacity(0.65),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(14, 11, 0, 11),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "${index + 1}",
+                                          style: SafeGoogleFont(
+                                            "Inter",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 10,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      index == 0
+                                          ? "What will you learn?"
+                                          : "Define your personal brand",
+                                      style: SafeGoogleFont(
+                                        "Inter",
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color(0xff414040),
                                       ),
-                                      Text(
-                                        index == 0
-                                            ? "What will you learn?"
-                                            : "Define your personal brand",
-                                        style: SafeGoogleFont(
-                                          "Inter",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: const Color(0xff414040),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            }),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -320,7 +341,7 @@ class WebinarDetailsPage extends StatelessWidget {
             child: customButton(
               context: context,
               onPressed: () {},
-              title: "Join Now",
+              title: 'Join Now',
             ),
           ),
           const SizedBox(
