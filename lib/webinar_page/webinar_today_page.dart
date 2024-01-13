@@ -15,7 +15,8 @@ class WebinarTodayPage extends StatelessWidget {
       itemCount: 10,
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
+          padding:
+              EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
           child: CustomWebinarCard1(
             showDuration: true,
             title: "Learn more about CUET and IPMAT",
@@ -229,7 +230,12 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    title: const Text('Do you want to register for the webinar?'),
+                                    title: const Text(
+                                      'Do you want to register for the webinar?',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                     actions: [
                                       TextButton(
                                           onPressed: () {
@@ -239,7 +245,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                       TextButton(
                                         onPressed: () async {
                                           await _updateRegistrationStatus(true);
-                                          if(mounted) {
+                                          if (mounted) {
                                             Navigator.pop(context);
                                           }
                                         },

@@ -166,26 +166,22 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/page-1/images/persons.png",
-                                ),
-                                const SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                  "44/100",
-                                  style: SafeGoogleFont(
-                                    "Inter",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: fontColor,
-                                  ),
-                                )
-                              ],
-                            )
+                            // const Spacer(),
+                            // Image.asset(
+                            //   "assets/page-1/images/persons.png",
+                            // ),
+                            // const SizedBox(
+                            //   width: 3,
+                            // ),
+                            // Text(
+                            //   "44/100",
+                            //   style: SafeGoogleFont(
+                            //     "Inter",
+                            //     fontSize: 12,
+                            //     fontWeight: FontWeight.w500,
+                            //     color: fontColor,
+                            //   ),
+                            // )
                           ],
                         ),
                       ),
