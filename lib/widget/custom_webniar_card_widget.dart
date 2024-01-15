@@ -245,6 +245,7 @@ Widget registerNowWidget({
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        elevation: 24,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -275,6 +276,7 @@ class CustomWebinarCard1 extends StatefulWidget {
     required this.title,
     required this.showDuration,
     this.enableAutoScroll = false,
+    required void Function() onRegisterClicked,
   });
 
   final bool isRegisterNow;
@@ -306,7 +308,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const WebinarDetailsPage(),
+            builder: (context) => const WebinarDetailsPageWidget1(),
           ),
         );
       },
@@ -408,11 +410,11 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                           ),
                           customRegisterNow(
                             onPressed: () {
-                              Fluttertoast.showToast(
-                                msg:
-                                    'Thankyou for registering your session will start soon',
-                                gravity: ToastGravity.CENTER,
-                              );
+                              // Fluttertoast.showToast(
+                              //   msg:
+                              //       'Thankyou for registering your session will start soon',
+                              //   gravity: ToastGravity.CENTER,
+                              // );
                             },
                             title: widget.btnTitle,
                             isRegisterNow: widget.isRegisterNow,
@@ -437,9 +439,9 @@ Widget customRegisterNow({
   required bool isRegisterNow,
 }) {
   Color buttonColor = isRegisterNow
-      ? const Color.fromARGB(255, 189, 173, 241)
-      : const Color.fromARGB(255, 189, 173, 241);
-  Color textColor = isRegisterNow ? Colors.white : Colors.white;
+      ?  Colors.white
+      :  Colors.white;
+  Color textColor = isRegisterNow ? Colors.black : Colors.black;
 
   return SizedBox(
     height: 42,
@@ -447,6 +449,7 @@ Widget customRegisterNow({
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        elevation: 18,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -457,7 +460,7 @@ Widget customRegisterNow({
         title,
         style: SafeGoogleFont(
           "Inter",
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
         ),
       ),

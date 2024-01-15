@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../utils.dart';
+import 'package:myapp/utils.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -73,6 +72,7 @@ class DummyNotificationModel {
   final String img;
   final String message;
   final String name;
+
   DummyNotificationModel({
     required this.img,
     required this.name,

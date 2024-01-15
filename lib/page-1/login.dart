@@ -1,15 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/utils.dart';
-
-import '../other/api_service.dart';
 import '../other/constants.dart';
 
 import 'otp.dart';
 
 class Login extends StatefulWidget {
+  static String? verify;
+
   const Login({super.key});
 
   @override
@@ -18,16 +19,19 @@ class Login extends StatefulWidget {
 
 class _Login extends State<Login> {
   // final _nameController = TextEditingController();
-  final phonecontroller = TextEditingController();
+  final phoneController = TextEditingController();
   final emailcontroller = TextEditingController();
+  var phone = '';
 
   // final String _errorMessage = '';
 
   @override
   void initState() {
     super.initState();
+    phoneController.text = '';
     configLoading();
   }
+   String verify = '';
 
   @override
   Widget build(BuildContext context) {
@@ -182,8 +186,11 @@ class _Login extends State<Login> {
                     child: SizedBox(
                       height: 16,
                       child: TextFormField(
+                        onChanged: (value) {
+                          phone = value;
+                        },
                         cursorColor: Colors.black,
-                        controller: phonecontroller,
+                        controller: phoneController,
                         keyboardType: TextInputType.phone,
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(10),
@@ -221,23 +228,39 @@ class _Login extends State<Login> {
                     ),
                     child: Center(
                       child: GestureDetector(
-                        onTap: () {
-                          if (check_val()) {
-                            ApiService()
-                                .call_otp_2(
-                                    email:
-                                        emailcontroller.text.toString().trim())
-                                .then((value) async {
-                              if (value["message"] ==
-                                  "Email sent successfully") {
-                                onTapGettingstarted(context);
-                              } else {
-                                EasyLoading.showToast("error",
-                                    toastPosition:
-                                        EasyLoadingToastPosition.bottom);
-                              }
-                            });
-                          }
+                        onTap: () async{
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                            phoneNumber: phoneController.text + phone,
+                            verificationCompleted:
+                                (PhoneAuthCredential credential) {},
+                            verificationFailed: (FirebaseAuthException e) {},
+                            codeSent: (String verificationId, int? resendToken) {
+                              Login.verify = verificationId;
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const OtpScreen(),
+                              //   ),
+                              // );
+                            },
+                            codeAutoRetrievalTimeout: (String verificationId) {},
+                          );
+                          // if (check_val()) {
+                          //   ApiService()
+                          //       .call_otp_2(
+                          //           email:
+                          //               emailcontroller.text.toString().trim())
+                          //       .then((value) async {
+                          //     if (value["message"] ==
+                          //         "Email sent successfully") {
+                          //       onTapGettingstarted(context);
+                          //     } else {
+                          //       EasyLoading.showToast("error",
+                          //           toastPosition:
+                          //               EasyLoadingToastPosition.bottom);
+                          //     }
+                          //   });
+                          // }
                         },
                         child: Text(
                           'Log in',
@@ -380,11 +403,11 @@ class _Login extends State<Login> {
       EasyLoading.showToast(AppConstants.USER_EMAIL,
           toastPosition: EasyLoadingToastPosition.bottom);
       isvaluevalid = false;
-    } else if (phonecontroller.text.toString().trim().isEmpty) {
+    } else if (phoneController.text.toString().trim().isEmpty) {
       EasyLoading.showToast(AppConstants.phoneerror,
           toastPosition: EasyLoadingToastPosition.bottom);
       isvaluevalid = false;
-    } else if (validateMobile(phonecontroller.text.toString().trim())) {
+    } else if (validateMobile(phoneController.text.toString().trim())) {
       EasyLoading.showToast(AppConstants.phonenotvalid,
           toastPosition: EasyLoadingToastPosition.bottom);
       isvaluevalid = false;

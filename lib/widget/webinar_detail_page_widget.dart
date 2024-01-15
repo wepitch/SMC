@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
+import 'package:myapp/webinar_page/webinar_past_page.dart';
+import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WebinarDetailsPageWidget extends StatefulWidget {
@@ -27,6 +29,22 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
     setState(() {
       _isRegistrationStarting = isStarting;
     });
+  }
+
+  Future<void> _updateRegistrationStatus(bool isStarting) async {
+    setState(() {
+      _isRegistrationStarting = isStarting;
+    });
+
+    if (isStarting) {
+      await _prefs.setInt(
+        'startingTimestamp',
+        DateTime.now().millisecondsSinceEpoch,
+      );
+    } else {
+      await _prefs.remove('startingTimestamp');
+    }
+    await _prefs.setBool('isRegistrationStarting', isStarting);
   }
 
   @override
@@ -167,26 +185,6 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          // const Spacer(),
-                          // Row(
-                          //   children: [
-                          //     Image.asset(
-                          //       "assets/page-1/images/persons.png",
-                          //     ),
-                          //     const SizedBox(
-                          //       width: 3,
-                          //     ),
-                          //     Text(
-                          //       "44/100",
-                          //       style: SafeGoogleFont(
-                          //         "Inter",
-                          //         fontSize: 12,
-                          //         fontWeight: FontWeight.w500,
-                          //         color: fontColor,
-                          //       ),
-                          //     )
-                          //   ],
-                          // )
                         ],
                       ),
                     ),
@@ -339,17 +337,48 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
           ),
           child: Card(
             color: Colors.white,
-            child: customButton(
-              context: context,
-              onPressed: () {
-                if (_isRegistrationStarting) {
-                  const Text('Starting in 2 days');
+            child: webinarDetailWidget(
+              onPressed: () async {
+                if (!_isRegistrationStarting) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text(
+                          'Do you want to register for the webinar?',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              await _updateRegistrationStatus(
+                                  true);
+                              if (mounted) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: const Text('Yes'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 } else {
-                  const Text('Join Now');
+                  Text('has Been Registered');
                 }
               },
-              title:
-                  _isRegistrationStarting ? 'Starting in 2 days' : 'Join Now',
+              title: _isRegistrationStarting
+                  ? 'Starting in 2 days'
+                  : 'Register Now',
+              isRegisterNow: _isRegistrationStarting,
             ),
           ),
         ),
@@ -360,41 +389,44 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
     );
   }
 }
-
-const fontColor = Color(0xff8E8989);
-
-Widget customButton({
-  required BuildContext context,
+Widget webinarDetailWidget({
   required VoidCallback onPressed,
   required String title,
+  required bool isRegisterNow,
 }) {
+  Color buttonColor =
+  isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+  Color textColor = isRegisterNow ? Colors.black : Colors.white;
+
+  double buttonWidth = title.contains('Starting in 2 days') ? double.infinity : 200.0;
+
   return SizedBox(
-    width: double.infinity,
-    height: 47,
-    child: OutlinedButton(
+    width: buttonWidth,
+    height: 42,
+    child: ElevatedButton(
       onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
+      style: ElevatedButton.styleFrom(
+        elevation: 10,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
         ),
-        foregroundColor: title.contains('Starting in 2 days')
-            ? Colors.black // Change text color to black
-            : Colors.white10,
-        backgroundColor: title.contains('Starting in 2 days')
-            ? Colors.white10 // Change button color to white
-            : const Color(0xff1F0A68),
+        foregroundColor: textColor,
+        backgroundColor: buttonColor,
       ),
       child: Text(
         title,
         style: SafeGoogleFont(
           "Inter",
-          fontSize: 20,
-          color: title.contains('Starting in 2 days')
-              ? Colors.black
-              : Colors.white,
-          fontWeight: FontWeight.w500,
+          fontSize: 15,
+          fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
         ),
       ),
     ),
   );
 }
+
+
+
+const fontColor = Color(0xff8E8989);
+
+

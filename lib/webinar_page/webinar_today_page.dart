@@ -15,8 +15,7 @@ class WebinarTodayPage extends StatelessWidget {
       itemCount: 10,
       itemBuilder: (context, index) {
         return Padding(
-          padding:
-              EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
+          padding: EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
           child: CustomWebinarCard1(
             showDuration: true,
             title: "Learn more about CUET and IPMAT",
@@ -81,7 +80,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
       );
 
       DateTime currentTime = DateTime.now();
-      if (currentTime.difference(savedTime).inSeconds >= 2) {
+      if (currentTime.difference(savedTime).inSeconds >= 20) {
         await _updateRegistrationStatus(false);
       } else {
         setState(() {
@@ -226,35 +225,41 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                           ),
                           customRegisterNowBtn(
                             onPressed: () async {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text(
-                                      'Do you want to register for the webinar?',
-                                      style: TextStyle(
-                                        fontSize: 16,
+                              if (!_isRegistrationStarting) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                        'Do you want to register for the webinar?',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ),
-                                    actions: [
-                                      TextButton(
+                                      actions: [
+                                        TextButton(
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: const Text('Cancel')),
-                                      TextButton(
-                                        onPressed: () async {
-                                          await _updateRegistrationStatus(true);
-                                          if (mounted) {
-                                            Navigator.pop(context);
-                                          }
-                                        },
-                                        child: const Text('Yes'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            await _updateRegistrationStatus(
+                                                true);
+                                            if (mounted) {
+                                              Navigator.pop(context);
+                                            }
+                                          },
+                                          child: const Text('Yes'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                Text('has Been Registered');
+                              }
                             },
                             title: _isRegistrationStarting
                                 ? 'Starting in 2 days'
@@ -273,4 +278,37 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
       ),
     );
   }
+}
+Widget customRegisterNowBtn({
+  required VoidCallback onPressed,
+  required String title,
+  required bool isRegisterNow,
+}) {
+  Color buttonColor =
+  isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+  Color textColor = isRegisterNow ? Colors.black : Colors.white;
+
+  return SizedBox(
+    height: 42,
+    width: 200,
+    child: ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        elevation: 16,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        foregroundColor: textColor,
+        backgroundColor: buttonColor,
+      ),
+      child: Text(
+        title,
+        style: SafeGoogleFont(
+          "Inter",
+          fontSize: 15,
+          fontWeight: isRegisterNow ? FontWeight.w500 : FontWeight.w500,
+        ),
+      ),
+    ),
+  );
 }

@@ -25,7 +25,7 @@ class _Signup extends State<Signup> {
     configLoading();
   }
 
-  bool isLoading = false;
+  // bool isLoading = false;
   void onTapGettingstarted(BuildContext context, String email) async {
     await EasyLoading.show(
       status: "Loading...",

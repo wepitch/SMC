@@ -1013,7 +1013,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   // color: Colors.red,
                   decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                      BoxDecoration(borderRadius: BorderRadius.circular(12)),
                   width: 390 * fem,
                   height: 120 * fem,
                   child: ImageSlideshow(
@@ -1549,8 +1549,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 List<String> dummyImagesSlider = [
-  "assets/page-1/images/21da4647-c95a-44d9-b78e-40655d4946bc 1.png",
-  "assets/page-1/images/attendthebest.jpg",
+  "assets/page-1/images/21da4647-c95a-44d9-b78e-40655d4946bc 1 (1).png",
+  "assets/page-1/images/attendthebest.png",
   "assets/page-1/images/bookyoursession.jpg",
 ];
 // "https://static.vecteezy.com/system/resources/previews/001/937/644/original/online-education-application-learning-worldwide-on-computer-mobile-website-background-social-distance-concept-the-classroom-training-course-library-illustration-flat-vector.jpg",
