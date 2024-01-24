@@ -1,97 +1,84 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/home_page/homepage.dart';
-import 'package:myapp/page-1/login.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/news/provider/news_provider.dart';
+import 'package:myapp/page-1/edulevel.dart';
+import 'package:myapp/phone/login.dart';
+import 'package:myapp/shared/colors_const.dart';
+import 'package:myapp/utils.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
-class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+class PhoneOtpScreen extends StatefulWidget {
+  const PhoneOtpScreen({super.key});
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  State<PhoneOtpScreen> createState() => _PhoneOtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  late NewsProvider newsProvider;
+  bool isLoading = false;
+
+  // @override
+  // void initState() {
+  //   newsProvider = Provider.of<NewsProvider>(context, listen: false);
+  //   super.initState();
+  //   newsProvider.startTimer();
+  // }
+
+  Duration duration = const Duration(minutes: 2);
+  Timer? timer;
+  bool isResendOtpEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    configLoading();
+    startTimer();
+  }
+
+  void addTime() {
+    const subSeconds = 1;
+
+    setState(() {
+      if (duration.inMinutes == 0 && duration.inSeconds == 0) {
+        isResendOtpEnabled = true;
+        timer!.cancel();
+      } else {
+        final seconds = duration.inSeconds - subSeconds;
+        duration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) => addTime());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 56,
-      textStyle: const TextStyle(
-        fontSize: 20,
-        color: Color.fromRGBO(30, 60, 87, 1),
-        fontWeight: FontWeight.w600,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
-      borderRadius: BorderRadius.circular(8),
-    );
-
-    final submittedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
-      ),
-    );
     var code = '';
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: Container(
-        margin: const EdgeInsets.only(left: 20, right: 20),
-        alignment: Alignment.center,
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 40),
+        alignment: Alignment.topCenter,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/img_1.png',
-                height: 200,
+                'assets/page-1/images/sortmycollege-logo-1-b8D.png',
+                height: 260,
+                width: 260,
               ),
               const SizedBox(
-                height: 46,
-              ),
-              const Text(
-                'Phone Verification',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                'We need to register your phone before getting start !',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
+                height: 34,
               ),
               Pinput(
                 length: 6,
@@ -101,65 +88,176 @@ class _OtpScreenState extends State<OtpScreen> {
                 },
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
+              Text(
+                "${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}",
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Dont\'n receive an OTP?',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Text(
+                    'Resend OTP',
+                    style: TextStyle(color: Colors.black38),
+                  ),
+                ],
+              ),
+              // TextButton(
+              //     onPressed: () {
+              //       Navigator.push(context,
+              //           MaterialPageRoute(builder: (context) => const Login()));
+              //     },
+              //     child: const Text('Wrong Number',style: ,)),
+              Container(
+                // wrongnumberBPF (437:95)
+                margin: EdgeInsets.all(8),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Login()));
+                  },
+                  child: Text(
+                    // 'Wrong Number' changed for testing purposes
+                    "Wrong Number",
+                    textAlign: TextAlign.center,
+                    style: SafeGoogleFont(
+                      'Roboto',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
+                      color: const Color(0xff000000),
+                      decorationColor: const Color(0xff000000),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 80,
+              ),
+
               SizedBox(
                 height: 45,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      PhoneAuthCredential credential =
-                      PhoneAuthProvider.credential(
-                          verificationId: Login.verify!,
-                          smsCode: code);
-                      await auth.signInWithCredential(credential);
-                      if (mounted) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return const HomePage();
-                            }));
-                      }
-                    } catch (e) {
-                      if (kDebugMode) {
-                        print('Error $e');
-                      }
-                    }
-                  },
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            PhoneAuthCredential credential =
+                                PhoneAuthProvider.credential(
+                                    verificationId: Login.verify,
+                                    smsCode: code);
+                            await auth.signInWithCredential(credential);
+                            if (mounted) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EducationLevel()));
+                            }
+                          } catch (e) {
+                            if (kDebugMode) {
+                              print('Error $e');
+                            }
+                          } finally {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                          if (mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EducationLevel(),
+                              ),
+                            );
+                          }
+                          Fluttertoast.showToast(
+                              msg: 'Verify Otp Successfully');
+                        },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade600,
+                    backgroundColor: ColorsConst.appBarColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    'Verify Phone Number',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
+                  child: isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: ColorsConst.appBarColor,
+                          ),
+                        )
+                      : const Text(
+                          'Submit Otp',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                 ),
               ),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()));
-                    },
-                    child: const Text(
-                      'Edit Phone Number ?',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // SizedBox(
+              //   height: 45,
+              //   width: double.infinity,
+              //   child: ElevatedButton(
+              //     onPressed: () async {
+              //       try {
+              //         PhoneAuthCredential credential =
+              //         PhoneAuthProvider.credential(
+              //             verificationId: Login.verify,
+              //             smsCode: code);
+              //         await auth.signInWithCredential(credential);
+              //         if (mounted) {
+              //           Navigator.push(context,
+              //               MaterialPageRoute(builder: (context) {
+              //                 return const EducationLevel();
+              //               }));
+              //         }
+              //       } catch (e) {
+              //         if (kDebugMode) {
+              //           print('Error $e');
+              //         }
+              //       }
+              //     },
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: ColorsConst.appBarColor,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //     ),
+              //     child: const Text(
+              //       'Verify Phone Number',
+              //       style: TextStyle(fontSize: 16, color: Colors.white),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..displayDuration = const Duration(milliseconds: 1000)
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..maskType = EasyLoadingMaskType.none
+    ..radius = 10.0
+    ..maskColor = Colors.black.withOpacity(0.5)
+    ..userInteractions = false
+    ..dismissOnTap = false;
 }

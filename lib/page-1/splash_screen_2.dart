@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import '../utils.dart';
 
-import 'login.dart';
+import '../phone/login.dart';
 
 class SplashScreen2 extends StatefulWidget {
   const SplashScreen2({super.key});
@@ -337,11 +337,28 @@ class _SplashScreen2State extends State<SplashScreen2> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Login()));
+                    onTap: () async {
+                      SharedPreferences shared =
+                          await SharedPreferences.getInstance();
+                      var token = shared.getString('token');
+                      if (token != null) {
+                        if (mounted) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                     const HomePageContainer()));
+                        }
+                      } else {
+                        if (mounted) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                       const Login()
+                                      ));
+                        }
+                      }
                     },
                     child: Text(
                       'Log in',
@@ -385,13 +402,27 @@ class _SplashScreen2State extends State<SplashScreen2> {
 void onTapGettingStarted(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString("token");
-
-  Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              token == null ? const Signup() : const HomePageContainer()));
-
-  // Navigator.pushReplacement(
-  //     context, MaterialPageRoute(builder: (context) => const EducationLevel()));
+  if (token != null) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                token == null ? const Signup() : const HomePageContainer()));
+  } else {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                token == null ? const Signup() : const HomePageContainer()));
+  }
 }
+// void onTapLogIn(BuildContext context) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   var token = prefs.getString("token");
+//   Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//           builder: (context) =>
+//           token == null ? const Login() : const HomePageContainer()));
+//
+// }

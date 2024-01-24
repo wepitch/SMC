@@ -56,40 +56,40 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
   }
 }
 
-Widget customEnrollButton(
-    {required VoidCallback onPresssed,
-    required String title,
-    required BuildContext context}) {
-  return SizedBox(
-    height: 30,
-    width: 60,
-    child: Container(
-      decoration: BoxDecoration(
-          color: const Color(0xff1F0A68),
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 3,
-              color: Colors.grey,
-              spreadRadius: 0.1,
-              offset: Offset(0, 3),
-            )
-          ]),
-      child: Center(
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: SafeGoogleFont(
-            "Inter",
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    ),
-  );
-}
+// Widget customEnrollButton(
+//     {required VoidCallback onPresssed,
+//     required String title,
+//     required BuildContext context}) {
+//   return SizedBox(
+//     height: 30,
+//     width: 60,
+//     child: Container(
+//       decoration: BoxDecoration(
+//           color: const Color(0xff1F0A68),
+//           borderRadius: BorderRadius.circular(5),
+//           boxShadow: const [
+//             BoxShadow(
+//               blurRadius: 3,
+//               color: Colors.grey,
+//               spreadRadius: 0.1,
+//               offset: Offset(0, 3),
+//             )
+//           ]),
+//       child: Center(
+//         child: Text(
+//           title,
+//           textAlign: TextAlign.center,
+//           style: SafeGoogleFont(
+//             "Inter",
+//             color: Colors.white,
+//             fontSize: 10,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 
 class WebinarDetailsPageWidget1 extends StatefulWidget {

@@ -102,6 +102,17 @@ class ApiService {
     return ResponseModel.fromJson(data);
   }
 
+  static Future<ResponseModel> call_phone_otp_1() async {
+    var data;
+    var url = Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
+    final response =
+    await http.get(url, headers: {"Content-Type": "application/json"});
+    data = json.decode(response.body);
+    return ResponseModel.fromJson(data);
+  }
+
+
+
   Future call_otp_2({email}) async {
     print(email);
     var headers = {
@@ -125,6 +136,32 @@ class ApiService {
       return {"error": "something went wrong!"};
     } else {}
   }
+
+  Future call_otp_phone_2({phone}) async {
+    print(phone);
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    final body = {'phone': phone};
+
+    var data;
+    var url = Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    console.log(response.body.toString());
+    if (response.statusCode == 200 || response.statusCode == 500) {
+      data = jsonDecode(response.body.toString());
+      return data;
+    } else if (response.body.contains("html")) {
+      return {"error": "something went wrong!"};
+    } else {}
+  }
+
+
 
   Future verify_otp_2({otp, email}) async {
     print(email);
@@ -151,6 +188,33 @@ class ApiService {
     }
   }
 
+  Future verify_otp_phone_2({otp, phone}) async {
+    print(phone);
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    final body = {'otp': otp, 'phone': phone};
+
+    var data;
+    var url = Uri.parse(AppConstants.baseUrl + AppConstants.verifyotpphoneRequest);
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    console.log("Verfiying Otp : ${response.body}");
+    if (response.statusCode == 200 || response.statusCode == 401) {
+      data = jsonDecode(response.body.toString());
+      return data;
+    }
+    if (response.statusCode == 404) {
+      return {"error": "something went wrong!"};
+    }
+  }
+
+
+
   Future call_otp(String email) async {
     // var data;
     var headers = {'Content-Type': 'application/json'};
@@ -167,6 +231,28 @@ class ApiService {
       print(response.reasonPhrase);
     }
   }
+
+  Future phone_otp(String phone) async {
+    // var data;
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST', Uri.parse('http://13.127.234.0:9000/user/auth/sendOTPPhone'));
+    request.body = json.encode({"phone": "piyush@wepitch.uk"});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+
+
+
+
 
   static Future<CounsellorSessionDetails> getCounsellor_sessions(
       {String? date, String? sessionType, required String id}) async {

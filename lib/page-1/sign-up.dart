@@ -4,7 +4,7 @@ import 'package:myapp/utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../other/constants.dart';
-import 'login.dart';
+import '../phone/login.dart';
 import 'otp.dart';
 import 'package:flutter/services.dart';
 

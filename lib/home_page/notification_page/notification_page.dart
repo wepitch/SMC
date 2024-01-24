@@ -1,96 +1,165 @@
+import 'dart:convert';
+import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
+import 'package:myapp/main.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/utils.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({super.key});
+class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key});
+
+  @override
+  State<MessageScreen> createState() => MessageScreenState();
+}
+
+class MessageScreenState extends State<MessageScreen> {
+  List<Map<String, dynamic>> notificationsList = [];
+  static Map<String, dynamic>? latestNotification;
+
+  DatabaseHelper databaseHelper = DatabaseHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNotifications();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments;
+    if (data is RemoteMessage) {
+      final payload = data.data;
+      _addNotificationToList(payload);
+    }
+    if (data is NotificationResponse) {
+      final payload = jsonDecode(data.payload!);
+      _addNotificationToList(payload);
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff1F0A68),
-        foregroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Image.asset(
-              'assets/page-1/images/back.png',
-            ),
-          ),
-        ),
-        titleSpacing: 70,
-        title: Text(
-          "Notifications",
-          style: SafeGoogleFont("Inter",
-              fontSize: 18, fontWeight: FontWeight.w600),
-        ),
+        title: const Text("Notifications"),
       ),
       body: ListView.builder(
-          itemCount: dummyList.length,
-          itemBuilder: (context, index) {
-            var notificationData = dummyList[index];
-            return ListTile(
-              contentPadding: const EdgeInsets.all(16),
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(
-                  notificationData.img,
-                ),
-              ),
-              title: Text(
-                notificationData.name,
-                style: SafeGoogleFont(
-                  "Inter",
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              subtitle: Text(
-                notificationData.message,
-                style: SafeGoogleFont(
-                  "Inter",
-                  color: const Color(0xff626161),
-                  height: 1.5,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              shape: Border(
-                  bottom: BorderSide(
-                color: Colors.black.withOpacity(0.09),
-              )),
-            );
-          }),
+        itemCount: notificationsList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(notificationsList[index]['title'] ?? ''),
+            subtitle: Text(notificationsList[index]['body'] ?? ''),
+            trailing: Text(
+              '${notificationsList[index]['date']} ${notificationsList[index]['time']}',
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  void _loadNotifications() async {
+    // final notifications = await databaseHelper.getNotifications();
+    // setState(() {
+    //   notificationsList.addAll(notifications);
+    // });
+  }
+
+  void _addNotificationToList(Map<String, dynamic> payload) {
+    setState(() {
+      notificationsList.insert(0, payload);
+    });
   }
 }
 
-class DummyNotificationModel {
-  final String img;
-  final String message;
-  final String name;
+class PushNotifications {
+  static final _firebaseMessaging = FirebaseMessaging.instance;
+  static final FlutterLocalNotificationsPlugin
+      _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  DummyNotificationModel({
-    required this.img,
-    required this.name,
-    required this.message,
-  });
+  static Future init() async {
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: true,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    // get the device fcm token
+    final token = await _firebaseMessaging.getToken();
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print("Background Notification Tapped");
+        //navigatorKey.currentState!.pushNamed("/message", arguments: message);
+      }
+    });
+
+    FirebaseMessaging.onBackgroundMessage((message)async {
+
+
+    });
+    print("device token: $token");
+  }
+
+  // initialize local notifications
+  static Future localNotiInit() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings(
+      onDidReceiveLocalNotification: (id, title, body, payload) => null,
+    );
+    const LinuxInitializationSettings initializationSettingsLinux =
+        LinuxInitializationSettings(defaultActionName: 'Open notification');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsDarwin,
+      linux: initializationSettingsLinux,
+    );
+    _flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: onNotificationTap,
+      onDidReceiveBackgroundNotificationResponse: onNotificationTap,
+    );
+  }
+
+  static void onNotificationTap(NotificationResponse notificationResponse) {
+    // navigatorKey.currentState!
+    //     .pushNamed("/message", arguments: notificationResponse);
+    // open
+    final Map<String, dynamic> notificationData = {
+      'id': notificationResponse.id ?? '',
+      'payload': notificationResponse.payload,
+    };
+    MessageScreenState().notificationsList.insert(0, notificationData);
+  }
+
+  // static void onNotificationTap(NotificationResponse notificationResponse) {
+  //   navigatorKey.currentState!.pushNamed("/notification", arguments: notificationResponse);
+  // }
+
+  static Future showSimpleNotification({
+    required String title,
+    required String body,
+    required String payload,
+  }) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      'your channel id',
+      'your channel name',
+      channelDescription: 'your channel description',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await _flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      notificationDetails,
+      payload: payload,
+    );
+  }
 }
-
-List<DummyNotificationModel> dummyList = [
-  DummyNotificationModel(
-      img: "assets/page-1/images/profile_booking.png",
-      name: "Sandeep Mehra",
-      message: "posted 3 more pictures"),
-  DummyNotificationModel(
-      img: "assets/page-1/images/profile_booking.png",
-      name: "Dinesh Joshi",
-      message: "posted 1 more pictures"),
-  DummyNotificationModel(
-      img: "assets/page-1/images/mask-group-Z9B.png",
-      name: "Kashish Sharma",
-      message: "Added new session on CUET at 4:00 PM"),
-];

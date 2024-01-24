@@ -186,10 +186,10 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                               ),
                             ],
                           ),
-                          customEnrollButton(
-                              onPresssed: () {},
-                              title: "Free Enroll",
-                              context: context)
+                          // customEnrollButton(
+                          //     onPresssed: () {},
+                          //     title: "Free Enroll",
+                          //     context: context)
                         ],
                       ),
                       const SizedBox(

@@ -12,7 +12,10 @@ import 'package:myapp/home_page/help_screen.dart';
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
 // import 'package:myapp/page-1/webinar.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/home_page/notification_page/notification_page.dart';
+import 'package:myapp/main.dart';
+import 'package:myapp/notify.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/profile_page/profile_page.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
@@ -68,6 +71,7 @@ class _HomePageState extends State<HomePage> {
     _pageController.dispose();
     super.dispose();
   }
+  late final Map<String, dynamic> notificationData;
 
   String username = "";
   String path = '';
@@ -432,7 +436,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NotificationPage(),
+                  builder: (context) =>  const MessageScreen(),
                 ),
               );
             },

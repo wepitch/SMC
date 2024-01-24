@@ -160,10 +160,10 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                                     ),
                                   ],
                                 ),
-                                customEnrollButton(
-                                    onPresssed: () {},
-                                    title: "Free Enroll",
-                                    context: context)
+                                // customEnrollButton(
+                                //     onPresssed: () {},
+                                //     title: "Free Enroll",
+                                //     context: context)
                               ],
                             ),
                             const SizedBox(
@@ -377,10 +377,10 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                               ),
                             ],
                           ),
-                          customEnrollButton(
-                              onPresssed: () {},
-                              title: "Free Enroll",
-                              context: context)
+                          // customEnrollButton(
+                          //     onPresssed: () {},
+                          //     title: "Free Enroll",
+                          //     context: context)
                         ],
                       ),
                       const SizedBox(

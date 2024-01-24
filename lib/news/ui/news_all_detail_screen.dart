@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:myapp/news/model/news_response.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class NewsAllDetailScreen extends StatefulWidget {
   const NewsAllDetailScreen({required this.newsArticle, super.key});
@@ -53,6 +52,7 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                     topRight: Radius.circular(10)),
                 child: Image.network(
                   widget.newsArticle.urlToImage ?? '',
+                  height: 220,
                   fit: BoxFit.cover,
                 ),
               ),

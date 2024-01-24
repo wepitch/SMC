@@ -6,7 +6,9 @@ class AppConstants {
   static String baseUrl = 'https://server.sortmycollege.com';
   static String counsellorlistEndpoint = '/counsellor/';
   static String sendotpRequest = '/user/auth/sendOTPEmail';
+  static String sendotpphoneRequest = '/user/auth/sendOTPPhone';
   static String verifyotpRequest = '/user/auth/verifyOTPEmail';
+  static String verifyotpphoneRequest = '/user/auth/sendOTPPhone';
   static const imagePath = "assets/page-1/images/";
   static const appName = "sortmycollege";
   static const packageId = "com.sortmycollege";
