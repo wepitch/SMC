@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
-import 'package:myapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'model/notification_model.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -14,7 +15,6 @@ class MessageScreen extends StatefulWidget {
 
 class MessageScreenState extends State<MessageScreen> {
   List<Map<String, dynamic>> notificationsList = [];
-  static Map<String, dynamic>? latestNotification;
 
   DatabaseHelper databaseHelper = DatabaseHelper();
 
@@ -56,11 +56,24 @@ class MessageScreenState extends State<MessageScreen> {
   }
 
   void _loadNotifications() async {
-    // final notifications = await databaseHelper.getNotifications();
-    // setState(() {
-    //   notificationsList.addAll(notifications);
-    // });
+    final notifications = await DatabaseHelper.getNotificationData();
+    setState(() {
+      notificationsList.addAll(notifications.map((notification) => notification.toMap()).toList());
+    });
   }
+
+  // void _addNotificationToList(Map<String, dynamic> payload) {
+  //   final String title = payload['title'] ?? '';
+  //   final String body = payload['body'] ?? '';
+  //   final String date = DateTime.now().toString(); // Assuming you want to save the current date
+  //
+  //   // Save the notification to the local database
+  //   DatabaseHelper.addNotification(NotificationModel(date: date, title: title, description: body));
+  //
+  //   setState(() {
+  //     notificationsList.insert(0, payload);
+  //   });
+  // }
 
   void _addNotificationToList(Map<String, dynamic> payload) {
     setState(() {
@@ -123,10 +136,10 @@ class PushNotifications {
     );
   }
 
-  static void onNotificationTap(NotificationResponse notificationResponse) {
+  static void onNotificationTap(NotificationResponse notificationResponse,) {
     // navigatorKey.currentState!
     //     .pushNamed("/message", arguments: notificationResponse);
-    // open
+
     final Map<String, dynamic> notificationData = {
       'id': notificationResponse.id ?? '',
       'payload': notificationResponse.payload,
@@ -144,7 +157,7 @@ class PushNotifications {
     required String payload,
   }) async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
+    AndroidNotificationDetails(
       'your channel id',
       'your channel name',
       channelDescription: 'your channel description',
@@ -153,7 +166,7 @@ class PushNotifications {
       ticker: 'ticker',
     );
     const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
+    NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin.show(
       0,
       title,
@@ -161,5 +174,10 @@ class PushNotifications {
       notificationDetails,
       payload: payload,
     );
+
+    String date = DateTime.now().toString();
+    await DatabaseHelper.addNotification(date as NotificationModel, title, body);
   }
+
 }
+

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:myapp/firebase_options.dart';
+import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
 import 'package:myapp/home_page/notification_page/notification_page.dart';
 import 'package:myapp/news/provider/news_provider.dart';
 import 'package:myapp/news/service/news_api_service.dart';
@@ -17,6 +18,7 @@ import 'package:myapp/phone/phone_otp_screen.dart';
 import 'package:myapp/profile_page/profile_page.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'home_page/homepage.dart';
 import 'home_page/notification_page/noti.dart';
@@ -111,6 +113,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await DatabaseHelper.createDatabase();
   runApp(const MyApp());
   DependencyInjection.init();
 

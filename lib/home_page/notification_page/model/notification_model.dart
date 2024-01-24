@@ -1,14 +1,12 @@
 class NotificationModel {
   String? id;
-  String? date;
-  String? time;
+  String date;
   String title;
   String description;
 
   NotificationModel({
     this.id,
-    this.date,
-    this.time,
+    required this.date,
     required this.title,
     required this.description,
   });
@@ -17,7 +15,6 @@ class NotificationModel {
     return {
       'id' : id,
       'date': date,
-      'time': time,
       'title': title,
       'description': description,
     };
@@ -27,7 +24,6 @@ class NotificationModel {
     return NotificationModel(
       id: map['id'],
       date: map['date'],
-      time: map['time'],
       title: map['title'],
       description: map['description'],
     );
