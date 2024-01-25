@@ -1,12 +1,11 @@
 import 'dart:convert';
+import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path/path.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
-import 'model/notification_model.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -139,8 +138,8 @@ class PushNotifications {
   static void onNotificationTap(
     NotificationResponse notificationResponse,
   ) {
-    // navigatorKey.currentState!
-    //     .pushNamed("/message", arguments: notificationResponse);
+    navigatorKey.currentState!
+        .pushNamed("/message", arguments: const Notification2());
 
     final Map<String, dynamic> notificationData = {
       'id': notificationResponse.id ?? '',
@@ -157,9 +156,7 @@ class PushNotifications {
     required String title,
     required String body,
     required String payload,
-  }
-
-  ) async {
+  }) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       'your channel id',
@@ -178,8 +175,12 @@ class PushNotifications {
       notificationDetails,
       payload: payload,
     );
-
     String date = DateTime.now().toString();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('title', title);
+    sharedPreferences.setString('body', body);
+    sharedPreferences.setString('date', date);
 
     // Navigator.push(context, MaterialPageRoute(builder: (context) => Notification2(
     //   title: title,
@@ -194,38 +195,8 @@ class PushNotifications {
     //       date: date,
     //     ),
     //   ),
-   // );
+    // );
   }
 }
 
-class Notification2 extends StatelessWidget {
-  final String? title;
-  final String? body;
-  final String? date;
-
-  const Notification2({
-    Key? key,
-     this.title,
-     this.body,
-     this.date,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Notification Details'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('Title: $title'),
-          Text('Body: $body'),
-          Text('Date: $date'),
-        ],
-      ),
-    );
-  }
-}
 

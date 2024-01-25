@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:myapp/firebase_options.dart';
+import 'package:myapp/home_page/notification_page/news/provider/news_provider1.dart';
+import 'package:myapp/home_page/notification_page/news/service/news_service.dart';
 import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
 import 'package:myapp/home_page/notification_page/notification_page.dart';
 import 'package:myapp/news/provider/news_provider.dart';
@@ -166,6 +168,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (context) =>
                 NewsProvider(newsApiService: NewsApiService())),
+        ChangeNotifierProvider(
+            create: (context) =>
+                NewsProvider1(newsService: NewsService())),
       ],
       child: GetMaterialApp(
           title: 'Flutter',

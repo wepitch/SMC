@@ -12,6 +12,7 @@ import 'package:myapp/home_page/help_screen.dart';
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
 // import 'package:myapp/page-1/webinar.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/home_page/notification_page/news/ui/news_information_screen.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/home_page/notification_page/notification_page.dart';
 import 'package:myapp/main.dart';
@@ -436,7 +437,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  const Notification2(),
+                  builder: (context) =>  const NewsInformationScreen(),
                 ),
               );
             },
@@ -1241,274 +1242,257 @@ class _HomePageState extends State<HomePage> {
   Widget profileCard() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Card(
-              color: Colors.white,
-              surfaceTintColor: Colors.white,
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const CircleAvatar(
-                          radius: 38,
-                          backgroundImage: AssetImage(
-                            "assets/page-1/images/Rectangle 101.png",
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Anshika Mehra',
-                                  style: TextStyle(
-                                    color: Color(0xFF1F0A68),
-                                    fontSize: 16,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.08,
-                                ),
-                                CircleAvatar(
-                                  backgroundColor: const Color(0xff7F90F7),
-                                  child: Center(
-                                    child: Image.asset(
-                                      "assets/page-1/images/group-38-oFX.png",
-                                      color: Colors.white,
-                                      height: 14,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            const SizedBox(
-                              width: 190.25,
-                              child: Text(
-                                'Importance of CUET',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/page-1/images/clock-circular-outline-Ra1.png",
-                                  // color: Colors.black,
-                                  height: 12,
-                                  width: 12,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                const SizedBox(
-                                  width: 121.13,
-                                  child: Text(
-                                    ' Session at 8:00pm',
-                                    style: TextStyle(
-                                      color: Color(0xFF414040),
-                                      fontSize: 12,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0.08,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: 13,
-                                  height: 13,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/page-1/images/calender.png"),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 6,
-                                ),
-                                const SizedBox(
-                                  width: 121.13,
-                                  child: Text(
-                                    '27th Dec 2023',
-                                    style: TextStyle(
-                                      color: Color(0xFF414040),
-                                      fontSize: 12,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0.08,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: 12,
-                                  height: 12,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/page-1/images/rate.png"),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                const SizedBox(
-                                  width: 121.13,
-                                  child: Text(
-                                    ' 10/-',
-                                    style: TextStyle(
-                                      color: Color(0xFF414040),
-                                      fontSize: 12,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0.08,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
+      child: Card(
+        color: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    radius: 38,
+                    backgroundImage: AssetImage(
+                      "assets/page-1/images/Rectangle 101.png",
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 0.47,
-                      width: double.infinity,
-                      color: const Color(0xffAFAFAF).withOpacity(.78),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 120.14,
-                          height: 36.09,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 0.50,
-                                color: Colors.black
-                                    .withOpacity(0.7400000095367432),
-                              ),
-                              borderRadius: BorderRadius.circular(16),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Anshika Mehra',
+                            style: TextStyle(
+                              color: Color(0xFF1F0A68),
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                              height: 0,
                             ),
                           ),
-                          child: const SizedBox(
-                            width: 119.09,
-                            height: 16.05,
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.08,
+                          ),
+                          CircleAvatar(
+                            backgroundColor: const Color(0xff7F90F7),
                             child: Center(
-                              child: Text(
-                                'Visit Profile',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF262626),
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0.07,
-                                ),
+                              child: Image.asset(
+                                "assets/page-1/images/group-38-oFX.png",
+                                color: Colors.white,
+                                height: 14,
                               ),
                             ),
                           ),
-                        ),
-                        Container(
-                          width: 120,
-                          height: 36,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xff1F0A68),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      const SizedBox(
+                        width: 190.25,
+                        child: Text(
+                          'Importance of CUET',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
                           ),
-                          child: const SizedBox(
-                            width: 119.09,
-                            height: 16.05,
-                            child: Center(
-                              child: Text(
-                                'Book Now',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0.07,
-                                ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            "assets/page-1/images/clock-circular-outline-Ra1.png",
+                            // color: Colors.black,
+                            height: 12,
+                            width: 12,
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const SizedBox(
+                            width: 121.13,
+                            child: Text(
+                              ' Session at 8:00pm',
+                              style: TextStyle(
+                                color: Color(0xFF414040),
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                height: 0.08,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 13,
+                            height: 13,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/page-1/images/calender.png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          const SizedBox(
+                            width: 121.13,
+                            child: Text(
+                              '27th Dec 2023',
+                              style: TextStyle(
+                                color: Color(0xFF414040),
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                height: 0.08,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/page-1/images/rate.png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const SizedBox(
+                            width: 121.13,
+                            child: Text(
+                              ' 10/-',
+                              style: TextStyle(
+                                color: Color(0xFF414040),
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                height: 0.08,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 0.47,
+                width: double.infinity,
+                color: const Color(0xffAFAFAF).withOpacity(.78),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 120.14,
+                    height: 36.09,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 0.50,
+                          color: Colors.black
+                              .withOpacity(0.7400000095367432),
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: const SizedBox(
+                      width: 119.09,
+                      height: 16.05,
+                      child: Center(
+                        child: Text(
+                          'Visit Profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF262626),
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w700,
+                            height: 0.07,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 120,
+                    height: 36,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xff1F0A68),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: const SizedBox(
+                      width: 119.09,
+                      height: 16.05,
+                      child: Center(
+                        child: Text(
+                          'Book Now',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w700,
+                            height: 0.07,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          GestureDetector(
-              onTap: () {
-                if (_currentIndex < 2) {
-                  _pageController.animateToPage(
-                    _currentIndex + 1,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                }
-              },
-              child: const Icon(Icons.arrow_forward_ios)),
-        ],
+        ),
       ),
     );
   }

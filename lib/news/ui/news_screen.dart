@@ -84,14 +84,13 @@ class _NewsScreen extends State<NewsScreen> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
                   child: ListView.builder(
-                    reverse: true,
                     itemCount: articles?.length,
                     itemBuilder: (context, index) {
                       return Padding(

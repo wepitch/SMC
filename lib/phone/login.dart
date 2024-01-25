@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
                         decoration: const InputDecoration(
                           hintStyle:
                               TextStyle(color: Colors.black54, fontSize: 15.0),
-                          hintText: "Enter Your Name",
+                          hintText: " Enter Your Name",
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.only(bottom: 12),
                           focusedBorder: InputBorder.none,
@@ -191,7 +191,10 @@ class _LoginState extends State<Login> {
                         ),
                         const Text(
                           '|',
-                          style: TextStyle(fontSize: 30,color: Colors.black38),
+                          style: TextStyle(fontSize: 22,color: Colors.black38),
+                        ),
+                        const SizedBox(
+                          width:4,
                         ),
                         Expanded(
                           child: TextField(
