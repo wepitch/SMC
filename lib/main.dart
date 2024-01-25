@@ -181,7 +181,7 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             '/': (context) => const SplashScreen2(),
-            '/message': (context) => const MessageScreen()
+            '/message': (context) => const Notification2(),
           },
           // home: const Scaffold(
           //   body: SplashScreen2(),

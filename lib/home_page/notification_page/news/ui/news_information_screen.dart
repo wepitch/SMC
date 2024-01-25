@@ -4,7 +4,6 @@ import 'package:myapp/home_page/homepagecontainer.dart';
 import 'package:myapp/home_page/notification_page/news/model/news_model.dart';
 import 'package:myapp/home_page/notification_page/news/provider/news_provider1.dart';
 import 'package:myapp/home_page/notification_page/news/ui/news_all_info_screen.dart';
-import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/shared/string_const.dart';
 import 'package:myapp/utils.dart';
@@ -76,7 +75,7 @@ class _NewsInformationScreenState extends State<NewsInformationScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const Notification2(),
+                                  NewsAllInfoScreen(articles: articles![index]),
                             ),
                           );
                         },

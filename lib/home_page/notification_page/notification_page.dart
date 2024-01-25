@@ -1,11 +1,19 @@
-import 'dart:convert';
+// import 'dart:convert';
+// import 'package:myapp/home_page/notification_page/noti.dart';
+// import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
+ import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:myapp/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../main.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import '../../main.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -17,7 +25,6 @@ class MessageScreen extends StatefulWidget {
 class MessageScreenState extends State<MessageScreen> {
   List<Map<String, dynamic>> notificationsList = [];
 
-  DatabaseHelper databaseHelper = DatabaseHelper();
 
   @override
   void initState() {
@@ -104,7 +111,7 @@ class PushNotifications {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
         print("Background Notification Tapped");
-        //navigatorKey.currentState!.pushNamed("/message", arguments: message);
+       navigatorKey.currentState!.pushNamed("/message", arguments:  Notification2());
       }
     });
 
@@ -138,14 +145,15 @@ class PushNotifications {
   static void onNotificationTap(
     NotificationResponse notificationResponse,
   ) {
-    navigatorKey.currentState!
-        .pushNamed("/message", arguments: const Notification2());
+    // navigatorKey.currentState!
+    //     .pushNamed("/message", arguments: const Notification2());
 
     final Map<String, dynamic> notificationData = {
       'id': notificationResponse.id ?? '',
       'payload': notificationResponse.payload,
     };
     MessageScreenState().notificationsList.insert(0, notificationData);
+
   }
 
   // static void onNotificationTap(NotificationResponse notificationResponse) {

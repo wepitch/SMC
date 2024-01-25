@@ -437,7 +437,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  const NewsInformationScreen(),
+                  builder: (context) =>  const Notification2(),
                 ),
               );
             },
