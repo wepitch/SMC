@@ -144,7 +144,6 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
               const SizedBox(
                 height: 80,
               ),
-
               SizedBox(
                 height: 45,
                 width: double.infinity,

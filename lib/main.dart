@@ -17,6 +17,7 @@ import 'package:myapp/page-1/splash_screen_2.dart';
 import 'package:myapp/phone/phone_otp_screen.dart';
 import 'package:myapp/profile_page/profile_page.dart';
 import 'package:myapp/utils.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 

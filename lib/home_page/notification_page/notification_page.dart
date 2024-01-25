@@ -3,7 +3,9 @@ import 'package:myapp/home_page/notification_page/notification_database_helper.d
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:path/path.dart';
 
+import '../../main.dart';
 import 'model/notification_model.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -58,7 +60,8 @@ class MessageScreenState extends State<MessageScreen> {
   void _loadNotifications() async {
     final notifications = await DatabaseHelper.getNotificationData();
     setState(() {
-      notificationsList.addAll(notifications.map((notification) => notification.toMap()).toList());
+      notificationsList.addAll(
+          notifications.map((notification) => notification.toMap()).toList());
     });
   }
 
@@ -106,10 +109,7 @@ class PushNotifications {
       }
     });
 
-    FirebaseMessaging.onBackgroundMessage((message)async {
-
-
-    });
+    FirebaseMessaging.onBackgroundMessage((message) async {});
     print("device token: $token");
   }
 
@@ -136,7 +136,9 @@ class PushNotifications {
     );
   }
 
-  static void onNotificationTap(NotificationResponse notificationResponse,) {
+  static void onNotificationTap(
+    NotificationResponse notificationResponse,
+  ) {
     // navigatorKey.currentState!
     //     .pushNamed("/message", arguments: notificationResponse);
 
@@ -155,9 +157,11 @@ class PushNotifications {
     required String title,
     required String body,
     required String payload,
-  }) async {
+  }
+
+  ) async {
     const AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails(
+        AndroidNotificationDetails(
       'your channel id',
       'your channel name',
       channelDescription: 'your channel description',
@@ -166,7 +170,7 @@ class PushNotifications {
       ticker: 'ticker',
     );
     const NotificationDetails notificationDetails =
-    NotificationDetails(android: androidNotificationDetails);
+        NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin.show(
       0,
       title,
@@ -176,8 +180,52 @@ class PushNotifications {
     );
 
     String date = DateTime.now().toString();
-    await DatabaseHelper.addNotification(date as NotificationModel, title, body);
-  }
 
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => Notification2(
+    //   title: title,
+    //   body: body,
+    //   date: date,
+    // )));
+    // navigatorKey.currentState?.push(
+    //   MaterialPageRoute(
+    //     builder: (context) =>  Notification2(
+    //       title: title,
+    //       body: body,
+    //       date: date,
+    //     ),
+    //   ),
+   // );
+  }
+}
+
+class Notification2 extends StatelessWidget {
+  final String? title;
+  final String? body;
+  final String? date;
+
+  const Notification2({
+    Key? key,
+     this.title,
+     this.body,
+     this.date,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notification Details'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('Title: $title'),
+          Text('Body: $body'),
+          Text('Date: $date'),
+        ],
+      ),
+    );
+  }
 }
 
