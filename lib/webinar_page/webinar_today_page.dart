@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
-import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/widget/webinar_detail_page_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

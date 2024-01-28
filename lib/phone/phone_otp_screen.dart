@@ -11,7 +11,6 @@ import 'package:myapp/phone/login.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:pinput/pinput.dart';
-import 'package:provider/provider.dart';
 
 class PhoneOtpScreen extends StatefulWidget {
   const PhoneOtpScreen({super.key});
@@ -100,7 +99,7 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Dont\'n receive an OTP?',
+                    "Don't receive an OTP? ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -200,7 +199,7 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
                           ),
                         )
                       : const Text(
-                          'Submit Otp',
+                          'Submit',
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                 ),

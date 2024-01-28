@@ -30,8 +30,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     with SingleTickerProviderStateMixin {
 //phone pe  members
   String environment = "UAT_SIM";
-  String appId = "";
-  String merchantId = "PGTESTPAYUAT";
+  String appId = "com.sortmycollege";
+  String merchantId = "SORTMYCOLLONLINE";
   bool enableLogging = true;
   String saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
   String saltIndex = "1";

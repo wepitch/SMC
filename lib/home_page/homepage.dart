@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
+
   //String value = '';
 
   CounsellorDetailsProvider counsellorDetailsProvider =
@@ -72,6 +73,7 @@ class _HomePageState extends State<HomePage> {
     _pageController.dispose();
     super.dispose();
   }
+
   late final Map<String, dynamic> notificationData;
 
   String username = "";
@@ -83,6 +85,7 @@ class _HomePageState extends State<HomePage> {
     path = prefs.getString("profile_image_path") ?? "N/A";
     setState(() {});
   }
+
   void saveImagePathToPrefs(String path) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("profile_image_path", path);
@@ -152,10 +155,10 @@ class _HomePageState extends State<HomePage> {
                               child: path != null
                                   ? Image.file(File(path), fit: BoxFit.cover)
                                   : const Icon(
-                                Icons.person,
-                                size: 100,
-                                color: Colors.grey,
-                              ),
+                                      Icons.person,
+                                      size: 100,
+                                      color: Colors.grey,
+                                    ),
                             ),
                           ),
                         ],
@@ -302,10 +305,10 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                const FeedScreen(
-                                  name: '',id: '',
-                                )));
+                                builder: (context) => const FeedScreen(
+                                      name: '',
+                                      id: '',
+                                    )));
                       },
                       leading: const Icon(
                         Icons.save_alt,
@@ -321,8 +324,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       shape: Border(
                           bottom: BorderSide(
-                            color: Colors.black.withOpacity(0.09),
-                          )),
+                        color: Colors.black.withOpacity(0.09),
+                      )),
                     ),
                   ],
                 ),
@@ -437,8 +440,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  const Notification2(),
-
+                  builder: (context) => const Notification2(),
                 ),
               );
             },
@@ -1167,24 +1169,49 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const Column(
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
-                  child: CustomWebinarCard(
-                      enableAutoScroll: true,
-                      showDuration: false,
-                      title: "Learn more about CUET and IPMAT",
-                      isRegisterNow: true,
-                      btnTitle: "Register Now",
-                      time: "15 Sep @ 2:00 PM Onwards",
-                      duration: "60",
-                      participants: "Unlimited",
-                      bannerImg: "assets/page-1/images/webinarBanner.png"),
-                ),
-              ],
+            const Padding(
+              padding:
+                  EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+              child: CustomWebinarCard(
+                  enableAutoScroll: true,
+                  showDuration: false,
+                  title: "Learn more about CUET and IPMAT",
+                  isRegisterNow: true,
+                  btnTitle: "Register Now",
+                  time: "15 Sep @ 2:00 PM Onwards",
+                  duration: "60",
+                  participants: "Unlimited",
+                  bannerImg: "assets/page-1/images/webinarBanner.png"),
             ),
+            const Padding(
+              padding:
+              EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+              child: CustomWebinarCard(
+                  enableAutoScroll: true,
+                  showDuration: false,
+                  title: "Learn more about CUET and IPMAT",
+                  isRegisterNow: true,
+                  btnTitle: "Register Now",
+                  time: "15 Sep @ 2:00 PM Onwards",
+                  duration: "60",
+                  participants: "Unlimited",
+                  bannerImg: "assets/page-1/images/webinarBanner.png"),
+            ),
+            const Padding(
+              padding:
+              EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+              child: CustomWebinarCard(
+                  enableAutoScroll: true,
+                  showDuration: false,
+                  title: "Learn more about CUET and IPMAT",
+                  isRegisterNow: true,
+                  btnTitle: "Register Now",
+                  time: "15 Sep @ 2:00 PM Onwards",
+                  duration: "60",
+                  participants: "Unlimited",
+                  bannerImg: "assets/page-1/images/webinarBanner.png"),
+            ),
+
             // InkWell(
             //   onTap: () async {
             //     const email = 'mailto :nsheoran2005@gmail.com';
@@ -1247,8 +1274,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.white,
         surfaceTintColor: Colors.white,
         elevation: 4,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
           child: Column(
@@ -1284,8 +1310,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           SizedBox(
-                            width:
-                                MediaQuery.of(context).size.width * 0.08,
+                            width: MediaQuery.of(context).size.width * 0.08,
                           ),
                           CircleAvatar(
                             backgroundColor: const Color(0xff7F90F7),
@@ -1388,8 +1413,8 @@ class _HomePageState extends State<HomePage> {
                             height: 12,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(
-                                    "assets/page-1/images/rate.png"),
+                                image:
+                                    AssetImage("assets/page-1/images/rate.png"),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -1438,8 +1463,7 @@ class _HomePageState extends State<HomePage> {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 0.50,
-                          color: Colors.black
-                              .withOpacity(0.7400000095367432),
+                          color: Colors.black.withOpacity(0.7400000095367432),
                         ),
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -1538,7 +1562,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 List<String> dummyImagesSlider = [
-  "assets/page-1/images/21da4647-c95a-44d9-b78e-40655d4946bc 1 (1).png",
+  "assets/page-1/images/21da4647-c95a-44d9-b78e-40655d4946bc 1.png",
   "assets/page-1/images/attendthebest.png",
   "assets/page-1/images/bookyoursession.jpg",
 ];

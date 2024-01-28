@@ -73,19 +73,18 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
+      height: MediaQuery.of(context).size.height * 0.5,
       child: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
         children: [
           cardView(context),
-          cardView(context),
-          cardView(context),
         ],
+
+        // controller: _pageController,
+        // onPageChanged: (index) {
+        //   setState(() {
+        //     _currentIndex = index;
+        //   });
+        // },
       ),
     );
   }

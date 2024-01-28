@@ -95,13 +95,13 @@ class _NewsInformationScreenState extends State<NewsInformationScreen> {
                             height: 40,
                             width: 40,
                             decoration: const BoxDecoration(
-                              color: Colors.black12,
+                              color: Colors.black26,
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(60),
                               child: const Center(
-                                  child: Icon(Icons.message_outlined,color: Colors.black45,size: 20,)),
+                                  child: Icon(Icons.notifications,color: ColorsConst.whiteColor,size: 20,)),
                             ),
                           ),
                           trailing:  Text(

@@ -13,7 +13,7 @@ class PhonepePaymentPage extends StatefulWidget {
 class _PhonepePaymentPageState extends State<PhonepePaymentPage> {
   String environment = "UAT_SIM";
   String appId = "";
-  String merchantId = "PGTESTPAYUAT";
+  String merchantId = "SORTMYCOLLONLINE";
   bool enableLogging = true;
   String saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
   String saltIndex = "1";
