@@ -8,6 +8,7 @@ import 'dashboard-session-personnel-new.dart';
 class CounsellingSessionPage extends StatefulWidget {
   const CounsellingSessionPage(
       {super.key, required this.name, required this.id});
+
   final String name;
   final String id;
   @override
@@ -59,10 +60,6 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
           style: SafeGoogleFont("Inter",
               fontSize: 22, fontWeight: FontWeight.w600),
         ),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20),
-        )),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

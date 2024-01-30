@@ -114,7 +114,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Widget cardView(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,

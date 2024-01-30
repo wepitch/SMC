@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/other/api_service.dart';
+import 'package:myapp/shared/app_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
@@ -29,9 +30,9 @@ class Counseling_Session_group extends StatefulWidget {
 class _Counseling_Session_groupState extends State<Counseling_Session_group>
     with SingleTickerProviderStateMixin {
 //phone pe  members
-  String environment = "UAT_SIM";
-  String appId = "com.sortmycollege";
-  String merchantId = "SORTMYCOLLONLINE";
+  String environment = "SANDBOX";
+  String appId = "";
+  String merchantId = "PGTESTPAYUAT";
   bool enableLogging = true;
   String saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
   String saltIndex = "1";
@@ -48,53 +49,145 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
   String selectedDate = Jiffy.now().format(pattern: "d MMM");
   String selectedSessionDate = Jiffy.now().format(pattern: "dd/M/yyyy");
 
-  void phonePeInit() {
+  void PhonePayInit() {
     PhonePePaymentSdk.init(environment, appId, merchantId, enableLogging)
         .then((val) => {
-              setState(() {
-                result = 'PhonePe SDK Initialized - $val';
-              })
-            })
+      setState(() {
+        result = 'PhonePe SDK Initialized - $val';
+        print(result);
+        //handleException: Invalid appId!
+      })
+    })
         .catchError((error) {
       handleError(error);
       return <dynamic>{};
     });
   }
 
-  void startPgTransaction() {
+  // void startPgTransaction() {
+  //   try {
+  //     var response = PhonePePaymentSdk.startPGTransaction(
+  //         body, callBackUrl, checkSum, {}, apiEndPoint, "");
+  //     response
+  //         .then((val) => {
+  //               setState(() {
+  //                 if (val != null) {
+  //                   String status = val["status"].toString();
+  //                   String error = val["error"].toString();
+  //
+  //                   if (status == "SUCCESS") {
+  //                     result = "Success";
+  //                   } else {
+  //                     result = "Failed : $error";
+  //                   }
+  //                 }
+  //               })
+  //             })
+  //         .catchError((error) {
+  //       handleError(error);
+  //       return <dynamic>{};
+  //     });
+  //   } catch (error) {
+  //     handleError(error);
+  //   }
+  // }
+
+  void startPgTransaction(String? id, String? sessionDate, sessionPrice) {
     try {
+      body = getCheckSum(sessionPrice);
       var response = PhonePePaymentSdk.startPGTransaction(
           body, callBackUrl, checkSum, {}, apiEndPoint, "");
-      response
-          .then((val) => {
-                setState(() {
-                  if (val != null) {
-                    String status = val["status"].toString();
-                    String error = val["error"].toString();
+      response.then((val) {
+        setState(() {
+          if (val != null) {
+            String status = val["status"].toString();
+            String error = val["error"].toString();
 
-                    if (status == "SUCCESS") {
-                      result = "Success";
-                    } else {
-                      result = "Failed : $error";
-                    }
-                  }
-                })
-              })
-          .catchError((error) {
+            if (status == "SUCCESS") {
+              AppConst1.showToast("Payment Successfully");
+              EasyLoading.show(
+                  status: "Loading...",
+                  dismissOnTap: false);
+              ApiService.sessionBooked(
+                 id!)
+                  .then((value) {
+                if (value["message"] ==
+                    "Counseling session booked successfully") {
+                  EasyLoading.showToast(
+                      value["message"],
+                      toastPosition:
+                      EasyLoadingToastPosition.bottom);
+                  context
+                      .read<CounsellorDetailsProvider>()
+                      .fetchCounsellor_session(
+                      id: widget.id);
+                  var date = Jiffy.parse(
+                      sessionDate!)
+                      .format(
+                      pattern: "yyyy-M-d");
+                  context
+                      .read<CounsellorDetailsProvider>()
+                      .fetchCounsellor_session(
+                      id: widget.id,
+                      sessionType: "Group",
+                      date: date);
+                  setState(() {});
+                } else {
+                  EasyLoading.showToast(
+                      value["error"],
+                      toastPosition:
+                      EasyLoadingToastPosition.bottom);
+                }
+              });
+
+            } else {
+              AppConst1.showToast("Payment Failed: $error");
+            }
+          }
+        });
+      }).catchError((error) {
         handleError(error);
+        AppConst1.showToast("Payment Failed: $error");
         return <dynamic>{};
       });
     } catch (error) {
       handleError(error);
+      AppConst1.showToast("Payment Failed: $error");
     }
   }
 
-  getCheckSum() {
+  void callSessionBookedAPI(String transactionId) async {
+    try {
+      var response = await ApiService.sessionBooked(transactionId);
+      print("sessionBooked API Response: $response");
+    } catch (error) {
+      print("Error calling sessionBooked API: $error");
+    }
+  }
+
+
+  // void showToast(String message) {
+  //   Fluttertoast.showToast(
+  //     msg: message,
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     gravity: ToastGravity.BOTTOM,
+  //     timeInSecForIosWeb: 1,
+  //     backgroundColor: Colors.black,
+  //     textColor: Colors.white,
+  //     fontSize: 16.0,
+  //   );
+  // }
+
+
+  getCheckSum(sessionPrice) {
+   int price = int.parse(sessionPrice.toString());
+   price * 100;
+   String strPrice = price.toString();
     var requestData = {
       "merchantId": merchantId,
       "merchantTransactionId": "transaction_123",
       "merchantUserId": "90223250",
-      "amount": 1000,
+      "amount": strPrice,
       "mobileNumber": "9999999999",
       "callbackUrl": callBackUrl,
       "paymentInstrument": {
@@ -121,8 +214,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
   void initState() {
     // TODO: implement initState
     super.initState();
-    phonePeInit();
-    body = getCheckSum();
+    PhonePayInit();
+    // body = getCheckSum();
 
     sessionDate.getDates();
     tabController =
@@ -228,7 +321,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     7 * fem,
                                                     0 * fem),
                                                 child: Text(
-                                                  '${e.index == 0 ? "Today" : e.index == 1 ? "Tomorrow" : e.day}, ${e.formattedDate}',
+                                                  '${e.index == 0 ? "Today" : e.index == 1 ? "Yesterday" : e.day}, ${e.formattedDate}',
                                                   textAlign: TextAlign.center,
                                                   style: SafeGoogleFont(
                                                     'Inter',
@@ -362,24 +455,18 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                       child: Card(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(20),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 19.5, vertical: 15),
+                                          padding: const EdgeInsets.symmetric(horizontal: 19.5, vertical: 15),
                                           child: Column(
                                             children: [
                                               Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   const Text(
                                                     'Coming soon',
@@ -387,8 +474,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                       color: Color(0xFF1F0A68),
                                                       fontSize: 20,
                                                       fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                      fontWeight: FontWeight.w600,
                                                       height: 0,
                                                     ),
                                                   ),
@@ -396,13 +482,9 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     width: 45.51,
                                                     height: 19,
                                                     decoration: ShapeDecoration(
-                                                      color: const Color(
-                                                          0xFFB1A0EA),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(99),
+                                                      color: const Color(0xFFB1A0EA),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(99),
                                                       ),
                                                     ),
                                                     child: Center(
@@ -412,8 +494,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                           color: Colors.white,
                                                           fontSize: 13,
                                                           fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                          fontWeight: FontWeight.w500,
                                                           height: 0,
                                                         ),
                                                       ),
@@ -425,29 +506,21 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                 height: 5,
                                               ),
                                               Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
                                                         selectedSessionDate,
-                                                        textAlign:
-                                                            TextAlign.center,
+                                                        textAlign: TextAlign.center,
                                                         style: const TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 12,
                                                           fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w400,
+                                                          fontWeight: FontWeight.w400,
                                                           height: 0,
                                                         ),
                                                       ),
@@ -460,8 +533,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                           color: Colors.black,
                                                           fontSize: 12,
                                                           fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w400,
+                                                          fontWeight: FontWeight.w400,
                                                           height: 0,
                                                         ),
                                                       ),
@@ -469,15 +541,13 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                        'Price - ${counsellorSessionProvider.details.sessions?[index].sessionPrice ?? "0"} /-',
-                                                        textAlign:
-                                                            TextAlign.center,
+                                                        'Price - ${counsellorSessionProvider.details.sessions?[index].sessionPrice} /-',
+                                                        textAlign: TextAlign.center,
                                                         style: const TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 12,
                                                           fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                          fontWeight: FontWeight.w500,
                                                           height: 0,
                                                         ),
                                                       ),
@@ -486,29 +556,20 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                       ),
                                                       GestureDetector(
                                                         onTap: () {
-                                                          isExpanded =
-                                                              !isExpanded;
+                                                          isExpanded = !isExpanded;
                                                           setState(() {});
                                                         },
                                                         child: const Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
+                                                          crossAxisAlignment: CrossAxisAlignment.end,
                                                           children: [
                                                             Text(
                                                               'View Details',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                                              textAlign: TextAlign.center,
                                                               style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
+                                                                color: Colors.black,
                                                                 fontSize: 12,
-                                                                fontFamily:
-                                                                    'Inter',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
+                                                                fontFamily: 'Inter',
+                                                                fontWeight: FontWeight.w800,
                                                                 height: 0,
                                                               ),
                                                             ),
@@ -516,8 +577,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                               width: 10,
                                                             ),
                                                             Icon(
-                                                              Icons
-                                                                  .arrow_forward_ios,
+                                                              Icons.arrow_forward_ios,
                                                               size: 15,
                                                             )
                                                           ],
@@ -528,114 +588,114 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                       ),
                                                       isExpanded
                                                           ? Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                    "Name : ${widget.name}"),
-                                                                const SizedBox(
-                                                                  height: 5,
-                                                                ),
-                                                                Text(
-                                                                    "Slots : ${counsellorSessionProvider.details.sessions?[index].sessionSlots ?? "0"}"),
-                                                                const SizedBox(
-                                                                  height: 5,
-                                                                ),
-                                                                Text(
-                                                                    "Duration : ${counsellorSessionProvider.details.sessions?[index].sessionDuration ?? "0"}"),
-                                                                const SizedBox(
-                                                                  height: 5,
-                                                                ),
-                                                                Text(
-                                                                    "Session Status : ${counsellorSessionProvider.details.sessions?[index].sessionStatus ?? "N/A"}"),
-                                                              ],
-                                                            )
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text("Name : ${widget.name}"),
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              "Slots : ${counsellorSessionProvider.details.sessions?[index].sessionSlots ?? "0"}"),
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              "Duration : ${counsellorSessionProvider.details.sessions?[index].sessionDuration ?? "0"}"),
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              "Session Status : ${counsellorSessionProvider.details.sessions?[index].sessionStatus ?? "N/A"}"),
+                                                        ],
+                                                      )
                                                           : const SizedBox()
                                                     ],
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      // EasyLoading.show(
-                                                      //     status: "Loading...",
-                                                      //     dismissOnTap: false);
-                                                      // ApiService.sessionBooked(
-                                                      //         counsellorSessionProvider
-                                                      //             .details
-                                                      //             .sessions![
-                                                      //                 index]
-                                                      //             .id!)
-                                                      //     .then((value) {
-                                                      //   if (value["message"] ==
-                                                      //       "Counseling session booked successfully") {
-                                                      //     EasyLoading.showToast(
-                                                      //         value["message"],
-                                                      //         toastPosition:
-                                                      //             EasyLoadingToastPosition
-                                                      //                 .bottom);
-                                                      //     context
-                                                      //         .read<
-                                                      //             CounsellorDetailsProvider>()
-                                                      //         .fetchCounsellor_session(
-                                                      //             id: widget
-                                                      //                 .id);
-                                                      //     var date = Jiffy.parse(
-                                                      //             counsellorSessionProvider
-                                                      //                 .details
-                                                      //                 .sessions![
-                                                      //                     index]
-                                                      //                 .sessionDate!)
-                                                      //         .format(
-                                                      //             pattern:
-                                                      //                 "yyyy-M-d");
-                                                      //     context
-                                                      //         .read<
-                                                      //             CounsellorDetailsProvider>()
-                                                      //         .fetchCounsellor_session(
-                                                      //             id: widget.id,
-                                                      //             sessionType:
-                                                      //                 "Group",
-                                                      //             date: date);
-                                                      //     setState(() {});
-                                                      //   } else {
-                                                      //     EasyLoading.showToast(
-                                                      //         value["error"],
-                                                      //         toastPosition:
-                                                      //             EasyLoadingToastPosition
-                                                      //                 .bottom);
-                                                      //   }
-                                                      // });
-
-                                                      startPgTransaction();
+                                                      if (counsellorSessionProvider.details.sessions![index].sessionAvailableSlots! > 0) {
+                                                        startPgTransaction(counsellorSessionProvider
+                                                            .details
+                                                            .sessions![
+                                                        index]
+                                                            .id,counsellorSessionProvider
+                                                            .details
+                                                            .sessions![
+                                                        index]
+                                                            .sessionDate,
+                                                            counsellorSessionProvider
+                                                                .details
+                                                                .sessions![
+                                                            index]
+                                                                .sessionPrice);
+                                                        // EasyLoading.show(
+                                                        //     status: "Loading...",
+                                                        //     dismissOnTap: false);
+                                                        // ApiService.sessionBooked(
+                                                        //     counsellorSessionProvider
+                                                        //         .details
+                                                        //         .sessions![
+                                                        //     index]
+                                                        //         .id!)
+                                                        //     .then((value) {
+                                                        //   if (value["message"] ==
+                                                        //       "Counseling session booked successfully") {
+                                                        //     EasyLoading.showToast(
+                                                        //         value["message"],
+                                                        //         toastPosition:
+                                                        //         EasyLoadingToastPosition.bottom);
+                                                        //     context
+                                                        //         .read<CounsellorDetailsProvider>()
+                                                        //         .fetchCounsellor_session(
+                                                        //         id: widget.id);
+                                                        //     var date = Jiffy.parse(
+                                                        //         counsellorSessionProvider
+                                                        //             .details
+                                                        //             .sessions![
+                                                        //         index]
+                                                        //             .sessionDate!)
+                                                        //         .format(
+                                                        //         pattern: "yyyy-M-d");
+                                                        //     context
+                                                        //         .read<CounsellorDetailsProvider>()
+                                                        //         .fetchCounsellor_session(
+                                                        //         id: widget.id,
+                                                        //         sessionType: "Group",
+                                                        //         date: date);
+                                                        //     setState(() {});
+                                                        //   } else {
+                                                        //     EasyLoading.showToast(
+                                                        //         value["error"],
+                                                        //         toastPosition:
+                                                        //         EasyLoadingToastPosition.bottom);
+                                                        //   }
+                                                        // });
+                                                      } else {
+                                                        EasyLoading.showToast('Slot is not available',
+                                                            toastPosition: EasyLoadingToastPosition.bottom);
+                                                      }
                                                     },
                                                     child: Container(
                                                       width: 96,
                                                       height: 38,
-                                                      decoration:
-                                                          ShapeDecoration(
-                                                        color: const Color(
-                                                            0xFF1F0A68),
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          side:
-                                                              const BorderSide(
-                                                                  width: 1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
+                                                      decoration: ShapeDecoration(
+                                                        color: counsellorSessionProvider.details.sessions![index].sessionAvailableSlots! > 0
+                                                            ? const Color(0xFF1F0A68)
+                                                            : const Color(0xFF1F0A68),
+                                                        shape: RoundedRectangleBorder(
+                                                         // side: const BorderSide(width: 1),
+                                                          borderRadius: BorderRadius.circular(10),
                                                         ),
                                                       ),
                                                       child: const Center(
                                                         child: Text(
                                                           'Book',
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                          textAlign: TextAlign.center,
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 18,
                                                             fontFamily: 'Inter',
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                            fontWeight: FontWeight.w600,
                                                             height: 0,
                                                           ),
                                                         ),
@@ -649,7 +709,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                         ),
                                       ),
                                     );
-
                                     // return Container(
                                     //   // group193fip (I2510:2510;2510:2244)
                                     //   margin: EdgeInsets.fromLTRB(

@@ -71,7 +71,7 @@ dependencies:
   url_launcher: ^6.0.0
   share_plus: ^7.2.1
   delete_un_used_assets: ^1.0.1
-  phonepe_payment_sdk: ^1.0.4
+  phonepe_payment_sdk: ^1.1.0
   crypto: ^3.0.3
 
 dev_dependencies:

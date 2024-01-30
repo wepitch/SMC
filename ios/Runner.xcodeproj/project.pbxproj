@@ -54,7 +54,7 @@
 		};
 /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXGroup section */
+/* Begin PBXction */
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,7 +98,7 @@
 			path = Runner;
 			sourceTree = "<group>";
 		};
-/* End PBXGroup section */
+/* End PBXction */
 
 /* Begin PBXNativeTarget section */
 		97C146ED1CF9000F007C117D /* Runner */ = {

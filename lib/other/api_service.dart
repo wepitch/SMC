@@ -328,6 +328,9 @@ class ApiService {
     if (response.statusCode == 404) {
       return {"error": "Something went wrong!"};
     }
+    if(response.statusCode == 400){
+      return {"error": "There are no booking slots available in this session, please book another session"};
+    }
     return {};
   }
 

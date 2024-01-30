@@ -35,7 +35,7 @@ class Sessions {
   int? sessionTime;
   int? sessionDuration;
   String? sessionType;
-  int? sessionPrice;
+  dynamic sessionPrice;
   String? sessionStatus;
   int? sessionSlots;
   String? sessionLink;
@@ -83,8 +83,8 @@ class Sessions {
     if (json["session_type"] is String) {
       sessionType = json["session_type"];
     }
-    if (json["session_price"] is int) {
-      sessionPrice = json["session_price"];
+    if (json["session_fee"] is int) {
+      sessionPrice = json["session_fee"];
     }
     if (json["session_status"] is String) {
       sessionStatus = json["session_status"];
@@ -121,7 +121,7 @@ class Sessions {
     _data["session_time"] = sessionTime;
     _data["session_duration"] = sessionDuration;
     _data["session_type"] = sessionType;
-    _data["session_price"] = sessionPrice;
+    _data["session_fee"] = sessionPrice;
     _data["session_status"] = sessionStatus;
     _data["session_slots"] = sessionSlots;
     _data["session_link"] = sessionLink;

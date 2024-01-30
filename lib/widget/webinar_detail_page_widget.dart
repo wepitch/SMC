@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
-import 'package:myapp/webinar_page/webinar_past_page.dart';
-import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WebinarDetailsPageWidget extends StatefulWidget {
@@ -71,7 +69,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
+                                InkWell(
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
