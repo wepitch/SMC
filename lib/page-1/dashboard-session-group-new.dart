@@ -64,34 +64,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     });
   }
 
-  // void startPgTransaction() {
-  //   try {
-  //     var response = PhonePePaymentSdk.startPGTransaction(
-  //         body, callBackUrl, checkSum, {}, apiEndPoint, "");
-  //     response
-  //         .then((val) => {
-  //               setState(() {
-  //                 if (val != null) {
-  //                   String status = val["status"].toString();
-  //                   String error = val["error"].toString();
-  //
-  //                   if (status == "SUCCESS") {
-  //                     result = "Success";
-  //                   } else {
-  //                     result = "Failed : $error";
-  //                   }
-  //                 }
-  //               })
-  //             })
-  //         .catchError((error) {
-  //       handleError(error);
-  //       return <dynamic>{};
-  //     });
-  //   } catch (error) {
-  //     handleError(error);
-  //   }
-  // }
-
   void startPgTransaction(String? id, String? sessionDate, sessionPrice) {
     try {
       body = getCheckSum(sessionPrice);
@@ -164,20 +136,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
       print("Error calling sessionBooked API: $error");
     }
   }
-
-
-  // void showToast(String message) {
-  //   Fluttertoast.showToast(
-  //     msg: message,
-  //     toastLength: Toast.LENGTH_SHORT,
-  //     gravity: ToastGravity.BOTTOM,
-  //     timeInSecForIosWeb: 1,
-  //     backgroundColor: Colors.black,
-  //     textColor: Colors.white,
-  //     fontSize: 16.0,
-  //   );
-  // }
-
 
   getCheckSum(sessionPrice) {
    int price = int.parse(sessionPrice.toString());
