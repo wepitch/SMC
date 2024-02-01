@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/notify.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/widget/webinar_detail_page_widget.dart';
@@ -14,7 +16,8 @@ class WebinarTodayPage extends StatelessWidget {
       itemCount: 10,
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
+          padding:
+              EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
           child: CustomWebinarCard1(
             showDuration: true,
             title: "Learn more about CUET and IPMAT",
@@ -116,12 +119,14 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   Widget cardView(BuildContext context) {
     return InkWell(
       onTap: () {
+        // Navigator.push(
+        //   context,
+        //   SlideRightRoute(const WebinarDetailsPageWidget()),
+        // );
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const WebinarDetailsPageWidget(),
-          ),
-        );
+            context,
+            MaterialPageRoute(
+                builder: (context) => const WebinarDetailsPageWidget()));
       },
       child: Column(
         children: [
@@ -278,13 +283,14 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
     );
   }
 }
+
 Widget customRegisterNowBtn({
   required VoidCallback onPressed,
   required String title,
   required bool isRegisterNow,
 }) {
   Color buttonColor =
-  isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+      isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
   Color textColor = isRegisterNow ? Colors.black : Colors.white;
 
   return SizedBox(

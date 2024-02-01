@@ -141,18 +141,18 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
               });
 
             } else {
-              AppConst1.showToast("Payment Failed: $error");
+              AppConst1.showToast("Transaction failed please try again $error");
             }
           }
         });
       }).catchError((error) {
         handleError(error);
-        AppConst1.showToast("Payment Failed: $error");
+        AppConst1.showToast("Transaction failed please try again $error");
         return <dynamic>{};
       });
     } catch (error) {
       handleError(error);
-      AppConst1.showToast("Payment Failed: $error");
+      AppConst1.showToast("Transaction failed please try again $error");
     }
   }
 
@@ -182,7 +182,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
   getCheckSum(sessionPrice) {
    int price = int.parse(sessionPrice.toString());
    price * 100;
-   String strPrice = price.toString();
+  // String strPrice = price.toString();
+   String strPrice = '1';
     var requestData = {
       "merchantId": merchantId,
       "merchantTransactionId": "transaction_123",
@@ -604,6 +605,69 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                           const SizedBox(
                                                             height: 5,
                                                           ),
+                                                          // onTap: () {
+                                                          //   if (counsellorSessionProvider.details.sessions![index].sessionAvailableSlots! > 0) {
+                                                          //     startPgTransaction(counsellorSessionProvider
+                                                          //         .details
+                                                          //         .sessions![
+                                                          //     index]
+                                                          //         .id,counsellorSessionProvider
+                                                          //         .details
+                                                          //         .sessions![
+                                                          //     index]
+                                                          //         .sessionDate,
+                                                          //         counsellorSessionProvider
+                                                          //             .details
+                                                          //             .sessions![
+                                                          //         index]
+                                                          //             .sessionPrice);
+                                                          //     // EasyLoading.show(
+                                                          //     //     status: "Loading...",
+                                                          //     //     dismissOnTap: false);
+                                                          //     // ApiService.sessionBooked(
+                                                          //     //     counsellorSessionProvider
+                                                          //     //         .details
+                                                          //     //         .sessions![
+                                                          //     //     index]
+                                                          //     //         .id!)
+                                                          //     //     .then((value) {
+                                                          //     //   if (value["message"] ==
+                                                          //     //       "Counseling session booked successfully") {
+                                                          //     //     EasyLoading.showToast(
+                                                          //     //         value["message"],
+                                                          //     //         toastPosition:
+                                                          //     //         EasyLoadingToastPosition.bottom);
+                                                          //     //     context
+                                                          //     //         .read<CounsellorDetailsProvider>()
+                                                          //     //         .fetchCounsellor_session(
+                                                          //     //         id: widget.id);
+                                                          //     //     var date = Jiffy.parse(
+                                                          //     //         counsellorSessionProvider
+                                                          //     //             .details
+                                                          //     //             .sessions![
+                                                          //     //         index]
+                                                          //     //             .sessionDate!)
+                                                          //     //         .format(
+                                                          //     //         pattern: "yyyy-M-d");
+                                                          //     //     context
+                                                          //     //         .read<CounsellorDetailsProvider>()
+                                                          //     //         .fetchCounsellor_session(
+                                                          //     //         id: widget.id,
+                                                          //     //         sessionType: "Group",
+                                                          //     //         date: date);
+                                                          //     //     setState(() {});
+                                                          //     //   } else {
+                                                          //     //     EasyLoading.showToast(
+                                                          //     //         value["error"],
+                                                          //     //         toastPosition:
+                                                          //     //         EasyLoadingToastPosition.bottom);
+                                                          //     //   }
+                                                          //     // });
+                                                          //   } else {
+                                                          //     EasyLoading.showToast('Slot is not available',
+                                                          //         toastPosition: EasyLoadingToastPosition.bottom);
+                                                          //   }
+                                                          // },
                                                           Text(
                                                               "Session Status : ${counsellorSessionProvider.details.sessions?[index].sessionStatus ?? "N/A"}"),
                                                         ],
@@ -613,68 +677,21 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      if (counsellorSessionProvider.details.sessions![index].sessionAvailableSlots! > 0) {
-                                                        startPgTransaction(counsellorSessionProvider
-                                                            .details
-                                                            .sessions![
-                                                        index]
-                                                            .id,counsellorSessionProvider
-                                                            .details
-                                                            .sessions![
-                                                        index]
-                                                            .sessionDate,
-                                                            counsellorSessionProvider
-                                                                .details
-                                                                .sessions![
-                                                            index]
-                                                                .sessionPrice);
-                                                        // EasyLoading.show(
-                                                        //     status: "Loading...",
-                                                        //     dismissOnTap: false);
-                                                        // ApiService.sessionBooked(
-                                                        //     counsellorSessionProvider
-                                                        //         .details
-                                                        //         .sessions![
-                                                        //     index]
-                                                        //         .id!)
-                                                        //     .then((value) {
-                                                        //   if (value["message"] ==
-                                                        //       "Counseling session booked successfully") {
-                                                        //     EasyLoading.showToast(
-                                                        //         value["message"],
-                                                        //         toastPosition:
-                                                        //         EasyLoadingToastPosition.bottom);
-                                                        //     context
-                                                        //         .read<CounsellorDetailsProvider>()
-                                                        //         .fetchCounsellor_session(
-                                                        //         id: widget.id);
-                                                        //     var date = Jiffy.parse(
-                                                        //         counsellorSessionProvider
-                                                        //             .details
-                                                        //             .sessions![
-                                                        //         index]
-                                                        //             .sessionDate!)
-                                                        //         .format(
-                                                        //         pattern: "yyyy-M-d");
-                                                        //     context
-                                                        //         .read<CounsellorDetailsProvider>()
-                                                        //         .fetchCounsellor_session(
-                                                        //         id: widget.id,
-                                                        //         sessionType: "Group",
-                                                        //         date: date);
-                                                        //     setState(() {});
-                                                        //   } else {
-                                                        //     EasyLoading.showToast(
-                                                        //         value["error"],
-                                                        //         toastPosition:
-                                                        //         EasyLoadingToastPosition.bottom);
-                                                        //   }
-                                                        // });
-                                                      } else {
-                                                        EasyLoading.showToast('Slot is not available',
-                                                            toastPosition: EasyLoadingToastPosition.bottom);
+                                                      var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
+                                                      var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
+                                                      if (availableSlots <= 0) {
+                                                        EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
+                                                      } else if (availableSlots <= totalAvailableSlots) {
+                                                        startPgTransaction(
+                                                          counsellorSessionProvider.details.sessions![index].id,
+                                                          counsellorSessionProvider.details.sessions![index].sessionDate,
+                                                          counsellorSessionProvider.details.sessions![index].sessionPrice,
+                                                        );
+                                                      } else{
+                                                        EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
                                                       }
                                                     },
+
                                                     child: Container(
                                                       width: 96,
                                                       height: 38,

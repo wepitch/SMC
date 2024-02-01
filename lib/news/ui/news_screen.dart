@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myapp/news/model/news_response.dart';
 import 'package:myapp/news/provider/news_provider.dart';
 import 'package:myapp/news/ui/news_all_detail_screen.dart';
@@ -96,6 +97,7 @@ class _NewsScreen extends State<NewsScreen> {
                       return Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (articles?[index].urlToImage != null)
                               ClipRRect(
@@ -114,8 +116,12 @@ class _NewsScreen extends State<NewsScreen> {
                             const SizedBox(
                               height: 16,
                             ),
+                            Text(formatTime(articles![index].publishedAt ?? '')),
+                            const SizedBox(
+                              height: 16,
+                            ),
                             Text(
-                              articles![index].title ?? '',
+                              articles[index].title ?? '',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
@@ -170,6 +176,11 @@ class _NewsScreen extends State<NewsScreen> {
         },
       ),
     );
+  }
+  String formatTime(String timestamp) {
+    DateTime dateTime = DateTime.parse(timestamp);
+    String formattedTime = DateFormat('MMM dd, yyyy').format(dateTime);
+    return formattedTime;
   }
 }
 

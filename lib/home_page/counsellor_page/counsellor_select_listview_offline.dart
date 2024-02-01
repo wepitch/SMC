@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:myapp/page-1/dashboard_session_page.dart';
+// import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
 
@@ -12,6 +12,7 @@ import '../../other/api_service.dart';
 import '../../other/listcontroler.dart';
 import 'package:get/get.dart';
 
+import '../../page-1/dashboard_session_page.dart';
 import 'counsellor_details_page.dart';
 
 import '../homepagecontainer.dart';
