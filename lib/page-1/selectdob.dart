@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:myapp/home_page/homepagecontainer.dart';
+import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../utils.dart';
 
 class SelectDob extends StatefulWidget {
   const SelectDob({super.key});

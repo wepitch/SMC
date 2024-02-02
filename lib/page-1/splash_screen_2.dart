@@ -342,22 +342,11 @@ class _SplashScreen2State extends State<SplashScreen2> {
                           await SharedPreferences.getInstance();
                       var token = shared.getString('token');
                       if (token != null) {
-                        if (mounted) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                     const HomePageContainer()));
-                        }
-                      } else {
-                        if (mounted) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                       const Login()
-                                      ));
-                        }
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                token == null ? const Login() : const HomePageContainer()));
                       }
                     },
                     child: Text(

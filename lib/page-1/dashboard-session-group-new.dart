@@ -30,9 +30,10 @@ class Counseling_Session_group extends StatefulWidget {
 class _Counseling_Session_groupState extends State<Counseling_Session_group>
     with SingleTickerProviderStateMixin {
 //phone pe  members
-  String environment = "SANDBOX";
+// SANDBOX
+  String environment = "PRODUCTION";
   String appId = "";
-  String merchantId = "PGTESTPAYUAT";
+  String merchantId = "SORTMYCOLLONLINE";
   bool enableLogging = true;
   String saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
   String saltIndex = "1";
@@ -42,6 +43,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
   String body = "";
   Object? result;
   String apiEndPoint = "/pg/v1/pay";
+  String? packageName = 'com.sortmycollege';
 
   //widget members
   bool isExpanded = false;
@@ -67,8 +69,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
   void startPgTransaction(String? id, String? sessionDate, sessionPrice) {
     try {
       body = getCheckSum(sessionPrice);
-      var response = PhonePePaymentSdk.startPGTransaction(
-          body, callBackUrl, checkSum, {}, apiEndPoint, "");
+      var response = PhonePePaymentSdk.startTransaction(
+          body, callBackUrl, checkSum, packageName);
       response.then((val) {
         setState(() {
           if (val != null) {
@@ -114,12 +116,14 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
 
             } else {
               AppConst1.showToast("Transaction failed please try again $error");
+              print('Error:    ${error}');
             }
           }
         });
       }).catchError((error) {
         handleError(error);
         AppConst1.showToast("Transaction failed please try again $error");
+        print('Error:    ${error}');
         return <dynamic>{};
       });
     } catch (error) {
@@ -637,7 +641,12 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     onTap: () {
                                                       var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
                                                       var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                                      if (availableSlots <= 0) {
+                                                      startPgTransaction(
+                                                        counsellorSessionProvider.details.sessions![index].id,
+                                                        counsellorSessionProvider.details.sessions![index].sessionDate,
+                                                        counsellorSessionProvider.details.sessions![index].sessionPrice,
+                                                      );
+                                                     /* if (availableSlots >= 0) {
                                                         EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
                                                       } else if (availableSlots <= totalAvailableSlots) {
                                                         startPgTransaction(
@@ -647,7 +656,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                         );
                                                       } else{
                                                         EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                                      }
+                                                      }*/
                                                     },
 
                                                     child: Container(
@@ -1060,11 +1069,11 @@ bool isDateIsSame(String date, List<Sessions> sessions) {
   for (final element in sessions) {
     var apiDate = Jiffy.parse(element.sessionDate!).format(pattern: "d MMM");
     if (date.contains(apiDate)) {
-      console.log("yess");
+     // console.log("yess");
       return true;
     }
   }
-  console.log("nope");
+  //console.log("nope");
 
   return false;
 }

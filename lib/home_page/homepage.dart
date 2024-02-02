@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   //String value = '';
 
   CounsellorDetailsProvider counsellorDetailsProvider =
-      CounsellorDetailsProvider();
+  CounsellorDetailsProvider();
 
   @override
   void initState() {
@@ -155,10 +155,10 @@ class _HomePageState extends State<HomePage> {
                               child: path != null
                                   ? Image.file(File(path), fit: BoxFit.cover)
                                   : const Icon(
-                                      Icons.person,
-                                      size: 100,
-                                      color: Colors.grey,
-                                    ),
+                                Icons.person,
+                                size: 100,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
                         ],
@@ -206,8 +206,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         shape: Border(
                             bottom: BorderSide(
-                          color: Colors.black.withOpacity(0.09),
-                        )),
+                              color: Colors.black.withOpacity(0.09),
+                            )),
                       ),
                     ),
                   ],
@@ -264,8 +264,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         shape: Border(
                             bottom: BorderSide(
-                          color: Colors.black.withOpacity(0.09),
-                        )),
+                              color: Colors.black.withOpacity(0.09),
+                            )),
                       ),
                     ),
                   ],
@@ -290,8 +290,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       shape: Border(
                           bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.09),
-                      )),
+                            color: Colors.black.withOpacity(0.09),
+                          )),
                     ),
                   ],
                 ),
@@ -306,9 +306,9 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const FeedScreen(
-                                      name: '',
-                                      id: '',
-                                    )));
+                                  name: '',
+                                  id: '',
+                                )));
                       },
                       leading: const Icon(
                         Icons.save_alt,
@@ -324,8 +324,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       shape: Border(
                           bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.09),
-                      )),
+                            color: Colors.black.withOpacity(0.09),
+                          )),
                     ),
                   ],
                 ),
@@ -354,7 +354,7 @@ class _HomePageState extends State<HomePage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const SplashScreen2()));
+                                          const SplashScreen2()));
                                 }
                               },
                               child: const Text('Logout'),
@@ -457,68 +457,135 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+        Container(
+        // autogroupwwimtT3 (AXyHNJmCtiEztNKuY5WWim)
+        padding:
+        EdgeInsets.fromLTRB(27 * fem, 8 * fem, 25 * fem, 23 * fem),
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            // Container(
+            //   // group6p5o (453:7)
+            //   margin: EdgeInsets.fromLTRB(
+            //       322.84 * fem, 0 * fem, 1 * fem, 17.66 * fem),
+            //   width: double.infinity,
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Container(
+            //         // groupY1o (442:47)
+            //         margin: EdgeInsets.fromLTRB(
+            //             0 * fem, 0.16 * fem, 7 * fem, 0 * fem),
+            //         width: 13.16 * fem,
+            //         height: 13.16 * fem,
+            //         child: Image.asset(
+            //           'assets/page-1/images/group-Qyf.png',
+            //           width: 13.16 * fem,
+            //           height: 13.16 * fem,
+            //         ),
+            //       ),
+            //       // Text(
+            //       //   // filterScy (442:51)
+            //       //   'Filter',
+            //       //   style: SafeGoogleFont(
+            //       //     'Inter',
+            //       //     fontSize: 14 * ffem,
+            //       //     fontWeight: FontWeight.w400,
+            //       //     height: 1.2125 * ffem / fem,
+            //       //     color: const Color(0xff000000),
+            //       //   ),
+            //       // ),
+            //     ],
+            //   ),
+            // ),
             Container(
-              // autogroupwwimtT3 (AXyHNJmCtiEztNKuY5WWim)
-              padding:
-                  EdgeInsets.fromLTRB(27 * fem, 8 * fem, 25 * fem, 23 * fem),
+              // autogroupnoa9nB3 (AXyEx8HnJQq7KYRJqLNoa9)
+              margin: EdgeInsets.fromLTRB(
+                  0 * fem, 0 * fem, 2 * fem, 29 * fem),
               width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              height: 113 * fem,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Container(
-                  //   // group6p5o (453:7)
-                  //   margin: EdgeInsets.fromLTRB(
-                  //       322.84 * fem, 0 * fem, 1 * fem, 17.66 * fem),
-                  //   width: double.infinity,
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       Container(
-                  //         // groupY1o (442:47)
-                  //         margin: EdgeInsets.fromLTRB(
-                  //             0 * fem, 0.16 * fem, 7 * fem, 0 * fem),
-                  //         width: 13.16 * fem,
-                  //         height: 13.16 * fem,
-                  //         child: Image.asset(
-                  //           'assets/page-1/images/group-Qyf.png',
-                  //           width: 13.16 * fem,
-                  //           height: 13.16 * fem,
-                  //         ),
-                  //       ),
-                  //       // Text(
-                  //       //   // filterScy (442:51)
-                  //       //   'Filter',
-                  //       //   style: SafeGoogleFont(
-                  //       //     'Inter',
-                  //       //     fontSize: 14 * ffem,
-                  //       //     fontWeight: FontWeight.w400,
-                  //       //     height: 1.2125 * ffem / fem,
-                  //       //     color: const Color(0xff000000),
-                  //       //   ),
-                  //       // ),
-                  //     ],
-                  //   ),
-                  // ),
+                  GestureDetector(
+                    onTap: () {
+                      onTapgotocounsellor(context);
+                    },
+                    child: Container(
+                      // autogroupfspu6hX (AXyFA37bt2ojAabTr9Fspu)
+                      padding: EdgeInsets.fromLTRB(
+                          12 * fem, 7 * fem, 12 * fem, 12.66 * fem),
+                      width: 110 * fem,
+                      height: 113 * fem,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 4),
+                            blurRadius: 4,
+                            color: Colors.black.withOpacity(0.1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              // untitleddesign51zH7 (1115:125)
+                              margin: const EdgeInsets.only(bottom: 5),
+                              // margin: EdgeInsets.fromLTRB(
+                              //     0 * fem, 5 * fem, 1 * fem, 8.34 * fem),
+                              width: 35,
+                              height: 64,
+                              child: Image.asset(
+                                'assets/page-1/images/untitled-design-5-1.png',
+                                // fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            // counsellorhxD (993:189)
+                            'Counsellor',
+                            textAlign: TextAlign.center,
+                            style: SafeGoogleFont(
+                              'Inter',
+                              fontSize: 13 * ffem,
+                              fontWeight: FontWeight.w700,
+                              height: 1.2125 * ffem / fem,
+                              color: const Color(0xff000000),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   Container(
-                    // autogroupnoa9nB3 (AXyEx8HnJQq7KYRJqLNoa9)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 2 * fem, 29 * fem),
-                    width: double.infinity,
-                    height: 113 * fem,
+                    // autogroupebw1SQ1 (AXyFHhZVzFQXkZZUnCebW1)
+                    padding: EdgeInsets.fromLTRB(
+                        23 * fem, 2 * fem, 0 * fem, 0 * fem),
+                    height: double.infinity,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () {
-                            onTapgotocounsellor(context);
+                            EasyLoading.showToast("Coming Soon..",
+                                toastPosition:
+                                EasyLoadingToastPosition.bottom);
                           },
                           child: Container(
-                            // autogroupfspu6hX (AXyFA37bt2ojAabTr9Fspu)
+                            // frame2xt9 (993:183)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 0 * fem, 23 * fem, 0 * fem),
                             padding: EdgeInsets.fromLTRB(
-                                12 * fem, 7 * fem, 12 * fem, 12.66 * fem),
+                                15 * fem, 4 * fem, 9 * fem, 6 * fem),
                             width: 110 * fem,
                             height: 113 * fem,
                             clipBehavior: Clip.antiAlias,
@@ -533,291 +600,61 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
+
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                   child: Container(
-                                    // untitleddesign51zH7 (1115:125)
-                                    margin: const EdgeInsets.only(bottom: 5),
-                                    // margin: EdgeInsets.fromLTRB(
-                                    //     0 * fem, 5 * fem, 1 * fem, 8.34 * fem),
-                                    width: 35,
-                                    height: 64,
-                                    child: Image.asset(
-                                      'assets/page-1/images/untitled-design-5-1.png',
-                                      // fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  // counsellorhxD (993:189)
-                                  'Counsellor',
-                                  textAlign: TextAlign.center,
-                                  style: SafeGoogleFont(
-                                    'Inter',
-                                    fontSize: 13 * ffem,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.2125 * ffem / fem,
-                                    color: const Color(0xff000000),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          // autogroupebw1SQ1 (AXyFHhZVzFQXkZZUnCebW1)
-                          padding: EdgeInsets.fromLTRB(
-                              23 * fem, 2 * fem, 0 * fem, 0 * fem),
-                          height: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  EasyLoading.showToast("Coming Soon..",
-                                      toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                },
-                                child: Container(
-                                  // frame2xt9 (993:183)
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 23 * fem, 0 * fem),
-                                  padding: EdgeInsets.fromLTRB(
-                                      15 * fem, 4 * fem, 9 * fem, 6 * fem),
-                                  width: 110 * fem,
-                                  height: 113 * fem,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 4,
-                                        color: Colors.black.withOpacity(0.1),
-                                      ),
-                                    ],
-                                  ),
-
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          // autogroupdj6r2ND (AXyFQCNg83Pn2mHvneDj6R)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 0 * fem, 7 * fem),
-                                          width: double.infinity,
-                                          height: 62 * fem,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                // d05dc9b4dd6d9b6203372a5fa3d872 (925:4)
-                                                left: 2 * fem,
-                                                top: 7 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 72 * fem,
-                                                    height: 55 * fem,
-                                                    child: TextButton(
-                                                      onPressed: () {},
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                      ),
-                                                      child: Container(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                // untitleddesign6132R (1189:124)
-                                                left: 0 * fem,
-                                                top: 0 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 86 * fem,
-                                                    height: 60 * fem,
-                                                    child: Image.asset(
-                                                      'assets/page-1/images/untitled-design-6-1.png',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        // entrancepreparationYjs (993:185)
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 7 * fem, 0 * fem),
-                                        child: Text(
-                                          'Entrance \nPreparation',
-                                          textAlign: TextAlign.center,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 13 * ffem,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1.2125 * ffem / fem,
-                                            color: const Color(0xff000000),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                // frame7dmK (993:211)
-                                onPressed: () {
-                                  EasyLoading.showToast("Coming Soon..",
-                                      toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                },
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20 * fem, 4 * fem, 20 * fem, 13 * fem),
-                                  width: 110 * fem,
-                                  height: 113 * fem,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 4,
-                                        color: Colors.black.withOpacity(0.1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        // maskgroupJ6m (444:76)
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 0 * fem, 9 * fem),
-                                        width: 70 * fem,
-                                        height: 69 * fem,
-                                        child: Image.asset(
-                                          'assets/page-1/images/mask-group-SbT.png',
-                                          width: 70 * fem,
-                                          height: 69 * fem,
-                                        ),
-                                      ),
-                                      Container(
-                                        // connectc7T (993:213)
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 1 * fem, 0 * fem),
-                                        child: Text(
-                                          'Connect',
-                                          textAlign: TextAlign.center,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 13 * ffem,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1.2125 * ffem / fem,
-                                            color: const Color(0xff000000),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    // autogroup7xnyWyX (AXyFiXBUYzjxZbFhtM7Xny)
-                    width: double.infinity,
-                    height: 113 * fem,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          // frame5kN5 (993:194)
-                          onPressed: () {
-                            EasyLoading.showToast("Coming Soon..",
-                                toastPosition: EasyLoadingToastPosition.bottom);
-                          },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 10 * fem),
-                            width: 110 * fem,
-                            height: 113 * fem,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 4),
-                                  blurRadius: 4,
-                                  color: Colors.black.withOpacity(0.1),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    // autogroups5t7M6y (AXyG8RfJzhJsr5YqqWS5T7)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                                    padding: EdgeInsets.fromLTRB(
-                                        26 * fem, 8 * fem, 26 * fem, 1 * fem),
+                                    // autogroupdj6r2ND (AXyFQCNg83Pn2mHvneDj6R)
+                                    margin: EdgeInsets.fromLTRB(0 * fem,
+                                        0 * fem, 0 * fem, 7 * fem),
                                     width: double.infinity,
-                                    child: Align(
-                                      // hostel115Hs (1174:123)
-                                      alignment: Alignment.bottomCenter,
-                                      child: SizedBox(
-                                        width: 70 * fem,
-                                        height: 66 * fem,
-                                        child: Image.asset(
-                                          'assets/page-1/images/hostel-1-1.png',
-                                          fit: BoxFit.cover,
+                                    height: 62 * fem,
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          child: SizedBox(
+                                            width: 72 * fem,
+                                            height: 55 * fem,
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              style:
+                                              TextButton.styleFrom(
+                                                padding:
+                                                EdgeInsets.zero,
+                                              ),
+                                              child: Container(),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Align(
+                                          child: SizedBox(
+                                            width: 86 * fem,
+                                            height: 60 * fem,
+                                            child: Image.asset(
+                                              'assets/page-1/images/untitled-design-6-1.png',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                                 Container(
-                                  // vocationalcoursesmyK (993:193)
+                                  // entrancepreparationYjs (993:185)
                                   margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 2 * fem, 1 * fem, 0),
-                                  // constraints: BoxConstraints(
-                                  //     // maxWidth: 70 * fem,
-                                  //     ),
-
+                                      0 * fem, 0 * fem, 7 * fem, 0 * fem),
                                   child: Text(
-                                    'Student \nAccommodation',
+                                    'Entrance \nPreparation',
                                     textAlign: TextAlign.center,
                                     style: SafeGoogleFont(
                                       'Inter',
                                       fontSize: 13 * ffem,
                                       fontWeight: FontWeight.w700,
-                                      // height: 1.2125 * ffem / fem,
+                                      height: 1.2125 * ffem / fem,
                                       color: const Color(0xff000000),
                                     ),
                                   ),
@@ -826,85 +663,238 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Container(
-                          // autogroupjfdb5BP (AXyFrbnM5WRB7dwrS8JFDB)
-                          padding: EdgeInsets.fromLTRB(
-                              23 * fem, 2 * fem, 0 * fem, 0 * fem),
-                          height: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                // frame4bvR (993:191)
-                                margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 25 * fem, 0 * fem),
-                                child: TextButton(
-                                  onPressed: () {
-                                    EasyLoading.showToast("Coming Soon..",
-                                        toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                  },
-                                  style: TextButton.styleFrom(
-                                    padding: EdgeInsets.zero,
+                        TextButton(
+                          // frame7dmK (993:211)
+                          onPressed: () {
+                            EasyLoading.showToast("Coming Soon..",
+                                toastPosition:
+                                EasyLoadingToastPosition.bottom);
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(
+                                20 * fem, 4 * fem, 20 * fem, 13 * fem),
+                            width: 110 * fem,
+                            height: 113 * fem,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 4,
+                                  color: Colors.black.withOpacity(0.1),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // maskgroupJ6m (444:76)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 9 * fem),
+                                  width: 70 * fem,
+                                  height: 69 * fem,
+                                  child: Image.asset(
+                                    'assets/page-1/images/mask-group-SbT.png',
+                                    width: 70 * fem,
+                                    height: 69 * fem,
                                   ),
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(
-                                        19 * fem, 4 * fem, 19 * fem, 3 * fem),
-                                    width: 110 * fem,
-                                    height: 113 * fem,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          offset: const Offset(0, 4),
-                                          blurRadius: 4,
-                                          color: Colors.black.withOpacity(0.1),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          // maskgroup43K (993:204)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 0 * fem, 6 * fem),
-                                          width: 72 * fem,
-                                          height: 66 * fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/mask-group-Z9B.png',
-                                            width: 72 * fem,
-                                            height: 66 * fem,
-                                          ),
-                                        ),
-                                        Container(
-                                          // vocationalcoursesmyK (993:193)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 1 * fem, 0 * fem),
-                                          constraints: BoxConstraints(
-                                            maxWidth: 71 * fem,
-                                          ),
-                                          child: Text(
-                                            'Vocational \nCourses',
-                                            textAlign: TextAlign.center,
-                                            style: SafeGoogleFont(
-                                              'Inter',
-                                              fontSize: 13 * ffem,
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.2125 * ffem / fem,
-                                              color: const Color(0xff000000),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                ),
+                                Container(
+                                  // connectc7T (993:213)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 1 * fem, 0 * fem),
+                                  child: Text(
+                                    'Connect',
+                                    textAlign: TextAlign.center,
+                                    style: SafeGoogleFont(
+                                      'Inter',
+                                      fontSize: 13 * ffem,
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.2125 * ffem / fem,
+                                      color: const Color(0xff000000),
                                     ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              // autogroup7xnyWyX (AXyFiXBUYzjxZbFhtM7Xny)
+              width: double.infinity,
+              height: 113 * fem,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    // frame5kN5 (993:194)
+                    onPressed: () {
+                      EasyLoading.showToast("Coming Soon..",
+                          toastPosition: EasyLoadingToastPosition.bottom);
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 10 * fem),
+                      width: 110 * fem,
+                      height: 113 * fem,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 4),
+                            blurRadius: 4,
+                            color: Colors.black.withOpacity(0.1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Container(
+                              // autogroups5t7M6y (AXyG8RfJzhJsr5YqqWS5T7)
+                              margin: EdgeInsets.fromLTRB(
+                                  0 * fem, 0 * fem, 0 * fem, 1 * fem),
+                              padding: EdgeInsets.fromLTRB(
+                                  26 * fem, 8 * fem, 26 * fem, 1 * fem),
+                              width: double.infinity,
+                              child: Align(
+                                // hostel115Hs (1174:123)
+                                alignment: Alignment.bottomCenter,
+                                child: SizedBox(
+                                  width: 70 * fem,
+                                  height: 66 * fem,
+                                  child: Image.asset(
+                                    'assets/page-1/images/hostel-1-1.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
-                              /* TextButton(
+                            ),
+                          ),
+                          Container(
+                            // vocationalcoursesmyK (993:193)
+                            margin: EdgeInsets.fromLTRB(
+                                0 * fem, 2 * fem, 1 * fem, 0),
+                            // constraints: BoxConstraints(
+                            //     // maxWidth: 70 * fem,
+                            //     ),
+
+                            child: Text(
+                              'Student \nAccommodation',
+                              textAlign: TextAlign.center,
+                              style: SafeGoogleFont(
+                                'Inter',
+                                fontSize: 13 * ffem,
+                                fontWeight: FontWeight.w700,
+                                // height: 1.2125 * ffem / fem,
+                                color: const Color(0xff000000),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // autogroupjfdb5BP (AXyFrbnM5WRB7dwrS8JFDB)
+                    padding: EdgeInsets.fromLTRB(
+                        23 * fem, 2 * fem, 0 * fem, 0 * fem),
+                    height: double.infinity,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          // frame4bvR (993:191)
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 25 * fem, 0 * fem),
+                          child: TextButton(
+                            onPressed: () {
+                              EasyLoading.showToast("Coming Soon..",
+                                  toastPosition:
+                                  EasyLoadingToastPosition.bottom);
+                            },
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  19 * fem, 4 * fem, 19 * fem, 3 * fem),
+                              width: 110 * fem,
+                              height: 113 * fem,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 4),
+                                    blurRadius: 4,
+                                    color: Colors.black.withOpacity(0.1),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    // maskgroup43K (993:204)
+                                    margin: EdgeInsets.fromLTRB(0 * fem,
+                                        0 * fem, 0 * fem, 6 * fem),
+                                    width: 72 * fem,
+                                    height: 66 * fem,
+                                    child: Image.asset(
+                                      'assets/page-1/images/mask-group-Z9B.png',
+                                      width: 72 * fem,
+                                      height: 66 * fem,
+                                    ),
+                                  ),
+                                  Container(
+                                    // vocationalcoursesmyK (993:193)
+                                    margin: EdgeInsets.fromLTRB(0 * fem,
+                                        0 * fem, 1 * fem, 0 * fem),
+                                    constraints: BoxConstraints(
+                                      maxWidth: 71 * fem,
+                                    ),
+                                    child: Text(
+                                      'Vocational \nCourses',
+                                      textAlign: TextAlign.center,
+                                      style: SafeGoogleFont(
+                                        'Inter',
+                                        fontSize: 13 * ffem,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.2125 * ffem / fem,
+                                        color: const Color(0xff000000),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        /* TextButton(
                                 // frame64hX (993:202)
                                 onPressed: () {},
                                 style: TextButton.styleFrom (
@@ -944,326 +934,321 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),*/
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-            // Container(
-            //   color: Colors.white,
-            //   // autogroup2op7o2q (AXyGFfxEgcqGTznj9r2oP7)
-            //   width: 450 * fem,
-            //   height: 166 * fem,
-            //   child: const Stack(
-            //     children: [
-            //       // Positioned(
-            //       //   // rectangle53iQh (442:6)
-            //       //   child: Align(
-            //       //     child: SizedBox(
-            //       //       width: 200.63 * fem,
-            //       //       height: 350.66 * fem,
-            //       //       child: Container(
-            //       //         decoration: BoxDecoration(
-            //       //           color: Colors.white,
-            //       //           borderRadius: BorderRadius.only(
-            //       //             topLeft: Radius.circular(15 * fem),
-            //       //             topRight: Radius.circular(15 * fem),
-            //       //           ),
-            //       //           boxShadow: [
-            //       //             BoxShadow(
-            //       //               color: const Color(0x19000000),
-            //       //               offset: Offset(0 * fem, -1 * fem),
-            //       //               blurRadius: 1 * fem,
-            //       //             ),
-            //       //           ],
-            //       //         ),
-            //       //       ),
-            //       //     ),
-            //       //   ),
-            //       // ),
-            //       // Positioned(
-            //       //     top: 120,
-            //       //     child: SizedBox(
-            //       //       height: 107,
-            //       //       width: MediaQuery.sizeOf(context).width,
-            //       //       child: ListView.builder(
-            //       //           itemCount: dummyImagesSlider.length,
-            //       //           scrollDirection: Axis.horizontal,
-            //       //           physics: const BouncingScrollPhysics(),
-            //       //           itemBuilder: (context, index) {
-            //       //             var item = dummyImagesSlider[index];
-            //       //             return Container(
-            //       //               width: 145,
-            //       //               height: 107,
-            //       //               margin: const EdgeInsets.only(left: 20),
-            //       //               decoration: BoxDecoration(
-            //       //                   borderRadius: BorderRadius.circular(10),
-            //       //                   image: DecorationImage(
-            //       //                       fit: BoxFit.cover,
-            //       //                       image: NetworkImage(item))),
-            //       //             );
-            //       //           }),
-            //       //     )),
-            Positioned(
-              // maskgroupUUy (444:85)
-              left: 20.3735351562 * fem,
-              top: 20 * fem,
-              child: Align(
-                // image slider
-                child: Container(
-                  constraints: const BoxConstraints(
-                    maxHeight: 120,
-                    maxWidth: 390,
-                  ),
-                  // color: Colors.red,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(12)),
-                  width: 390 * fem,
-                  height: 120 * fem,
-                  child: ImageSlideshow(
-                    autoPlayInterval: 6000,
-                    isLoop: true,
-                    indicatorColor: Colors.black,
-                    indicatorBackgroundColor: Colors.white,
-                    children: dummyImagesSlider
-                        .map((e) => Container(
-                              width: 390 * fem,
-                              height: 120 * fem,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(16)),
-                                // image: DecorationImage(
-                                //   image: ImageN(e),
-                                //   fit: BoxFit.cover,
-                                // )),
-                                image: DecorationImage(image: AssetImage(e)),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              ),
-            ),
-            //       // Positioned(
-            //       //   // careerboostersU7b (444:66)
-            //       //   left: 20.3735351562 * fem,
-            //       //   top: 186.3397827148 * fem,
-            //       //   child: Align(
-            //       //     child: SizedBox(
-            //       //       width: 118 * fem,
-            //       //       height: 19 * fem,
-            //       //       child: Text(
-            //       //         'Career Boosters',
-            //       //         style: SafeGoogleFont(
-            //       //           'Inter',
-            //       //           fontSize: 15 * ffem,
-            //       //           fontWeight: FontWeight.w600,
-            //       //           height: 1.2125 * ffem / fem,
-            //       //           color: const Color(0xff1f0a68),
-            //       //         ),
-            //       //       ),
-            //       //     ),
-            //       //   ),
-            //       // ),
-            //     ],
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(20.0),
-            //   child: SizedBox(
-            //     height: 100,
-            //     child: PageView(
-            //       children: [
-            //         imageScroll(),
-            //         imageScroll1(),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 28.0 * fem),
-              child: const Row(
-                children: [
-                  Icon(
-                    Icons.person_2_outlined,
-                    size: 20,
-                  ),
-                  // Image.asset(
-                  //   'assets/page-1/images/person_icon.png',
-                  //   fit: BoxFit.fill,
-                  //   height: 16,
-                  //   width: 16,
-                  // ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Text(
-                    'Popular Workshops',
-                    style: TextStyle(
-                      color: Color(0xFF1F0A68),
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.28,
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                children: [
-                  profileCard(),
-                  profileCard(),
-                  profileCard(),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 28.0 * fem),
-              child: const Row(
-                children: [
-                  Icon(
-                    Icons.person_pin_outlined,
-                    size: 18,
-                  ),
-                  // Image.asset(
-                  //   'assets/page-1/images/person_mes.png',
-                  //   fit: BoxFit.cover,
-                  //   height: 18,
-                  //   width: 18,
-                  // ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Text(
-                    'Trending Webinars',
-                    style: TextStyle(
-                      color: Color(0xFF1F0A68),
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
-              child: CustomWebinarCard(
-                  enableAutoScroll: true,
-                  showDuration: false,
-                  title: "Learn more about CUET and IPMAT",
-                  isRegisterNow: true,
-                  btnTitle: "Register Now",
-                  time: "15 Sep @ 2:00 PM Onwards",
-                  duration: "60",
-                  participants: "Unlimited",
-                  bannerImg: "assets/page-1/images/webinarBanner.png"),
-            ),
-            const Padding(
-              padding:
-              EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
-              child: CustomWebinarCard(
-                  enableAutoScroll: true,
-                  showDuration: false,
-                  title: "Learn more about CUET and IPMAT",
-                  isRegisterNow: true,
-                  btnTitle: "Register Now",
-                  time: "15 Sep @ 2:00 PM Onwards",
-                  duration: "60",
-                  participants: "Unlimited",
-                  bannerImg: "assets/page-1/images/webinarBanner.png"),
-            ),
-            const Padding(
-              padding:
-              EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
-              child: CustomWebinarCard(
-                  enableAutoScroll: true,
-                  showDuration: false,
-                  title: "Learn more about CUET and IPMAT",
-                  isRegisterNow: true,
-                  btnTitle: "Register Now",
-                  time: "15 Sep @ 2:00 PM Onwards",
-                  duration: "60",
-                  participants: "Unlimited",
-                  bannerImg: "assets/page-1/images/webinarBanner.png"),
-            ),
-
-            // InkWell(
-            //   onTap: () async {
-            //     const email = 'mailto :nsheoran2005@gmail.com';
-            //     final Uri emailLaunchUri = Uri(
-            //       scheme: 'mailto',
-            //       path: email,
-            //     );
-            //     await launch(emailLaunchUri.toString());
-            //   },
-            //   child: Container(
-            //     height: 60,
-            //     decoration: const BoxDecoration(
-            //       color: Color(0xBAE3398C),
-            //     ),
-            //     child: const Center(
-            //       child: SizedBox(
-            //         width: 370,
-            //         height: 44,
-            //         child: Text.rich(
-            //           TextSpan(
-            //             children: [
-            //               TextSpan(
-            //                 text: 'Need Help? ',
-            //                 style: TextStyle(
-            //                   color: Colors.white,
-            //                   fontSize: 18,
-            //                   fontFamily: 'Inter',
-            //                   fontWeight: FontWeight.w700,
-            //                   height: 0,
-            //                 ),
-            //               ),
-            //               TextSpan(
-            //                 text: ' mail us at help@sortmycollege.com',
-            //                 style: TextStyle(
-            //                   color: Colors.white,
-            //                   fontSize: 16,
-            //                   fontFamily: 'Inter',
-            //                   fontWeight: FontWeight.w700,
-            //                   height: 0,
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //           textAlign: TextAlign.center,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
+      // Container(
+      //   color: Colors.white,
+      //   // autogroup2op7o2q (AXyGFfxEgcqGTznj9r2oP7)
+      //   width: 450 * fem,
+      //   height: 166 * fem,
+      //   child: const Stack(
+      //     children: [
+      //       // Positioned(
+      //       //   // rectangle53iQh (442:6)
+      //       //   child: Align(
+      //       //     child: SizedBox(
+      //       //       width: 200.63 * fem,
+      //       //       height: 350.66 * fem,
+      //       //       child: Container(
+      //       //         decoration: BoxDecoration(
+      //       //           color: Colors.white,
+      //       //           borderRadius: BorderRadius.only(
+      //       //             topLeft: Radius.circular(15 * fem),
+      //       //             topRight: Radius.circular(15 * fem),
+      //       //           ),
+      //       //           boxShadow: [
+      //       //             BoxShadow(
+      //       //               color: const Color(0x19000000),
+      //       //               offset: Offset(0 * fem, -1 * fem),
+      //       //               blurRadius: 1 * fem,
+      //       //             ),
+      //       //           ],
+      //       //         ),
+      //       //       ),
+      //       //     ),
+      //       //   ),
+      //       // ),
+      //       // Positioned(
+      //       //     top: 120,
+      //       //     child: SizedBox(
+      //       //       height: 107,
+      //       //       width: MediaQuery.sizeOf(context).width,
+      //       //       child: ListView.builder(
+      //       //           itemCount: dummyImagesSlider.length,
+      //       //           scrollDirection: Axis.horizontal,
+      //       //           physics: const BouncingScrollPhysics(),
+      //       //           itemBuilder: (context, index) {
+      //       //             var item = dummyImagesSlider[index];
+      //       //             return Container(
+      //       //               width: 145,
+      //       //               height: 107,
+      //       //               margin: const EdgeInsets.only(left: 20),
+      //       //               decoration: BoxDecoration(
+      //       //                   borderRadius: BorderRadius.circular(10),
+      //       //                   image: DecorationImage(
+      //       //                       fit: BoxFit.cover,
+      //       //                       image: NetworkImage(item))),
+      //       //             );
+      //       //           }),
+      //       //     )),
+      Align(
+        // image slider
+        child: Container(
+          constraints: const BoxConstraints(
+            maxHeight: 120,
+            maxWidth: 390,
+          ),
+          // color: Colors.red,
+          decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          width: 390 * fem,
+          height: 120 * fem,
+          child: ImageSlideshow(
+            autoPlayInterval: 6000,
+            isLoop: true,
+            indicatorColor: Colors.black,
+            indicatorBackgroundColor: Colors.white,
+            children: dummyImagesSlider
+                .map((e) => Container(
+              width: 390 * fem,
+              height: 120 * fem,
+              decoration: BoxDecoration(
+                borderRadius:
+                const BorderRadius.all(Radius.circular(16)),
+                // image: DecorationImage(
+                //   image: ImageN(e),
+                //   fit: BoxFit.cover,
+                // )),
+                image: DecorationImage(image: AssetImage(e)),
+              ),
+            ))
+                .toList(),
+          ),
+        ),
+      ),
+      //       // Positioned(
+      //       //   // careerboostersU7b (444:66)
+      //       //   left: 20.3735351562 * fem,
+      //       //   top: 186.3397827148 * fem,
+      //       //   child: Align(
+      //       //     child: SizedBox(
+      //       //       width: 118 * fem,
+      //       //       height: 19 * fem,
+      //       //       child: Text(
+      //       //         'Career Boosters',
+      //       //         style: SafeGoogleFont(
+      //       //           'Inter',
+      //       //           fontSize: 15 * ffem,
+      //       //           fontWeight: FontWeight.w600,
+      //       //           height: 1.2125 * ffem / fem,
+      //       //           color: const Color(0xff1f0a68),
+      //       //         ),
+      //       //       ),
+      //       //     ),
+      //       //   ),
+      //       // ),
+      //     ],
+      //   ),
+      // ),
+      // Padding(
+      //   padding: const EdgeInsets.all(20.0),
+      //   child: SizedBox(
+      //     height: 100,
+      //     child: PageView(
+      //       children: [
+      //         imageScroll(),
+      //         imageScroll1(),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      const SizedBox(
+        height: 20,
+      ),
+      Padding(
+        padding: EdgeInsets.only(left: 28.0 * fem),
+        child: const Row(
+          children: [
+            Icon(
+              Icons.person_2_outlined,
+              size: 20,
+            ),
+            // Image.asset(
+            //   'assets/page-1/images/person_icon.png',
+            //   fit: BoxFit.fill,
+            //   height: 16,
+            //   width: 16,
+            // ),
+            SizedBox(
+              width: 16,
+            ),
+            Text(
+              'Popular Workshops',
+              style: TextStyle(
+                color: Color(0xFF1F0A68),
+                fontSize: 18,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            )
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: 12,
+      ),
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.28,
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          children: [
+            profileCard(),
+            profileCard(),
+            profileCard(),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: 30,
+      ),
+      Padding(
+        padding: EdgeInsets.only(left: 28.0 * fem),
+        child: const Row(
+          children: [
+            Icon(
+              Icons.person_pin_outlined,
+              size: 18,
+            ),
+            // Image.asset(
+            //   'assets/page-1/images/person_mes.png',
+            //   fit: BoxFit.cover,
+            //   height: 18,
+            //   width: 18,
+            // ),
+            SizedBox(
+              width: 16,
+            ),
+            Text(
+              'Trending Webinars',
+              style: TextStyle(
+                color: Color(0xFF1F0A68),
+                fontSize: 18,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            )
+          ],
+        ),
+      ),
+      const Padding(
+        padding:
+        EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+        child: CustomWebinarCard(
+            enableAutoScroll: true,
+            showDuration: false,
+            title: "Learn more about CUET and IPMAT",
+            isRegisterNow: true,
+            btnTitle: "Register Now",
+            time: "15 Sep @ 2:00 PM Onwards",
+            duration: "60",
+            participants: "Unlimited",
+            bannerImg: "assets/page-1/images/webinarBanner.png"),
+      ),
+      const Padding(
+        padding:
+        EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+        child: CustomWebinarCard(
+            enableAutoScroll: true,
+            showDuration: false,
+            title: "Learn more about CUET and IPMAT",
+            isRegisterNow: true,
+            btnTitle: "Register Now",
+            time: "15 Sep @ 2:00 PM Onwards",
+            duration: "60",
+            participants: "Unlimited",
+            bannerImg: "assets/page-1/images/webinarBanner.png"),
+      ),
+      const Padding(
+        padding:
+        EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+        child: CustomWebinarCard(
+            enableAutoScroll: true,
+            showDuration: false,
+            title: "Learn more about CUET and IPMAT",
+            isRegisterNow: true,
+            btnTitle: "Register Now",
+            time: "15 Sep @ 2:00 PM Onwards",
+            duration: "60",
+            participants: "Unlimited",
+            bannerImg: "assets/page-1/images/webinarBanner.png"),
+      ),
+
+      // InkWell(
+      //   onTap: () async {
+      //     const email = 'mailto :nsheoran2005@gmail.com';
+      //     final Uri emailLaunchUri = Uri(
+      //       scheme: 'mailto',
+      //       path: email,
+      //     );
+      //     await launch(emailLaunchUri.toString());
+      //   },
+      //   child: Container(
+      //     height: 60,
+      //     decoration: const BoxDecoration(
+      //       color: Color(0xBAE3398C),
+      //     ),
+      //     child: const Center(
+      //       child: SizedBox(
+      //         width: 370,
+      //         height: 44,
+      //         child: Text.rich(
+      //           TextSpan(
+      //             children: [
+      //               TextSpan(
+      //                 text: 'Need Help? ',
+      //                 style: TextStyle(
+      //                   color: Colors.white,
+      //                   fontSize: 18,
+      //                   fontFamily: 'Inter',
+      //                   fontWeight: FontWeight.w700,
+      //                   height: 0,
+      //                 ),
+      //               ),
+      //               TextSpan(
+      //                 text: '
+      //                 style: TextStyle(
+      //                   color: Colors.white,
+      //                   fontSize: 16,
+      //                   fontFamily: 'Inter',
+      //                   fontWeight: FontWeight.w700,
+      //                   height: 0,
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //           textAlign: TextAlign.center,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      ],
+    ),
+    ),
     );
   }
 
@@ -1414,7 +1399,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image:
-                                    AssetImage("assets/page-1/images/rate.png"),
+                                AssetImage("assets/page-1/images/rate.png"),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -1539,7 +1524,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const SplashScreen2()),
-        (route) => false,
+            (route) => false,
       );
     }
   }
