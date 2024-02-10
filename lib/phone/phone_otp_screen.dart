@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/news/provider/news_provider.dart';
 import 'package:myapp/page-1/edulevel.dart';
+import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/phone/login.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
@@ -23,13 +24,6 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   late NewsProvider newsProvider;
   bool isLoading = false;
-
-  // @override
-  // void initState() {
-  //   newsProvider = Provider.of<NewsProvider>(context, listen: false);
-  //   super.initState();
-  //   newsProvider.startTimer();
-  // }
 
   Duration duration = const Duration(minutes: 2);
   Timer? timer;
@@ -99,7 +93,7 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't receive an OTP? ",
+                    "Didn’t receive an OTP? ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -163,8 +157,7 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EducationLevel()));
+                                      builder: (context) => const Signup()));
                             }
                           } catch (e) {
                             if (kDebugMode) {
@@ -177,11 +170,9 @@ class _PhoneOtpScreenState extends State<PhoneOtpScreen> {
                           }
                           if (mounted) {
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EducationLevel(),
-                              ),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Signup()));
                           }
                           Fluttertoast.showToast(
                               msg: 'Verify Otp Successfully');

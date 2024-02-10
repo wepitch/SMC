@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/model/counsellor_data.dart';
 import 'package:myapp/model/counsellor_detail.dart';
 import 'package:myapp/model/counsellor_sessions.dart';
+import 'package:myapp/model/cousnellor_list_model.dart';
 
 import '../api_service.dart';
 
 class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorDetail> cousnellorlist_detail = [];
+  List<CounsellorModel> counsellorModel = [];
+  List<CounsellorData> counsellorData = [];
 
   CounsellorSessionDetails allDetails = CounsellorSessionDetails();
   CounsellorSessionDetails details = CounsellorSessionDetails();
@@ -18,6 +22,19 @@ class CounsellorDetailsProvider extends ChangeNotifier {
       isLoading = true;
     } else {
       cousnellorlist_detail = counsellor;
+      isLoading = false;
+    }
+
+    notifyListeners();
+  }
+
+  void fetchCounsellor_details(String id) async {
+    var counsellors = await ApiService.getCounsellor_Data();
+    isLoading = true;
+    if (counsellors.isEmpty) {
+      isLoading = true;
+    } else {
+      counsellorData = counsellors;
       isLoading = false;
     }
 
@@ -41,10 +58,4 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  String currentGender = 'Male';
-  String currentEducation = 'Bachelor';
-
-  List<String> genderList = ['Male', 'Female', 'Other'];
-  List<String> educationList = ['Bachelor', 'Master', 'PhD', 'Other'];
 }

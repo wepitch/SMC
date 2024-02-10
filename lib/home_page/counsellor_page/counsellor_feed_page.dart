@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
 import 'package:myapp/model/counsellor_feed_model.dart';
 import 'package:myapp/other/constants.dart';
-import 'package:myapp/home_page/counsellor_page/counsellor_details_page.dart';
-
 import '../../utils.dart';
 
 class CounsellorFeedPage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
             padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+               Navigator.pop(context);
               },
               child: Image.asset(
                 'assets/page-1/images/back.png',
@@ -76,7 +76,7 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CounsellorDetialsPage(
+                              builder: (context) => CounsellorDetailsScreen(
                                     id: widget.id,
                                     name: widget.name,
                                   )));
@@ -299,7 +299,7 @@ Future<bool> _onBackPressed(
   Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (context) => CounsellorDetialsPage(
+          builder: (context) => CounsellorDetailsScreen(
                 id: id,
                 name: name,
               )));

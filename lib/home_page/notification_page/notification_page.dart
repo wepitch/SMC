@@ -1,19 +1,12 @@
-// import 'dart:convert';
-// import 'package:myapp/home_page/notification_page/noti.dart';
-// import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
- import 'dart:convert';
-
+import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/route_manager.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/home_page/notification_page/notification_database_helper.dart';
 import 'package:myapp/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import '../../main.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -24,7 +17,6 @@ class MessageScreen extends StatefulWidget {
 
 class MessageScreenState extends State<MessageScreen> {
   List<Map<String, dynamic>> notificationsList = [];
-
 
   @override
   void initState() {
@@ -44,23 +36,7 @@ class MessageScreenState extends State<MessageScreen> {
       _addNotificationToList(payload);
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Notifications"),
-      ),
-      body: ListView.builder(
-        itemCount: notificationsList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(notificationsList[index]['title'] ?? ''),
-            subtitle: Text(notificationsList[index]['body'] ?? ''),
-            trailing: Text(
-              '${notificationsList[index]['date']} ${notificationsList[index]['time']}',
-            ),
-          );
-        },
-      ),
-    );
+    return const Scaffold();
   }
 
   void _loadNotifications() async {
@@ -70,19 +46,6 @@ class MessageScreenState extends State<MessageScreen> {
           notifications.map((notification) => notification.toMap()).toList());
     });
   }
-
-  // void _addNotificationToList(Map<String, dynamic> payload) {
-  //   final String title = payload['title'] ?? '';
-  //   final String body = payload['body'] ?? '';
-  //   final String date = DateTime.now().toString(); // Assuming you want to save the current date
-  //
-  //   // Save the notification to the local database
-  //   DatabaseHelper.addNotification(NotificationModel(date: date, title: title, description: body));
-  //
-  //   setState(() {
-  //     notificationsList.insert(0, payload);
-  //   });
-  // }
 
   void _addNotificationToList(Map<String, dynamic> payload) {
     setState(() {
@@ -111,21 +74,21 @@ class PushNotifications {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
         print("Background Notification Tapped");
-       navigatorKey.currentState!.pushNamed("/message", arguments:  Notification2());
+        Get.to(const Notification2());
       }
     });
-
     FirebaseMessaging.onBackgroundMessage((message) async {});
     print("device token: $token");
+    //Get.to(const Notification2());
   }
 
-  // initialize local notifications
   static Future localNotiInit() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     final DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
       onDidReceiveLocalNotification: (id, title, body, payload) => null,
+
     );
     const LinuxInitializationSettings initializationSettingsLinux =
         LinuxInitializationSettings(defaultActionName: 'Open notification');
@@ -142,19 +105,35 @@ class PushNotifications {
     );
   }
 
-  static void onNotificationTap(
-    NotificationResponse notificationResponse,
-  ) {
-    // navigatorKey.currentState!
-    //     .pushNamed("/message", arguments: const Notification2());
+  // static void onNotificationTap(
+  //   NotificationResponse notificationResponse,
+  // ) {
+  //   final Map<String, dynamic> notificationData = {
+  //     'id': notificationResponse.id ?? '',
+  //     'payload': notificationResponse.payload,
+  //   };
+  //   MessageScreenState().notificationsList.insert(0, notificationData);
+  //   Get.to(const Notification2());
+  // }
 
+  static void onNotificationTap(NotificationResponse notificationResponse) async {
     final Map<String, dynamic> notificationData = {
       'id': notificationResponse.id ?? '',
       'payload': notificationResponse.payload,
-    };
-    MessageScreenState().notificationsList.insert(0, notificationData);
 
+    };
+
+    await saveNotification(notificationData);
+    Get.to(const Notification2());
   }
+
+  static Future<void> saveNotification(Map<String, dynamic> notificationData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> notifications = prefs.getStringList('notifications') ?? [];
+    notifications.insert(0, json.encode(notificationData));
+    prefs.setStringList('notifications', notifications);
+  }
+
 
   // static void onNotificationTap(NotificationResponse notificationResponse) {
   //   navigatorKey.currentState!.pushNamed("/notification", arguments: notificationResponse);
@@ -190,21 +169,11 @@ class PushNotifications {
     sharedPreferences.setString('body', body);
     sharedPreferences.setString('date', date);
 
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => Notification2(
-    //   title: title,
-    //   body: body,
-    //   date: date,
-    // )));
-    // navigatorKey.currentState?.push(
-    //   MaterialPageRoute(
-    //     builder: (context) =>  Notification2(
-    //       title: title,
-    //       body: body,
-    //       date: date,
-    //     ),
-    //   ),
-    // );
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print("Background Notification Tapped");
+        navigatorKey.currentState!.pushNamed("/message", arguments: message);
+      }
+    });
   }
 }
-
-

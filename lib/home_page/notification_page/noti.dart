@@ -107,6 +107,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/home_page/homepagecontainer.dart';
 import 'package:myapp/home_page/notification_page/news/ui/news_information_screen.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
@@ -137,13 +138,12 @@ class _Notification2State extends State<Notification2> {
     String date = prefs.getString("date") ?? "N/A";
 
     DateTime notificationDate = DateTime.parse(date);
-    if (DateTime.now().difference(notificationDate).inDays <= 4) {
+    if (DateTime.now().difference(notificationDate).inDays <= 60) {
       notifications.insert(0, {
         'title': title,
         'body': body,
         'date': date,
       });
-
       setState(() {});
     }
   }
@@ -160,7 +160,7 @@ class _Notification2State extends State<Notification2> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NewsInformationScreen(),
+                builder: (context) => const HomePageContainer(),
               ),
             );
           },

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
 import 'package:myapp/model/counsellor_feed_model.dart';
 import 'package:myapp/other/constants.dart';
-import 'package:myapp/home_page/counsellor_page/counsellor_details_page.dart';
-
 import '../../utils.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -54,9 +53,9 @@ class _FeedScreenState extends State<FeedScreen>
               ),
             ),
           ),
-          titleSpacing: 92,
+          centerTitle: true,
           title: Text(
-            'Feed',
+            'Saved',
             style: SafeGoogleFont("Inter",
                 fontSize: 18, fontWeight: FontWeight.w600),
           ),
@@ -302,7 +301,7 @@ Future<bool> _onBackPressed(
   Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (context) => CounsellorDetialsPage(
+          builder: (context) => CounsellorDetailsScreen(
                 id: id,
                 name: name,
               )));

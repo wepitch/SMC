@@ -11,8 +11,6 @@ import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../other/constants.dart';
 
-import '../page-1/otp.dart';
-
 class Login extends StatefulWidget {
   static String verify = '';
 
@@ -238,9 +236,7 @@ class _LoginState extends State<Login> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: isLoading
-                            ? null
-                            : () async {
+                        onPressed: () async {
                                 setState(() {
                                   isLoading = true;
                                 });
@@ -254,6 +250,9 @@ class _LoginState extends State<Login> {
                                     codeSent: (String verificationId,
                                         int? resendToken) {
                                       Login.verify = verificationId;
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -269,10 +268,6 @@ class _LoginState extends State<Login> {
                                   if (kDebugMode) {
                                     print('Error $e');
                                   }
-                                } finally {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
                                 }
                               },
                         style: ElevatedButton.styleFrom(
@@ -284,7 +279,7 @@ class _LoginState extends State<Login> {
                         child: isLoading
                             ? const Center(
                                 child: CircularProgressIndicator(
-                                  color: ColorsConst.appBarColor,
+                                  color: ColorsConst.whiteColor,
                                 ),
                               )
                             : Text(

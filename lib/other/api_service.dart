@@ -13,6 +13,26 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
+
+  static Future<void> updateFollowers(String counselorId, CounsellorModel counsellorModel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final response = await http.put(
+      Uri.parse('https://server.sortmycollege.com/counselors/$counselorId'),
+      headers: {'Content-Type': 'application/json',
+        "Authorization": token,
+      },
+      body: jsonEncode(counsellorModel.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print('Counsellor updated successfully');
+    } else {
+      throw Exception('Failed to update counsellor');
+    }
+  }
+
+
   static Future<List<CounsellorModel>> getCounsellor_1() async {
     //var url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
     var url = Uri.parse("http://13.127.234.0:9000/counsellor/");
@@ -52,9 +72,39 @@ class ApiService {
             reviews: 5)
       ];
     }
-
     return [];
-    // print(data);
+  }
+
+  static Future<List<CounsellorData>> getCounsellor_() async {
+    var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    console.log("Counsellor List : ${response.body}");
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<CounsellorData>.from(
+          data.map((x) => CounsellorData.fromJson(x)));
+    }
+    if (response.statusCode == 404) {
+      return [
+        CounsellorData(
+            id: "0",
+            name: "none",
+            profilePic: "",
+            averageRating: 1,
+            experienceInYears: 2,
+            totalSessions: 3,
+            rewardPoints: 4,
+            reviews: 5)
+      ];
+    }
+    return [];
   }
 
   static Future<List<CounsellorDetail>> getCounsellor_Detail(String id) async {
@@ -344,7 +394,7 @@ class ApiService {
             "${AppConstants.baseUrl}/user/booking?past=$past&today=$today&upcoming=$upcoming");
     final headers = {
       "Content-Type": "application/json",
-      // "Authorization": token,
+       "Authorization": token,
     };
     final response = await http.get(url, headers: headers);
 

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xff1F0A68),
         foregroundColor: Colors.white,
@@ -180,16 +179,6 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text(title),
           subtitle: Text(subtitle),
           leading: Icon(iconData),
-          // trailing: showEditIcon
-          //     ? IconButton(
-          //         icon: const Icon(Icons.edit),
-          //         color: Colors.grey.shade400,
-          //         onPressed: () {
-          //           _editProfileField(title, subtitle);
-          //         },
-          //       )
-          //     : null,
-          // tileColor: Colors.white,
         ),
       ),
     );

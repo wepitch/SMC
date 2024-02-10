@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WebinarDetailsPageWidget extends StatefulWidget {
@@ -79,10 +80,16 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                     size: 25,
                                   ),
                                 ),
-                                Image.asset(
-                                  "assets/page-1/images/share.png",
-                                  color: Colors.white,
-                                  height: 23,
+                                GestureDetector(
+                                  onTap: () {
+                                    Share.share(
+                                        'https://play.google.com/store/apps/details?id=com.sortmycollege');
+                                  },
+                                  child: Image.asset(
+                                    "assets/page-1/images/share.png",
+                                    color: Colors.white,
+                                    height: 23,
+                                  ),
                                 )
                               ],
                             ),
@@ -357,8 +364,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                           ),
                           TextButton(
                             onPressed: () async {
-                              await _updateRegistrationStatus(
-                                  true);
+                              await _updateRegistrationStatus(true);
                               if (mounted) {
                                 Navigator.pop(context);
                               }
@@ -387,16 +393,18 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
     );
   }
 }
+
 Widget webinarDetailWidget({
   required VoidCallback onPressed,
   required String title,
   required bool isRegisterNow,
 }) {
   Color buttonColor =
-  isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+      isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
   Color textColor = isRegisterNow ? Colors.black : Colors.white;
 
-  double buttonWidth = title.contains('Starting in 2 days') ? double.infinity : 200.0;
+  double buttonWidth =
+      title.contains('Starting in 2 days') ? double.infinity : 200.0;
 
   return SizedBox(
     width: buttonWidth,
@@ -423,8 +431,4 @@ Widget webinarDetailWidget({
   );
 }
 
-
-
 const fontColor = Color(0xff8E8989);
-
-

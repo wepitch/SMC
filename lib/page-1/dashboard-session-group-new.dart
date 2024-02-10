@@ -35,11 +35,10 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
   String appId = "";
   String merchantId = "SORTMYCOLLONLINE";
   bool enableLogging = true;
-  String saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
-  String saltIndex = "1";
+  String saltKey = "fd064c88-80c4-4ef1-bf9f-0628189916a5";
+  String saltIndex = "2";
   String checkSum = "";
-  String callBackUrl =
-      "https://webhook.site/a53375c1-0ed6-432e-8c25-ad324fed6c2a";
+  String callBackUrl = "https://webhook.site/a53375c1-0ed6-432e-8c25-ad324fed6c2a";
   String body = "";
   Object? result;
   String apiEndPoint = "/pg/v1/pay";
@@ -76,7 +75,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
           if (val != null) {
             String status = val["status"].toString();
             String error = val["error"].toString();
-
             if (status == "SUCCESS") {
               AppConst1.showToast("Payment Successfully");
               EasyLoading.show(
@@ -113,7 +111,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                       EasyLoadingToastPosition.bottom);
                 }
               });
-
             } else {
               AppConst1.showToast("Transaction failed please try again $error");
               print('Error:    ${error}');
@@ -131,16 +128,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
       AppConst1.showToast("Transaction failed please try again $error");
     }
   }
-
-  void callSessionBookedAPI(String transactionId) async {
-    try {
-      var response = await ApiService.sessionBooked(transactionId);
-      print("sessionBooked API Response: $response");
-    } catch (error) {
-      print("Error calling sessionBooked API: $error");
-    }
-  }
-
   getCheckSum(sessionPrice) {
    int price = int.parse(sessionPrice.toString());
    price * 100;
@@ -157,9 +144,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
         "type": "PAY_PAGE",
       },
     };
-
     String base64Body = base64.encode(utf8.encode(json.encode(requestData)));
-
     checkSum =
         "${sha256.convert(utf8.encode(base64Body + apiEndPoint + saltKey)).toString()}###$saltIndex";
 
@@ -284,7 +269,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     7 * fem,
                                                     0 * fem),
                                                 child: Text(
-                                                  '${e.index == 0 ? "Today" : e.index == 1 ? "Yesterday" : e.day}, ${e.formattedDate}',
+                                                  '${e.index == 0 ? "Today" : e.index == 1 ? "Tomorrow" : e.day}, ${e.formattedDate}',
                                                   textAlign: TextAlign.center,
                                                   style: SafeGoogleFont(
                                                     'Inter',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
+import 'package:share_plus/share_plus.dart';
 
 class WebinarDetailsPage extends StatefulWidget {
   const WebinarDetailsPage({super.key});
@@ -62,10 +63,15 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                                       size: 25,
                                     ),
                                   ),
-                                  Image.asset(
-                                    "assets/page-1/images/share.png",
-                                    color: Colors.white,
-                                    height: 23,
+                                  GestureDetector(
+                                    onTap: (){
+                                      Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                                    },
+                                    child: Image.asset(
+                                      "assets/page-1/images/share.png",
+                                      color: Colors.white,
+                                      height: 23,
+                                    ),
                                   )
                                 ],
                               ),

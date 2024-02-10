@@ -5,6 +5,7 @@ import 'package:myapp/notify.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/widget/webinar_detail_page_widget.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WebinarTodayPage extends StatelessWidget {
@@ -216,14 +217,19 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: const Color(0xff7F90F7),
-                            child: Center(
-                              child: Image.asset(
-                                "assets/page-1/images/group-38-oFX.png",
-                                width: 17,
-                                height: 17,
-                                color: Colors.white,
+                          GestureDetector(
+                            onTap: (){
+                              Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0xff7F90F7),
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/page-1/images/group-38-oFX.png",
+                                  width: 17,
+                                  height: 17,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

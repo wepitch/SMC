@@ -15,19 +15,7 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   String? currentEducation;
   String? currentGender;
   String? currentDob;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   loadInitialValues();
-  // }
-  // Future<void> loadInitialValues() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     currentEducation = prefs.getString('edu_level');
-  //     currentGender = prefs.getString('gender');
-  //     currentDob = prefs.getString('date');
-  //   });
-  // }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -63,12 +51,12 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
             const SizedBox(
               height: 20,
             ),
-            EditDobWidget(callback: (String dob) {
-              setState(() {
-                currentDob = dob;
-              });
-            },
-
+            EditDobWidget(
+              callback: (String dob) {
+                setState(() {
+                  currentDob = dob;
+                });
+              },
             ),
           ],
         ),
@@ -90,34 +78,33 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
 
   Future<void> saveDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool valueSaved = false;
 
     if (currentEducation != null) {
       prefs.setString('edu_level', currentEducation!);
+      valueSaved = true;
     }
 
     if (currentGender != null) {
       prefs.setString('gender', currentGender!);
+      valueSaved = true;
     }
 
     if (currentDob != null) {
       prefs.setString('date', currentDob!);
+      valueSaved = true;
     }
 
-    if (mounted) {
-      Navigator.pop(context);
+    if (valueSaved) {
+      if (mounted) {
+        Navigator.pop(context);
+      }
+      Fluttertoast.showToast(
+        msg: "Update Successfully",
+      );
     }
-
-    Fluttertoast.showToast(
-      msg: "Update Successfully",
-    );
   }
 
-
-  // bool allValuesSelected() {
-  //   return currentEducation != null &&
-  //       currentGender != null &&
-  //       currentDob != null;
-  // }
 
   void showEducationDropdown(BuildContext context) async {
     List<String> educationList = [
