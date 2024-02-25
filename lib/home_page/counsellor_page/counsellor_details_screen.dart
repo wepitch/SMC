@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -7,8 +8,10 @@ import 'package:myapp/model/cousnellor_list_model.dart';
 import 'package:myapp/other/listcontroler.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
+import 'package:myapp/page-1/counslleing_session2.dart';
 import 'package:myapp/page-1/dashboard-session-group-new.dart';
 import 'package:myapp/page-1/dashboard-session-personnel-new.dart';
+import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:myapp/page-1/payment_gateaway.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
@@ -78,7 +81,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
         title: Center(
           child: Text(
             // anshikamehra7w6 (2608:501)
-            counsellorDetailController.cousnellorlist_detail[0].name,
+            widget.name,
             style: SafeGoogleFont(
               'Inter',
               fontSize: 19,
@@ -189,57 +192,55 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             const Spacer(),
                             Column(
                               children: [
-                                hasFollowedBefore
-                                    ? Container()
-                                    : Container(
-                                        width: 110,
-                                        height: 34,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: const Color(0x70000000)),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              isFollowing = !isFollowing;
-                                              if (isFollowing) {
-                                                followerCount++;
-                                              } else {
-                                                followerCount--;
-                                              }
-                                              _saveData();
-                                            });
-                                          },
-                                          style: TextButton.styleFrom(
-                                            padding: EdgeInsets.zero,
-                                            backgroundColor: isFollowing
-                                                ? Colors.white
-                                                : const Color(0xff1f0a68),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              isFollowing
-                                                  ? 'Following'
-                                                  : 'Follow',
-                                              style: SafeGoogleFont(
-                                                'Inter',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.2125,
-                                                color: isFollowing
-                                                    ? Colors.black
-                                                    : const Color(0xffffffff),
-                                              ),
-                                            ),
-                                          ),
+                                // hasFollowedBefore
+                                //     ? Container()
+                                //     :
+                                Container(
+                                  width: 110,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: const Color(0xff1f0a68)),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Fluttertoast.showToast(msg: 'Follower not found');
+                                      // setState(() {
+                                      //   isFollowing = !isFollowing;
+                                      // if (isFollowing) {
+                                      //   followerCount++;
+                                      // } else {
+                                      //   followerCount--;
+                                      // }
+                                      //   _saveData();
+                                      // });
+                                    },
+                                    style: TextButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      backgroundColor: isFollowing
+                                          ? Colors.white
+                                          : const Color(0xff1f0a68),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        isFollowing ? 'Following' : 'Follow',
+                                        style: SafeGoogleFont(
+                                          'Inter',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.2125,
+                                          color: isFollowing
+                                              ? Colors.black
+                                              : const Color(0xffffffff),
                                         ),
                                       ),
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(height: 8),
                                 Row(
                                   children: [
@@ -846,10 +847,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   GestureDetector(
                                     onTap: () {
                                       Get.to(
-                                        Counseling_Session_group(
-                                          name: widget.name,
-                                          id: widget.id,
-                                        ),
+                                          const CounsellingSessionPage2(name: '', id: '',)
                                       );
                                     },
                                     child: Container(
@@ -1074,10 +1072,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   GestureDetector(
                                     onTap: () {
                                       Get.to(
-                                        Counseling_Session_Personnel(
-                                          name: widget.name,
-                                          id: widget.id,
-                                        ),
+                                          const CounsellingSessionPage(name: "", id: '',),
                                       );
                                     },
                                     child: Container(
@@ -1125,7 +1120,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
 
   Padding buildPadding() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8,top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -1153,8 +1148,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  const Text('N/A'),
                   const SizedBox(height: 12),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -110,7 +110,10 @@ class _Drawer1State extends State<Drawer1> {
                       Navigator.pop(context);
                     },
                     child: ListTile(
-                      leading: const Icon(Icons.home,size: 20,),
+                      leading: const Icon(
+                        Icons.home,
+                        size: 20,
+                      ),
                       title: Text(
                         "Home",
                         style: SafeGoogleFont(
@@ -140,7 +143,10 @@ class _Drawer1State extends State<Drawer1> {
                               builder: (context) => const HelpScreen()));
                     },
                     child: ListTile(
-                      leading: Icon(Icons.question_mark,size: 18,),
+                      leading: Icon(
+                        Icons.question_mark,
+                        size: 18,
+                      ),
                       title: Text(
                         "Help?",
                         style: SafeGoogleFont(
@@ -163,7 +169,10 @@ class _Drawer1State extends State<Drawer1> {
               child: Column(
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.psychology,size: 21,),
+                    leading: const Icon(
+                      Icons.psychology,
+                      size: 21,
+                    ),
                     title: Text(
                       "Psychometric Test",
                       style: SafeGoogleFont(
@@ -189,10 +198,7 @@ class _Drawer1State extends State<Drawer1> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const FeedScreen(
-                                    name: '',
-                                    id: '',
-                                  )));
+                              builder: (context) => FollowerUpdateScreen()));
                     },
                     leading: const Icon(
                       Icons.save_alt,

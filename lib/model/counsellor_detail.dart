@@ -2,6 +2,10 @@
 //
 //     final counsellorDetail = counsellorDetailFromJson(jsonString);
 
+// To parse this JSON data, do
+//
+//     final counsellorDetail = counsellorDetailFromJson(jsonString);
+
 import 'dart:convert';
 
 CounsellorDetail counsellorDetailFromJson(String str) =>
@@ -22,6 +26,7 @@ class CounsellorDetail {
   String gender;
   List qualifications;
   List howIWillHelpYou;
+  int? followers;
   List? languages;
   int? age;
   Location? location;
@@ -40,6 +45,7 @@ class CounsellorDetail {
     required this.experienceInYears,
     required this.totalSessionsAttended,
     required this.gender,
+    this.followers,
     this.languages,
     this.age,
     this.location,
@@ -52,14 +58,15 @@ class CounsellorDetail {
           id: json["_id"],
           name: json["name"],
           email: json["email"],
-          coverImage: json["cover_image"],
+          coverImage: json["cover_image"] ?? "",
           averageRating: json["average_rating"],
-          followersCount: json["followers_count"],
+          followersCount: json["followers_count"] ?? 0,
           experienceInYears: json["experience_in_years"],
           totalSessionsAttended: json["total_sessions_attended"],
           gender: json["gender"],
           qualifications: json["qualifications"],
           howIWillHelpYou: json["how_will_i_help"],
+          followers: json["followers"],
           languages: json["languages_spoken"],
           age: json["age"],
           personalSessionPrice: json["personal_session_price"],
@@ -69,16 +76,17 @@ class CounsellorDetail {
           ));
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "name": name,
-        "email": email,
-        "cover_image": coverImage,
-        "average_rating": averageRating,
-        "followers_count": followersCount,
-        "experience_in_years": experienceInYears,
-        "total_sessions_attended": totalSessionsAttended,
-        "gender": gender,
-      };
+    "_id": id,
+    "name": name,
+    "email": email,
+    "cover_image": coverImage,
+    "average_rating": averageRating,
+    "followers_count": followersCount,
+    "experience_in_years": experienceInYears,
+    "total_sessions_attended": totalSessionsAttended,
+    "gender": gender,
+    "followers" : followers,
+  };
 }
 
 class Location {

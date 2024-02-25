@@ -15,6 +15,7 @@ import 'package:myapp/news/provider/news_provider.dart';
 import 'package:myapp/news/service/news_api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/dependency_injection.dart';
+import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
 import 'package:myapp/page-1/shared.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
@@ -39,11 +40,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   bool? isLoggedIn = await MyApp.loggIn();
-  runApp( MyApp(isLoggedIn: isLoggedIn!));
+  runApp(MyApp(isLoggedIn: isLoggedIn!));
   DependencyInjection.init();
 
   // on background notification tapped
-
 
   PushNotifications.init();
   PushNotifications.localNotiInit();
@@ -76,6 +76,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.isLoggedIn});
+
   final bool isLoggedIn;
 
   static Future<bool?> loggIn() async {
@@ -83,9 +84,10 @@ class MyApp extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => FollowerProvider()),
         ChangeNotifierProvider(
           create: (context) => CounsellorDetailsProvider(),
         ),
@@ -96,8 +98,7 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 NewsProvider(newsApiService: NewsApiService())),
         ChangeNotifierProvider(
-            create: (context) =>
-                NewsProvider1(newsService: NewsService())),
+            create: (context) => NewsProvider1(newsService: NewsService())),
       ],
       child: GetMaterialApp(
           title: 'Flutter',
@@ -106,26 +107,26 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.grey,
           ),
-        // routes: {
-        //   '/': (context) => const SplashScreen2(),
-        //   '/message': (context) => const Notification2(),
-        //   // Add your other routes
-        // },
-          home: isLoggedIn ?  const HomePageContainer() : const SplashScreen2(),
+          // routes: {
+          //   '/': (context) => const SplashScreen2(),
+          //   '/message': (context) => const Notification2(),
+          //   // Add your other routes
+          // },
+          home: isLoggedIn ? const HomePageContainer() : const SplashScreen2(),
           builder: EasyLoading.init()),
     );
   }
 }
- Future<dynamic> getInitialRoute() async {
+
+Future<dynamic> getInitialRoute() async {
   SharedPreferences shared = await SharedPreferences.getInstance();
   var token = shared.getString('token');
-  if(token != null){
+  if (token != null) {
     Get.to(const SplashScreen2());
-  }else{
+  } else {
     Get.to(const HomePageContainer());
   }
 }
-
 
 // Future<void> backgroundHandler(RemoteMessage message) async {
 //   if (message.notification != null) {

@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/booking_model.dart';
+import 'package:myapp/model/follower_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/counsellor_data.dart';
 import '../model/counsellor_detail.dart';
 import '../model/counsellor_sessions.dart';
@@ -13,16 +12,17 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
-
-  static Future<void> updateFollowers(String counselorId, CounsellorModel counsellorModel) async {
+  static Future<void> updateFollowers(FollowerModel followerModel) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
-    final response = await http.put(
-      Uri.parse('https://server.sortmycollege.com/counselors/$counselorId'),
-      headers: {'Content-Type': 'application/json',
+    final response = await http.post(
+      Uri.parse(
+          'https://server.sortmycollege.com/counsellor/follower/65c5fcdf37dabde115cd64ff'),
+      headers: {
+        'Content-Type': 'application/json',
         "Authorization": token,
       },
-      body: jsonEncode(counsellorModel.toJson()),
+      body: jsonEncode(followerModel.toJson()),
     );
 
     if (response.statusCode == 200) {
@@ -31,7 +31,6 @@ class ApiService {
       throw Exception('Failed to update counsellor');
     }
   }
-
 
   static Future<List<CounsellorModel>> getCounsellor_1() async {
     //var url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
@@ -154,14 +153,13 @@ class ApiService {
 
   static Future<ResponseModel> call_phone_otp_1() async {
     var data;
-    var url = Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
+    var url =
+        Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
     final response =
-    await http.get(url, headers: {"Content-Type": "application/json"});
+        await http.get(url, headers: {"Content-Type": "application/json"});
     data = json.decode(response.body);
     return ResponseModel.fromJson(data);
   }
-
-
 
   Future call_otp_2({email}) async {
     print(email);
@@ -195,7 +193,8 @@ class ApiService {
     final body = {'phone': phone};
 
     var data;
-    var url = Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
+    var url =
+        Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
     final response = await http.post(
       url,
       headers: headers,
@@ -210,8 +209,6 @@ class ApiService {
       return {"error": "something went wrong!"};
     } else {}
   }
-
-
 
   Future verify_otp_2({otp, email}) async {
     print(email);
@@ -246,7 +243,8 @@ class ApiService {
     final body = {'otp': otp, 'phone': phone};
 
     var data;
-    var url = Uri.parse(AppConstants.baseUrl + AppConstants.verifyotpphoneRequest);
+    var url =
+        Uri.parse(AppConstants.baseUrl + AppConstants.verifyotpphoneRequest);
     final response = await http.post(
       url,
       headers: headers,
@@ -262,8 +260,6 @@ class ApiService {
       return {"error": "something went wrong!"};
     }
   }
-
-
 
   Future call_otp(String email) async {
     // var data;
@@ -298,11 +294,6 @@ class ApiService {
       print(response.reasonPhrase);
     }
   }
-
-
-
-
-
 
   static Future<CounsellorSessionDetails> getCounsellor_sessions(
       {String? date, String? sessionType, required String id}) async {
@@ -378,8 +369,11 @@ class ApiService {
     if (response.statusCode == 404) {
       return {"error": "Something went wrong!"};
     }
-    if(response.statusCode == 400){
-      return {"error": "There are no booking slots available in this session, please book another session"};
+    if (response.statusCode == 400) {
+      return {
+        "error":
+            "There are no booking slots available in this session, please book another session"
+      };
     }
     return {};
   }
@@ -394,7 +388,7 @@ class ApiService {
             "${AppConstants.baseUrl}/user/booking?past=$past&today=$today&upcoming=$upcoming");
     final headers = {
       "Content-Type": "application/json",
-       "Authorization": token,
+      "Authorization": token,
     };
     final response = await http.get(url, headers: headers);
 

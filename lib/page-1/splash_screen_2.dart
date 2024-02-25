@@ -62,53 +62,53 @@ class _SplashScreen2State extends State<SplashScreen2> {
               height: MediaQuery.of(context).size.height * 0.06,
             ),
             Container(
-              width: 300,
-              height: 200,
+              width: 340,
+              height: 240,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      "assets/page-1/images/preview-32x_1595344376024-webp-2112×4000- 1.png"),
-                  fit: BoxFit.fill,
+                      "assets/page-1/images/splash_image.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            const Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Welcome to SortMyCollege India’s First ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      height: 0,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'Super App',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      height: 0,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' for Students',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      height: 0,
-                    ),
-                  ),
-                ],
-              ),
-              textAlign: TextAlign.center,
-            ),
+            // const Text.rich(
+            //   TextSpan(
+            //     children: [
+            //       TextSpan(
+            //         text: 'Welcome to SortMyCollege India’s First ',
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 16,
+            //           fontFamily: 'Montserrat',
+            //           fontWeight: FontWeight.w500,
+            //           height: 0,
+            //         ),
+            //       ),
+            //       TextSpan(
+            //         text: 'Super App',
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 16,
+            //           fontFamily: 'Montserrat',
+            //           fontWeight: FontWeight.w500,
+            //           height: 0,
+            //         ),
+            //       ),
+            //       TextSpan(
+            //         text: ' for Students',
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 16,
+            //           fontFamily: 'Montserrat',
+            //           fontWeight: FontWeight.w500,
+            //           height: 0,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            //   textAlign: TextAlign.center,
+            // ),
             // CarouselSlider.builder(
             //     itemCount: sliderTextImages.length,
             //     itemBuilder: (context, index, realIndex) {
@@ -272,7 +272,6 @@ class _SplashScreen2State extends State<SplashScreen2> {
               // margin: const EdgeInsets.fromLTRB(72.5, 0, 80.5, 33),
               width: 210,
               height: 42,
-
               decoration: BoxDecoration(
                 color: const Color(0xff1f0a68),
                 borderRadius: BorderRadius.circular(10),

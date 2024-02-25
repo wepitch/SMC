@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/booking_page/booking_page.dart';
+import 'package:myapp/news/ui/news_screen.dart';
+
 // import 'package:myapp/page-1/profile.dart';
 import 'package:myapp/profile_page/profile_page.dart';
+
 // import 'package:myapp/page-1/webinar-detail-second-full-view.dart';
 // import 'package:myapp/page-1/webinar.dart';
 // import 'package:myapp/page-1/homepage.dart';
 // import 'package:myapp/page-1/news.dart';
 import 'package:myapp/webinar_page/webinar_page.dart';
+
 // import 'counsellor-select-new.dart';
 import 'counsellor_page/counsellor_select_listview_offline.dart';
+
 // import 'counselor-dashboard-new-full-view.dart';
 // import 'counselor-detailed-full-view.dart';
 // import 'counselor-detailed-select-full-view.dart';
@@ -31,7 +36,7 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
 
   final Widget _booking = const BookingPage();
 
-  /*Widget _news = News();*/
+  final Widget _news = const NewsScreen();
 
   final Widget _profile = const ProfilePage();
 
@@ -66,12 +71,15 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
             ),
           ),
           BottomNavigationBarItem(
-            label: "Booking",
-              icon: Icon(Icons.calendar_month_outlined,size: 24,)
-            // icon: ImageIcon(
-            //   AssetImage("assets/page-1/images/booking.png"),
-            // ),
-          ),
+              label: "Booking",
+              icon: Icon(
+                Icons.calendar_month_outlined,
+                size: 24,
+              )
+              // icon: ImageIcon(
+              //   AssetImage("assets/page-1/images/booking.png"),
+              // ),
+              ),
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage("assets/page-1/images/newspaper-1-s6H.png"),
@@ -105,11 +113,9 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
       return _webnar;
     } else if (selectedIndex == 2) {
       return _booking;
-    }
-    /*else if(this.selectedIndex==3) {
-      return this._news; */
-    // }
-    else if (selectedIndex == 4) {
+    } else if (this.selectedIndex == 3) {
+      return this._news;
+    } else if (selectedIndex == 4) {
       return _profile;
     } else {
       return _home;

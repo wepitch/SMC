@@ -64,6 +64,7 @@ class _NewsScreen extends State<NewsScreen> {
             return Text('Error: ${snapshot.error}');
           } else {
             List<NewsArticle>? articles = snapshot.data;
+            articles?.sort((a, b) => b.publishedAt!.compareTo(a.publishedAt!));
             return Column(
               children: [
                 Padding(
@@ -94,6 +95,7 @@ class _NewsScreen extends State<NewsScreen> {
                   child: ListView.builder(
                     itemCount: articles?.length,
                     itemBuilder: (context, index) {
+
                       return Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
