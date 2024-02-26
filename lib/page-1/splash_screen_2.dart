@@ -334,7 +334,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      SharedPreferences shared = await SharedPreferences.getInstance();
+                     /* SharedPreferences shared = await SharedPreferences.getInstance();
                       var token = shared.getString('token');
                       if (token != null) {
                         Navigator.pushReplacement(
@@ -349,7 +349,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                             MaterialPageRoute(
                                 builder: (context) =>
                                 token == null ? const Login() : const HomePageContainer()));
-                      }
+                      }*/
                     },
                     child: Text(
                       'Log in',

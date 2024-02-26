@@ -12,18 +12,19 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
-  static Future<void> updateFollowers(FollowerModel followerModel) async {
+  static Future<void> updateFollowers(FollowerModel followerModel,String id,) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final response = await http.post(
-      Uri.parse(
-          'https://server.sortmycollege.com/counsellor/follower/65c5fcdf37dabde115cd64ff'),
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": token,
-      },
-      body: jsonEncode(followerModel.toJson()),
-    );
+        Uri.parse(
+            'https://server.sortmycollege.com/counsellor/follower/65cda8f02e9764fb009d587d/$id'),
+        headers: {
+          "Authorization": token,
+          // 'Content-Type': 'application/json',
+        },
+        body: {
+          "user_id": "65cda8f02e9764fb009d587d"
+        });
 
     if (response.statusCode == 200) {
       print('Counsellor updated successfully');
@@ -32,9 +33,30 @@ class ApiService {
     }
   }
 
+  static Future<void> updateUnFollowers(FollowerModel followerModel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final response = await http.put(
+        Uri.parse(
+            'https://server.sortmycollege.com/counsellor/follower/658ac1e4ec3ebdc6c088cccc'),
+        headers: {
+          // 'Content-Type': 'application/json',
+          "Authorization": token,
+        },
+        body: {
+          "user_id": "658ac1e4ec3ebdc6c088cccc"
+        });
+
+    if (response.statusCode == 200) {
+      print('Follow Successfully');
+    } else {
+      throw Exception('Failed to Follow');
+    }
+  }
+
   static Future<List<CounsellorModel>> getCounsellor_1() async {
     //var url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
-    var url = Uri.parse("http://13.127.234.0:9000/counsellor/");
+    var url = Uri.parse("http://13.127.234.0:9000//counsellor/");
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
     // var data = json.decode(response.body);
@@ -42,22 +64,19 @@ class ApiService {
         json.decode(response.body).map((x) => CounsellorModel.fromJson(x)));
   }
 
-  static Future<List<CounsellorData>> getCounsellor_Data() async {
-    var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
+  static Future<List<CounsellorData>> getCounsellorData() async {
+    var url = Uri.parse("https://server.sortmycollege.com//counsellor/");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
-
     final response = await http.get(url, headers: {
       "Content-Type": "application/json",
-      "Authorization": token,
-    });
+      "Authorization": token,});
     var data;
     console.log("Counsellor List : ${response.body}");
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       return List<CounsellorData>.from(
-          data.map((x) => CounsellorData.fromJson(x)));
-    }
+          data.map((x) => CounsellorData.fromJson(x)));}
     if (response.statusCode == 404) {
       return [
         CounsellorData(
@@ -73,23 +92,19 @@ class ApiService {
     }
     return [];
   }
-
   static Future<List<CounsellorData>> getCounsellor_() async {
     var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
-
     final response = await http.get(url, headers: {
       "Content-Type": "application/json",
-      "Authorization": token,
-    });
+      "Authorization": token,});
     var data;
     console.log("Counsellor List : ${response.body}");
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       return List<CounsellorData>.from(
-          data.map((x) => CounsellorData.fromJson(x)));
-    }
+          data.map((x) => CounsellorData.fromJson(x)));}
     if (response.statusCode == 404) {
       return [
         CounsellorData(

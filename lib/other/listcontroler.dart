@@ -35,7 +35,7 @@ class ListController extends GetxController
   void fetchCounsellor_data () async {
     try{
       isLoading(true);
-      var counsellor = await ApiService.getCounsellor_Data();
+      var counsellor = await ApiService.getCounsellorData();
       cousnellorlist_data.assignAll(counsellor);
     }
     finally{

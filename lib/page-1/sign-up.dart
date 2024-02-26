@@ -236,7 +236,7 @@ class _Signup extends State<Signup> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        onTapGettingstarted_login(context);
+                       // onTapGettingstarted_login(context);
                       },
                       child: Container(
                         // alreadyhaveanaccountsigninygd (437:58)
@@ -449,10 +449,10 @@ class _Signup extends State<Signup> {
     );
   }
 
-  void onTapGettingstarted_login(BuildContext context) {
+  /*void onTapGettingstarted_login(BuildContext context) {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const Login()));
-  }
+  }*/
 
   bool validateMobile(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';

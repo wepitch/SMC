@@ -198,7 +198,7 @@ class _Drawer1State extends State<Drawer1> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FollowerUpdateScreen()));
+                              builder: (context) => const FeedScreen(name: '', id: '')));
                     },
                     leading: const Icon(
                       Icons.save_alt,

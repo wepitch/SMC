@@ -5,12 +5,12 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_feed_page.dart';
 import 'package:myapp/model/cousnellor_list_model.dart';
+import 'package:myapp/model/follower_model.dart';
 import 'package:myapp/other/listcontroler.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
+import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
 import 'package:myapp/page-1/counslleing_session2.dart';
-import 'package:myapp/page-1/dashboard-session-group-new.dart';
-import 'package:myapp/page-1/dashboard-session-personnel-new.dart';
 import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:myapp/page-1/payment_gateaway.dart';
 import 'package:myapp/shared/colors_const.dart';
@@ -37,6 +37,9 @@ class CounsellorDetailsScreen extends StatefulWidget {
 class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     with SingleTickerProviderStateMixin {
   final ListController listController = Get.put(ListController());
+  late FollowerProvider followerProvider;
+  FollowerModel followerModel = FollowerModel();
+
   bool visible = false;
   late TabController _controller;
   List<CounsellorModel> counsellorModel = [];
@@ -49,6 +52,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     super.initState();
     context.read<CounsellorDetailsProvider>().fetchCounsellor_detail(widget.id);
     _controller = TabController(length: 2, vsync: this, initialIndex: 0);
+    followerProvider = Provider.of<FollowerProvider>(context,listen: false);
     _loadData();
   }
 
@@ -199,22 +203,12 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   width: 110,
                                   height: 34,
                                   decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: const Color(0xff1f0a68)),
+                                    border: Border.all(color: const Color(0xff1f0a68)),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: TextButton(
-                                    onPressed: () {
-                                      Fluttertoast.showToast(msg: 'Follower not found');
-                                      // setState(() {
-                                      //   isFollowing = !isFollowing;
-                                      // if (isFollowing) {
-                                      //   followerCount++;
-                                      // } else {
-                                      //   followerCount--;
-                                      // }
-                                      //   _saveData();
-                                      // });
+                                    onPressed: () async {
+                                      await context.read<FollowerProvider>().toggleFollowState(followerModel,widget.id);
                                     },
                                     style: TextButton.styleFrom(
                                       padding: EdgeInsets.zero,
@@ -241,6 +235,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     ),
                                   ),
                                 ),
+
                                 const SizedBox(height: 8),
                                 Row(
                                   children: [

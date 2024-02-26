@@ -28,12 +28,12 @@ class _CounsellorListPage_offlineState
   @override
   void initState() {
     super.initState();
-    ApiService.getCounsellor_Data();
+    ApiService.getCounsellorData();
   }
 
   Future<void> _refresh() {
     return Future.delayed(const Duration(seconds: 1), () {
-      ApiService.getCounsellor_Data().then((value) {
+      ApiService.getCounsellorData().then((value) {
         if (value.isNotEmpty) {
           setState(() {});
         }
@@ -341,7 +341,7 @@ class _CounsellorListPage_offlineState
                                                           const Duration(
                                                               seconds: 2), () {
                                                         ApiService
-                                                            .getCounsellor_Data();
+                                                            .getCounsellorData();
                                                       });
                                                     },
                                                     child: ListView.builder(

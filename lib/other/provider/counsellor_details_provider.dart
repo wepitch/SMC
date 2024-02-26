@@ -29,7 +29,7 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   }
 
   void fetchCounsellor_details(String id) async {
-    var counsellors = await ApiService.getCounsellor_Data();
+    var counsellors = await ApiService.getCounsellorData();
     isLoading = true;
     if (counsellors.isEmpty) {
       isLoading = true;

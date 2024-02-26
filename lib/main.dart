@@ -27,12 +27,12 @@ import 'home_page/notification_page/noti.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 // function to lisen to background changes
-Future _firebaseBackgroundMessage(RemoteMessage message) async {
+/*Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null) {
     print("Some notification Received");
     Get.to(const Notification2());
   }
-}
+}*/
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,9 +43,8 @@ Future<void> main() async {
   runApp(MyApp(isLoggedIn: isLoggedIn!));
   DependencyInjection.init();
 
-  // on background notification tapped
 
-  PushNotifications.init();
+  /*PushNotifications.init();
   PushNotifications.localNotiInit();
   // Listen to background notifications
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
@@ -71,7 +70,7 @@ Future<void> main() async {
     Future.delayed(Duration(seconds: 1), () {
       navigatorKey.currentState!.pushNamed("/message", arguments: message);
     });
-  }
+  }*/
 }
 
 class MyApp extends StatelessWidget {
