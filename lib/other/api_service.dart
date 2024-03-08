@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/booking_model.dart';
-import 'package:myapp/model/follower_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/counsellor_data.dart';
 import '../model/counsellor_detail.dart';
@@ -12,45 +11,141 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
-  static Future<void> updateFollowers(FollowerModel followerModel,String id,) async {
+  static Future<Map<String, dynamic>> Follow_councellor(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
-    final response = await http.post(
-        Uri.parse(
-            'https://server.sortmycollege.com/counsellor/follower/65cda8f02e9764fb009d587d/$id'),
-        headers: {
-          "Authorization": token,
-          // 'Content-Type': 'application/json',
-        },
-        body: {
-          "user_id": "65cda8f02e9764fb009d587d"
-        });
+
+    final body = jsonEncode({"user_id": id});
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url =
+        Uri.parse('https://server.sortmycollege.com/counsellor/follower/$id');
+
+    final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
-      print('Counsellor updated successfully');
+      //print('Counsellor updated successfully');
+      var data = jsonDecode(response.body.toString());
+      return data;
+    }
+
+    if (response.statusCode == 400) {
+      return {"error": "Counsellor is already followed by the user"};
+    }
+
+    return {};
+  }
+
+  static Future<Map<String, dynamic>> Unfollow_councellor(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final body = jsonEncode({"user_id": id});
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url =
+        Uri.parse('https://server.sortmycollege.com/counsellor/follower/$id');
+
+    final response = await http.put(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      //print('Counsellor updated successfully');
+      var data = jsonDecode(response.body.toString());
+      return data;
+    }
+
+    if (response.statusCode == 404) {
+      return {"error": "Follower not found"};
+    }
+
+    return {};
+  }
+
+  static Future<Map<String, dynamic>> Feedback_councellor(
+      String id, double rating_val, String feedback_msg) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final body = jsonEncode(
+        {"counsellor_id": id, "rating": rating_val, "message": feedback_msg});
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url =
+        Uri.parse('https://server.sortmycollege.com/counsellor/feedback');
+
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      return data;
+    } else if (response.statusCode == 400) {
+      return {"error": "Feedback is already given by the user"};
     } else {
-      throw Exception('Failed to update counsellor');
+      return {"error": "Something went wrong"};
     }
   }
 
-  static Future<void> updateUnFollowers(FollowerModel followerModel) async {
+  static Future<Map<String, dynamic>> counsellor_create_order(String name,
+      String email, double price, String description, String number,) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
-    final response = await http.put(
-        Uri.parse(
-            'https://server.sortmycollege.com/counsellor/follower/658ac1e4ec3ebdc6c088cccc'),
-        headers: {
-          // 'Content-Type': 'application/json',
-          "Authorization": token,
-        },
-        body: {
-          "user_id": "658ac1e4ec3ebdc6c088cccc"
-        });
+    final body = jsonEncode({
+      "amount": price,
+      "email": email,
+      "name": name,
+      "description": description,
+      "phone_no": number
+    });
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url = Uri.parse(
+        'https://server.sortmycollege.com/admin/payments/create-order');
+    final response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      return data;
+    } else if (response.statusCode == 400) {
+      return {"error": ""};
+    } else {
+      return {"error": "Something went wrong"};
+    }
+  }
+
+  static Future<Map<String, dynamic>> counsellor_create_payment(
+      double price,String paymentId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final body = jsonEncode({
+      "amount": price,
+      "payment_id" : paymentId
+    });
+
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+
+    final url = Uri.parse(
+        'https://server.sortmycollege.com/admin/payments/create-order');
+
+    final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
-      print('Follow Successfully');
+      var data = jsonDecode(response.body.toString());
+      return data;
+    } else if (response.statusCode == 400) {
+      return {"error": "Create payment successfully"};
     } else {
-      throw Exception('Failed to Follow');
+      return {"error": "Something went wrong"};
     }
   }
 
@@ -65,18 +160,20 @@ class ApiService {
   }
 
   static Future<List<CounsellorData>> getCounsellorData() async {
-    var url = Uri.parse("https://server.sortmycollege.com//counsellor/");
+    var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final response = await http.get(url, headers: {
-      "Content-Type": "application/json",
-      "Authorization": token,});
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
     var data;
     console.log("Counsellor List : ${response.body}");
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       return List<CounsellorData>.from(
-          data.map((x) => CounsellorData.fromJson(x)));}
+          data.map((x) => CounsellorData.fromJson(x)));
+    }
     if (response.statusCode == 404) {
       return [
         CounsellorData(
@@ -92,19 +189,22 @@ class ApiService {
     }
     return [];
   }
+
   static Future<List<CounsellorData>> getCounsellor_() async {
     var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final response = await http.get(url, headers: {
       "Content-Type": "application/json",
-      "Authorization": token,});
+      "Authorization": token,
+    });
     var data;
     console.log("Counsellor List : ${response.body}");
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       return List<CounsellorData>.from(
-          data.map((x) => CounsellorData.fromJson(x)));}
+          data.map((x) => CounsellorData.fromJson(x)));
+    }
     if (response.statusCode == 404) {
       return [
         CounsellorData(
@@ -177,7 +277,7 @@ class ApiService {
   }
 
   Future call_otp_2({email}) async {
-    print(email);
+    //print(email);
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -201,7 +301,7 @@ class ApiService {
   }
 
   Future call_otp_phone_2({phone}) async {
-    print(phone);
+    //print(phone);
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -226,7 +326,7 @@ class ApiService {
   }
 
   Future verify_otp_2({otp, email}) async {
-    print(email);
+    //print(email);
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -251,7 +351,7 @@ class ApiService {
   }
 
   Future verify_otp_phone_2({otp, phone}) async {
-    print(phone);
+    //print(phone);
     var headers = {
       'Content-Type': 'application/json',
     };

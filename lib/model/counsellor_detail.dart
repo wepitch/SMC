@@ -55,24 +55,24 @@ class CounsellorDetail {
 
   factory CounsellorDetail.fromJson(Map<String, dynamic> json) =>
       CounsellorDetail(
-          id: json["_id"],
-          name: json["name"],
-          email: json["email"],
-          coverImage: json["cover_image"] ?? "",
-          averageRating: json["average_rating"],
+          id: json["_id"] ?? 0,
+          name: json["name"] ?? "",
+          email: json["email"] ?? '',
+          coverImage: json["cover_image"] ?? "https://media.gettyimages.com/id/1334712074/vector/coming-soon-message.jpg?s=612x612&w=0&k=20&c=0GbpL-k_lXkXC4LidDMCFGN_Wo8a107e5JzTwYteXaw=",
+          averageRating: json["average_rating"] ?? 0,
           followersCount: json["followers_count"] ?? 0,
-          experienceInYears: json["experience_in_years"],
-          totalSessionsAttended: json["total_sessions_attended"],
-          gender: json["gender"],
-          qualifications: json["qualifications"],
-          howIWillHelpYou: json["how_will_i_help"],
-          followers: json["followers"],
-          languages: json["languages_spoken"],
-          age: json["age"],
-          personalSessionPrice: json["personal_session_price"],
-          groupSessionPrice: json["group_session_price"],
+          experienceInYears: json["experience_in_years"] ?? 0,
+          totalSessionsAttended: json["total_sessions_attended"] ?? '',
+          gender: json["gender"] ?? '',
+          qualifications: json["qualifications"] ?? '',
+          howIWillHelpYou: json["how_will_i_help"] ?? '',
+          followers: json["followers"] ?? 0,
+          languages: json["languages_spoken"] ?? '',
+          age: json["age"] ?? 0,
+          personalSessionPrice: json["personal_session_price"] ?? 0,
+          groupSessionPrice: json["group_session_price"] ?? 0,
           location: Location.fromjson(
-            json["location"],
+            json["location"] ?? '',
           ));
 
   Map<String, dynamic> toJson() => {
@@ -98,10 +98,10 @@ class Location {
 
   factory Location.fromjson(Map<String, dynamic> json) {
     return Location(
-        city: json["city"],
-        state: json["state"],
-        country: json["country"],
-        pincode: json["pin_code"]);
+        city: json["city"] ?? '',
+        state: json["state"] ?? '',
+        country: json["country"] ?? '',
+        pincode: json["pin_code"] ?? 0);
   }
 
   List<Location> getLocationList(Location location) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -18,6 +20,8 @@ import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../other/api_service.dart';
 
 class CounsellorDetailsScreen extends StatefulWidget {
   const CounsellorDetailsScreen({
@@ -39,6 +43,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   final ListController listController = Get.put(ListController());
   late FollowerProvider followerProvider;
   FollowerModel followerModel = FollowerModel();
+  TextEditingController controller = TextEditingController();
 
   bool visible = false;
   late TabController _controller;
@@ -46,14 +51,16 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   bool isFollowing = false;
   int followerCount = 0;
   bool hasFollowedBefore = false;
+  double rating_val = 0;
+  String feedback_msg = '';
 
   @override
   void initState() {
     super.initState();
     context.read<CounsellorDetailsProvider>().fetchCounsellor_detail(widget.id);
     _controller = TabController(length: 2, vsync: this, initialIndex: 0);
-    followerProvider = Provider.of<FollowerProvider>(context,listen: false);
-    _loadData();
+    followerProvider = Provider.of<FollowerProvider>(context, listen: false);
+    //_loadData();
   }
 
   _loadData() async {
@@ -130,12 +137,8 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
-                                  counsellorDetailController
-                                          .cousnellorlist_detail[0].coverImage
-                                          .contains("http")
-                                      ? counsellorDetailController
-                                          .cousnellorlist_detail[0].coverImage
-                                      : "https://media.gettyimages.com/id/1334712074/vector/coming-soon-message.jpg?s=612x612&w=0&k=20&c=0GbpL-k_lXkXC4LidDMCFGN_Wo8a107e5JzTwYteXaw=",
+                                   counsellorDetailController
+                                          .cousnellorlist_detail[0].coverImage,
                                   fit: BoxFit.cover,
                                   errorBuilder: (BuildContext context,
                                       Object exception,
@@ -203,12 +206,80 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   width: 110,
                                   height: 34,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: const Color(0xff1f0a68)),
+                                    border: Border.all(
+                                        color: const Color(0xff1f0a68)),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: TextButton(
                                     onPressed: () async {
-                                      await context.read<FollowerProvider>().toggleFollowState(followerModel,widget.id);
+                                      if (isFollowing == true) {
+                                        var value = await ApiService
+                                            .Unfollow_councellor(widget.id);
+                                        if (value["message"] ==
+                                            "User is now unfollowing the counsellor") {
+                                          EasyLoading.showToast(
+                                              value["message"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                            followerCount--;
+                                          });
+                                        } else if (value["error"] ==
+                                            "Follower not found") {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                            followerCount--;
+                                          });
+                                        } else {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                          });
+                                        }
+                                      } else {
+                                        var value =
+                                            await ApiService.Follow_councellor(
+                                                widget.id);
+                                        if (value["message"] ==
+                                            "User is now following the counsellor") {
+                                          EasyLoading.showToast(
+                                              value["message"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = true;
+                                            followerCount++;
+                                          });
+                                        } else if (value["error"] ==
+                                            "Counsellor is already followed by the user") {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = true;
+                                            followerCount++;
+                                          });
+                                        } else {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                          });
+                                        }
+                                      }
                                     },
                                     style: TextButton.styleFrom(
                                       padding: EdgeInsets.zero,
@@ -235,7 +306,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     ),
                                   ),
                                 ),
-
                                 const SizedBox(height: 8),
                                 Row(
                                   children: [
@@ -247,7 +317,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     const SizedBox(width: 4),
                                     Text(
                                       // followingweY (2958:442)
-                                      '${counsellorDetailController.cousnellorlist_detail[0].followersCount} '
+                                      '$followerCount '
                                       "Following",
                                       style: SafeGoogleFont(
                                         'Inter',
@@ -575,17 +645,25 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                         const Text('Give a Review',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
-                        const Row(
+                        Row(
                           children: [
-                            SizedBox(width: 6),
-                            Icon(Icons.star_border,
-                                color: Colors.amber, size: 18),
-                            Icon(Icons.star_border,
-                                color: Colors.amber, size: 18),
-                            Icon(Icons.star_border,
-                                color: Colors.amber, size: 18),
-                            Icon(Icons.star, color: Colors.amber, size: 18),
-                            Icon(Icons.star, color: Colors.amber, size: 18),
+                            RatingBar.builder(
+                              initialRating: 1,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 18,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (rating) {
+                                setState(() {
+                                  rating_val = rating;
+                                });
+                              },
+                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -597,20 +675,41 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                const Text('commit',
-                                    style: TextStyle(color: Colors.black38)),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/page-1/images/ic-baseline-send.png',
-                                  width: 21,
-                                  height: 18,
-                                ),
-                              ],
-                            ),
+                          child: TextFormField(
+                            onChanged: (value) {
+                              feedback_msg = value;
+                            },
+                            controller: controller,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.only(
+                                    left: 8.0, top: 14, bottom: 10),
+                                hintText: 'commit',
+                                suffixIcon: IconButton(
+                                  onPressed: () async {
+                                    var value =
+                                        await ApiService.Feedback_councellor(
+                                            widget.id,rating_val,feedback_msg);
+                                    if (value["error"] ==
+                                        "Feedback is already given by the user") {
+                                      EasyLoading.showToast(value["error"],
+                                          toastPosition:
+                                              EasyLoadingToastPosition.bottom);
+                                    } else{
+                                      (value["message"] ==
+                                          "Feedback has been successfully added");
+                                      EasyLoading.showToast(value["message"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                    }
+                                    controller.clear();
+                                  },
+                                  icon: const Icon(
+                                    Icons.send_sharp,
+                                    size: 22,
+                                    color: Colors.black54,
+                                  ),
+                                )),
                           ),
                         ),
                         // HiddenText(
@@ -841,9 +940,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(
-                                          const CounsellingSessionPage2(name: '', id: '',)
-                                      );
+                                      Get.to(const CounsellingSessionPage2(
+                                        name: '',
+                                        id: '',
+                                      ));
                                     },
                                     child: Container(
                                       // group349P36 (2936:462)
@@ -1067,7 +1167,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   GestureDetector(
                                     onTap: () {
                                       Get.to(
-                                          const CounsellingSessionPage(name: "", id: '',),
+                                        const CounsellingSessionPage(
+                                          name: "",
+                                          id: '',
+                                        ),
                                       );
                                     },
                                     child: Container(
@@ -1115,7 +1218,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
 
   Padding buildPadding() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8,top: 20),
+      padding: const EdgeInsets.only(left: 8, right: 8, top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -1136,8 +1239,8 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                     ),
                     child: Center(
                       child: ClipOval(
-                        child: Image.network(
-                          "https://media.gettyimages.com/id/1334712074/vector/coming-soon-message.jpg?s=612x612&w=0&k=20&c=0GbpL-k_lXkXC4LidDMCFGN_Wo8a107e5JzTwYteXaw=",
+                        child: Image.asset(
+                          'assets/page-1/images/comming_soon.png',
                           fit: BoxFit.cover,
                         ),
                       ),

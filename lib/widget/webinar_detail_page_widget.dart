@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class WebinarDetailsPageWidget extends StatefulWidget {
   const WebinarDetailsPageWidget({super.key});
@@ -363,11 +364,14 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                             child: const Text('Cancel'),
                           ),
                           TextButton(
-                            onPressed: () async {
-                              await _updateRegistrationStatus(true);
+                            onPressed: ()async {
+                              launchUrlString(
+                                  'https://app.zoom.us/wc/join/6876923575?fromPWA=1&pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1&_x_zm_rtaid=dMkrHAzTSv2KH-k63GFIIg.1709188412516.3a0d504b72c1403587e5715af973a35f&_x_zm_rhtaid=220');
                               if (mounted) {
                                 Navigator.pop(context);
                               }
+                              await _updateRegistrationStatus(
+                                  true);
                             },
                             child: const Text('Yes'),
                           ),

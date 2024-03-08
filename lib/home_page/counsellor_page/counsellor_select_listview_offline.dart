@@ -328,7 +328,10 @@ class _CounsellorListPage_offlineState
                                           String id = listController.cousnellorlist_data[0].id;
                                           String name = listController.cousnellorlist_data[0].name;
 
-                                          onTap_goto_detailPage(context, id, name);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
                                       },
                                               child: Container(
                                                   color: Colors.white,
@@ -712,7 +715,10 @@ class _CounsellorListPage_offlineState
                                                                                                     String id = listController.cousnellorlist_data[index].id;
                                                                                                     String name = listController.cousnellorlist_data[index].name;
 
-                                                                                                    onTap_goto_detailPage(context, id, name);
+                                                                                                    Navigator.push(
+                                                                                                        context,
+                                                                                                        MaterialPageRoute(
+                                                                                                            builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
                                                                                                   },
                                                                                                   child: SizedBox(
                                                                                                     width: 130.85,
@@ -1099,13 +1105,6 @@ class _CounsellorListPage_offlineState
         context,
         MaterialPageRoute(
             builder: (context) => CounsellingSessionPage(name: name, id: id)));
-  }
-
-  void onTap_goto_detailPage(BuildContext, String id, String name) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
   }
 
   Future<bool> _onBackPressed() async {

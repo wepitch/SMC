@@ -5,7 +5,10 @@ import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/phone/login.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../home_page/counsellor_page/razorpay_payment.dart';
 
 class SplashScreen2 extends StatefulWidget {
   const SplashScreen2({super.key});
@@ -365,6 +368,47 @@ class _SplashScreen2State extends State<SplashScreen2> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () {
+            //         launchUrlString(
+            //             'https://app.zoom.us/wc/join/6876923575?fromPWA=1&pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1&_x_zm_rtaid=dMkrHAzTSv2KH-k63GFIIg.1709188412516.3a0d504b72c1403587e5715af973a35f&_x_zm_rhtaid=220');
+            //       },
+            //       child: Text(
+            //         'Zoom Meeting By Browser',
+            //         style: SafeGoogleFont(
+            //           'Roboto',
+            //           fontSize: 12,
+            //           fontWeight: FontWeight.w400,
+            //           height: 1.4826653059,
+            //           color: Colors.pinkAccent,
+            //         ),
+            //       ),
+            //     ),
+            //     const Text('|'),
+            //     GestureDetector(
+            //       onTap: () {
+            //         launch(
+            //             'https://us05web.zoom.us/j/6876923575?pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1');
+            //       },
+            //       child: Text(
+            //         'Zoom Meeting By App',
+            //         style: SafeGoogleFont(
+            //           'Roboto',
+            //           fontSize: 12,
+            //           fontWeight: FontWeight.w400,
+            //           height: 1.4826653059,
+            //           color: Colors.pinkAccent,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             const Spacer(),
             GestureDetector(
               onTap: () {
@@ -387,6 +431,13 @@ class _SplashScreen2State extends State<SplashScreen2> {
         ),
       ),
     );
+  }
+  void launchUrlString(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
 

@@ -1,60 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:myapp/other/api_service.dart';
-import 'package:myapp/page-1/dashboard-session-group-new.dart';
-import 'package:myapp/home_page/homepagecontainer_2.dart';
-import 'package:myapp/utils.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'dashboard-session-personnel-new.dart';
-
-class CounsellingSessionPage extends StatefulWidget {
-  const CounsellingSessionPage(
-      {super.key, required this.name, required this.id});
-
-  final String name;
-  final String id;
+class RazorpayPaymentScreen extends StatefulWidget {
+  const RazorpayPaymentScreen({super.key});
 
   @override
-  State<CounsellingSessionPage> createState() => _CounsellingSessionPageState();
+  State<RazorpayPaymentScreen> createState() => _RazorpayPaymentScreenState();
 }
 
-class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
-  late PageController _controller;
-  int selectedIndex = 0;
+class _RazorpayPaymentScreenState extends State<RazorpayPaymentScreen> {
   late Razorpay razorpay;
   TextEditingController amountController = TextEditingController();
-  String email = '';
-
-  void getEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    email = prefs.getString("email") ?? "N/A";
-    setState(() {});
-  }
-
-  //updated
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getEmail();
-    _controller = PageController(initialPage: selectedIndex);
-    razorpay = Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _controller.dispose();
-    razorpay.clear();
-    super.dispose();
-  }
 
   void openCheckOut(amount) async {
     amount = amount * 100;
@@ -81,24 +38,10 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
     }
   }
 
-  void handlePaymentSuccess(PaymentSuccessResponse response)async {
+  void handlePaymentSuccess(PaymentSuccessResponse response) {
     Fluttertoast.showToast(
         msg: "Payment Success ${response.paymentId!}",
         toastLength: Toast.LENGTH_SHORT);
-    var value =
-        await    ApiService.counsellor_create_payment(10,response.paymentId!);
-    if (value["error"] ==
-        "payment not successfully done") {
-      EasyLoading.showToast(value["error"],
-          toastPosition:
-          EasyLoadingToastPosition.bottom);
-    } else{
-      (value["message"] ==
-          "payment successfully done");
-      EasyLoading.showToast(value["message"],
-          toastPosition:
-          EasyLoadingToastPosition.bottom);
-    }
   }
 
   void handlePaymentError(PaymentFailureResponse response) {
@@ -114,139 +57,100 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    razorpay.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    razorpay = Razorpay();
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // double baseWidth = 430;
-    // double fem = MediaQuery.of(context).size.width / baseWidth;
-    // double ffem = fem * 0.97;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xff1F0A68),
-        foregroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Image.asset(
-              'assets/page-1/images/back.png',
+      backgroundColor: Colors.grey[800],
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 100,
             ),
-          ),
-        ),
-        titleSpacing: -5,
-        title: Text(
-          widget.name,
-          style: SafeGoogleFont("Inter",
-              fontSize: 22, fontWeight: FontWeight.w600),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: IconButton(
-              onPressed: () {
-                openCheckOut(20);
-              },
-              icon: const Icon(
-                Icons.currency_exchange,
-                color: Colors.white,
-                size: 20,
+            // Image.asset(
+            //   'assets/page-1/images/sortmycollege-logo-1.png',
+            //   width: 300,
+            //   height: 100,
+            // ),
+            // SizedBox(
+            //   height: 100,
+            // ),
+            Text(
+              'Welcome to Eazorpay Payment Gateway Integration',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: TextFormField(
+                cursorColor: Colors.white,
+                autofocus: false,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: 'Enter Amount to be paid',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.white,
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  errorStyle: TextStyle(color: Colors.redAccent, fontSize: 15),
+                ),
+                controller: amountController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter Amount to be paid";
+                  }
+                  return null;
+                },
               ),
             ),
-          ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              customButton(
-                  onPressed: () {
-                    selectedIndex = 0;
-                    _controller.jumpToPage(selectedIndex);
-                    setState(() {});
-                  },
-                  title: "Group Session",
-                  isPressed: selectedIndex == 0),
-              customButton(
-                  onPressed: () {
-                    selectedIndex = 1;
-                    _controller.jumpToPage(selectedIndex);
-                    setState(() {});
-                  },
-                  title: "Personal Session",
-                  isPressed: selectedIndex == 1),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 0.5,
-            width: double.infinity,
-            color: Colors.black,
-          ),
-          Expanded(
-            // flex: 2,
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
-              controller: _controller,
-              children: [
-                Counseling_Session_group(
-                  name: widget.name,
-                  id: widget.id,
-                ),
-                Counseling_Session_Personnel(
-                  id: widget.id,
-                  name: widget.name,
-                )
-              ],
+            SizedBox(
+              height: 30,
             ),
-          )
-        ],
+            ElevatedButton(
+              onPressed: () {
+                if (amountController.text.toString().isNotEmpty) {
+                  setState(() {
+                    int amount = int.parse(amountController.text.toString());
+                    openCheckOut(amount);
+                  });
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Make Amount'),
+              ),
+            ),
+          ],
+        ),
       ),
-    );
-  }
-
-  Future<bool> _onBackPressed() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HomePageContainer_2()),
-    );
-    return true;
-  }
-
-  Widget customButton(
-      {required String title,
-      required bool isPressed,
-      required VoidCallback onPressed}) {
-    return SizedBox(
-      height: 45,
-      width: 175,
-      child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)
-                      // borderRadius: BorderRadius.circular(10),
-                      ),
-              side: isPressed
-                  ? BorderSide.none
-                  : const BorderSide(color: Color(0xff1F0A68)),
-              foregroundColor:
-                  isPressed ? Colors.white : const Color(0xff1F0A68),
-              backgroundColor:
-                  isPressed ? const Color(0xffE3398C) : Colors.transparent),
-          onPressed: onPressed,
-          child: Text(title)),
     );
   }
 }
