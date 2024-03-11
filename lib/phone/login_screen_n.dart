@@ -31,7 +31,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
   @override
   void initState() {
     super.initState();
-    configLoading();
+    //configLoading();
   }
 
   var phone = '';
@@ -46,212 +46,216 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
     double ffem = fem * 0.97;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/page-1/images/Group 627.png',
-            fit: BoxFit.cover,
-            height: 260,
-          ),
-          const SizedBox(height: 10,),
-          const Text(
-            'Let’s get you started!',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          SizedBox(
-            height: mHeight * 0.04,
-          ),
-          const Text(
-            ' Your phone number will be your\npassword, we will send you a code\n on your mobile device which will',
-            style: TextStyle(fontSize: 14),
-          ),
-          const Text(
-            'allow you to login!',
-            style: TextStyle(fontSize: 14),
-          ),
-          Container(
-            padding:
-                EdgeInsets.fromLTRB(60 * fem, 37 * fem, 60 * fem, 91 * fem),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          cursorColor: Colors.black,
-                          keyboardType: TextInputType.phone,
-                          onChanged: (value) {
-                            phone = value;
-                          },
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(10),
-                          ],
-                          decoration: const InputDecoration(
-                            hintStyle: TextStyle(
-                                color: Colors.black54, fontSize: 15.0),
-                            hintText: "Phone Number",
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                          ),
-                          style: SafeGoogleFont(
-                            'Roboto',
-                            fontSize: 18 * ffem,
-                            fontWeight: FontWeight.w400,
-                            height: 1.4010 * ffem / fem,
-                            color: const Color(0xff000000),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 60),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/page-1/images/Group 627.png',
+                fit: BoxFit.cover,
+                height: 250,
+              ),
+              const SizedBox(height: 10,),
+              const Text(
+                'Let’s get you started!',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              ),
+              SizedBox(
+                height: mHeight * 0.04,
+              ),
+              const Text(
+                ' Your phone number will be your\npassword, we will send you a code\n on your mobile device which will',
+                style: TextStyle(fontSize: 14),
+              ),
+              const Text(
+                'allow you to login!',
+                style: TextStyle(fontSize: 14),
+              ),
+              Container(
+                padding:
+                    EdgeInsets.fromLTRB(60 * fem, 37 * fem, 60 * fem, 91 * fem),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'I accept terms and conditions',
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // if (check_val()) {
-                    //   onTapGettingstarted(
-                    //       context, phoneController.text.toString());
-                    // }
-
-                  },
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        // setState(() {
-                        //   isLoading = true;
-                        // });
-                        // try {
-                        //   await FirebaseAuth.instance.verifyPhoneNumber(
-                        //     phoneNumber: countryController.text + phone,
-                        //     verificationCompleted:
-                        //         (PhoneAuthCredential credential) {},
-                        //     verificationFailed: (FirebaseAuthException e) {},
-                        //     codeSent:
-                        //         (String verificationId, int? resendToken) {
-                        //       LoginScreenNew.verify = verificationId;
-                        //       setState(() {
-                        //         isLoading = false;
-                        //       });
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => PhoneOtpScreen(),
-                        //         ),
-                        //       );
-                        //     },
-                        //     codeAutoRetrievalTimeout:
-                        //         (String verificationId) {},
-                        //   );
-                        // } catch (e) {
-                        //   if (kDebugMode) {
-                        //     print('Error $e');
-                        //   }
-                        // }
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => const PhoneOtpScreenNew()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorsConst.appBarColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1.6,
+                          color: ColorsConst.appBarColor,
                         ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: isLoading
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                color: ColorsConst.whiteColor,
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: TextField(
+                              cursorColor: Colors.black,
+                              keyboardType: TextInputType.phone,
+                              onChanged: (value) {
+                                phone = value;
+                              },
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(10),
+                              ],
+                              decoration: const InputDecoration(
+                                hintStyle: TextStyle(
+                                    color: Colors.black54, fontSize: 15.0),
+                                hintText: "Phone Number",
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
                               ),
-                            )
-                          : Text(
-                              'Log in',
-                              textAlign: TextAlign.center,
                               style: SafeGoogleFont(
+                                backgroundColor: Colors.white,
                                 'Roboto',
-                                fontSize: 20 * ffem,
+                                fontSize: 18 * ffem,
                                 fontWeight: FontWeight.w400,
-                                height: 1.1725 * ffem / fem,
-                                color: const Color(0xffffffff),
+                                height: 1.4010 * ffem / fem,
+                                color: const Color(0xff000000),
                               ),
                             ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Divider(color: Colors.black, endIndent: 60, indent: 60),
-                SizedBox(
-                  height: mHeight * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Don’t have an account? ',
-                      style: SafeGoogleFont(
-                        'Roboto',
-                        fontSize: 15 * ffem,
-                        fontWeight: FontWeight.w400,
-                        height: 1.4826653059 * ffem / fem,
-                        color: const Color(0xff000000),
+                          ),
+                        ],
                       ),
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: isChecked,
+                          overlayColor: MaterialStatePropertyAll(Color(0xff1F0A68)),
+                          onChanged: (value) {
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'I accept terms and conditions',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignupScreenNew()));
+                        // if (check_val()) {
+                        //   onTapGettingstarted(
+                        //       context, phoneController.text.toString());
+                        // }
                       },
-                      child: Text(
-                        'Sign up',
-                        style: SafeGoogleFont(
-                          'Roboto',
-                          fontSize: 17 * ffem,
-                          fontWeight: FontWeight.w700,
-                          height: 1.4826653059 * ffem / fem,
-                          color: const Color(0xff000000),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // setState(() {
+                            //   isLoading = true;
+                            // });
+                            // try {
+                            //   await FirebaseAuth.instance.verifyPhoneNumber(
+                            //     phoneNumber: countryController.text + phone,
+                            //     verificationCompleted:
+                            //         (PhoneAuthCredential credential) {},
+                            //     verificationFailed: (FirebaseAuthException e) {},
+                            //     codeSent:
+                            //         (String verificationId, int? resendToken) {
+                            //       LoginScreenNew.verify = verificationId;
+                            //       setState(() {
+                            //         isLoading = false;
+                            //       });
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) => PhoneOtpScreen(),
+                            //         ),
+                            //       );
+                            //     },
+                            //     codeAutoRetrievalTimeout:
+                            //         (String verificationId) {},
+                            //   );
+                            // } catch (e) {
+                            //   if (kDebugMode) {
+                            //     print('Error $e');
+                            //   }
+                            // }
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) => const PhoneOtpScreenNew()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorsConst.appBarColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: isLoading
+                              ? CircularProgressIndicator(
+                                color: Colors.pink,
+                              )
+                              : Text(
+                                  'Log in',
+                                  textAlign: TextAlign.center,
+                                  style: SafeGoogleFont(
+                                    'Roboto',
+                                    fontSize: 20 * ffem,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.1725 * ffem / fem,
+                                    color: const Color(0xffffffff),
+                                  ),
+                                ),
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(color: Colors.black, endIndent: 60, indent: 60),
+                    SizedBox(
+                      height: mHeight * 0.01,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don’t have an account? ',
+                          style: SafeGoogleFont(
+                            'Roboto',
+                            fontSize: 16 * ffem,
+                            fontWeight: FontWeight.w400,
+                            height: 1.4826653059 * ffem / fem,
+                            color: const Color(0xff000000),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignupScreenNew()));
+                          },
+                          child: Text(
+                            'Sign up',
+                            style: SafeGoogleFont(
+                              'Roboto',
+                              fontSize: 17 * ffem,
+                              fontWeight: FontWeight.w600,
+                              height: 1.4826653059 * ffem / fem,
+                              color: const Color(0xff1F0A68),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -267,7 +271,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
 
       if (value["message"] == "Email sent successfully") {
         EasyLoading.showToast(value["message"],
-            toastPosition: EasyLoadingToastPosition.bottom);
+            toastPosition: EasyLoadingToastPosition.bottom,);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("name", nameController.text.toString());
         if (!mounted) return;

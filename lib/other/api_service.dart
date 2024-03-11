@@ -21,7 +21,7 @@ class ApiService {
       "Authorization": token,
     };
     final url =
-        Uri.parse('https://server.sortmycollege.com/counsellor/follower/$id');
+        Uri.parse('${AppConstants.baseUrl}/counsellor/follower/$id');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -48,7 +48,7 @@ class ApiService {
       "Authorization": token,
     };
     final url =
-        Uri.parse('https://server.sortmycollege.com/counsellor/follower/$id');
+        Uri.parse('${AppConstants.baseUrl}/counsellor/follower/$id');
 
     final response = await http.put(url, headers: headers, body: body);
 
@@ -77,7 +77,7 @@ class ApiService {
       "Authorization": token,
     };
     final url =
-        Uri.parse('https://server.sortmycollege.com/counsellor/feedback');
+        Uri.parse('${AppConstants.baseUrl}/counsellor/feedback');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -107,7 +107,7 @@ class ApiService {
       "Authorization": token,
     };
     final url = Uri.parse(
-        'https://server.sortmycollege.com/admin/payments/create-order');
+        '${AppConstants.baseUrl}/admin/payments/create-order');
     final response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body.toString());
@@ -135,7 +135,7 @@ class ApiService {
     };
 
     final url = Uri.parse(
-        'https://server.sortmycollege.com/admin/payments/create-order');
+        '${AppConstants.baseUrl}/admin/payments/create-order');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -160,7 +160,7 @@ class ApiService {
   }
 
   static Future<List<CounsellorData>> getCounsellorData() async {
-    var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
+    var url = Uri.parse("${AppConstants.baseUrl}/counsellor/");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final response = await http.get(url, headers: {
@@ -191,7 +191,7 @@ class ApiService {
   }
 
   static Future<List<CounsellorData>> getCounsellor_() async {
-    var url = Uri.parse("https://server.sortmycollege.com/counsellor/");
+    var url = Uri.parse("${AppConstants.baseUrl}/counsellor/");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final response = await http.get(url, headers: {
@@ -222,7 +222,7 @@ class ApiService {
   }
 
   static Future<List<CounsellorDetail>> getCounsellor_Detail(String id) async {
-    var url = Uri.parse("https://server.sortmycollege.com/counsellor/$id");
+    var url = Uri.parse("${AppConstants.baseUrl}/counsellor/$id");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final response = await http.get(url, headers: {

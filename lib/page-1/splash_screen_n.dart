@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/home_page/homepagecontainer.dart';
+import 'package:myapp/page-1/edulevel_new.dart';
+import 'package:myapp/page-1/select_gender_new.dart';
+import 'package:myapp/page-1/selectdob_new.dart';
+import 'package:myapp/page-1/selectgender.dart';
 import 'package:myapp/page-1/shared.dart';
 import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/page-1/sign_up_screen_new.dart';
@@ -30,45 +34,28 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
     print(mWidth);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               // sortmycollegelogo1WFT (1115:272)
-              width: mWidth * 0.7,
-              height: mHeight * 0.08,
+              width: mWidth * 0.5,
+              height: mHeight * 0.06,
               padding: const EdgeInsets.all(0),
-
-              margin: EdgeInsets.fromLTRB(0, mHeight * 0.12, 0, 24),
-
+              margin: EdgeInsets.fromLTRB(0, mHeight * 0.10,7, 36),
               child: Image.asset(
                 'assets/page-1/images/sortmycollege-logo-1.png',
                 fit: BoxFit.fitWidth,
                 height: MediaQuery.of(context).size.height,
               ),
             ),
-            // Container(
-            //   // sortyourentirecollegejourneyDQ (1115:271)
-            //   margin: EdgeInsets.fromLTRB(0, 0, 0, mHeight * 0.04),
-            //   child: Text(
-            //     'All in one platform for student',
-            //     textAlign: TextAlign.center,
-            //     style: SafeGoogleFont(
-            //       'Roboto',
-            //       fontSize: 16,
-            //       fontWeight: FontWeight.w700,
-            //       height: 1.1725,
-            //       color: const Color(0xff1f0a68),
-            //     ),
-            //   ),
-            // ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.06,
+              height: MediaQuery.of(context).size.height * 0.00,
             ),
             Container(
-              width: 340,
-              height: 240,
+              width: 360,
+              height: 270,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/page-1/images/splash_image.png"),
@@ -88,7 +75,7 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                       color: Colors.black,
                       fontSize: 16,
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       height: 0,
                     ),
                   ),
@@ -98,7 +85,7 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                       color: Colors.black,
                       fontSize: 16,
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       height: 0,
                     ),
                   ),
@@ -108,7 +95,7 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                       color: Colors.black,
                       fontSize: 16,
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       height: 0,
                     ),
                   ),
@@ -130,9 +117,11 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreenNew()));
+                                builder: (context) => const LoginScreenNew()));
                       },
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: const BorderSide(
@@ -143,8 +132,8 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                       child: const Text('Log In',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600)),
                     ),
                   ),
                   SizedBox(
@@ -157,18 +146,19 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignupScreenNew()));
+                                builder: (context) => const SignupScreenNew()));
                       },
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.all(14),
+                          padding: const EdgeInsets.all(12),
                           backgroundColor: const Color(0xff1F0A68)),
                       child: const Text('Register',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
+                              fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],

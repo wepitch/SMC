@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/news/provider/news_provider.dart';
 import 'package:myapp/page-1/edulevel.dart';
+import 'package:myapp/page-1/selectdob_new.dart';
 import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/page-1/sign_up_screen_new.dart';
 import 'package:myapp/phone/login.dart';
@@ -57,14 +58,14 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
 
   final defaultPinTheme = PinTheme(
     width: 56,
-    height: 56,
-    textStyle: TextStyle(
+    height: 60,
+    textStyle: const TextStyle(
         fontSize: 20,
-        color: Color.fromRGBO(30, 60, 87, 1),
+        color: Colors.black,
         fontWeight: FontWeight.w600),
     decoration: BoxDecoration(
-      border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: ColorsConst.appBarColor),
+      borderRadius: BorderRadius.circular(8),
     ),
   );
 
@@ -72,12 +73,13 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
   Widget build(BuildContext context) {
     var code = '';
     return Scaffold(
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              Container(
+                height: 300,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -87,17 +89,16 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                   children: [
                     Image.asset(
                       'assets/page-1/images/www 1 (1).png',
-                      height: 280,
+                      height: 240,
                       width: 280,
                     ),
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              child: Container(
+              Container(
+                height: 460,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xffF6F7F7),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(100),
@@ -105,10 +106,11 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 60, left: 20, right: 20, bottom: 120),
+                      top: 40, left: 20, right: 20, bottom: 180),
                   child: Column(
                     children: [
                       Pinput(
+                        defaultPinTheme: defaultPinTheme,
                         length: 4,
                         showCursor: true,
                         onChanged: (value) {
@@ -165,7 +167,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const SignupScreenNew()));
+                                                  const SelectDobNew()));
                                     }
                                   } catch (e) {
                                     if (kDebugMode) {
@@ -181,7 +183,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const SignupScreenNew()));
+                                                const SelectDobNew()));
                                   }
                                   // Fluttertoast.showToast(
                                   //     msg: 'Verify Otp Successfully');
@@ -201,7 +203,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                               : const Text(
                                   'Submit OTP',
                                   style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
+                                      fontSize: 18, color: Colors.white),
                                 ),
                         ),
                       ),
@@ -209,8 +211,8 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       backgroundColor: Colors.white,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/page-1/edulevel.dart';
+import 'package:myapp/page-1/selectdob_new.dart';
 import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/utils.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -309,7 +310,7 @@ class _OtpState extends State<Otp> {
 
   void onTapGettingstarted(BuildContext context) {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const EducationLevel()));
+        MaterialPageRoute(builder: (context) => const SelectDobNew()));
   }
 
   void configLoading() {
