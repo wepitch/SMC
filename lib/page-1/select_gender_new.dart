@@ -145,6 +145,7 @@ class _SelectGenderNewState extends State<SelectGenderNew> {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
     );
   }
 }
@@ -161,6 +162,7 @@ Widget customButton(
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
+          elevation: 0,
           side: BorderSide(
             color: Color(0xff1F0A68)
           ),

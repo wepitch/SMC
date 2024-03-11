@@ -222,9 +222,9 @@ class _SelectDobNewState extends State<SelectDobNew> {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
     );
   }
-
   Widget customButton({
     required VoidCallback onPressed,
     required String title,
@@ -237,7 +237,8 @@ class _SelectDobNewState extends State<SelectDobNew> {
         child: OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-              side: BorderSide(color: Color(0xff1F0A68)),
+            elevation: 0,
+              side: const BorderSide(color: Color(0xff1F0A68)),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
               shape: RoundedRectangleBorder(
