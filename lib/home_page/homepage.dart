@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home_page/drawer/drawer_1.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
@@ -73,7 +74,10 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Text(
                 'Hello, $username',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(
+                    fontSize: 18,
+                    color: Color(0xff1F0A68),
+                    fontWeight: FontWeight.w500),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
@@ -83,7 +87,7 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        backgroundColor: const Color(0xff1F0A68),
+        backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.only(left: 30, top: 18, bottom: 18),
@@ -93,6 +97,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: Image.asset(
               'assets/page-1/images/group-59.png',
+              color: const Color(0xff1F0A68),
             ),
           ),
         ),
@@ -113,6 +118,7 @@ class _HomePageState extends State<HomePage> {
               'assets/page-1/images/bell.png',
               width: 18,
               height: 18,
+              color: const Color(0xff1F0A68),
             ),
           ),
           const SizedBox(
@@ -133,87 +139,61 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 2 * fem, 29 * fem),
+                    margin:
+                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 2 * fem, 8 * fem),
                     width: double.infinity,
-                    height: 113 * fem,
+                    height: 120 * fem,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            onTapgotocounsellor(context);
-                          },
+                        Expanded(
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(
-                                12 * fem, 7 * fem, 12 * fem, 12.66 * fem),
-                            width: 110 * fem,
-                            height: 114 * fem,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 4),
-                                  blurRadius: 4,
-                                  color: Colors.black.withOpacity(0.1),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(bottom: 5),
-                                    width: 32,
-                                    height: 62,
-                                    child: Image.asset(
-                                      'assets/page-1/images/untitled-design-5-1.png',
-                                      // fit: BoxFit.cover,
+                            height: 100,
+                            decoration: const BoxDecoration(),
+                            child: GestureDetector(
+                              onTap: () {
+                                onTapgotocounsellor(context);
+                              },
+                              child: Container(
+                                width: 140 * fem,
+                                height: 100 * fem,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff9584B0),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0, 4),
+                                      blurRadius: 4,
+                                      color: Colors.black.withOpacity(0.1),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                                Text(
-                                  'Counsellor',
-                                  textAlign: TextAlign.center,
-                                  style: SafeGoogleFont(
-                                    'Inter',
-                                    fontSize: 12 * ffem,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.2125 * ffem / fem,
-                                    color: const Color(0xff000000),
-                                  ),
+                                child: Image.asset(
+                                  "assets/page-1/images/Frame 412.png",
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(
-                              23 * fem, 2 * fem, 0 * fem, 0 * fem),
-                          height: double.infinity,
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  EasyLoading.showToast("Coming Soon..",
-                                      toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                },
+                              Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 23 * fem, 0 * fem),
                                   padding: EdgeInsets.fromLTRB(
                                       15 * fem, 4 * fem, 9 * fem, 6 * fem),
                                   width: 110 * fem,
-                                  height: 114 * fem,
+                                  height: 120 * fem,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
+                                    color: const Color(0xffE86C86),
+                                    borderRadius: BorderRadius.circular(20),
                                     boxShadow: [
                                       BoxShadow(
                                         offset: const Offset(0, 4),
@@ -222,121 +202,8 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 0 * fem, 7 * fem),
-                                          width: double.infinity,
-                                          height: 62 * fem,
-                                          child: Stack(
-                                            children: [
-                                              Align(
-                                                child: SizedBox(
-                                                  width: 72 * fem,
-                                                  height: 55 * fem,
-                                                  child: TextButton(
-                                                    onPressed: () {},
-                                                    style: TextButton.styleFrom(
-                                                      padding: EdgeInsets.zero,
-                                                    ),
-                                                    child: Container(),
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                child: SizedBox(
-                                                  width: 82 * fem,
-                                                  height: 58 * fem,
-                                                  child: Image.asset(
-                                                    'assets/page-1/images/untitled-design-6-1.png',
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 7 * fem, 0 * fem),
-                                        child: Text(
-                                          'Entrance \nPreparation',
-                                          textAlign: TextAlign.center,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 12 * ffem,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1.2125 * ffem / fem,
-                                            color: const Color(0xff000000),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  EasyLoading.showToast("Coming Soon..",
-                                      toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                },
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20 * fem, 8 * fem, 20 * fem, 13 * fem),
-                                  width: 110 * fem,
-                                  height: 114 * fem,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 4,
-                                        color: Colors.black.withOpacity(0.1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 0 * fem, 9 * fem),
-                                        width: 68 * fem,
-                                        height: 66 * fem,
-                                        child: Image.asset(
-                                          'assets/page-1/images/mask-group-SbT.png',
-                                          width: 68 * fem,
-                                          height: 66 * fem,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                            0 * fem, 0 * fem, 1 * fem, 0 * fem),
-                                        child: Text(
-                                          'Connect',
-                                          textAlign: TextAlign.center,
-                                          style: SafeGoogleFont(
-                                            'Inter',
-                                            fontSize: 12 * ffem,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1.2125 * ffem / fem,
-                                            color: const Color(0xff000000),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  child: Image.asset(
+                                    "assets/page-1/images/Frame 413.png",
                                   ),
                                 ),
                               ),
@@ -346,6 +213,9 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 14,
+                  ),
                   SizedBox(
                     width: double.infinity,
                     height: 113 * fem,
@@ -353,144 +223,62 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            EasyLoading.showToast("Coming Soon..",
-                                toastPosition: EasyLoadingToastPosition.bottom);
-                          },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 10 * fem),
-                            width: 110 * fem,
-                            height: 114 * fem,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 4),
-                                  blurRadius: 4,
-                                  color: Colors.black.withOpacity(0.1),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                                    padding: EdgeInsets.fromLTRB(
-                                        30 * fem, 8 * fem, 30 * fem, 1 * fem),
-                                    width: double.infinity,
-                                    child: Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: SizedBox(
-                                        width: 68 * fem,
-                                        height: 62 * fem,
-                                        child: Image.asset(
-                                          'assets/page-1/images/hostel-1-1.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Fluttertoast.showToast(msg: 'Coming soon...');
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  20 * fem, 8 * fem, 20 * fem, 13 * fem),
+                              width: 110 * fem,
+                              height: 120 * fem,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                color: Color(0xff6450A8),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 4),
+                                    blurRadius: 4,
+                                    color: Colors.black.withOpacity(0.1),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 2 * fem, 1 * fem, 0),
-                                  child: Text(
-                                    'Student \nAccommodation',
-                                    textAlign: TextAlign.center,
-                                    style: SafeGoogleFont(
-                                      'Inter',
-                                      fontSize: 12 * ffem,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xff000000),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
+                              child: Image.asset(
+                                "assets/page-1/images/Frame 416.png",
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(
-                              23 * fem, 2 * fem, 0 * fem, 0 * fem),
-                          height: double.infinity,
+                        const SizedBox(
+                          width: 14,
+                        ),
+                        Expanded(
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    0 * fem, 0 * fem, 25 * fem, 0 * fem),
-                                child: TextButton(
-                                  onPressed: () {
-                                    EasyLoading.showToast("Coming Soon..",
-                                        toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                  },
-                                  style: TextButton.styleFrom(
-                                    padding: EdgeInsets.zero,
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                      19 * fem, 4 * fem, 19 * fem, 3 * fem),
+                                  width: 140 * fem,
+                                  height: 140 * fem,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff5273B4),
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 4,
+                                        color: Colors.black.withOpacity(0.1),
+                                      ),
+                                    ],
                                   ),
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(
-                                        19 * fem, 4 * fem, 19 * fem, 3 * fem),
-                                    width: 110 * fem,
-                                    height: 113 * fem,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          offset: const Offset(0, 4),
-                                          blurRadius: 4,
-                                          color: Colors.black.withOpacity(0.1),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 0 * fem, 6 * fem),
-                                          width: 68 * fem,
-                                          height: 62 * fem,
-                                          child: Image.asset(
-                                            'assets/page-1/images/mask-group-Z9B.png',
-                                            width: 68 * fem,
-                                            height: 62 * fem,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 1 * fem, 0 * fem),
-                                          constraints: BoxConstraints(
-                                            maxWidth: 71 * fem,
-                                          ),
-                                          child: Text(
-                                            'Vocational \nCourses',
-                                            textAlign: TextAlign.center,
-                                            style: SafeGoogleFont(
-                                              'Inter',
-                                              fontSize: 12 * ffem,
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.2125 * ffem / fem,
-                                              color: const Color(0xff000000),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  child: Image.asset(
+                                    "assets/page-1/images/Frame 415.png",
                                   ),
                                 ),
                               ),
@@ -539,13 +327,6 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: 28.0 * fem),
               child: const Row(
                 children: [
-                  Icon(
-                    Icons.person_2_outlined,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
                   Text(
                     'Popular Workshops',
                     style: TextStyle(
@@ -675,8 +456,9 @@ class _HomePageState extends State<HomePage> {
                             width: MediaQuery.of(context).size.width * 0.08,
                           ),
                           GestureDetector(
-                            onTap: (){
-                              Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                            onTap: () {
+                              Share.share(
+                                  'https://play.google.com/store/apps/details?id=com.sortmycollege');
                             },
                             child: CircleAvatar(
                               backgroundColor: const Color(0xff7F90F7),
@@ -708,7 +490,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 4,
+                        height: 2,
                       ),
                       Row(
                         children: [
@@ -737,7 +519,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 3,
                       ),
                       Row(
                         children: [
@@ -771,7 +553,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 3,
                       ),
                       Row(
                         children: [
@@ -809,7 +591,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 6,
               ),
               Container(
                 height: 0.47,
@@ -817,14 +599,14 @@ class _HomePageState extends State<HomePage> {
                 color: const Color(0xffAFAFAF).withOpacity(.78),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     width: 120.14,
-                    height: 36.09,
+                    height: 30,
                     decoration: ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -855,7 +637,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     width: 120,
-                    height: 36,
+                    height: 30,
                     decoration: ShapeDecoration(
                       color: const Color(0xff1F0A68),
                       shape: RoundedRectangleBorder(
@@ -882,6 +664,29 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.circle,
+                    color: Color(0xff1F0A68),
+                    size: 10,
+                  ),
+                  Icon(
+                    Icons.circle_outlined,
+                    color: Color(0xff1F0A68),
+                    size: 10,
+                  ),
+                  Icon(
+                    Icons.circle_outlined,
+                    color: Color(0xff1F0A68),
+                    size: 10,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -894,6 +699,7 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(builder: (context) => const HomePageContainer_2()));
   }
 }
+
 List<String> dummyImagesSlider = [
   "https://res.cloudinary.com/drqangxt5/image/upload/v1707392532/vwoxcoxnthnqzf6gr6dk.png",
   "https://res.cloudinary.com/drqangxt5/image/upload/v1707395734/hg6qrgwoxunplx8nulyo.png",

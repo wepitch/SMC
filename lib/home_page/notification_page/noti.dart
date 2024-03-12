@@ -153,7 +153,6 @@ class _Notification2State extends State<Notification2> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xff1F0A68),
         foregroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
@@ -166,25 +165,113 @@ class _Notification2State extends State<Notification2> {
           },
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: Colors.white,
+            color: Color(0xff1F0A68),
           ),
         ),
-        titleSpacing: 58,
         title: Text(
           "Notification",
           style: SafeGoogleFont(
             "Inter",
             fontSize: 18,
             fontWeight: FontWeight.w600,
+            color: Color(0xff1F0A68),
           ),
         ),
       ),
-      body: ListView.builder(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            ListTile(
+              leading: Container(
+                height: 48,
+                width: 48,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.amber,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.network(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg1dIOAjqRZTG33LCikcTs75d2G2OJH9vnTA&usqp=CAU',
+                    height: 48,
+                    width: 48,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              title: Text(
+                'Sandeep Mehra',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'Posted 3 more pictures',
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+            ListTile(
+              leading: Container(
+                height: 48,
+                width: 48,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.amber,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.network(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg1dIOAjqRZTG33LCikcTs75d2G2OJH9vnTA&usqp=CAU',
+                    height: 48,
+                    width: 48,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              title: Text(
+                'Dinesh Joshi',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'Posted 1 more pictures',
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+            ListTile(
+              leading: Container(
+                height: 48,
+                width: 48,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.amber,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.network(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg1dIOAjqRZTG33LCikcTs75d2G2OJH9vnTA&usqp=CAU',
+                    height: 48,
+                    width: 48,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              title: Text(
+                'Kashish Sharma',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'Added new session on CUET at 4:00 PM',
+                style: TextStyle(color: Colors.black54),
+              ),
+            ),
+          ],
+        ),
+      ),
+      /*body: ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
           return buildNotificationTile(notifications[index]);
         },
-      ),
+      ),*/
     );
   }
 

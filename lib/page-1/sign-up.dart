@@ -134,7 +134,7 @@ class _Signup extends State<Signup> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border: Border.all(color: const Color(0xff000000)),
-                        color: const Color(0xfffffcfc),
+                        color: const Color(0xffffffff),
                         borderRadius: BorderRadius.circular(10 * fem),
                       ),
                       child: SizedBox(
@@ -171,7 +171,7 @@ class _Signup extends State<Signup> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border: Border.all(color: const Color(0xff000000)),
-                        color: const Color(0xfffffcfc),
+                        color: const Color(0xffffffff),
                         borderRadius: BorderRadius.circular(10 * fem),
                       ),
                       child: SizedBox(

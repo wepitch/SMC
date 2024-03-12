@@ -98,7 +98,7 @@ class _Signup extends State<SignupScreenNew> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border: Border.all(color: ColorsConst.appBarColor,),
-                        color: const Color(0xfffffcfc),
+                        color: const Color(0xffffffff),
                         borderRadius: BorderRadius.circular(10 * fem),
                       ),
                       child: SizedBox(
@@ -135,7 +135,7 @@ class _Signup extends State<SignupScreenNew> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border: Border.all(color: ColorsConst.appBarColor,),
-                        color: const Color(0xfffffcfc),
+                        color: const Color(0xffffffff),
                         borderRadius: BorderRadius.circular(10 * fem),
                       ),
                       child: SizedBox(

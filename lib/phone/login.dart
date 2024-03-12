@@ -121,7 +121,7 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
-                      color: const Color(0xfffffcfc),
+                      color: const Color(0xffffffff),
                       borderRadius: BorderRadius.circular(10 * fem),
                     ),
                     child: SizedBox(

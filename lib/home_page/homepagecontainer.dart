@@ -65,7 +65,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
           BottomNavigationBarItem(
             label: "Home",
             icon: ImageIcon(
-              AssetImage("assets/page-1/images/home.png"),
+              AssetImage("assets/page-1/images/home1.png"),
             ),
           ),
           BottomNavigationBarItem(

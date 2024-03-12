@@ -74,7 +74,7 @@ class _CounsellorListPage_offlineState
                           20 * fem, 60.79 * fem, 2 * fem, 12.40 * fem),
                       width: double.infinity,
                       decoration: const BoxDecoration(
-                        color: Color(0xff1f0a68),
+                        color: Colors.white,
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,7 +95,7 @@ class _CounsellorListPage_offlineState
                                 padding: EdgeInsets.only(left: 10),
                                 child: Icon(
                                   Icons.arrow_back_ios,
-                                  color: Colors.white,
+                                  color: Color(0xff1f0a68),
                                   size: 25,
                                 ),
                               ),
@@ -103,12 +103,10 @@ class _CounsellorListPage_offlineState
                           ),
                           Container(
                             // counselor8BB (730:7)
-                            margin: EdgeInsets.fromLTRB(
-                                108 * fem, 0 * fem, 88 * fem, 0 * fem),
                             child: const Text(
-                              'Counsellor',
+                              'Find Counsellors',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Color(0xff1f0a68),
                                 fontSize: 18,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
@@ -116,6 +114,7 @@ class _CounsellorListPage_offlineState
                               ),
                             ),
                           ),
+                          Spacer(),
                           Expanded(
                             child: Container(
                               // layer2oHK (730:5)
@@ -127,6 +126,7 @@ class _CounsellorListPage_offlineState
                                 'assets/page-1/images/layer-3.png',
                                 width: 26.39 * fem,
                                 height: 25 * fem,
+                                color: Color(0xff1f0a68),
                               ),
                             ),
                           ),
@@ -288,7 +288,7 @@ class _CounsellorListPage_offlineState
                                                 width: 88.5 * fem,
                                                 height: 120.5 * fem,
                                                 child: Image.asset(
-                                                  'assets/page-1/images/girl_img.jpeg',
+                                                  'assets/page-1/images/graduation-hat.png',
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -378,8 +378,7 @@ class _CounsellorListPage_offlineState
                                                               height: 280 * fem,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: const Color(
-                                                                    0xfff7f4ff),
+                                                                color: Colors.white,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -651,122 +650,6 @@ class _CounsellorListPage_offlineState
                                                                                             ),
                                                                                           ),
                                                                                           //updated
-                                                                                          Container(
-                                                                                            // group1324p9 (730:74)
-                                                                                            margin: EdgeInsets.fromLTRB(0 * fem, 3.5 * fem, 3.29 * fem, 0 * fem),
-                                                                                            height: 35 * fem,
-                                                                                            child: Row(
-                                                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                              children: [
-                                                                                                Container(
-                                                                                                  // autogroupe3c5bJH (5rq7jHywR7DyJAXNn2E3c5)
-                                                                                                  margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4.75 * fem, 0 * fem),
-                                                                                                  padding: EdgeInsets.fromLTRB(9.55 * fem, 5.45 * fem, 7.45 * fem, 9.55 * fem),
-                                                                                                  height: double.infinity,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    border: Border.all(color: const Color(0xff000000)),
-                                                                                                    color: const Color(0xffffffff),
-                                                                                                    borderRadius: BorderRadius.circular(128 * fem),
-                                                                                                  ),
-                                                                                                  child: Center(
-                                                                                                    // like5DT (730:86)
-                                                                                                    child: SizedBox(
-                                                                                                      width: 16 * fem,
-                                                                                                      height: 16 * fem,
-                                                                                                      child: Image.asset(
-                                                                                                        'assets/page-1/images/like-ufw.png',
-                                                                                                        fit: BoxFit.cover,
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                                Container(
-                                                                                                  // autogrouphxj3zbK (5rq7sCvRNhfpfPKsUiHxj3)
-                                                                                                  padding: EdgeInsets.fromLTRB(8.7 * fem, 5.67 * fem, 7.3 * fem, 8.33 * fem),
-                                                                                                  width: 33 * fem,
-                                                                                                  height: double.infinity,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    border: Border.all(color: const Color(0xff000000)),
-                                                                                                    color: const Color(0xffffffff),
-                                                                                                    borderRadius: BorderRadius.circular(99 * fem),
-                                                                                                  ),
-                                                                                                  child: Center(
-                                                                                                    // image8gj3 (730:79)
-                                                                                                    child: SizedBox(
-                                                                                                      width: double.infinity,
-                                                                                                      height: 16 * fem,
-                                                                                                      child: Container(
-                                                                                                        decoration: const BoxDecoration(
-                                                                                                          image: DecorationImage(
-                                                                                                            fit: BoxFit.cover,
-                                                                                                            image: AssetImage(
-                                                                                                              'assets/page-1/images/image-8-bg-NQZ.png',
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                                const SizedBox(width: 80),
-                                                                                                const Spacer(),
-                                                                                                GestureDetector(
-                                                                                                  onTap: () {
-                                                                                                    String id = listController.cousnellorlist_data[index].id;
-                                                                                                    String name = listController.cousnellorlist_data[index].name;
-
-                                                                                                    Navigator.push(
-                                                                                                        context,
-                                                                                                        MaterialPageRoute(
-                                                                                                            builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
-                                                                                                  },
-                                                                                                  child: SizedBox(
-                                                                                                    width: 130.85,
-                                                                                                    height: 25.09,
-                                                                                                    child: Stack(
-                                                                                                      children: [
-                                                                                                        Positioned(
-                                                                                                          child: Container(
-                                                                                                            width: 130.85,
-                                                                                                            height: 25.09,
-                                                                                                            decoration: ShapeDecoration(
-                                                                                                              color: Colors.white,
-                                                                                                              shape: RoundedRectangleBorder(
-                                                                                                                side: BorderSide(
-                                                                                                                  width: 0.50,
-                                                                                                                  color: Colors.black.withOpacity(0.7400000095367432),
-                                                                                                                ),
-                                                                                                                borderRadius: BorderRadius.circular(16),
-                                                                                                              ),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                        const Positioned(
-                                                                                                          left: 5.45,
-                                                                                                          top: 13,
-                                                                                                          child: SizedBox(
-                                                                                                            width: 123.01,
-                                                                                                            height: 16.05,
-                                                                                                            child: Text(
-                                                                                                              'Visit Profile',
-                                                                                                              textAlign: TextAlign.center,
-                                                                                                              style: TextStyle(
-                                                                                                                color: Color(0xFF262626),
-                                                                                                                fontSize: 14,
-                                                                                                                fontFamily: 'Inter',
-                                                                                                                fontWeight: FontWeight.w700,
-                                                                                                                height: 0.07,
-                                                                                                              ),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                )
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
                                                                                         ],
                                                                                       ),
                                                                                     ),
@@ -774,7 +657,7 @@ class _CounsellorListPage_offlineState
                                                                                   Positioned(
                                                                                     // group127Yc9 (730:56)
                                                                                     left: 15.095703125 * fem,
-                                                                                    top: 170.1729736328 * fem,
+                                                                                    top: 130.1729736328 * fem,
                                                                                     child: SizedBox(
                                                                                       width: 330.19 * fem,
                                                                                       height: 41.88 * fem,
