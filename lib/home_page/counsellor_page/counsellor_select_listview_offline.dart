@@ -378,7 +378,8 @@ class _CounsellorListPage_offlineState
                                                               height: 280 * fem,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: Colors.white,
+                                                                color: const Color(
+                                                                    0xfff7f4ff),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -650,6 +651,70 @@ class _CounsellorListPage_offlineState
                                                                                             ),
                                                                                           ),
                                                                                           //updated
+                                                                                          Container(
+                                                                                            // group1324p9 (730:74)
+                                                                                            margin: EdgeInsets.fromLTRB(0 * fem, 3.5 * fem, 3.29 * fem, 0 * fem),
+                                                                                            height: 35 * fem,
+                                                                                            child: Row(
+                                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                              children: [
+                                                                                                GestureDetector(
+                                                                                                  onTap: () {
+                                                                                                    String id = listController.cousnellorlist_data[index].id;
+                                                                                                    String name = listController.cousnellorlist_data[index].name;
+
+                                                                                                    Navigator.push(
+                                                                                                        context,
+                                                                                                        MaterialPageRoute(
+                                                                                                            builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
+                                                                                                  },
+                                                                                                  child: SizedBox(
+                                                                                                    width: 130.85,
+                                                                                                    height: 25.09,
+                                                                                                    child: Stack(
+                                                                                                      children: [
+                                                                                                        Positioned(
+                                                                                                          child: Container(
+                                                                                                            width: 130.85,
+                                                                                                            height: 25.09,
+                                                                                                            decoration: ShapeDecoration(
+                                                                                                              color: Colors.white,
+                                                                                                              shape: RoundedRectangleBorder(
+                                                                                                                side: BorderSide(
+                                                                                                                  width: 0.50,
+                                                                                                                  color: Colors.black.withOpacity(0.7400000095367432),
+                                                                                                                ),
+                                                                                                                borderRadius: BorderRadius.circular(16),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                        const Positioned(
+                                                                                                          left: 5.45,
+                                                                                                          top: 13,
+                                                                                                          child: SizedBox(
+                                                                                                            width: 123.01,
+                                                                                                            height: 16.05,
+                                                                                                            child: Text(
+                                                                                                              'Visit Profile',
+                                                                                                              textAlign: TextAlign.center,
+                                                                                                              style: TextStyle(
+                                                                                                                color: Color(0xFF262626),
+                                                                                                                fontSize: 14,
+                                                                                                                fontFamily: 'Inter',
+                                                                                                                fontWeight: FontWeight.w700,
+                                                                                                                height: 0.07,
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ],
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                )
+                                                                                              ],
+                                                                                            ),
+                                                                                          ),
                                                                                         ],
                                                                                       ),
                                                                                     ),
@@ -657,7 +722,7 @@ class _CounsellorListPage_offlineState
                                                                                   Positioned(
                                                                                     // group127Yc9 (730:56)
                                                                                     left: 15.095703125 * fem,
-                                                                                    top: 130.1729736328 * fem,
+                                                                                    top: 170.1729736328 * fem,
                                                                                     child: SizedBox(
                                                                                       width: 330.19 * fem,
                                                                                       height: 41.88 * fem,
