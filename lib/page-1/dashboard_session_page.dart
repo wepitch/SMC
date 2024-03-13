@@ -24,7 +24,7 @@ class CounsellingSessionPage extends StatefulWidget {
 class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
   late PageController _controller;
   int selectedIndex = 0;
-  late Razorpay razorpay;
+  // late Razorpay razorpay;
   TextEditingController amountController = TextEditingController();
   String email = '';
 
@@ -42,17 +42,17 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
     super.initState();
     getEmail();
     _controller = PageController(initialPage: selectedIndex);
-    razorpay = Razorpay();
+    /*razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);*/
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     _controller.dispose();
-    razorpay.clear();
+    // razorpay.clear();
     super.dispose();
   }
 
@@ -75,7 +75,7 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
       }
     };
     try {
-      razorpay.open(options);
+      // razorpay.open(options);
     } catch (e) {
       debugPrint('Error : $e');
     }
@@ -140,21 +140,6 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
           style: SafeGoogleFont("Inter",
               fontSize: 22, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: IconButton(
-              onPressed: () {
-                openCheckOut(20);
-              },
-              icon: const Icon(
-                Icons.currency_exchange,
-                color: Color(0xff1F0A68),
-                size: 20,
-              ),
-            ),
-          ),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
