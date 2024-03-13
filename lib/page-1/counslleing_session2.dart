@@ -41,7 +41,7 @@ class _CounsellingSessionPage2State extends State<CounsellingSessionPage2> {
     // double ffem = fem * 0.97;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff1F0A68),
+        backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -51,6 +51,7 @@ class _CounsellingSessionPage2State extends State<CounsellingSessionPage2> {
             },
             child: Image.asset(
               'assets/page-1/images/back.png',
+              color: Color(0xff1F0A68),
             ),
           ),
         ),
@@ -58,7 +59,7 @@ class _CounsellingSessionPage2State extends State<CounsellingSessionPage2> {
         title: Text(
           widget.name,
           style: SafeGoogleFont("Inter",
-              fontSize: 22, fontWeight: FontWeight.w600),
+              fontSize: 22, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
         ),
       ),
       body: Column(
@@ -150,7 +151,7 @@ class _CounsellingSessionPage2State extends State<CounsellingSessionPage2> {
               foregroundColor:
               isPressed ? Colors.white : const Color(0xff1F0A68),
               backgroundColor:
-              isPressed ? const Color(0xffE3398C) : Colors.transparent),
+              isPressed ? const Color(0xff1F0A68) : Colors.transparent),
           onPressed: onPressed,
           child: Text(title)),
     );

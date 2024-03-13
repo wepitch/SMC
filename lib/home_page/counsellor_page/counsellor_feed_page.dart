@@ -39,8 +39,9 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
         return _onBackPressed(context, widget.id, widget.name);
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: const Color(0xff1F0A68),
+          backgroundColor: const Color(0xffffffff),
           foregroundColor: Colors.white,
           leading: Padding(
             padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -50,6 +51,7 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
               },
               child: Image.asset(
                 'assets/page-1/images/back.png',
+                color: Color(0xff1F0A68),
               ),
             ),
           ),
@@ -57,7 +59,7 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
           title: Text(
             widget.name,
             style: SafeGoogleFont("Inter",
-                fontSize: 22, fontWeight: FontWeight.w600),
+                fontSize: 22, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
           ),
         ),
         body: Column(
@@ -66,10 +68,10 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
               height: 20,
             ),
             Container(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withOpacity(0.1),
               child: TabBar(
                   indicatorColor: const Color(0xff1F0A68),
-                  indicatorWeight: 3,
+                  indicatorWeight: 2,
                   controller: _controller,
                   onTap: (value) {
                     if (value == 0) {
@@ -87,14 +89,14 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
                       child: Text(
                         "Info",
                         style: SafeGoogleFont("Inter",
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                            fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
                       ),
                     ),
                     Tab(
                       child: Text(
                         "Feed",
                         style: SafeGoogleFont("Inter",
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                            fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
                       ),
                     ),
                   ]),

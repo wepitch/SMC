@@ -152,29 +152,36 @@ class _Notification2State extends State<Notification2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         foregroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomePageContainer(),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Row(
+            children: [
+               GestureDetector(
+                 onTap: (){
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => const HomePageContainer(),
+                     ),
+                   );
+                 },
+                 child: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Color(0xff1F0A68),
+                  ),
+               ),
+              const SizedBox(width: 60,),
+              Text(
+                "Notification",
+                style: SafeGoogleFont(
+                  "Inter",
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff1F0A68),
+                ),
               ),
-            );
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Color(0xff1F0A68),
-          ),
-        ),
-        title: Text(
-          "Notification",
-          style: SafeGoogleFont(
-            "Inter",
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Color(0xff1F0A68),
+            ],
           ),
         ),
       ),

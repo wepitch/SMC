@@ -37,7 +37,7 @@ class _BookingPageState extends State<BookingPage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xff1F0A68),
+          backgroundColor: const Color(0xffffffff),
           foregroundColor: Colors.white,
           // leading: Padding(
           //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -55,11 +55,11 @@ class _BookingPageState extends State<BookingPage> {
           // ),
           //titleSpacing: 108,
           title: Padding(
-            padding: const EdgeInsets.only(left: 110),
+            padding: const EdgeInsets.only(left: 20),
             child: Text(
               "My Booking",
               style: SafeGoogleFont("Inter",
-                  fontSize: 18, fontWeight: FontWeight.w600),
+                  fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
             ),
           ),
           actions: [
@@ -67,6 +67,7 @@ class _BookingPageState extends State<BookingPage> {
               'assets/page-1/images/layer-3.png',
               width: 20,
               height: 20,
+              color: Color(0xff1F0A68),
             ),
             const SizedBox(
               width: 22,
@@ -142,8 +143,10 @@ class _BookingPageState extends State<BookingPage> {
               )
             ],
           ),
-        ));
+        ),backgroundColor: Colors.white,);
+
   }
+
 }
 
 // ElevatedButton(
@@ -182,19 +185,20 @@ class CustomTab extends StatelessWidget {
       child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
+            surfaceTintColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            elevation: 5,
+            elevation: 4,
             textStyle: SafeGoogleFont(
               'Inter',
               fontSize: mWidth * 0.030,
               fontWeight: FontWeight.w600,
             ),
             foregroundColor:
-                isSelected ? const Color(0xffFFFFFF) : const Color(0xff747474),
+                isSelected ? const Color(0xffffffff) :  Colors.black45,
             backgroundColor:
-                isSelected ? const Color(0xffE9599F) : const Color(0xffFFFFFF),
+                isSelected ? const Color(0xff1F0A68) :  Colors.white,
           ),
           child: Text(title)),
     );

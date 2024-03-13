@@ -60,8 +60,9 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
         items: const [
           BottomNavigationBarItem(
             label: "Counsellor",
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/home.png"),
+            icon: Icon(
+              Icons.home_outlined,
+              size: 26,
             ),
           ),
           BottomNavigationBarItem(

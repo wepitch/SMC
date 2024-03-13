@@ -417,7 +417,8 @@ class ApiService {
     final token = prefs.getString("token").toString();
 
     var url = Uri.parse(
-        "https://server.sortmycollege.com/counsellor/$id/sessions${date != null ? params : ''}");
+        "${AppConstants.baseUrl}/counsellor/$id/sessions${date != null ? params : ''}");
+    print(url);
 
     var response = await http.get(
       url,

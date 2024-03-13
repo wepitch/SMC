@@ -316,7 +316,7 @@ class _WebinarDetailUpComingWidgetState extends State<WebinarDetailUpComingWidge
                   child: Stack(
                     children: [
                       Container(
-                        color: const Color(0xff320C3F).withOpacity(0.8),
+                        color: const Color(0xffffffff).withOpacity(0.8),
                         width: double.infinity,
                         height: 280,
                         child: SafeArea(
@@ -332,13 +332,13 @@ class _WebinarDetailUpComingWidgetState extends State<WebinarDetailUpComingWidge
                                   },
                                   child: const Icon(
                                     Icons.arrow_back_ios,
-                                    color: Colors.white,
+                                    color: Color(0xff1F0A68),
                                     size: 25,
                                   ),
                                 ),
                                 Image.asset(
                                   "assets/page-1/images/share.png",
-                                  color: Colors.white,
+                                  color: Color(0xff1F0A68),
                                   height: 23,
                                 )
                               ],

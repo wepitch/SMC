@@ -87,32 +87,29 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     double ffem = fem * 0.97;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Center(
-          child: Text(
-            // anshikamehra7w6 (2608:501)
-            widget.name,
-            style: SafeGoogleFont(
-              'Inter',
-              fontSize: 19,
-              fontWeight: FontWeight.w600,
-              height: 1.2125,
-              color: const Color(0xffffffff),
-            ),
+        title: Text(
+          // anshikamehra7w6 (2608:501)
+          widget.name,
+          style: SafeGoogleFont(
+            'Inter',
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            height: 1.2125,
+            color: const Color(0xff1f0a68),
           ),
         ),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 10),
-            child: Icon(Icons.more_vert, color: Colors.white),
+            child: Icon(Icons.more_vert, color: Color(0xff1f0a68)),
           ),
         ],
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
-        backgroundColor: const Color(0xff1f0a68),
+            icon: const Icon(Icons.arrow_back_ios, color: Color(0xff1f0a68))),
+        backgroundColor: const Color(0xffffffff),
       ),
       body: Column(
         children: [
@@ -166,6 +163,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       style: const TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff1f0a68),
+                                        fontWeight: FontWeight.w600
                                       ),
                                     ),
                                   ],
@@ -353,6 +351,11 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             Column(
                               children: [
+                                Text('|',style: TextStyle(fontSize: 28,color: Colors.black54),),
+                              ],
+                            ),
+                            Column(
+                              children: [
                                 const Text('Session',
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
@@ -362,6 +365,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
+                              ],
+                            ), Column(
+                              children: [
+                                Text('|',style: TextStyle(fontSize: 28,color: Colors.black54),),
                               ],
                             ),
                             Column(
@@ -375,6 +382,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
+                              ],
+                            ), Column(
+                              children: [
+                                Text('|',style: TextStyle(fontSize: 28,color: Colors.black54),),
                               ],
                             ),
                             Column(
@@ -402,7 +413,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                     color: Colors.grey[300],
                     child: TabBar(
                         indicatorColor: const Color(0xff1F0A68),
-                        indicatorWeight: 3,
+                        indicatorWeight: 2,
                         controller: _controller,
                         onTap: (value) {
                           if (value == 1) {
@@ -422,14 +433,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             child: Text(
                               "Info",
                               style: SafeGoogleFont("Inter",
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                  fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
                             ),
                           ),
                           Tab(
                             child: Text(
                               "Feed",
                               style: SafeGoogleFont("Inter",
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                  fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
                             ),
                           ),
                         ]),
@@ -939,9 +950,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(const CounsellingSessionPage2(
-                                        name: '',
-                                        id: '',
+                                      Get.to( CounsellingSessionPage2(
+                                        name: widget.name,
+                                        id: widget.id,
                                       ));
                                     },
                                     child: Container(
@@ -1166,9 +1177,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   GestureDetector(
                                     onTap: () {
                                       Get.to(
-                                        const CounsellingSessionPage(
-                                          name: "",
-                                          id: '',
+                                         CounsellingSessionPage(
+                                          name: widget.name,
+                                          id: widget.id,
                                         ),
                                       );
                                     },

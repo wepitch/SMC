@@ -13,823 +13,1046 @@ class HiddenText extends StatelessWidget {
     );
   }
 }
-// import 'package:flutter/material.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:myapp/home_page/drawer/drawer_1.dart';
-// import 'package:myapp/home_page/homepagecontainer_2.dart';
-// import 'package:myapp/home_page/notification_page/noti.dart';
-// import 'package:myapp/other/provider/counsellor_details_provider.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get_core/src/get_main.dart';
+// import 'package:get/get_instance/src/extension_instance.dart';
+// import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+// import 'package:get/route_manager.dart';
+// import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
+// import 'package:myapp/home_page/homepagecontainer.dart';
+// import 'package:myapp/other/api_service.dart';
+// import 'package:myapp/other/listcontroler.dart';
+// import 'package:myapp/page-1/dashboard_session_page.dart';
 // import 'package:myapp/utils.dart';
-// import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-// import 'package:myapp/widget/custom_webniar_card_widget.dart';
-// import 'package:provider/provider.dart';
 // import 'package:share_plus/share_plus.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 //
-// class HomePage extends StatefulWidget {
-//   const HomePage({super.key});
+// class CounsellorListPage_offline extends StatefulWidget {
+//   const CounsellorListPage_offline({super.key});
 //
 //   @override
-//   State<HomePage> createState() => _HomePageState();
+//   State<CounsellorListPage_offline> createState() =>
+//       _CounsellorListPage_offlineState();
 // }
 //
-// class _HomePageState extends State<HomePage> {
-//   String name = "";
-//   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-//
-//   CounsellorDetailsProvider counsellorDetailsProvider =
-//   CounsellorDetailsProvider();
+// class _CounsellorListPage_offlineState
+//     extends State<CounsellorListPage_offline> {
+//   final ListController listController = Get.put(ListController());
 //
 //   @override
 //   void initState() {
 //     super.initState();
-//     setName();
-//     getAllInfo();
-//     counsellorDetailsProvider =
-//         Provider.of<CounsellorDetailsProvider>(context, listen: false);
+//     ApiService.getCounsellorData();
 //   }
 //
-//   String username = "";
-//   String path = '';
-//
-//   void getAllInfo() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     username = prefs.getString("name") ?? "N/A";
-//     path = prefs.getString("profile_image_path") ?? "N/A";
-//     setState(() {});
+//   Future<void> _refresh() {
+//     return Future.delayed(const Duration(seconds: 1), () {
+//       ApiService.getCounsellorData().then((value) {
+//         if (value.isNotEmpty) {
+//           setState(() {});
+//         }
+//         if (value[0].name == "none") {
+//           EasyLoading.showToast("404 Page Not Found",
+//               toastPosition: EasyLoadingToastPosition.bottom);
+//         }
+//         setState(() {});
+//       });
+//     });
 //   }
 //
-//   void saveImagePathToPrefs(String path) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     prefs.setString("profile_image_path", path);
-//   }
-//
-//   void setName() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     name = prefs.getString("name") ?? "N/A";
-//     setState(() {});
-//   }
+//   int selectedIndex = 0;
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double baseWidth = 430;
+//     double baseWidth = 460;
 //     double fem = MediaQuery.of(context).size.width / baseWidth;
 //     double ffem = fem * 0.97;
-//     return Scaffold(
-//       drawer: const Drawer1(),
-//       key: _scaffoldKey,
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         title: Row(
-//           children: [
-//             const SizedBox(
-//               width: 18,
-//             ),
-//             Expanded(
-//               child: Text(
-//                 'Hello, $username',
-//                 style: const TextStyle(
-//                     fontSize: 18,
-//                     color: Color(0xff1F0A68),
-//                     fontWeight: FontWeight.w500),
-//                 overflow: TextOverflow.ellipsis,
-//                 maxLines: 1,
-//               ),
-//             ),
-//             const SizedBox(
-//               width: 30,
-//             )
-//           ],
+//     return WillPopScope(
+//       onWillPop: _onBackPressed,
+//       child: Container(
+//         width: double.infinity,
+//         decoration: const BoxDecoration(
+//           color: Color(0xffffffff),
 //         ),
-//         backgroundColor: Colors.white,
-//         foregroundColor: Colors.white,
-//         leading: Padding(
-//           padding: const EdgeInsets.only(left: 30, top: 18, bottom: 18),
-//           child: GestureDetector(
-//             onTap: () {
-//               _scaffoldKey.currentState?.openDrawer();
-//             },
-//             child: Image.asset(
-//               'assets/page-1/images/group-59.png',
-//               color: const Color(0xff1F0A68),
-//             ),
-//           ),
-//         ),
-//         bottom: PreferredSize(
-//             preferredSize: const Size(double.infinity, 12), child: Container()),
-//         titleSpacing: 1,
-//         actions: [
-//           GestureDetector(
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => const Notification2(),
+//         child: Obx(
+//               () => listController.isLoading.value
+//               ? const Center(child: CircularProgressIndicator())
+//               : Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Container(
+//                 // group47BNR (730:3)
+//                 margin: EdgeInsets.fromLTRB(
+//                     0 * fem, 0 * fem, 0 * fem, 0.5 * fem),
+//                 padding: EdgeInsets.fromLTRB(
+//                     20 * fem, 60.79 * fem, 2 * fem, 12.40 * fem),
+//                 width: double.infinity,
+//                 decoration: const BoxDecoration(
+//                   color: Colors.white,
 //                 ),
-//               );
-//             },
-//             child: Image.asset(
-//               'assets/page-1/images/bell.png',
-//               width: 18,
-//               height: 18,
-//               color: const Color(0xff1F0A68),
-//             ),
-//           ),
-//           const SizedBox(
-//             width: 28,
-//           ),
-//         ],
-//       ),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Container(
-//               padding:
-//               EdgeInsets.fromLTRB(27 * fem, 8 * fem, 25 * fem, 23 * fem),
-//               width: double.infinity,
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.end,
-//                 children: [
-//                   Container(
-//                     margin: EdgeInsets.fromLTRB(
-//                         0 * fem, 0 * fem, 2 * fem, 29 * fem),
-//                     width: double.infinity,
-//                     height: 113 * fem,
-//                     child: Row(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         Expanded(
-//                           child: Container(
-//                             height: 100,
-//                             decoration: BoxDecoration(),
-//                             child: GestureDetector(
-//                               onTap: () {
-//                                 onTapgotocounsellor(context);
-//                               },
-//                               child: Container(
-//                                 padding: EdgeInsets.fromLTRB(
-//                                     12 * fem, 7 * fem, 12 * fem, 12.66 * fem),
-//                                 width: 110 * fem,
-//                                 height: 114 * fem,
-//                                 clipBehavior: Clip.antiAlias,
-//                                 decoration: BoxDecoration(
-//                                   color: Colors.white,
-//                                   borderRadius: BorderRadius.circular(5),
-//                                   boxShadow: [
-//                                     BoxShadow(
-//                                       offset: const Offset(0, 4),
-//                                       blurRadius: 4,
-//                                       color: Colors.black.withOpacity(0.1),
-//                                     ),
-//                                   ],
-//                                 ),
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.center,
-//                                   children: [
-//                                     Expanded(
-//                                       child: Container(
-//                                         margin:
-//                                         const EdgeInsets.only(bottom: 5),
-//                                         width: 32,
-//                                         height: 62,
-//                                         child: Image.asset(
-//                                           'assets/page-1/images/untitled-design-5-1.png',
-//                                           // fit: BoxFit.cover,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     Text(
-//                                       'Counsellor',
-//                                       textAlign: TextAlign.center,
-//                                       style: SafeGoogleFont(
-//                                         'Inter',
-//                                         fontSize: 12 * ffem,
-//                                         fontWeight: FontWeight.w700,
-//                                         height: 1.2125 * ffem / fem,
-//                                         color: const Color(0xff000000),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ),
+//                 child: Row(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     GestureDetector(
+//                       onTap: () {
+//                         Navigator.pop(context);
+//                       },
+//                       child: GestureDetector(
+//                         onTap: () {
+//                           Navigator.pushReplacement(
+//                               context,
+//                               MaterialPageRoute(
+//                                   builder: (context) =>
+//                                   const HomePageContainer()));
+//                         },
+//                         child: const Padding(
+//                           padding: EdgeInsets.only(left: 10),
+//                           child: Icon(
+//                             Icons.arrow_back_ios,
+//                             color: Color(0xff1f0a68),
+//                             size: 25,
 //                           ),
 //                         ),
-//                         const SizedBox(
-//                           width: 14,
+//                       ),
+//                     ),
+//                     Container(
+//                       // counselor8BB (730:7)
+//                       child: const Text(
+//                         'Find Counsellors',
+//                         style: TextStyle(
+//                           color: Color(0xff1f0a68),
+//                           fontSize: 18,
+//                           fontFamily: 'Inter',
+//                           fontWeight: FontWeight.w600,
+//                           height: 0,
 //                         ),
-//                         Expanded(
-//                           child: Row(
-//                             crossAxisAlignment: CrossAxisAlignment.center,
-//                             mainAxisAlignment: MainAxisAlignment.center,
+//                       ),
+//                     ),
+//                     Spacer(),
+//                     Expanded(
+//                       child: Container(
+//                         // layer2oHK (730:5)
+//                         margin: EdgeInsets.fromLTRB(
+//                             8 * fem, 0 * fem, 0 * fem, 0 * fem),
+//                         width: 70.39 * fem,
+//                         height: 25 * fem,
+//                         child: Image.asset(
+//                           'assets/page-1/images/layer-3.png',
+//                           width: 26.39 * fem,
+//                           height: 25 * fem,
+//                           color: Color(0xff1f0a68),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               Expanded(
+//                 child: SizedBox(
+//                   // autogroup13ehpiD (5rq67B26ka2aqeMhbB13eh)
+//                   child: Stack(
+//                     children: [
+//                       RefreshIndicator(
+//                         onRefresh: _refresh,
+//                         child: SingleChildScrollView(
+//                           physics: const AlwaysScrollableScrollPhysics(),
+//                           child: Column(
 //                             children: [
-//                               Expanded(
-//                                 child: Container(
-//                                   padding: EdgeInsets.fromLTRB(
-//                                       15 * fem, 4 * fem, 9 * fem, 6 * fem),
-//                                   width: 110 * fem,
-//                                   height: 114 * fem,
-//                                   clipBehavior: Clip.antiAlias,
-//                                   decoration: BoxDecoration(
-//                                     color: Colors.white,
-//                                     borderRadius: BorderRadius.circular(5),
-//                                     boxShadow: [
-//                                       BoxShadow(
-//                                         offset: const Offset(0, 4),
-//                                         blurRadius: 4,
-//                                         color: Colors.black.withOpacity(0.1),
+//                               Container(
+//                                 // sliderhqs (742:104)
+//                                 width: double.infinity,
+//                                 height: 100.35 * fem,
+//                                 margin: const EdgeInsets.only(
+//                                     left: 18.0, top: 5.0),
+//                                 child: Stack(
+//                                   children: [
+//                                     Positioned(
+//                                       // groupRms (742:105)
+//                                       left: 0 * fem,
+//                                       top: 15.3145446777 * fem,
+//                                       child: Align(
+//                                           child: Container(
+//                                             height: 60.5,
+//                                             width: 330.5,
+//                                             decoration: BoxDecoration(
+//                                               color: Colors.white,
+//                                               borderRadius:
+//                                               BorderRadius.circular(10),
+//                                               boxShadow: [
+//                                                 BoxShadow(
+//                                                   offset: const Offset(0, 1),
+//                                                   blurRadius: 2,
+//                                                   color: Colors.black
+//                                                       .withOpacity(0.1),
+//                                                 ),
+//                                               ],
+//                                             ),
+//                                           )),
+//                                     ),
+//                                     Positioned(
+//                                       left: 150 * fem,
+//                                       bottom: 20 * fem,
+//                                       child: Row(
+//                                         children: [
+//                                           TabPageSelectorIndicator(
+//                                               backgroundColor:
+//                                               selectedIndex == 0
+//                                                   ? const Color(
+//                                                   0xff1F0A68)
+//                                                   : Colors.grey,
+//                                               borderColor:
+//                                               Colors.transparent,
+//                                               size: 7),
+//                                           TabPageSelectorIndicator(
+//                                               backgroundColor:
+//                                               selectedIndex == 1
+//                                                   ? const Color(
+//                                                   0xff1F0A68)
+//                                                   : Colors.grey,
+//                                               borderColor:
+//                                               Colors.transparent,
+//                                               size: 7),
+//                                           TabPageSelectorIndicator(
+//                                               backgroundColor:
+//                                               selectedIndex == 2
+//                                                   ? const Color(
+//                                                   0xff1F0A68)
+//                                                   : Colors.grey,
+//                                               borderColor:
+//                                               Colors.transparent,
+//                                               size: 7)
+//                                         ],
 //                                       ),
-//                                     ],
-//                                   ),
-//                                   child: Column(
-//                                     crossAxisAlignment:
-//                                     CrossAxisAlignment.center,
-//                                     children: [
-//                                       Expanded(
-//                                         child: Container(
-//                                           margin: EdgeInsets.fromLTRB(0 * fem,
-//                                               0 * fem, 0 * fem, 7 * fem),
-//                                           width: double.infinity,
-//                                           height: 62 * fem,
-//                                           child: Stack(
-//                                             children: [
-//                                               Align(
-//                                                 child: SizedBox(
-//                                                   width: 72 * fem,
-//                                                   height: 55 * fem,
-//                                                   child: TextButton(
-//                                                     onPressed: () {},
-//                                                     style:
-//                                                     TextButton.styleFrom(
-//                                                       padding:
-//                                                       EdgeInsets.zero,
-//                                                     ),
-//                                                     child: Container(),
-//                                                   ),
+//                                     ),
+//                                     Positioned(
+//                                       // whatentranceexaminationsshould (742:113)
+//                                       left: 13.28515625 * fem,
+//                                       top: 27.3145446777 * fem,
+//                                       child: Align(
+//                                         alignment: Alignment.topLeft,
+//                                         child: SizedBox(
+//                                           width: 245 * fem,
+//                                           height: 40 * fem,
+//                                           child: CarouselSlider(
+//                                             items: [
+//                                               Text(
+//                                                 'Follow your favourite experts',
+//                                                 style: SafeGoogleFont(
+//                                                   'Inter',
+//                                                   fontSize: 14 * ffem,
+//                                                   fontWeight:
+//                                                   FontWeight.w500,
+//                                                   height: 1.3252271925 *
+//                                                       ffem /
+//                                                       fem,
+//                                                   color: const Color(
+//                                                       0xFF2A2F33),
 //                                                 ),
 //                                               ),
-//                                               Align(
-//                                                 child: SizedBox(
-//                                                   width: 82 * fem,
-//                                                   height: 58 * fem,
-//                                                   child: Image.asset(
-//                                                     'assets/page-1/images/untitled-design-6-1.png',
-//                                                     fit: BoxFit.cover,
-//                                                   ),
+//                                               Text(
+//                                                 "Attend popular workshops on various topics",
+//                                                 textAlign: TextAlign.left,
+//                                                 style: SafeGoogleFont(
+//                                                   'Inter',
+//                                                   fontSize: 14 * ffem,
+//                                                   fontWeight:
+//                                                   FontWeight.w500,
+//                                                   height: 1.3252271925 *
+//                                                       ffem /
+//                                                       fem,
+//                                                   color: const Color(
+//                                                       0xFF2A2F33),
+//                                                 ),
+//                                               ),
+//                                               Text(
+//                                                 'Confused about your career? Book a counsellor now!',
+//                                                 style: SafeGoogleFont(
+//                                                   'Inter',
+//                                                   fontSize: 14 * ffem,
+//                                                   fontWeight:
+//                                                   FontWeight.w500,
+//                                                   height: 1.3252271925 *
+//                                                       ffem /
+//                                                       fem,
+//                                                   color: const Color(
+//                                                       0xFF2A2F33),
 //                                                 ),
 //                                               ),
 //                                             ],
+//                                             options: CarouselOptions(
+//                                                 onPageChanged:
+//                                                     (index, reason) {
+//                                                   setState(() {
+//                                                     selectedIndex = index;
+//                                                   });
+//                                                 },
+//                                                 viewportFraction: 1,
+//                                                 autoPlay: true),
 //                                           ),
 //                                         ),
 //                                       ),
-//                                       Container(
-//                                         margin: EdgeInsets.fromLTRB(0 * fem,
-//                                             0 * fem, 7 * fem, 0 * fem),
-//                                         child: Text(
-//                                           'Entrance \nPreparation',
-//                                           textAlign: TextAlign.center,
-//                                           style: SafeGoogleFont(
-//                                             'Inter',
-//                                             fontSize: 12 * ffem,
-//                                             fontWeight: FontWeight.w700,
-//                                             height: 1.2125 * ffem / fem,
-//                                             color: const Color(0xff000000),
+//                                     ),
+//                                     Positioned(
+//                                       // graduationhataoB (742:114)
+//                                       left: 290.75 * fem,
+//                                       top: 6 * fem,
+//                                       bottom: 7,
+//                                       child: Align(
+//                                         child: SizedBox(
+//                                           width: 88.5 * fem,
+//                                           height: 120.5 * fem,
+//                                           child: Image.asset(
+//                                             'assets/page-1/images/graduation-hat.png',
+//                                             fit: BoxFit.cover,
 //                                           ),
 //                                         ),
 //                                       ),
-//                                     ],
-//                                   ),
+//                                     ),
+//                                   ],
 //                                 ),
 //                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 14,
-//                   ),
-//                   SizedBox(
-//                     width: double.infinity,
-//                     height: 113 * fem,
-//                     child: Row(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Expanded(
-//                           child: GestureDetector(
-//                             onTap: () {
-//                               Fluttertoast.showToast(msg: 'Coming soon...');
-//                             },
-//                             child: Container(
-//                               padding: EdgeInsets.fromLTRB(
-//                                   20 * fem, 8 * fem, 20 * fem, 13 * fem),
-//                               width: 110 * fem,
-//                               height: 114 * fem,
-//                               clipBehavior: Clip.antiAlias,
-//                               decoration: BoxDecoration(
-//                                 color: Colors.white,
-//                                 borderRadius: BorderRadius.circular(5),
-//                                 boxShadow: [
-//                                   BoxShadow(
-//                                     offset: const Offset(0, 4),
-//                                     blurRadius: 4,
-//                                     color: Colors.black.withOpacity(0.1),
-//                                   ),
-//                                 ],
-//                               ),
-//                               child: Column(
-//                                 crossAxisAlignment: CrossAxisAlignment.center,
-//                                 children: [
-//                                   Container(
-//                                     margin: EdgeInsets.fromLTRB(
-//                                         0 * fem, 0 * fem, 0 * fem, 9 * fem),
-//                                     width: 68 * fem,
-//                                     height: 66 * fem,
-//                                     child: Image.asset(
-//                                       'assets/page-1/images/mask-group-SbT.png',
-//                                       width: 68 * fem,
-//                                       height: 66 * fem,
+//                               listController.cousnellorlist_data.isEmpty
+//                                   ? Container(
+//                                 // height: double.maxFinite,
+//                                 child: Column(
+//                                   mainAxisSize: MainAxisSize.max,
+//                                   mainAxisAlignment:
+//                                   MainAxisAlignment.center,
+//                                   // alignment: Alignment.bottomCenter,
+//                                   children: [
+//                                     SizedBox(
+//                                       height:
+//                                       MediaQuery.sizeOf(context)
+//                                           .height /
+//                                           3.5,
 //                                     ),
-//                                   ),
-//                                   Container(
-//                                     margin: EdgeInsets.fromLTRB(
-//                                         0 * fem, 0 * fem, 1 * fem, 0 * fem),
-//                                     child: Text(
-//                                       'Connect',
-//                                       textAlign: TextAlign.center,
-//                                       style: SafeGoogleFont(
-//                                         'Inter',
-//                                         fontSize: 12 * ffem,
-//                                         fontWeight: FontWeight.w700,
-//                                         height: 1.2125 * ffem / fem,
-//                                         color: const Color(0xff000000),
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                         const SizedBox(
-//                           width: 14,
-//                         ),
-//                         Expanded(
-//                           child: Row(
-//                             crossAxisAlignment: CrossAxisAlignment.center,
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             children: [
-//                               Expanded(
+//                                     const Text("Data not Found")
+//                                   ],
+//                                 ),
+//                               )
+//                                   : listController.cousnellorlist_data[0]
+//                                   .name ==
+//                                   "none"
+//                                   ? const Center(
+//                                 child: Text(
+//                                     "Something went wrong!"),
+//                               )
+//                                   : GestureDetector(
+//                                 onTap: (){
+//                                   String id = listController.cousnellorlist_data[0].id;
+//                                   String name = listController.cousnellorlist_data[0].name;
+//
+//                                   Navigator.push(
+//                                       context,
+//                                       MaterialPageRoute(
+//                                           builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
+//                                 },
 //                                 child: Container(
-//                                   padding: EdgeInsets.fromLTRB(
-//                                       19 * fem, 4 * fem, 19 * fem, 3 * fem),
-//                                   width: 140 * fem,
-//                                   height: 113 * fem,
-//                                   clipBehavior: Clip.antiAlias,
-//                                   decoration: BoxDecoration(
-//                                     color: Colors.white,
-//                                     borderRadius: BorderRadius.circular(5),
-//                                     boxShadow: [
-//                                       BoxShadow(
-//                                         offset: const Offset(0, 4),
-//                                         blurRadius: 4,
-//                                         color: Colors.black.withOpacity(0.1),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   child: Column(
-//                                     crossAxisAlignment:
-//                                     CrossAxisAlignment.center,
-//                                     children: [
-//                                       Container(
-//                                         margin: EdgeInsets.fromLTRB(
-//                                             0 * fem, 0 * fem, 0 * fem, 6 * fem),
-//                                         width: 68 * fem,
-//                                         height: 62 * fem,
-//                                         child: Image.asset(
-//                                           'assets/page-1/images/mask-group-Z9B.png',
-//                                           width: 68 * fem,
-//                                           height: 62 * fem,
-//                                         ),
-//                                       ),
-//                                       Container(
-//                                         margin: EdgeInsets.fromLTRB(
-//                                             0 * fem, 0 * fem, 1 * fem, 0 * fem),
-//                                         constraints: BoxConstraints(
-//                                           maxWidth: 71 * fem,
-//                                         ),
-//                                         child: Text(
-//                                           'Vocational \nCourses',
-//                                           textAlign: TextAlign.center,
-//                                           style: SafeGoogleFont(
-//                                             'Inter',
-//                                             fontSize: 12 * ffem,
-//                                             fontWeight: FontWeight.w700,
-//                                             height: 1.2125 * ffem / fem,
-//                                             color: const Color(0xff000000),
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ],
+//                                   color: Colors.white,
+//                                   margin:
+//                                   const EdgeInsets.fromLTRB(
+//                                       0, 10, 0, 10),
+//                                   child: RefreshIndicator(
+//                                     onRefresh: () {
+//                                       return Future<void>.delayed(
+//                                           const Duration(
+//                                               seconds: 2), () {
+//                                         ApiService
+//                                             .getCounsellorData();
+//                                       });
+//                                     },
+//                                     child: ListView.builder(
+//                                       padding: const EdgeInsets
+//                                           .symmetric(
+//                                           horizontal: 10),
+//                                       itemCount: listController
+//                                           .cousnellorlist_data
+//                                           .length,
+//                                       physics:
+//                                       const BouncingScrollPhysics(),
+//                                       shrinkWrap: true,
+//                                       primary: false,
+//                                       itemBuilder:
+//                                           (context, index) {
+//                                         return Row(
+//                                           crossAxisAlignment:
+//                                           CrossAxisAlignment
+//                                               .end,
+//                                           children: [
+//                                             Container(
+//                                               // group25Cyf (730:13)
+//                                               margin: EdgeInsets
+//                                                   .fromLTRB(
+//                                                   20 * fem,
+//                                                   10 * fem,
+//                                                   10 * fem,
+//                                                   10.73 *
+//                                                       fem),
+//                                               width: 400 * fem,
+//                                               height: 280 * fem,
+//                                               decoration:
+//                                               BoxDecoration(
+//                                                 color: const Color(
+//                                                     0xfff7f4ff),
+//                                                 borderRadius:
+//                                                 BorderRadius
+//                                                     .circular(
+//                                                     7 * fem),
+//                                               ),
+//                                               child: Stack(
+//                                                 children: [
+//                                                   Positioned(
+//                                                     // group24uNH (730:15)
+//                                                     left:
+//                                                     10 * fem,
+//                                                     child:
+//                                                     SizedBox(
+//                                                       width: 370 *
+//                                                           fem,
+//                                                       height:
+//                                                       320.1 *
+//                                                           fem,
+//                                                       child:
+//                                                       Stack(
+//                                                         children: [
+//                                                           Positioned(
+//                                                             // rectangle101cGh (730:16)
+//                                                             left: 10 *
+//                                                                 fem,
+//                                                             top: 3.4286193848 *
+//                                                                 fem,
+//                                                             child:
+//                                                             Align(
+//                                                               child:
+//                                                               SizedBox(
+//                                                                 width: 95 * fem,
+//                                                                 height: 104 * fem,
+//                                                                 child: ClipRRect(
+//                                                                   borderRadius: BorderRadius.circular(75 * fem),
+//                                                                   child: Image.network(
+//                                                                     listController.cousnellorlist_data[index].profilePic,
+//                                                                     fit: BoxFit.cover,
+//                                                                     errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+//                                                                       //print("Exception >> ${exception.toString()}");
+//                                                                       return Image.asset('assets/page-1/images/comming_soon.png',fit: BoxFit.cover,);
+//                                                                     },
+//                                                                   ),
+//                                                                 ),
+//                                                               ),
+//                                                             ),
+//                                                           ),
+//                                                           Positioned(
+//                                                             // group15tk1 (730:17)
+//                                                             left: 123 *
+//                                                                 fem,
+//                                                             top: 70.4285888672 *
+//                                                                 fem,
+//                                                             child:
+//                                                             Container(
+//                                                               width:
+//                                                               52 * fem,
+//                                                               height:
+//                                                               18 * fem,
+//                                                               decoration:
+//                                                               BoxDecoration(
+//                                                                 color: const Color(0xff1f0a68),
+//                                                                 borderRadius: BorderRadius.circular(3 * fem),
+//                                                               ),
+//                                                               child:
+//                                                               Center(
+//                                                                 child: Text(
+//                                                                   "N/A",
+//                                                                   style: SafeGoogleFont(
+//                                                                     'Inter',
+//                                                                     fontSize: 11 * ffem,
+//                                                                     fontWeight: FontWeight.w700,
+//                                                                     height: 0,
+//                                                                     color: const Color(0xffffffff),
+//                                                                   ),
+//                                                                 ),
+//                                                               ),
+//                                                             ),
+//                                                           ),
+//                                                           Positioned(
+//                                                             // group25kfj (730:23)
+//                                                             left: 180 *
+//                                                                 fem,
+//                                                             top: 70.4285888672 *
+//                                                                 fem,
+//                                                             child:
+//                                                             Container(
+//                                                               width:
+//                                                               29.74 * fem,
+//                                                               height:
+//                                                               18 * fem,
+//                                                               decoration:
+//                                                               BoxDecoration(
+//                                                                 color: const Color(0xff1f0a68),
+//                                                                 borderRadius: BorderRadius.circular(3 * fem),
+//                                                               ),
+//                                                               child:
+//                                                               Center(
+//                                                                 child: Text(
+//                                                                   'N/A',
+//                                                                   style: SafeGoogleFont(
+//                                                                     'Inter',
+//                                                                     fontSize: 12 * ffem,
+//                                                                     fontWeight: FontWeight.w700,
+//                                                                     height: 1.2125 * ffem / fem,
+//                                                                     color: const Color(0xffffffff),
+//                                                                   ),
+//                                                                 ),
+//                                                               ),
+//                                                             ),
+//                                                           ),
+//                                                           Positioned(
+//                                                             child:
+//                                                             SizedBox(
+//                                                               width:
+//                                                               370 * fem,
+//                                                               height:
+//                                                               270.1 * fem,
+//                                                               child:
+//                                                               Stack(
+//                                                                 children: [
+//                                                                   Positioned(
+//                                                                     // rectangle107TMB (730:30)
+//                                                                     left: 0 * fem,
+//                                                                     top: 115.0888214111 * fem,
+//                                                                     child: Align(
+//                                                                       child: SizedBox(
+//                                                                         width: 370 * fem,
+//                                                                         height: 182.01 * fem,
+//                                                                         child: Container(
+//                                                                           decoration: BoxDecoration(
+//                                                                             borderRadius: BorderRadius.circular(10 * fem),
+//                                                                             color: const Color(0xffffffff),
+//                                                                           ),
+//                                                                         ),
+//                                                                       ),
+//                                                                     ),
+//                                                                   ),
+//                                                                   Positioned(
+//                                                                     // group22y4d (730:31)
+//                                                                     left: 11.2578125 * fem,
+//                                                                     top: 0 * fem,
+//                                                                     child: SizedBox(
+//                                                                       width: 355.39 * fem,
+//                                                                       height: 200.43 * fem,
+//                                                                       child: Column(
+//                                                                         crossAxisAlignment: CrossAxisAlignment.end,
+//                                                                         children: [
+//                                                                           Container(
+//                                                                             // autogroupi45wHb7 (5rq74tvFbZcGmqkUCBi45w)
+//                                                                             margin: EdgeInsets.fromLTRB(111.74 * fem, 0 * fem, 4.07 * fem, 32.92 * fem),
+//                                                                             width: double.infinity,
+//                                                                             child: Row(
+//                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                                                               crossAxisAlignment: CrossAxisAlignment.start,
+//                                                                               children: [
+//                                                                                 Container(
+//                                                                                   // group18PPF (730:36)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 14.43 * fem, 0, 0 * fem),
+//                                                                                   child: Column(
+//                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
+//                                                                                     children: [
+//                                                                                       Container(
+//                                                                                         // anshikamehrausP (730:37)
+//                                                                                         margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 4.25 * fem),
+//                                                                                         child: Text(
+//                                                                                           "${listController.cousnellorlist_data[index].name} ",
+//                                                                                           style: SafeGoogleFont(
+//                                                                                             'Inter',
+//                                                                                             fontSize: 22 * ffem,
+//                                                                                             fontWeight: FontWeight.w700,
+//                                                                                             height: 1.2125 * ffem / fem,
+//                                                                                             color: const Color(0xFF41403F),
+//                                                                                           ),
+//                                                                                         ),
+//                                                                                       ),
+//                                                                                       Text(
+//                                                                                         // productdesignerwepitchd2h (730:38)
+//                                                                                         "N/A",
+//                                                                                         style: SafeGoogleFont(
+//                                                                                           'Inter',
+//                                                                                           fontSize: 12 * ffem,
+//                                                                                           fontWeight: FontWeight.w400,
+//                                                                                           height: 1.2125 * ffem / fem,
+//                                                                                           color: const Color(0xff696969),
+//                                                                                         ),
+//                                                                                       ),
+//                                                                                     ],
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 GestureDetector(
+//                                                                                   onTap: (){
+//                                                                                     Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+//                                                                                   },
+//                                                                                   child: Container(
+//                                                                                     margin: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+//                                                                                     // group38MUV (730:32)
+//                                                                                     width: 17.42 * fem,
+//                                                                                     height: 18.86 * fem,
+//                                                                                     child: Image.asset(
+//                                                                                       'assets/page-1/images/group-38-oFX.png',
+//                                                                                       width: 17.42 * fem,
+//                                                                                       height: 18.86 * fem,
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // autogroupgljmgWm (5rq7GDviByH7TzJqkBgLJM)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 3.3 * fem),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // autogrouprcmfMPw (5rq7T8nCN5sYC595gTrcmf)
+//                                                                             margin: EdgeInsets.fromLTRB(30.79 * fem, 0 * fem, 0 * fem, 8.5 * fem),
+//                                                                             width: double.infinity,
+//                                                                             child: Row(
+//                                                                               crossAxisAlignment: CrossAxisAlignment.start,
+//                                                                               children: [
+//                                                                                 Container(
+//                                                                                   // clockcircularoutlineQuw (730:55)
+//                                                                                   margin: EdgeInsets.fromLTRB(80 * fem, 1.26 * fem, 4.13 * fem, 0 * fem),
+//                                                                                   width: 10.41 * fem,
+//                                                                                   height: 10.41 * fem,
+//                                                                                   child: Image.asset(
+//                                                                                     'assets/page-1/images/clock-circular-outline-Ra1.png',
+//                                                                                     fit: BoxFit.cover,
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Container(
+//                                                                                   // nextsessionat800pm8L9 (730:73)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 51.8 * fem, 0 * fem),
+//                                                                                   child: Text(
+//                                                                                     'N/A',
+//                                                                                     textAlign: TextAlign.center,
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 12 * ffem,
+//                                                                                       fontWeight: FontWeight.w500,
+//                                                                                       height: 1 * ffem / fem,
+//                                                                                       color: const Color(0xff414040),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Container(
+//                                                                                   // starpim (730:70)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 2.34 * fem, 0 * fem),
+//                                                                                   width: 10 * fem,
+//                                                                                   height: 10 * fem,
+//                                                                                   child: Image.asset(
+//                                                                                     'assets/page-1/images/star.png',
+//                                                                                     fit: BoxFit.cover,
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Text(
+//                                                                                   // 9W9 (730:71)
+//                                                                                   '${listController.cousnellorlist_data[index].averageRating}',
+//                                                                                   textAlign: TextAlign.center,
+//                                                                                   style: SafeGoogleFont(
+//                                                                                     'Inter',
+//                                                                                     fontSize: 9 * ffem,
+//                                                                                     fontWeight: FontWeight.w700,
+//                                                                                     height: 1 * ffem / fem,
+//                                                                                     color: const Color(0xff000000),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                           //updated
+//                                                                           Container(
+//                                                                             // group1324p9 (730:74)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 3.5 * fem, 3.29 * fem, 0 * fem),
+//                                                                             height: 35 * fem,
+//                                                                             child: Row(
+//                                                                               crossAxisAlignment: CrossAxisAlignment.center,
+//                                                                               children: [
+//                                                                                 GestureDetector(
+//                                                                                   onTap: () {
+//                                                                                     String id = listController.cousnellorlist_data[index].id;
+//                                                                                     String name = listController.cousnellorlist_data[index].name;
+//                                                                                     Navigator.push(
+//                                                                                         context,
+//                                                                                         MaterialPageRoute(
+//                                                                                             builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
+//                                                                                   },
+//                                                                                   child: SizedBox(
+//                                                                                     width: 130.85,
+//                                                                                     height: 25.09,
+//                                                                                     child: Stack(
+//                                                                                       children: [
+//                                                                                         Positioned(
+//                                                                                           child: Container(
+//                                                                                             width: 130.85,
+//                                                                                             height: 25.09,
+//                                                                                             decoration: ShapeDecoration(
+//                                                                                               color: Colors.white,
+//                                                                                               shape: RoundedRectangleBorder(
+//                                                                                                 side: BorderSide(
+//                                                                                                   width: 0.50,
+//                                                                                                   color: Colors.black.withOpacity(0.7400000095367432),
+//                                                                                                 ),
+//                                                                                                 borderRadius: BorderRadius.circular(16),
+//                                                                                               ),
+//                                                                                             ),
+//                                                                                           ),
+//                                                                                         ),
+//                                                                                         const Positioned(
+//                                                                                           left: 5.45,
+//                                                                                           top: 13,
+//                                                                                           child: SizedBox(
+//                                                                                             width: 123.01,
+//                                                                                             height: 16.05,
+//                                                                                             child: Text(
+//                                                                                               'Visit Profile',
+//                                                                                               textAlign: TextAlign.center,
+//                                                                                               style: TextStyle(
+//                                                                                                 color: Color(0xFF262626),
+//                                                                                                 fontSize: 14,
+//                                                                                                 fontFamily: 'Inter',
+//                                                                                                 fontWeight: FontWeight.w700,
+//                                                                                                 height: 0.07,
+//                                                                                               ),
+//                                                                                             ),
+//                                                                                           ),
+//                                                                                         ),
+//                                                                                       ],
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 )
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                         ],
+//                                                                       ),
+//                                                                     ),
+//                                                                   ),
+//                                                                   Positioned(
+//                                                                     // group127Yc9 (730:56)
+//                                                                     left: 15.095703125 * fem,
+//                                                                     top: 170.1729736328 * fem,
+//                                                                     child: SizedBox(
+//                                                                       width: 330.19 * fem,
+//                                                                       height: 41.88 * fem,
+//                                                                       child: Row(
+//                                                                         crossAxisAlignment: CrossAxisAlignment.end,
+//                                                                         children: [
+//                                                                           Container(
+//                                                                             // autogroupxdarfqB (5rq95AuqkATF4BMvwmXDaR)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 1.35 * fem, 23.41 * fem, 3.21 * fem),
+//                                                                             height: double.infinity,
+//                                                                             child: Column(
+//                                                                               crossAxisAlignment: CrossAxisAlignment.center,
+//                                                                               children: [
+//                                                                                 Container(
+//                                                                                   // experiencezMf (730:57)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 3.33 * fem),
+//                                                                                   child: Text(
+//                                                                                     'Experience',
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 11 * ffem,
+//                                                                                       fontWeight: FontWeight.w500,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xFF8D8888),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Container(
+//                                                                                   // yrsthw (730:61)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 3 * fem, 1.34 * fem, 0 * fem),
+//                                                                                   child: Text(
+//                                                                                     "${listController.cousnellorlist_data[index].experienceInYears}"
+//                                                                                         " year",
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 13 * ffem,
+//                                                                                       fontWeight: FontWeight.w700,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff000000),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // zFB (730:65)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 19.05 * fem, 0.81 * fem),
+//                                                                             constraints: BoxConstraints(
+//                                                                               maxWidth: 3 * fem,
+//                                                                             ),
+//                                                                             child: Text(
+//                                                                               '.\n.\n.\n.\n.\n.\n.\n.\n.',
+//                                                                               textAlign: TextAlign.center,
+//                                                                               style: SafeGoogleFont(
+//                                                                                 'Inter',
+//                                                                                 fontSize: 9 * ffem,
+//                                                                                 fontWeight: FontWeight.w400,
+//                                                                                 height: 0.4849999746 * ffem / fem,
+//                                                                                 color: const Color(0xff9a9898),
+//                                                                               ),
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // autogroupmychGyP (5rq9BvDbjLHY7cvriqmYch)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 23.67 * fem, 1.09 * fem),
+//                                                                             child: Column(
+//                                                                               crossAxisAlignment: CrossAxisAlignment.center,
+//                                                                               children: [
+//                                                                                 Container(
+//                                                                                   // sessionPo7 (730:59)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 5.45 * fem),
+//                                                                                   child: Text(
+//                                                                                     'Session',
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 11 * ffem,
+//                                                                                       fontWeight: FontWeight.w500,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff8d8888),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Container(
+//                                                                                   // JfB (730:62)
+//                                                                                   margin: EdgeInsets.fromLTRB(2.42 * fem, 3 * fem, 0 * fem, 0 * fem),
+//                                                                                   child: Text(
+//                                                                                     '${listController.cousnellorlist_data[index].totalSessions}',
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 13 * ffem,
+//                                                                                       fontWeight: FontWeight.w700,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff000000),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // CkZ (730:66)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 26.73 * fem, 0.95 * fem),
+//                                                                             constraints: BoxConstraints(
+//                                                                               maxWidth: 3 * fem,
+//                                                                             ),
+//                                                                             child: Text(
+//                                                                               '.\n.\n.\n.\n.\n.\n.\n.\n.',
+//                                                                               textAlign: TextAlign.center,
+//                                                                               style: SafeGoogleFont(
+//                                                                                 'Inter',
+//                                                                                 fontSize: 9 * ffem,
+//                                                                                 fontWeight: FontWeight.w400,
+//                                                                                 height: 0.4849999746 * ffem / fem,
+//                                                                                 color: const Color(0xff9a9898),
+//                                                                               ),
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // autogroupkgiuUTB (5rq9Haiq2Y7xThD3Vqkgiu)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 17.6 * fem, 0 * fem),
+//                                                                             child: Column(
+//                                                                               crossAxisAlignment: CrossAxisAlignment.center,
+//                                                                               children: [
+//                                                                                 Container(
+//                                                                                   // rewardsNoT (730:60)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 6.53 * fem),
+//                                                                                   child: Text(
+//                                                                                     'Rewards',
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 11 * ffem,
+//                                                                                       fontWeight: FontWeight.w500,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff8d8888),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Container(
+//                                                                                   // sVK (730:63)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 3 * fem, 3.09 * fem, 0 * fem),
+//                                                                                   child: Text(
+//                                                                                     " ${listController.cousnellorlist_data[index].rewardPoints} +",
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 13 * ffem,
+//                                                                                       fontWeight: FontWeight.w700,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff000000),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // BW1 (730:67)
+//                                                                             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 16.73 * fem, 1.88 * fem),
+//                                                                             constraints: BoxConstraints(
+//                                                                               maxWidth: 3 * fem,
+//                                                                             ),
+//                                                                             child: Text(
+//                                                                               '.\n.\n.\n.\n.\n.\n.\n.\n.',
+//                                                                               textAlign: TextAlign.center,
+//                                                                               style: SafeGoogleFont(
+//                                                                                 'Inter',
+//                                                                                 fontSize: 9 * ffem,
+//                                                                                 fontWeight: FontWeight.w400,
+//                                                                                 height: 0.4849999746 * ffem / fem,
+//                                                                                 color: const Color(0xff9a9898),
+//                                                                               ),
+//                                                                             ),
+//                                                                           ),
+//                                                                           Container(
+//                                                                             // autogroupjpq7GnM (5rq9PFE4KjxNomVEGqjpq7)
+//                                                                             child: Column(
+//                                                                               crossAxisAlignment: CrossAxisAlignment.center,
+//                                                                               children: [
+//                                                                                 Container(
+//                                                                                   // reviewsRQM (730:58)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 6.53 * fem),
+//                                                                                   child: Text(
+//                                                                                     'Reviews',
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 11 * ffem,
+//                                                                                       fontWeight: FontWeight.w500,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff8d8888),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                                 Container(
+//                                                                                   // kfT7 (730:64)
+//                                                                                   margin: EdgeInsets.fromLTRB(0 * fem, 3 * fem, 4.34 * fem, 0 * fem),
+//                                                                                   child: Text(
+//                                                                                     '${listController.cousnellorlist_data[index].reviews}',
+//                                                                                     style: SafeGoogleFont(
+//                                                                                       'Inter',
+//                                                                                       fontSize: 13 * ffem,
+//                                                                                       fontWeight: FontWeight.w700,
+//                                                                                       height: 1.2125 * ffem / fem,
+//                                                                                       color: const Color(0xff000000),
+//                                                                                     ),
+//                                                                                   ),
+//                                                                                 ),
+//                                                                               ],
+//                                                                             ),
+//                                                                           ),
+//                                                                         ],
+//                                                                       ),
+//                                                                     ),
+//                                                                   ),
+//                                                                 ],
+//                                                               ),
+//                                                             ),
+//                                                           ),
+//                                                         ],
+//                                                       ),
+//                                                     ),
+//                                                   ),
+//                                                   Positioned(
+//                                                     // rectangle202WCq (782:2)
+//                                                     left:
+//                                                     10 * fem,
+//                                                     top:
+//                                                     220.5815429688 *
+//                                                         fem,
+//                                                     child: Align(
+//                                                       child:
+//                                                       SizedBox(
+//                                                         width: 370 *
+//                                                             fem,
+//                                                         height:
+//                                                         51.5 *
+//                                                             fem,
+//                                                         child:
+//                                                         Container(
+//                                                           decoration:
+//                                                           BoxDecoration(
+//                                                             color:
+//                                                             const Color(0xffe1e0e0),
+//                                                             borderRadius:
+//                                                             BorderRadius.only(
+//                                                               bottomRight:
+//                                                               Radius.circular(10 * fem),
+//                                                               bottomLeft:
+//                                                               Radius.circular(10 * fem),
+//                                                             ),
+//                                                           ),
+//                                                         ),
+//                                                       ),
+//                                                     ),
+//                                                   ),
+//                                                   Positioned(
+//                                                     // booknownAM (730:83)
+//                                                     left:
+//                                                     146.9609375 *
+//                                                         fem,
+//                                                     top:
+//                                                     240.3315429688 *
+//                                                         fem,
+//                                                     child: Align(
+//                                                       child:
+//                                                       SizedBox(
+//                                                         width: 91 *
+//                                                             fem,
+//                                                         height: 20 *
+//                                                             fem,
+//                                                         child:
+//                                                         GestureDetector(
+//                                                           onTap:
+//                                                               () {
+//                                                             onTapgotocounsellor(
+//                                                                 context,
+//                                                                 id: listController.cousnellorlist_data[index].id,
+//                                                                 name: listController.cousnellorlist_data[index].name);
+//                                                           },
+//                                                           child:
+//                                                           Text(
+//                                                             'BOOK NOW',
+//                                                             style:
+//                                                             SafeGoogleFont(
+//                                                               'Inter',
+//                                                               fontSize:
+//                                                               16 * ffem,
+//                                                               fontWeight:
+//                                                               FontWeight.w600,
+//                                                               height: 1.2125 *
+//                                                                   ffem /
+//                                                                   fem,
+//                                                               color:
+//                                                               const Color(0xff262626),
+//                                                             ),
+//                                                           ),
+//                                                         ),
+//                                                       ),
+//                                                     ),
+//                                                   ),
+//                                                 ],
+//                                               ),
+//                                             ),
+//                                           ],
+//                                         );
+//                                       },
+//                                     ),
 //                                   ),
 //                                 ),
 //                               ),
 //                             ],
 //                           ),
 //                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Align(
-//               child: Container(
-//                 constraints: const BoxConstraints(
-//                   maxHeight: 120,
-//                   maxWidth: 390,
-//                 ),
-//                 decoration:
-//                 BoxDecoration(borderRadius: BorderRadius.circular(12)),
-//                 width: 390 * fem,
-//                 height: 120 * fem,
-//                 child: ImageSlideshow(
-//                   autoPlayInterval: 6000,
-//                   isLoop: true,
-//                   indicatorColor: Colors.black,
-//                   indicatorBackgroundColor: Colors.white,
-//                   children: dummyImagesSlider
-//                       .map((e) => Container(
-//                     width: 390 * fem,
-//                     height: 120 * fem,
-//                     decoration: BoxDecoration(
-//                       borderRadius:
-//                       const BorderRadius.all(Radius.circular(16)),
-//                       image: DecorationImage(image: NetworkImage(e)),
-//                     ),
-//                   ))
-//                       .toList(),
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(
-//               height: 20,
-//             ),
-//             Padding(
-//               padding: EdgeInsets.only(left: 28.0 * fem),
-//               child: const Row(
-//                 children: [
-//
-//                   Text(
-//                     'Popular Workshops',
-//                     style: TextStyle(
-//                       color: Color(0xFF1F0A68),
-//                       fontSize: 18,
-//                       fontFamily: 'Inter',
-//                       fontWeight: FontWeight.w600,
-//                       height: 0,
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//             const SizedBox(
-//               height: 12,
-//             ),
-//             SizedBox(
-//               height: MediaQuery.of(context).size.height * 0.28,
-//               child: PageView(
-//                 children: [
-//                   profileCard(),
-//                   profileCard(),
-//                   profileCard(),
-//                 ],
-//               ),
-//             ),
-//             const SizedBox(
-//               height: 30,
-//             ),
-//             Padding(
-//               padding: EdgeInsets.only(left: 28.0 * fem),
-//               child: const Row(
-//                 children: [
-//                   Icon(
-//                     Icons.person_pin_outlined,
-//                     size: 18,
-//                   ),
-//                   SizedBox(
-//                     width: 16,
-//                   ),
-//                   Text(
-//                     'Trending Webinars',
-//                     style: TextStyle(
-//                       color: Color(0xFF1F0A68),
-//                       fontSize: 18,
-//                       fontFamily: 'Inter',
-//                       fontWeight: FontWeight.w600,
-//                       height: 0,
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//             Padding(
-//               padding:
-//               const EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
-//               child: Column(
-//                 children: [
-//                   buildCustomWebinarCard(),
-//                   buildCustomWebinarCard(),
-//                   buildCustomWebinarCard(),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   CustomWebinarCard buildCustomWebinarCard() {
-//     return const CustomWebinarCard(
-//         enableAutoScroll: true,
-//         showDuration: false,
-//         title: "Learn more about CUET and IPMAT",
-//         isRegisterNow: true,
-//         btnTitle: "Register Now",
-//         time: "15 Sep @ 2:00 PM Onwards",
-//         duration: "60",
-//         participants: "Unlimited",
-//         bannerImg: "assets/page-1/images/webinarBanner.png");
-//   }
-//
-//   Widget profileCard() {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 14.0),
-//       child: Card(
-//         color: Colors.white,
-//         surfaceTintColor: Colors.white,
-//         elevation: 4,
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-//         child: Padding(
-//           padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
-//           child: Column(
-//             children: [
-//               Row(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   const CircleAvatar(
-//                     radius: 38,
-//                     backgroundImage: AssetImage(
-//                       "assets/page-1/images/Rectangle 101.png",
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     width: 8,
-//                   ),
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       const SizedBox(
-//                         height: 10,
 //                       ),
-//                       Row(
-//                         children: [
-//                           const Text(
-//                             'Anshika Mehra',
-//                             style: TextStyle(
-//                               color: Color(0xFF1F0A68),
-//                               fontSize: 16,
-//                               fontFamily: 'Inter',
-//                               fontWeight: FontWeight.w600,
-//                               height: 0,
-//                             ),
-//                           ),
-//                           SizedBox(
-//                             width: MediaQuery.of(context).size.width * 0.08,
-//                           ),
-//                           GestureDetector(
-//                             onTap: () {
-//                               Share.share(
-//                                   'https://play.google.com/store/apps/details?id=com.sortmycollege');
-//                             },
-//                             child: CircleAvatar(
-//                               backgroundColor: const Color(0xff7F90F7),
-//                               child: Center(
-//                                 child: Image.asset(
-//                                   "assets/page-1/images/group-38-oFX.png",
-//                                   color: Colors.white,
-//                                   height: 14,
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       const SizedBox(
-//                         height: 2,
-//                       ),
-//                       const SizedBox(
-//                         width: 190.25,
-//                         child: Text(
-//                           'Importance of CUET',
-//                           style: TextStyle(
-//                             color: Colors.black,
-//                             fontSize: 12,
-//                             fontFamily: 'Inter',
-//                             fontWeight: FontWeight.w600,
-//                             height: 0,
-//                           ),
-//                         ),
-//                       ),
-//                       const SizedBox(
-//                         height: 2,
-//                       ),
-//                       Row(
-//                         children: [
-//                           Image.asset(
-//                             "assets/page-1/images/clock-circular-outline-Ra1.png",
-//                             // color: Colors.black,
-//                             height: 12,
-//                             width: 12,
-//                           ),
-//                           const SizedBox(
-//                             width: 4,
-//                           ),
-//                           const SizedBox(
-//                             width: 121.13,
-//                             child: Text(
-//                               ' Session at 8:00pm',
-//                               style: TextStyle(
-//                                 color: Color(0xFF414040),
-//                                 fontSize: 12,
-//                                 fontFamily: 'Inter',
-//                                 fontWeight: FontWeight.w500,
-//                                 height: 0.08,
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       const SizedBox(
-//                         height: 3,
-//                       ),
-//                       Row(
-//                         children: [
-//                           Container(
-//                             width: 13,
-//                             height: 13,
-//                             decoration: const BoxDecoration(
-//                               image: DecorationImage(
-//                                 image: AssetImage(
-//                                     "assets/page-1/images/calender.png"),
-//                                 fit: BoxFit.fill,
-//                               ),
-//                             ),
-//                           ),
-//                           const SizedBox(
-//                             width: 6,
-//                           ),
-//                           const SizedBox(
-//                             width: 121.13,
-//                             child: Text(
-//                               '27th Dec 2023',
-//                               style: TextStyle(
-//                                 color: Color(0xFF414040),
-//                                 fontSize: 12,
-//                                 fontFamily: 'Inter',
-//                                 fontWeight: FontWeight.w500,
-//                                 height: 0.08,
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       const SizedBox(
-//                         height: 3,
-//                       ),
-//                       Row(
-//                         children: [
-//                           Container(
-//                             width: 12,
-//                             height: 12,
-//                             decoration: const BoxDecoration(
-//                               image: DecorationImage(
-//                                 image:
-//                                 AssetImage("assets/page-1/images/rate.png"),
-//                                 fit: BoxFit.fill,
-//                               ),
-//                             ),
-//                           ),
-//                           const SizedBox(
-//                             width: 4,
-//                           ),
-//                           const SizedBox(
-//                             width: 121.13,
-//                             child: Text(
-//                               ' 10/-',
-//                               style: TextStyle(
-//                                 color: Color(0xFF414040),
-//                                 fontSize: 12,
-//                                 fontFamily: 'Inter',
-//                                 fontWeight: FontWeight.w500,
-//                                 height: 0.08,
-//                               ),
-//                             ),
-//                           ),
-//                         ],
-//                       )
 //                     ],
 //                   ),
-//                 ],
-//               ),
-//               const SizedBox(
-//                 height: 6,
-//               ),
-//               Container(
-//                 height: 0.47,
-//                 width: double.infinity,
-//                 color: const Color(0xffAFAFAF).withOpacity(.78),
-//               ),
-//               SizedBox(
-//                 height: MediaQuery.of(context).size.height * 0.01,
-//               ),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                 children: [
-//                   Container(
-//                     width: 120.14,
-//                     height: 30,
-//                     decoration: ShapeDecoration(
-//                       color: Colors.white,
-//                       shape: RoundedRectangleBorder(
-//                         side: BorderSide(
-//                           width: 0.50,
-//                           color: Colors.black.withOpacity(0.7400000095367432),
-//                         ),
-//                         borderRadius: BorderRadius.circular(16),
-//                       ),
-//                     ),
-//                     child: const SizedBox(
-//                       width: 119.09,
-//                       height: 16.05,
-//                       child: Center(
-//                         child: Text(
-//                           'Visit Profile',
-//                           textAlign: TextAlign.center,
-//                           style: TextStyle(
-//                             color: Color(0xFF262626),
-//                             fontSize: 14,
-//                             fontFamily: 'Inter',
-//                             fontWeight: FontWeight.w700,
-//                             height: 0.07,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                   Container(
-//                     width: 120,
-//                     height: 30,
-//                     decoration: ShapeDecoration(
-//                       color: const Color(0xff1F0A68),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(16),
-//                       ),
-//                     ),
-//                     child: const SizedBox(
-//                       width: 119.09,
-//                       height: 16.05,
-//                       child: Center(
-//                         child: Text(
-//                           'Book Now',
-//                           textAlign: TextAlign.center,
-//                           style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 14,
-//                             fontFamily: 'Inter',
-//                             fontWeight: FontWeight.w700,
-//                             height: 0.07,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 10,),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Icon(Icons.circle,color: Color(0xff1F0A68),size: 10,),
-//                   Icon(Icons.circle_outlined,color: Color(0xff1F0A68),size: 10,),
-//                   Icon(Icons.circle_outlined,color: Color(0xff1F0A68),size: 10,),
-//                 ],
+//                 ),
 //               ),
 //             ],
 //           ),
@@ -838,15 +1061,17 @@ class HiddenText extends StatelessWidget {
 //     );
 //   }
 //
-//   void onTapgotocounsellor(BuildContext context) {
+//   void onTapgotocounsellor(BuildContext context,
+//       {required String name, required String id}) {
+//     Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//             builder: (context) => CounsellingSessionPage(name: name, id: id)));
+//   }
+//
+//   Future<bool> _onBackPressed() async {
 //     Navigator.pushReplacement(context,
-//         MaterialPageRoute(builder: (context) => const HomePageContainer_2()));
+//         MaterialPageRoute(builder: (context) => const HomePageContainer()));
+//     return true;
 //   }
 // }
-//
-// List<String> dummyImagesSlider = [
-//   "https://res.cloudinary.com/drqangxt5/image/upload/v1707392532/vwoxcoxnthnqzf6gr6dk.png",
-//   "https://res.cloudinary.com/drqangxt5/image/upload/v1707395734/hg6qrgwoxunplx8nulyo.png",
-//   "https://res.cloudinary.com/drqangxt5/image/upload/v1707470820/hw3dtgyzidkdxmfn9okf.png",
-//   "https://res.cloudinary.com/drqangxt5/image/upload/v1707388826/ivt6y17a9pknj5fvdp8t.png",
-// ];

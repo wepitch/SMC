@@ -266,7 +266,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
 
-    PhonePayInit();
+    //PhonePayInit();
     // body = getCheckSum();
     sessionDate.getDates();
     tabController =

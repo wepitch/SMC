@@ -64,9 +64,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
         items: const [
           BottomNavigationBarItem(
             label: "Home",
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/home1.png"),
-            ),
+            icon: Icon(Icons.home_outlined,size: 26,),
           ),
           BottomNavigationBarItem(
             label: "Webinar",

@@ -65,6 +65,8 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
                                 alignment: Alignment.bottomCenter,
                                 children: [
                                   Card(
+                                    color: Colors.white,
+                                    surfaceTintColor: Colors.white,
                                     // semanticContainer: false,
                                     margin: const EdgeInsets.only(top: 5),
                                     elevation: 5,
