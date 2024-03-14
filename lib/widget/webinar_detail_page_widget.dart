@@ -404,7 +404,7 @@ Widget webinarDetailWidget({
   required bool isRegisterNow,
 }) {
   Color buttonColor =
-      isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+      isRegisterNow ? Colors.white : const Color(0xff1F0A68);
   Color textColor = isRegisterNow ? Colors.black : Colors.white;
 
   double buttonWidth =

@@ -126,7 +126,7 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
           Card(
             color: Colors.white,
             surfaceTintColor: Colors.white,
-            elevation: 4,
+            elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Column(
@@ -203,30 +203,30 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                       const SizedBox(
                         height: 14,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: const Color(0xff7F90F7),
-                            child: Center(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
                               child: Image.asset(
                                 "assets/page-1/images/group-38-oFX.png",
-                                width: 17,
-                                height: 17,
-                                color: Colors.white,
+                                width: 20,
+                                height: 20,
+                                color: Color(0xff1F0A68),
                               ),
                             ),
-                          ),
-                          customRegisterNow(
-                            onPressed: () async {
-                              // await _updateRegistrationStatus(true);
-                              //
-                              // Fluttertoast.showToast(msg: 'Starting in 2 days');
-                            },
-                            title: widget.btnTitle,
-                            isRegisterNow: widget.isRegisterNow,
-                          ),
-                        ],
+                            customRegisterNow(
+                              onPressed: () async {
+                                // await _updateRegistrationStatus(true);
+                                //
+                                // Fluttertoast.showToast(msg: 'Starting in 2 days');
+                              },
+                              title: widget.btnTitle,
+                              isRegisterNow: widget.isRegisterNow,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -245,13 +245,13 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
     required bool isRegisterNow,
   }) {
     Color buttonColor = isRegisterNow
-        ? const Color.fromARGB(255, 189, 173, 241)
-        : const Color.fromARGB(255, 189, 173, 241);
+        ? const Color(0xff1F0A68)
+        : const Color(0xff1F0A68);
     Color textColor = isRegisterNow ? Colors.white : Colors.white;
 
     return SizedBox(
-      height: 42,
-      width: 200,
+      height: 35,
+      width: 232,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

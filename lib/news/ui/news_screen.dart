@@ -29,7 +29,7 @@ class _NewsScreen extends State<NewsScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: ColorsConst.appBarColor,
+        backgroundColor: ColorsConst.whiteColor,
         foregroundColor: ColorsConst.whiteColor,
         // leading: Padding(
         //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -47,11 +47,11 @@ class _NewsScreen extends State<NewsScreen> {
         // ),
         //titleSpacing: 120,
         title: Padding(
-          padding: const EdgeInsets.only(left: 140),
+          padding: const EdgeInsets.only(left: 10),
           child: Text(
             StringConst.newsTitle,
             style: SafeGoogleFont("Inter",
-                fontSize: 18, fontWeight: FontWeight.w600),
+                fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),
           ),
         ),
       ),
@@ -155,7 +155,7 @@ class _NewsScreen extends State<NewsScreen> {
                                   Text(
                                     'Read More',
                                     style: TextStyle(
-                                      color: ColorsConst.redColor,
+                                      color: ColorsConst.appBarColor,
                                     ),
                                   ),
                                   // Icon(

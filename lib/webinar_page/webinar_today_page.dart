@@ -135,7 +135,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
           Card(
             color: ColorsConst.whiteColor,
             surfaceTintColor: ColorsConst.whiteColor,
-            elevation: 4,
+            elevation: 2,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -215,71 +215,71 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                       const SizedBox(
                         height: 14,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: const Color(0xff7F90F7),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                              },
                               child: Center(
                                 child: Image.asset(
                                   "assets/page-1/images/group-38-oFX.png",
-                                  width: 17,
-                                  height: 17,
-                                  color: Colors.white,
+                                  width: 20,
+                                  height: 20,
+                                  color: Color(0xff1F0A68),
                                 ),
                               ),
                             ),
-                          ),
-                          customRegisterNowBtn(
-                            onPressed: () async {
-                              if (!_isRegistrationStarting) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: const Text(
-                                        'Do you want to register for the webinar?',
-                                        style: TextStyle(
-                                          fontSize: 16,
+                            customRegisterNowBtn(
+                              onPressed: () async {
+                                if (!_isRegistrationStarting) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                          'Do you want to register for the webinar?',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            launchUrlString(
-                                                'https://app.zoom.us/wc/join/6876923575?fromPWA=1&pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1&_x_zm_rtaid=dMkrHAzTSv2KH-k63GFIIg.1709188412516.3a0d504b72c1403587e5715af973a35f&_x_zm_rhtaid=220');
-                                            if (mounted) {
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
                                               Navigator.pop(context);
-                                            }
-                                            await _updateRegistrationStatus(
-                                                true);
-                                          },
-                                          child: const Text('Yes'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                Text('has Been Registered');
-                              }
-                            },
-                            title: _isRegistrationStarting
-                                ? 'Starting in 2 days'
-                                : 'Register Now',
-                            isRegisterNow: _isRegistrationStarting,
-                          ),
-                        ],
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              launchUrlString(
+                                                  'https://app.zoom.us/wc/join/6876923575?fromPWA=1&pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1&_x_zm_rtaid=dMkrHAzTSv2KH-k63GFIIg.1709188412516.3a0d504b72c1403587e5715af973a35f&_x_zm_rhtaid=220');
+                                              if (mounted) {
+                                                Navigator.pop(context);
+                                              }
+                                              await _updateRegistrationStatus(
+                                                  true);
+                                            },
+                                            child: const Text('Yes'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  Text('has Been Registered');
+                                }
+                              },
+                              title: _isRegistrationStarting
+                                  ? 'Starting in 2 days'
+                                  : 'Register Now',
+                              isRegisterNow: _isRegistrationStarting,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -299,12 +299,12 @@ Widget customRegisterNowBtn({
   required bool isRegisterNow,
 }) {
   Color buttonColor =
-      isRegisterNow ? Colors.white : const Color.fromARGB(255, 189, 173, 241);
+      isRegisterNow ? Colors.white : const Color(0xff1F0A68);
   Color textColor = isRegisterNow ? Colors.black : Colors.white;
 
   return SizedBox(
-    height: 42,
-    width: 200,
+    height: 35,
+    width: 232,
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

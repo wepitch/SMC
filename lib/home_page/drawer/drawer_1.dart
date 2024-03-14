@@ -5,6 +5,7 @@ import 'package:myapp/home_page/drawer/image_saved_screen.dart';
 import 'package:myapp/home_page/help_screen.dart';
 import 'package:myapp/page-1/shared.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
+import 'package:myapp/page-1/splash_screen_n.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -298,7 +299,7 @@ class _Drawer1State extends State<Drawer1> {
     if (mounted) {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const SplashScreen2()),
+        MaterialPageRoute(builder: (context) => const SplashScreenNew()),
         (route) => false,
       );
       SharedPre.saveAuthLogin(false);

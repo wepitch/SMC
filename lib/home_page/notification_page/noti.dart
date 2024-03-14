@@ -155,24 +155,17 @@ class _Notification2State extends State<Notification2> {
         foregroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.only(left: 20),
-          child: Row(
-            children: [
-               GestureDetector(
-                 onTap: (){
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(
-                       builder: (context) => const HomePageContainer(),
-                     ),
-                   );
-                 },
-                 child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Color(0xff1F0A68),
+          child: IconButton(
+            onPressed: () { Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePageContainer(),
+            ),
+          ); }, icon: Icon( Icons.arrow_back_ios_new,
+            color: Color(0xff1F0A68),),
                   ),
                ),
-              const SizedBox(width: 60,),
-              Text(
+             title: Text(
                 "Notification",
                 style: SafeGoogleFont(
                   "Inter",
@@ -181,10 +174,7 @@ class _Notification2State extends State<Notification2> {
                   color: Color(0xff1F0A68),
                 ),
               ),
-            ],
           ),
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

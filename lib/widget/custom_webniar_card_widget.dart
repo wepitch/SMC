@@ -147,10 +147,10 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                             Text(
                               widget.showDuration
                                   ? "Career Institute : ${widget.duration}"
-                                  : "Allen career institute,\n by Anshika Mehra - ${widget.participants}",
+                                  : "Allen career institute,by Anshika Mehra - ${widget.participants}",
                               style: SafeGoogleFont(
                                 "Inter",
-                                fontSize: 12,
+                                fontSize: 11,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -163,7 +163,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 12,
                     ),
                     Container(
                       height: 1,
@@ -173,38 +173,38 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                     const SizedBox(
                       height: 14,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: const Color(0xff7F90F7),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                            },
                             child: Center(
                               child: Image.asset(
                                 "assets/page-1/images/group-38-oFX.png",
-                                width: 17,
-                                height: 17,
-                                color: Colors.white,
+                                width: 20,
+                                height: 20,
+                                color: Color(0xFF1F0A68),
                               ),
                             ),
                           ),
-                        ),
-                        registerNowWidget(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const WebinarDetailsPage(),
-                                ),
-                              );
-                            },
-                            title: widget.btnTitle,
-                            isRegisterNow: widget.isRegisterNow)
-                      ],
+                          registerNowWidget(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WebinarDetailsPage(),
+                                  ),
+                                );
+                              },
+                              title: widget.btnTitle,
+                              isRegisterNow: widget.isRegisterNow)
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -223,17 +223,17 @@ Widget registerNowWidget({
   required bool isRegisterNow,
 }) {
   Color buttonColor = isRegisterNow
-      ? const Color.fromARGB(255, 189, 173, 241)
-      : const Color.fromARGB(255, 189, 173, 241);
+      ? const Color(0xFF1F0A68)
+      : const Color(0xFF1F0A68);
   Color textColor = isRegisterNow ? Colors.white : Colors.white;
 
   return SizedBox(
-    height: 42,
-    width: 200,
+    height: 35,
+    width: 232,
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        elevation: 24,
+        elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -305,7 +305,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
           Card(
             color: Colors.white,
             surfaceTintColor: Colors.white,
-            elevation: 4,
+            elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Column(
@@ -382,32 +382,32 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                       const SizedBox(
                         height: 14,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: const Color(0xff7F90F7),
-                            child: Center(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
                               child: Image.asset(
                                 "assets/page-1/images/group-38-oFX.png",
-                                width: 17,
-                                height: 17,
-                                color: Colors.white,
+                                width: 20,
+                                height: 20,
+                                color: Color(0xff1F0A68),
                               ),
                             ),
-                          ),
-                          customRegisterNow(
-                            onPressed: () {
-                              // Fluttertoast.showToast(
-                              //   msg:
-                              //       'Thankyou for registering your session will start soon',
-                              //   gravity: ToastGravity.CENTER,
-                              // );
-                            },
-                            title: widget.btnTitle,
-                            isRegisterNow: widget.isRegisterNow,
-                          ),
-                        ],
+                            customRegisterNow(
+                              onPressed: () {
+                                // Fluttertoast.showToast(
+                                //   msg:
+                                //       'Thankyou for registering your session will start soon',
+                                //   gravity: ToastGravity.CENTER,
+                                // );
+                              },
+                              title: widget.btnTitle,
+                              isRegisterNow: widget.isRegisterNow,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -430,12 +430,12 @@ Widget customRegisterNow({
   Color textColor = isRegisterNow ? Colors.black : Colors.black;
 
   return SizedBox(
-    height: 42,
-    width: 200,
+    height: 35,
+    width: 232,
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        elevation: 18,
+        elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),

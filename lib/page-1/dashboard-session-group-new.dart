@@ -700,7 +700,7 @@ String key = "";
                                     );*/
 
                                       var value =
-                                          await    ApiService.counsellor_create_order(widget.name, 'abc@gmail.com', 1, 'test', '1234567890');
+                                          await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions?[index].sessionPrice,'description','9800000000');
                                       if (value["error"] ==
                                           "Order not successfully created") {
                                         EasyLoading.showToast(value["error"],
@@ -722,7 +722,7 @@ String key = "";
                                         }
                                         key = value["data"]["key"];
                                         print(key);
-                                        //openCheckOut(1);
+                                        openCheckOut(counsellorSessionProvider.details.sessions?[index].sessionPrice);
                                       }
                                     if (availableSlots >= 0) {
                                       EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);

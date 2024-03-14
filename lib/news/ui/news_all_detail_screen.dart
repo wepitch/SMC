@@ -26,16 +26,17 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
             },
             child: Image.asset(
               'assets/page-1/images/back.png',
+              color: ColorsConst.appBarColor,
             ),
           ),
         ),
-        backgroundColor: ColorsConst.appBarColor,
+        backgroundColor: ColorsConst.whiteColor,
         foregroundColor: ColorsConst.whiteColor,
-        titleSpacing: 70,
+        titleSpacing: 10,
         title: Text(
           "News Detail",
           style: SafeGoogleFont("Inter",
-              fontSize: 18, fontWeight: FontWeight.w600),
+              fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),
         ),
       ),
       body: Padding(

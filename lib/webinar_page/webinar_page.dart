@@ -31,7 +31,7 @@ class _WebinarPageState extends State<WebinarPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xff1F0A68),
+        backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         // titleSpacing: 60,
         // leading: Padding(
@@ -49,11 +49,11 @@ class _WebinarPageState extends State<WebinarPage> {
         //   ),
         // ),
         title: Padding(
-          padding: const EdgeInsets.only(left: 124),
+          padding: const EdgeInsets.only(left: 10),
           child: Text(
             "Webinar",
             style: SafeGoogleFont("Inter",
-                fontSize: 18, fontWeight: FontWeight.w600),
+                fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
           ),
         ),
         actions: [
@@ -61,6 +61,7 @@ class _WebinarPageState extends State<WebinarPage> {
             'assets/page-1/images/layer-3.png',
             width: 20,
             height: 20,
+            color: Color(0xff1F0A68),
           ),
           const SizedBox(
             width: 28,

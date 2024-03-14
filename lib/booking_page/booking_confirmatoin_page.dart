@@ -37,8 +37,9 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
             (widget.bookingData.sessionDuration ?? 0)) <
         0;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xff1F0A68),
+        backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -48,14 +49,14 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
             },
             child: Image.asset(
               'assets/page-1/images/back.png',
+              color: Color(0xff1F0A68),
             ),
           ),
         ),
-         titleSpacing: 72,
         title: Text(
           "My Booking",
           style: SafeGoogleFont("Inter",
-              fontSize: 18, fontWeight: FontWeight.w600),
+              fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
         ),
       ),
       body: Container(
@@ -183,7 +184,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                                     style: SafeGoogleFont("Inter",
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: const Color(0xff0024FF)),
+                                        color: const Color(0xff1F0A68)),
                                   )
                           ],
                         ),

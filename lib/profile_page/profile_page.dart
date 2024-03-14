@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myapp/profile_page/widget/profile_edit_dialog.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,9 +48,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xff1F0A68),
+        backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         // leading: Padding(
         //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -65,13 +65,11 @@ class _ProfilePageState extends State<ProfilePage> {
         //     ),
         //   ),
         // ),
-        titleSpacing: 20,
-        title: Center(
-          child: Text(
-            "My Profile",
-            style: SafeGoogleFont("Inter",
-                fontSize: 18, fontWeight: FontWeight.w600),
-          ),
+        titleSpacing: 28,
+        title: Text(
+          "My Profile",
+          style: SafeGoogleFont("Inter",
+              fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),
         ),
       ),
       body: Padding(
@@ -139,6 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 16,
               ),
               SizedBox(
+                height: 36,
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () async {
@@ -151,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(2),
                         backgroundColor: const Color(0xff1F0A68)),
                     child: const Text('Edit Profile')),
               ),

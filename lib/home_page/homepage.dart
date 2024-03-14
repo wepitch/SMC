@@ -128,114 +128,113 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
-            Container(
-              padding:
-                  EdgeInsets.fromLTRB(27 * fem, 8 * fem, 25 * fem, 23 * fem),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin:
-                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 2 * fem, 8 * fem),
-                    width: double.infinity,
-                    height: 120 * fem,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 100,
-                            decoration: const BoxDecoration(),
-                            child: GestureDetector(
-                              onTap: () {
-                                onTapgotocounsellor(context);
-                              },
-                              child: Container(
-                                width: 140 * fem,
-                                height: 100 * fem,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xff9584B0),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0, 4),
-                                      blurRadius: 4,
-                                      color: Colors.black.withOpacity(0.1),
-                                    ),
-                                  ],
-                                ),
-                                child: Image.asset(
-                                  "assets/page-1/images/Frame 412.png",
-                                ),
-                              ),
-                            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 110 * fem,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          onTapgotocounsellor(context);
+                        },
+                        child: Container(
+                          height: 94,
+                          decoration: BoxDecoration(
+                             color: const Color(0xffffffff),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Image.asset(
+                            "assets/page-1/images/find.jpg",
                           ),
                         ),
-                        const SizedBox(
-                          width: 8,
+                      ),
+                    ),
+                    const SizedBox(width: 34),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10,bottom: 0),
+                        width: 110 * fem,
+                        height: 120 * fem,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffE86C86),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 4),
+                              blurRadius: 4,
+                              color: Colors.black.withOpacity(0.1),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      15 * fem, 4 * fem, 9 * fem, 6 * fem),
-                                  width: 110 * fem,
-                                  height: 120 * fem,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffE86C86),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 4,
-                                        color: Colors.black.withOpacity(0.1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Image.asset(
-                                    "assets/page-1/images/Frame 413.png",
-                                  ),
-                                ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Image.asset(
+                              "assets/page-1/images/Frame 413.png",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 112 * fem,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Coming soon...');
+                        },
+                        child: Container(
+                          width: 110 * fem,
+                          height: 120 * fem,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: Color(0xff6450A8),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 4),
+                                blurRadius: 4,
+                                color: Colors.black.withOpacity(0.1),
                               ),
                             ],
                           ),
+                          child: Image.asset(
+                            "assets/page-1/images/Frame 416.png",
+                          ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 113 * fem,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Fluttertoast.showToast(msg: 'Coming soon...');
-                            },
+                    const SizedBox(
+                      width: 34,
+                    ),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
                             child: Container(
-                              padding: EdgeInsets.fromLTRB(
-                                  20 * fem, 8 * fem, 20 * fem, 13 * fem),
-                              width: 110 * fem,
-                              height: 120 * fem,
+                              width: 140 * fem,
+                              height: 140 * fem,
                               clipBehavior: Clip.antiAlias,
                               decoration: BoxDecoration(
-                                color: Color(0xff6450A8),
+                                color: const Color(0xff5273B4),
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
@@ -246,51 +245,18 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                               child: Image.asset(
-                                "assets/page-1/images/Frame 416.png",
+                                "assets/page-1/images/Frame 415.png",
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 14,
-                        ),
-                        Expanded(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      19 * fem, 4 * fem, 19 * fem, 3 * fem),
-                                  width: 140 * fem,
-                                  height: 140 * fem,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xff5273B4),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 4,
-                                        color: Colors.black.withOpacity(0.1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Image.asset(
-                                    "assets/page-1/images/Frame 415.png",
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+            const SizedBox(height: 20,),
             Align(
               child: Container(
                 constraints: const BoxConstraints(
@@ -331,9 +297,9 @@ class _HomePageState extends State<HomePage> {
                     'Popular Workshops',
                     style: TextStyle(
                       color: Color(0xFF1F0A68),
-                      fontSize: 18,
+                      fontSize: 20,
                       fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       height: 0,
                     ),
                   )
@@ -344,7 +310,7 @@ class _HomePageState extends State<HomePage> {
               height: 12,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.28,
+              height: MediaQuery.of(context).size.height * 0.24,
               child: PageView(
                 children: [
                   profileCard(),
@@ -360,23 +326,16 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(left: 28.0 * fem),
               child: const Row(
                 children: [
-                  Icon(
-                    Icons.person_pin_outlined,
-                    size: 18,
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
                   Text(
                     'Trending Webinars',
                     style: TextStyle(
                       color: Color(0xFF1F0A68),
-                      fontSize: 18,
+                      fontSize: 22,
                       fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       height: 0,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -416,7 +375,7 @@ class _HomePageState extends State<HomePage> {
       child: Card(
         color: Colors.white,
         surfaceTintColor: Colors.white,
-        elevation: 4,
+        elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
@@ -446,28 +405,25 @@ class _HomePageState extends State<HomePage> {
                             'Anshika Mehra',
                             style: TextStyle(
                               color: Color(0xFF1F0A68),
-                              fontSize: 16,
+                              fontSize: 15,
                               fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               height: 0,
                             ),
                           ),
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.08,
+                            width: MediaQuery.of(context).size.width * 0.2,
                           ),
                           GestureDetector(
                             onTap: () {
                               Share.share(
                                   'https://play.google.com/store/apps/details?id=com.sortmycollege');
                             },
-                            child: CircleAvatar(
-                              backgroundColor: const Color(0xff7F90F7),
-                              child: Center(
-                                child: Image.asset(
-                                  "assets/page-1/images/group-38-oFX.png",
-                                  color: Colors.white,
-                                  height: 14,
-                                ),
+                            child: Center(
+                              child: Image.asset(
+                                "assets/page-1/images/group-38-oFX.png",
+                                color: Color(0xFF1F0A68),
+                                height: 16,
                               ),
                             ),
                           ),
@@ -482,9 +438,9 @@ class _HomePageState extends State<HomePage> {
                           'Importance of CUET',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
+                            fontSize: 16,
                             fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                             height: 0,
                           ),
                         ),
@@ -511,7 +467,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Color(0xFF414040),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                                 height: 0.08,
                               ),
                             ),
@@ -545,7 +501,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Color(0xFF414040),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                                 height: 0.08,
                               ),
                             ),
@@ -579,7 +535,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Color(0xFF414040),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                                 height: 0.08,
                               ),
                             ),
@@ -646,7 +602,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: const SizedBox(
                       width: 119.09,
-                      height: 16.05,
+                      height: 14.05,
                       child: Center(
                         child: Text(
                           'Book Now',
@@ -665,7 +621,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 2,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
