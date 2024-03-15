@@ -185,40 +185,40 @@ class _Drawer1State extends State<Drawer1> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14.0),
-              child: Column(
-                children: [
-                  ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const FeedScreen(name: '', id: '')));
-                    },
-                    leading: Image.asset(
-                      'assets/page-1/images/test 1.png',
-                      height: 20,
-                      width: 20,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                      "Psychometric Test",
-                      style: SafeGoogleFont(
-                        "Inter",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    shape: Border(
-                        bottom: BorderSide(
-                      color: Colors.black.withOpacity(0.09),
-                    )),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            //   child: Column(
+            //     children: [
+            //       ListTile(
+            //         onTap: () {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) =>
+            //                       const FeedScreen(name: '', id: '')));
+            //         },
+            //         leading: Image.asset(
+            //           'assets/page-1/images/test 1.png',
+            //           height: 20,
+            //           width: 20,
+            //           fit: BoxFit.cover,
+            //         ),
+            //         title: Text(
+            //           "Psychometric Test",
+            //           style: SafeGoogleFont(
+            //             "Inter",
+            //             fontSize: 16,
+            //             fontWeight: FontWeight.w600,
+            //           ),
+            //         ),
+            //         shape: Border(
+            //             bottom: BorderSide(
+            //           color: Colors.black.withOpacity(0.09),
+            //         )),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14.0),
               child: GestureDetector(

@@ -127,12 +127,12 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                           side: const BorderSide(
                               color: Color(0xff1F0A68), width: 1),
                         ),
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(8),
                       ),
                       child: const Text('Log In',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600)),
                     ),
                   ),
@@ -154,11 +154,11 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(8),
                           backgroundColor: const Color(0xff1F0A68)),
                       child: const Text('Register',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                              fontSize: 16, fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],

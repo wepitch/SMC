@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/booking_page/booking_page.dart';
 import 'package:myapp/home_page/homepage.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
@@ -79,7 +80,7 @@ class _WebinarPageState extends State<WebinarPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                customButton(
+                CustomTab(
                     onPressed: () {
                       setState(() {
                         selectedIndex = 0;
@@ -87,8 +88,8 @@ class _WebinarPageState extends State<WebinarPage> {
                       pageController.jumpToPage(selectedIndex);
                     },
                     title: "My Webinar",
-                    isPressed: selectedIndex == 0),
-                customButton(
+                    isSelected: selectedIndex == 0),
+                CustomTab(
                     onPressed: () {
                       setState(() {
                         selectedIndex = 1;
@@ -96,16 +97,16 @@ class _WebinarPageState extends State<WebinarPage> {
                       pageController.jumpToPage(selectedIndex);
                     },
                     title: "Today",
-                    isPressed: selectedIndex == 1),
-                customButton(
+                    isSelected: selectedIndex == 1),
+                CustomTab(
                     onPressed: () {
                       setState(() {
                         selectedIndex = 2;
                       });
                       pageController.jumpToPage(selectedIndex);
                     },
-                    title: "UpComing",
-                    isPressed: selectedIndex == 2),
+                    title: "Upcoming",
+                    isSelected: selectedIndex == 2),
               ],
             ),
             Expanded(

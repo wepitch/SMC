@@ -310,7 +310,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(
-              height: 12,
+              height: 4,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.26,
@@ -323,7 +323,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             Padding(
               padding: EdgeInsets.only(left: 28.0 * fem),
@@ -344,7 +344,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 8),
+                  const EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 2),
               child: Column(
                 children: [
                   buildCustomWebinarCard(),
@@ -550,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 12,
               ),
               Container(
                 height: 0.47,
@@ -558,7 +558,7 @@ class _HomePageState extends State<HomePage> {
                 color: const Color(0xffAFAFAF).withOpacity(.78),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -81,7 +81,7 @@ class _BookingPageState extends State<BookingPage> {
                 height: 19,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 19.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                     // isScrollable: true,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +111,6 @@ class _BookingPageState extends State<BookingPage> {
                       CustomTab(
                         onPressed: () {
                           selectedIndex = 2;
-
                           setState(() {});
                           _controller.jumpToPage(
                             selectedIndex,
@@ -180,8 +179,8 @@ class CustomTab extends StatelessWidget {
     //var mHeight = MediaQuery.sizeOf(context).height;
     var mWidth = MediaQuery.sizeOf(context).width;
     return SizedBox(
-      height: 35,
-      width:102,
+      height: 36,
+      width:112,
       child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
@@ -191,8 +190,8 @@ class CustomTab extends StatelessWidget {
             ),
             textStyle: SafeGoogleFont(
               'Inter',
-              fontSize: mWidth * 0.030,
-              fontWeight: FontWeight.w600,
+              fontSize: mWidth * 0.03,
+              fontWeight: FontWeight.w400,
             ),
             foregroundColor:
                 isSelected ? const Color(0xffffffff) :  Colors.black45,

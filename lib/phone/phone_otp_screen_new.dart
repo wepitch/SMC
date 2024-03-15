@@ -193,6 +193,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            padding: const EdgeInsets.all(8),
                           ),
                           child: isLoading
                               ? const Center(

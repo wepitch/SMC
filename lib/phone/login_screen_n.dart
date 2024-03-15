@@ -191,6 +191,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            padding: const EdgeInsets.all(8),
                           ),
                           child: isLoading
                               ? CircularProgressIndicator(
@@ -201,7 +202,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                                   textAlign: TextAlign.center,
                                   style: SafeGoogleFont(
                                     'Roboto',
-                                    fontSize: 20 * ffem,
+                                    fontSize: 18 * ffem,
                                     fontWeight: FontWeight.w600,
                                     height: 1.1725 * ffem / fem,
                                     color: const Color(0xffffffff),

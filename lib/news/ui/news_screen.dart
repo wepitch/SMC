@@ -77,7 +77,8 @@ class _NewsScreen extends State<NewsScreen> {
                         Card(
                           color: Colors.white,
                           surfaceTintColor: Colors.white,
-                          elevation: 10,
+                          elevation: 2,
+                          shadowColor: ColorsConst.whiteColor,
                           child: TextButton(
                             onPressed: () {},
                             child: const Text(

@@ -85,48 +85,51 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.bottomRight,
                   children: [
                     Container(
-                      height: 140,
-                      width: 140,
+                      height: 110,
+                      width: 110,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
                       child: ClipOval(
-                        child: path != null
-                            ? Image.file(File(path!), fit: BoxFit.cover)
-                            : const Icon(
-                                Icons.person,
-                                size: 100,
-                                color: Colors.grey,
-                              ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () async {
-                          ImagePicker imagePicker = ImagePicker();
-                          XFile? xFile = await imagePicker.pickImage(
-                            source: ImageSource.gallery,
-                          );
-                          if (xFile != null) {
-                            path = xFile.path;
-                            saveImagePathToPrefs(path!);
-                            setState(() {});
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff1F0A68),
-                          ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
+                        child: Image.asset(
+                          'assets/page-1/images/Ellipse.png',
                         ),
+                        // child: path != null
+                        //     ? Image.file(File(path!), fit: BoxFit.cover)
+                        //     : const Icon(
+                        //         Icons.person,
+                        //         size: 100,
+                        //         color: Colors.grey,
+                        //       ),
                       ),
                     ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: InkWell(
+                    //     onTap: () async {
+                    //       ImagePicker imagePicker = ImagePicker();
+                    //       XFile? xFile = await imagePicker.pickImage(
+                    //         source: ImageSource.gallery,
+                    //       );
+                    //       if (xFile != null) {
+                    //         path = xFile.path;
+                    //         saveImagePathToPrefs(path!);
+                    //         setState(() {});
+                    //       }
+                    //     },
+                    //     child: Container(
+                    //       padding: const EdgeInsets.all(8),
+                    //       decoration: const BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         color: Color(0xff1F0A68),
+                    //       ),
+                    //       child: const Icon(
+                    //         Icons.edit,
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
