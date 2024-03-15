@@ -39,8 +39,10 @@ class _FeedScreenState extends State<FeedScreen>
         return _onBackPressed(context, widget.id, widget.name);
       },
       child: Scaffold(
+        backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
-          backgroundColor: const Color(0xff1F0A68),
+          surfaceTintColor: AppColors.whiteColor,
+          backgroundColor: const Color(0xffffffff),
           foregroundColor: Colors.white,
           leading: Padding(
             padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -50,14 +52,15 @@ class _FeedScreenState extends State<FeedScreen>
               },
               child: Image.asset(
                 'assets/page-1/images/back.png',
+                color: const Color(0xff1F0A68),
               ),
             ),
           ),
-          centerTitle: true,
+          titleSpacing: -1,
           title: Text(
             'Saved',
             style: SafeGoogleFont("Inter",
-                fontSize: 18, fontWeight: FontWeight.w600),
+                fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
           ),
         ),
         body: Column(

@@ -28,6 +28,7 @@ class _NewsScreen extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: ColorsConst.whiteColor,
         automaticallyImplyLeading: false,
         backgroundColor: ColorsConst.whiteColor,
         foregroundColor: ColorsConst.whiteColor,
@@ -177,6 +178,7 @@ class _NewsScreen extends State<NewsScreen> {
           }
         },
       ),
+      backgroundColor: ColorsConst.whiteColor,
     );
   }
   String formatTime(String timestamp) {

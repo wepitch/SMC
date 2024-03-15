@@ -86,7 +86,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Scaffold(
+      backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
+        surfaceTintColor: ColorsConst.whiteColor,
         title: Text(
           // anshikamehra7w6 (2608:501)
           widget.name,

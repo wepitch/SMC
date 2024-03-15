@@ -68,9 +68,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
           ),
           BottomNavigationBarItem(
             label: "Webinar",
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/online-video-1-1-vXj.png"),
-            ),
+            icon: Icon(Icons.smart_display_outlined,size: 26,),
           ),
           BottomNavigationBarItem(
               label: "Booking",
@@ -93,11 +91,9 @@ class _HomePageContainerState extends State<HomePageContainer> {
             label: "News",
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/user-1-1-J3b.png"),
-            ),
+            icon: Icon(Icons.account_circle_outlined,size: 26,),
             label: "Profile",
-          )
+          ),
         ],
         onTap: (int index) {
           onTapHandler(index);

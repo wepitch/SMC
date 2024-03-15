@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/widget/custom_webniar_card_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -141,7 +142,6 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                             padding: const EdgeInsets.all(18.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
                                   onTap: () {
@@ -153,6 +153,9 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                                     size: 25,
                                   ),
                                 ),
+                                Text('Webinar Details',style: SafeGoogleFont("Inter",
+                                    fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),),
+                                const Spacer(),
                                 Image.asset(
                                   "assets/page-1/images/share.png",
                                   color: Color(0xff1F0A68),
@@ -168,7 +171,7 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                bottom: 10.0, right: 20, left: 20),
+                                bottom: 28.0, right: 20, left: 20),
                             child: Container(
                               height: 196,
                               width: double.maxFinite,

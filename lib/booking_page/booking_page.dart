@@ -180,16 +180,15 @@ class CustomTab extends StatelessWidget {
     //var mHeight = MediaQuery.sizeOf(context).height;
     var mWidth = MediaQuery.sizeOf(context).width;
     return SizedBox(
-      height: 58,
-      width: mWidth * 0.29,
+      height: 35,
+      width:102,
       child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             surfaceTintColor: Colors.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(3),
             ),
-            elevation: 4,
             textStyle: SafeGoogleFont(
               'Inter',
               fontSize: mWidth * 0.030,

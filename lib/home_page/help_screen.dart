@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 
 class HelpScreen extends StatefulWidget {
@@ -12,8 +13,9 @@ class _HelpScreenState extends State<HelpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xff1F0A68),
+        backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
@@ -23,6 +25,7 @@ class _HelpScreenState extends State<HelpScreen> {
             },
             child: Image.asset(
               'assets/page-1/images/back.png',
+              color: Color(0xff1F0A68),
             ),
           ),
         ),
@@ -30,7 +33,7 @@ class _HelpScreenState extends State<HelpScreen> {
         title: Text(
           "Help",
           style: SafeGoogleFont("Inter",
-              fontSize: 20, fontWeight: FontWeight.w600),
+              fontSize: 20, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
         ),
       ),
       body: Padding(

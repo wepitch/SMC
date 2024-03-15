@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,7 +70,6 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                             padding: const EdgeInsets.all(18.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 InkWell(
                                   onTap: () {
@@ -81,6 +81,9 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                     size: 25,
                                   ),
                                 ),
+                                Text('Webinar Details',style: SafeGoogleFont("Inter",
+                                    fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),),
+                                const Spacer(),
                                 GestureDetector(
                                   onTap: () {
                                     Share.share(
@@ -102,7 +105,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                bottom: 10.0, right: 20, left: 20),
+                                bottom: 28.0, right: 20, left: 20),
                             child: Container(
                               height: 196,
                               width: double.maxFinite,
@@ -385,7 +388,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
               },
               title: _isRegistrationStarting
                   ? 'Starting in 2 days'
-                  : 'Register Now',
+                  : 'Join Now',
               isRegisterNow: _isRegistrationStarting,
             ),
           ),

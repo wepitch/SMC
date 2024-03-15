@@ -125,46 +125,44 @@ class _Drawer1State extends State<Drawer1> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HelpScreen()));
-                    },
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/page-1/images/help.jpg',
-                        height: 20,
-                        width: 20,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(
-                        "About Us",
-                        style: SafeGoogleFont(
-                          "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      shape: Border(
-                          bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.09),
-                      )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            //   child: Column(
+            //     children: [
+            //       ListTile(
+            //         leading: Image.asset(
+            //           'assets/page-1/images/help.jpg',
+            //           height: 20,
+            //           width: 20,
+            //           fit: BoxFit.cover,
+            //         ),
+            //         title: Text(
+            //           "About Us",
+            //           style: SafeGoogleFont(
+            //             "Inter",
+            //             fontSize: 16,
+            //             fontWeight: FontWeight.w600,
+            //           ),
+            //         ),
+            //         shape: Border(
+            //             bottom: BorderSide(
+            //           color: Colors.black.withOpacity(0.09),
+            //         )),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Column(
                 children: [
                   ListTile(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HelpScreen()));
+                    },
                     leading: Image.asset(
                       'assets/page-1/images/Question.jpg',
                       height: 20,
@@ -245,7 +243,7 @@ class _Drawer1State extends State<Drawer1> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const SplashScreen2()));
+                                            const SplashScreenNew()));
                               }
                             },
                             child: const Text('Logout'),
@@ -315,7 +313,7 @@ class _Drawer1State extends State<Drawer1> {
 // children: [
 // GestureDetector(
 // onTap: () {
-// EasyLoading.showToast("Coming Soon..",
+// EasyLoading.showToast("Coming Soon",
 // toastPosition:
 // EasyLoadingToastPosition.bottom);
 // },
@@ -398,7 +396,7 @@ class _Drawer1State extends State<Drawer1> {
 // ),
 // TextButton(
 // onPressed: () {
-// EasyLoading.showToast("Coming Soon..",
+// EasyLoading.showToast("Coming Soon",
 // toastPosition:
 // EasyLoadingToastPosition.bottom);
 // },

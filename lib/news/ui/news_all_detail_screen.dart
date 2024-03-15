@@ -17,6 +17,7 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),

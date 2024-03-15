@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/other/api_service.dart';
+import 'package:myapp/other/constants.dart';
 import 'package:myapp/page-1/dashboard-session-group-new.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/utils.dart';
@@ -119,7 +120,9 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
     // double fem = MediaQuery.of(context).size.width / baseWidth;
     // double ffem = fem * 0.97;
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
+        surfaceTintColor: AppColors.whiteColor,
         backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         leading: Padding(

@@ -5,6 +5,7 @@ import 'package:myapp/home_page/drawer/drawer_1.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:myapp/widget/custom_webniar_card_widget.dart';
@@ -66,6 +67,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: ColorsConst.whiteColor,
         title: Row(
           children: [
             const SizedBox(
@@ -150,6 +152,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Image.asset(
                             "assets/page-1/images/find.jpg",
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -197,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Fluttertoast.showToast(msg: 'Coming soon...');
+                          Fluttertoast.showToast(msg: 'Coming soon');
                         },
                         child: Container(
                           width: 110 * fem,
@@ -310,7 +313,7 @@ class _HomePageState extends State<HomePage> {
               height: 12,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.24,
+              height: MediaQuery.of(context).size.height * 0.26,
               child: PageView(
                 children: [
                   profileCard(),
@@ -547,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(
-                height: 6,
+                height: 10,
               ),
               Container(
                 height: 0.47,

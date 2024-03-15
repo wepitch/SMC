@@ -19,7 +19,7 @@ class WebinarTodayPage extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding:
-              EdgeInsets.only(top: index == 0 ? 15 : 2, right: 16, left: 16),
+              EdgeInsets.only(top: index == 0 ? 14 : 2, right: 16, left: 16),
           child: CustomWebinarCard1(
             showDuration: true,
             title: "Learn more about CUET and IPMAT",
@@ -113,7 +113,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.45,
       child: cardView(context),
     );
   }
@@ -133,11 +133,12 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
       child: Column(
         children: [
           Card(
+            shadowColor: ColorsConst.whiteColor,
             color: ColorsConst.whiteColor,
             surfaceTintColor: ColorsConst.whiteColor,
             elevation: 2,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +155,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(10, 4, 20, 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -166,7 +167,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 4),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,9 +182,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 3,
-                              ),
+
                               Text(
                                 widget.showDuration
                                     ? "Career Institute : ${widget.duration}"
@@ -205,7 +203,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Container(
                         height: 1,
@@ -213,7 +211,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                         color: const Color(0xffAFAFAF),
                       ),
                       const SizedBox(
-                        height: 14,
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -255,13 +253,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                           ),
                                           TextButton(
                                             onPressed: () async {
-                                              launchUrlString(
-                                                  'https://app.zoom.us/wc/join/6876923575?fromPWA=1&pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1&_x_zm_rtaid=dMkrHAzTSv2KH-k63GFIIg.1709188412516.3a0d504b72c1403587e5715af973a35f&_x_zm_rhtaid=220');
-                                              if (mounted) {
-                                                Navigator.pop(context);
-                                              }
-                                              await _updateRegistrationStatus(
-                                                  true);
+
                                             },
                                             child: const Text('Yes'),
                                           ),
@@ -308,7 +300,7 @@ Widget customRegisterNowBtn({
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        elevation: 16,
+        elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),

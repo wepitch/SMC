@@ -39,6 +39,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: AppColors.whiteColor,
         backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
         leading: Padding(

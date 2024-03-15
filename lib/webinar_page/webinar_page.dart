@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/home_page/homepage.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
@@ -69,6 +70,7 @@ class _WebinarPageState extends State<WebinarPage> {
         ],
       ),
       body: Scaffold(
+        backgroundColor: ColorsConst.whiteColor,
         body: Column(
           children: [
             const SizedBox(
@@ -129,7 +131,8 @@ Widget customButton({
   required bool isPressed,
 }) {
   return Card(
-    elevation: 10,
+    elevation: 1,
+    shadowColor: ColorsConst.whiteColor,
     child: SizedBox(
       height: 35,
       width: 100,

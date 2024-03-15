@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -50,8 +51,6 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                               padding: const EdgeInsets.all(18.0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   GestureDetector(
                                     onTap: () {
@@ -63,6 +62,9 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                                       size: 25,
                                     ),
                                   ),
+                                  Text('Webinar Details',style: SafeGoogleFont("Inter",
+                                      fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: (){
                                       Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
@@ -83,7 +85,7 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                             alignment: Alignment.bottomCenter,
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  bottom: 10.0, right: 20, left: 20),
+                                  bottom: 28.0, right: 20, left: 20),
                               child: Container(
                                 height: 196,
                                 width: double.maxFinite,

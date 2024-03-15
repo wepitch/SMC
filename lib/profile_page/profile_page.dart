@@ -47,7 +47,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
+        surfaceTintColor: ColorsConst.whiteColor,
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
