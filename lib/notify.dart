@@ -5,6 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/page-1/edulevel_new.dart';
+import 'package:myapp/page-1/select_gender_new.dart';
+import 'package:myapp/page-1/selectdob_new.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -279,15 +282,18 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
 
   void configLoading() {
     EasyLoading.instance
-      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-      ..displayDuration = const Duration(milliseconds: 1000)
-      ..loadingStyle = EasyLoadingStyle.dark
-      ..indicatorSize = 45.0
-      ..maskType = EasyLoadingMaskType.none
-      ..radius = 10.0
-      ..maskColor = Colors.black.withOpacity(0.5)
+      ..displayDuration = const Duration(milliseconds: 2000)
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorSize = 60
+      ..textColor = Colors.black
+      ..radius = 20
+      ..backgroundColor = Colors.transparent
+      ..maskColor = Colors.white
+      ..indicatorColor = Color(0xff1f0a68)
       ..userInteractions = false
-      ..dismissOnTap = false;
+      ..dismissOnTap = false
+      ..boxShadow = <BoxShadow>[]
+      ..indicatorType = EasyLoadingIndicatorType.circle;
   }
 
   void fetchDataFromApi() {
@@ -1184,3 +1190,57 @@ String slotCount(String date, List<Sessions> sessions) {
 
   return "";
 }
+
+// class MyHomePage extends StatelessWidget {
+//   final List<Widget> pages = [
+//     SelectDobNew(),
+//     SelectGenderNew(),
+//     EducationLevelNew(),
+//   ];
+//
+//   final PageController _controller = PageController();
+//
+//   void goToPreviousPage() {
+//     if (_controller.page == 1) {
+//       _controller.previousPage(
+//         duration: Duration(milliseconds: 500),
+//         curve: Curves.easeInOut,
+//       );
+//     }
+//   }
+//
+//   void goToNextPage() {
+//     if (_controller.page == 0) {
+//       _controller.nextPage(
+//         duration: Duration(milliseconds: 500),
+//         curve: Curves.easeInOut,
+//       );
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: PageView.builder(
+//         controller: _controller,
+//         itemCount: pages.length,
+//         itemBuilder: (context, index) {
+//           return pages[index];
+//         },
+//       ),
+//       floatingActionButton: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           FloatingActionButton(
+//             onPressed: goToPreviousPage,
+//             child: Icon(Icons.arrow_back),
+//           ),
+//           FloatingActionButton(
+//             onPressed: goToNextPage,
+//             child: Icon(Icons.arrow_forward),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

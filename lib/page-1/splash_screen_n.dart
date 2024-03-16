@@ -107,7 +107,7 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
               height: mHeight * 0.06,
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 50,right: 50),
               child: Column(
                 children: [
                   SizedBox(
@@ -123,7 +123,7 @@ class _SplashScreenNewState extends State<SplashScreenNew> {
                         elevation: 0,
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(10),
                           side: const BorderSide(
                               color: Color(0xff1F0A68), width: 1),
                         ),

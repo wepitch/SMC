@@ -15,31 +15,6 @@ class SelectDobNew extends StatefulWidget {
 class _SelectDobNewState extends State<SelectDobNew> {
   String date = "Select DOB";
 
-  @override
-  void initState() {
-    super.initState();
-    // Future.delayed(Duration.zero, () {
-    //   openDatePicker();
-    // });
-  }
-
-  //
-  //  openDatePicker() async {
-  //   var now = DateTime.now();
-  //   var firstDate = DateTime(1999);
-  //   showDatePicker(
-  //
-  //     context: context,
-  //     initialDate: now,
-  //     firstDate: firstDate,
-  //     lastDate: now,
-  //   ).then((value) {
-  //     if (value != null) {
-  //       date = DateFormat("d/M/yyyy").format(value).toString();
-  //       setState(() {});
-  //     }
-  //   });
-  // }
   openDatePicker() async {
     var now = DateTime.now();
     var firstDate = DateTime(1999);
@@ -53,7 +28,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
               width: 340,
               child: Theme(
                 data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
+                  colorScheme: const ColorScheme.light(
                     primary: Colors.white,
                     onPrimary: Colors.black,
                     onSurface: Colors.black,
@@ -86,7 +61,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
     return Scaffold(
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 40, right: 40, top: 100, bottom: 40),
+        const EdgeInsets.all(32),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +69,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
             children: [
               const Text('Question 1/3'),
               Image.asset('assets/page-1/images/dob.jpg'),
-              const Spacer(),
+              const SizedBox(height: 20,),
               Center(
                 child: Container(
                   height: 400,
@@ -104,7 +79,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 36, left: 40, right: 40, bottom: 140),
+                        top: 26, left: 20, right: 20,bottom: 140),
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,7 +102,6 @@ class _SelectDobNewState extends State<SelectDobNew> {
                             onPressed: () {
                               var now = DateTime.now();
                               var firstDate = DateTime(1999);
-                              // var lastDate = DateTime(2010);
                               showDatePicker(
                                 builder: (context, child) {
                                   return Column(
@@ -144,7 +118,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
                                               onSurface: Colors.black,
                                             ),
                                             textButtonTheme:
-                                                TextButtonThemeData(
+                                            TextButtonThemeData(
                                               style: TextButton.styleFrom(
                                                 foregroundColor: Colors
                                                     .black, // button text color
@@ -177,9 +151,8 @@ class _SelectDobNewState extends State<SelectDobNew> {
                   ),
                 ),
               ),
-              const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 80),
+                padding: const EdgeInsets.only(bottom: 40,top: 20,right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -191,28 +164,19 @@ class _SelectDobNewState extends State<SelectDobNew> {
                         } else {
                           var prefs = await SharedPreferences.getInstance();
                           prefs.setString("date", date);
-
                           if (!mounted) return;
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SelectGenderNew()));
+                          Future.delayed(const Duration(microseconds: 0), () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SelectGenderNew()));
+                          });
                         }
                       },
-                      // child: Image.asset('assets/page-1/images/arrow1.jpg',height: 46,width: 46,)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Center(
-                                child: Icon(
-                              Icons.arrow_circle_right_outlined,
-                              size: 40,
-                              color: Color(0xff1F0A68),
-                            ))
-                          ],
-                        ),
+                      child: const Icon(
+                        Icons.arrow_circle_right_outlined,
+                        size: 40,
+                        color: Color(0xff1F0A68),
                       ),
                     ),
                   ],
@@ -225,6 +189,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
       backgroundColor: Colors.white,
     );
   }
+
   Widget customButton({
     required VoidCallback onPressed,
     required String title,
@@ -237,7 +202,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
         child: OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-            elevation: 0,
+              elevation: 0,
               side: const BorderSide(color: Color(0xff1F0A68)),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
@@ -254,28 +219,6 @@ class _SelectDobNewState extends State<SelectDobNew> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget nextButton({required VoidCallback onPressed, required String title}) {
-    return SizedBox(
-      height: 45,
-      width: 326,
-      child: OutlinedButton(
-          onPressed: onPressed,
-          style: OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              backgroundColor: const Color(0xff1F0A68),
-              foregroundColor: Colors.white),
-          child: Text(
-            title,
-            style: SafeGoogleFont(
-              "Roboto",
-              fontSize: 20,
-            ),
-          )),
     );
   }
 }

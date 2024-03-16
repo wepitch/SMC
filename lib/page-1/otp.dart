@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/page-1/edulevel.dart';
 import 'package:myapp/page-1/selectdob_new.dart';
 import 'package:myapp/page-1/sign-up.dart';
+import 'package:myapp/slide_screen.dart';
 import 'package:myapp/utils.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
@@ -310,19 +311,22 @@ class _OtpState extends State<Otp> {
 
   void onTapGettingstarted(BuildContext context) {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const SelectDobNew()));
+        MaterialPageRoute(builder: (context) =>  MyHomePage()));
   }
 
   void configLoading() {
     EasyLoading.instance
-      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-      ..displayDuration = const Duration(milliseconds: 1000)
-      ..loadingStyle = EasyLoadingStyle.dark
-      ..indicatorSize = 45.0
-      ..maskType = EasyLoadingMaskType.none
-      ..radius = 10.0
-      ..maskColor = Colors.black.withOpacity(0.5)
+      ..displayDuration = const Duration(milliseconds: 2000)
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorSize = 60
+      ..textColor = Colors.black
+      ..radius = 20
+      ..backgroundColor = Colors.transparent
+      ..maskColor = Colors.white
+      ..indicatorColor = Color(0xff1f0a68)
       ..userInteractions = false
-      ..dismissOnTap = false;
+      ..dismissOnTap = false
+      ..boxShadow = <BoxShadow>[]
+      ..indicatorType = EasyLoadingIndicatorType.circle;
   }
 }

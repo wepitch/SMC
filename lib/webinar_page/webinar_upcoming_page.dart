@@ -256,7 +256,8 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          elevation: 16,
+          shadowColor: ColorsConst.whiteColor,
+          elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),

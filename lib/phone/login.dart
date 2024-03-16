@@ -405,15 +405,18 @@ class _LoginState extends State<Login> {
 
   void configLoading() {
     EasyLoading.instance
-      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-      ..displayDuration = const Duration(milliseconds: 1000)
-      ..loadingStyle = EasyLoadingStyle.dark
-      ..indicatorSize = 45.0
-      ..maskType = EasyLoadingMaskType.none
-      ..radius = 10.0
-      ..maskColor = Colors.black.withOpacity(0.5)
+      ..displayDuration = const Duration(milliseconds: 2000)
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorSize = 60
+      ..textColor = Colors.black
+      ..radius = 20
+      ..backgroundColor = Colors.transparent
+      ..maskColor = Colors.white
+      ..indicatorColor = Color(0xff1f0a68)
       ..userInteractions = false
-      ..dismissOnTap = false;
+      ..dismissOnTap = false
+      ..boxShadow = <BoxShadow>[]
+      ..indicatorType = EasyLoadingIndicatorType.circle;
   }
 
   bool isEmail(String em) {

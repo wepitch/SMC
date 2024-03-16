@@ -12,6 +12,7 @@ import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/page-1/sign_up_screen_new.dart';
 import 'package:myapp/phone/login.dart';
 import 'package:myapp/shared/colors_const.dart';
+import 'package:myapp/slide_screen.dart';
 import 'package:myapp/utils.dart';
 import 'package:pinput/pinput.dart';
 
@@ -167,7 +168,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const SelectDobNew()));
+                                                   MyHomePage()));
                                     }
                                   } catch (e) {
                                     if (kDebugMode) {
@@ -183,7 +184,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const SelectDobNew()));
+                                                 MyHomePage()));
                                   }
                                   // Fluttertoast.showToast(
                                   //     msg: 'Verify Otp Successfully');
@@ -223,13 +224,16 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
 
 void configLoading() {
   EasyLoading.instance
-    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-    ..displayDuration = const Duration(milliseconds: 1000)
-    ..loadingStyle = EasyLoadingStyle.dark
-    ..indicatorSize = 45.0
-    ..maskType = EasyLoadingMaskType.none
-    ..radius = 10.0
-    ..maskColor = Colors.black.withOpacity(0.5)
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 60
+    ..textColor = Colors.black
+    ..radius = 20
+    ..backgroundColor = Colors.transparent
+    ..maskColor = Colors.white
+    ..indicatorColor = Color(0xff1f0a68)
     ..userInteractions = false
-    ..dismissOnTap = false;
+    ..dismissOnTap = false
+    ..boxShadow = <BoxShadow>[]
+    ..indicatorType = EasyLoadingIndicatorType.circle;
 }

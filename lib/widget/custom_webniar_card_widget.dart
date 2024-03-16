@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/webinar_page/webinar_details_page.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
@@ -94,9 +95,10 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
     return Column(
       children: [
         Card(
+          shadowColor: ColorsConst.whiteColor,
           color: Colors.white,
           surfaceTintColor: Colors.white,
-          elevation: 4,
+          elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Column(
@@ -113,7 +115,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
+                padding: const EdgeInsets.fromLTRB(10, 8, 20, 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -146,8 +148,9 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                             ),
                             Text(
                               widget.showDuration
-                                  ? "Career Institute : ${widget.duration}"
-                                  : "Allen career institute,by Anshika Mehra - ${widget.participants}",
+                                  // ? "Career Institute : ${widget.duration}"
+                                  ? ""
+                                  : "Career Institute : ${widget.duration}\nAllen career institute,by Anshika Mehra - ${widget.participants}",
                               style: SafeGoogleFont(
                                 "Inter",
                                 fontSize: 11,

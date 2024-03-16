@@ -410,45 +410,45 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                       ],
                     ),
                   ),
-                  Container(
-                    height: 40,
-                    color: Colors.grey[300],
-                    child: TabBar(
-                        indicatorColor: const Color(0xff1F0A68),
-                        indicatorWeight: 2,
-                        controller: _controller,
-                        onTap: (value) {
-                          if (value == 1) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CounsellorFeedPage(
-                                          name: counsellorDetailController
-                                              .cousnellorlist_detail[0].name,
-                                          id: counsellorDetailController
-                                              .cousnellorlist_detail[0].id,
-                                        )));
-                          }
-                        },
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              "Info",
-                              style: SafeGoogleFont("Inter",
-                                  fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              "Feed",
-                              style: SafeGoogleFont("Inter",
-                                  fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
-                            ),
-                          ),
-                        ]),
-                  ),
+                  // Container(
+                  //   height: 40,
+                  //   color: Colors.grey[300],
+                  //   child: TabBar(
+                  //       indicatorColor: const Color(0xff1F0A68),
+                  //       indicatorWeight: 2,
+                  //       controller: _controller,
+                  //       onTap: (value) {
+                  //         if (value == 1) {
+                  //           Navigator.pushReplacement(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                   builder: (context) => CounsellorFeedPage(
+                  //                         name: counsellorDetailController
+                  //                             .cousnellorlist_detail[0].name,
+                  //                         id: counsellorDetailController
+                  //                             .cousnellorlist_detail[0].id,
+                  //                       )));
+                  //         }
+                  //       },
+                  //       tabs: [
+                  //         Tab(
+                  //           child: Text(
+                  //             "Info",
+                  //             style: SafeGoogleFont("Inter",
+                  //                 fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
+                  //           ),
+                  //         ),
+                  //         Tab(
+                  //           child: Text(
+                  //             "Feed",
+                  //             style: SafeGoogleFont("Inter",
+                  //                 fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black),
+                  //           ),
+                  //         ),
+                  //       ]),
+                  // ),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),

@@ -134,30 +134,37 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               itemProfile('Name', username, CupertinoIcons.person),
+              const Divider(),
               itemProfile('Gmail', email, CupertinoIcons.mail),
+              const Divider(),
               itemProfile('Date Of Birth', dob, CupertinoIcons.calendar),
+              const Divider(),
               itemProfile('Gender', gender, CupertinoIcons.person),
+              const Divider(),
               itemProfile('Education', eduLevel, CupertinoIcons.book),
               const SizedBox(
-                height: 16,
+                height: 20,
               ),
-              SizedBox(
-                height: 36,
-                width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const ProfileEditDialog();
-                          });
-                      getAllInfo();
-                    },
-                    style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.all(2),
-                        backgroundColor: const Color(0xff1F0A68)),
-                    child: const Text('Edit Profile')),
+              Padding(
+                padding: const EdgeInsets.only(left: 26,right: 26,top: 20),
+                child: SizedBox(
+                  height: 36,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ProfileEditDialog();
+                            });
+                        getAllInfo();
+                      },
+                      style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.all(2),
+                          backgroundColor: const Color(0xff1F0A68)),
+                      child: const Text('Edit Profile')),
+                ),
               ),
             ],
           ),
@@ -171,19 +178,16 @@ class _ProfilePageState extends State<ProfilePage> {
     String subtitle,
     IconData iconData,
   ) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.1,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: ListTile(
-          title: Text(title),
-          subtitle: Text(subtitle),
-          leading: Icon(iconData),
-        ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.08,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+        leading: Icon(iconData),
       ),
     );
   }

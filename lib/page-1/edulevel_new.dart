@@ -34,21 +34,27 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
             children: [
               const Text('Question 3/3'),
               Image.asset("assets/page-1/images/edulavel.jpg"),
-              const SizedBox(height: 28,),
+              const SizedBox(
+                height: 20,
+              ),
               Center(
                 child: Container(
-                  height: 410,
+                  height: 400,
                   decoration: BoxDecoration(
                     border: Border.all(color: Color(0xff1F0A68), width: 2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                    padding:
+                        const EdgeInsets.only(left: 26, right: 20, top: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('What is Your Level of\neducation?', style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w500),),
+                        const Text(
+                          'What is Your Level of\neducation?',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
+                        ),
                         const Spacer(),
                         SizedBox(
                           height: 300,
@@ -76,56 +82,64 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 40,top: 20),
+                padding: const EdgeInsets.only(bottom: 40, top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SelectGenderNew()));
-                      },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                  child: Icon(
-                                    Icons.arrow_circle_left_outlined,
-                                    size: 40,
-                                    color: Color(0xff1F0A68),
-                                  ))
-                            ],
-                          ),
-                        ),),
-                    GestureDetector(
-                        onTap: ()async{
-                          SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                          prefs.setString("edu_level", selectedOption);
-                          if (!mounted) return;
+                      onTap: () {
+                        Future.delayed(const Duration(microseconds: 0), () {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePageContainer()));
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Center(
-                                  child: Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 40,
-                                    color: Color(0xff1F0A68),
-                                  ))
-                            ],
-                          ),
-                        ),),
+                                  builder: (context) =>
+                                      const SelectGenderNew()));
+                        });
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
+                                child: Icon(
+                              Icons.arrow_circle_left_outlined,
+                              size: 40,
+                              color: Color(0xff1F0A68),
+                            ))
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString("edu_level", selectedOption);
+                        if (!mounted) return;
+                        Future.delayed(const Duration(microseconds: 0), () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const HomePageContainer()));
+                        });
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
+                                child: Icon(
+                              Icons.arrow_circle_right_outlined,
+                              size: 40,
+                              color: Color(0xff1F0A68),
+                            ))
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -140,8 +154,8 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
 
 Widget customButton(
     {required VoidCallback onPressed,
-      required String title,
-      required bool isActive}) {
+    required String title,
+    required bool isActive}) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 22),
     child: SizedBox(
@@ -150,12 +164,9 @@ Widget customButton(
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          elevation: 0,
-          side: BorderSide(
-            color: Color(0xff1F0A68)
-          ),
-            backgroundColor:
-            isActive ? const Color(0xff1F0A68) : Colors.white,
+            elevation: 0,
+            side: BorderSide(color: Color(0xff1F0A68)),
+            backgroundColor: isActive ? const Color(0xff1F0A68) : Colors.white,
             foregroundColor: isActive ? Colors.white : Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -172,4 +183,3 @@ Widget customButton(
     ),
   );
 }
-

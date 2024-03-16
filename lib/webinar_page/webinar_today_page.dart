@@ -182,14 +182,14 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-
                               Text(
                                 widget.showDuration
-                                    ? "Career Institute : ${widget.duration}"
-                                    : "Allen career institute,\n by Anshika Mehra - ${widget.participants}",
+                                    ? "Career Institute : ${widget.duration}\nAllen career institute,by Anshika Mehra - ${widget.participants}"
+                                    //: "Allen career institute,\nby Anshika Mehra - ${widget.participants}",
+                                : '',
                                 style: SafeGoogleFont(
                                   "Inter",
-                                  fontSize: 12,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
