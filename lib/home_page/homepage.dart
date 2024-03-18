@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/home_page/coming_soon.dart';
 import 'package:myapp/home_page/drawer/drawer_1.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
@@ -30,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _startTimer();
     setName();
     getAllInfo();
     counsellorDetailsProvider =
@@ -55,6 +59,27 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString("name") ?? "N/A";
     setState(() {});
+  }
+
+  int _currentIndex = 0;
+  final PageController _pageController = PageController(initialPage: 0);
+  late Timer _timer;
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_currentIndex < 2) {
+        _pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        _pageController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 2),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
   }
 
   @override
@@ -130,7 +155,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-
           children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
@@ -147,11 +171,11 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           height: 94,
                           decoration: BoxDecoration(
-                             color: const Color(0xffffffff),
+                            color: const Color(0xffffffff),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.asset(
-                            "assets/page-1/images/Group 792.png",
+                            "assets/page-1/images/WhatsApp Image 2024-03-18 at 2.07.29 PM.jpeg",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -159,29 +183,37 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(width: 34),
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 10,bottom: 0),
-                        width: 110 * fem,
-                        height: 120 * fem,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE86C86),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 4),
-                              blurRadius: 4,
-                              color: Colors.black.withOpacity(0.1),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Image.asset(
-                              "assets/page-1/images/Group 793.png",
-                            ),
-                          ],
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ComingSoon()));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10, bottom: 0),
+                          width: 110 * fem,
+                          height: 120 * fem,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffE86C86),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 4),
+                                blurRadius: 4,
+                                color: Colors.black.withOpacity(0.1),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Image.asset(
+                                "assets/page-1/images/Group 793.png",
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -200,7 +232,10 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Fluttertoast.showToast(msg: 'Coming soon');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ComingSoon()));
                         },
                         child: Container(
                           width: 110 * fem,
@@ -232,23 +267,31 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                            child: Container(
-                              width: 140 * fem,
-                              height: 140 * fem,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                color: const Color(0xff5273B4),
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 4),
-                                    blurRadius: 4,
-                                    color: Colors.black.withOpacity(0.1),
-                                  ),
-                                ],
-                              ),
-                              child: Image.asset(
-                                "assets/page-1/images/Group 795.png",
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const ComingSoon()));
+                              },
+                              child: Container(
+                                width: 140 * fem,
+                                height: 140 * fem,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff5273B4),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0, 4),
+                                      blurRadius: 4,
+                                      color: Colors.black.withOpacity(0.1),
+                                    ),
+                                  ],
+                                ),
+                                child: Image.asset(
+                                  "assets/page-1/images/Group 795.png",
+                                ),
                               ),
                             ),
                           ),
@@ -259,7 +302,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Align(
               child: Container(
                 constraints: const BoxConstraints(
@@ -315,6 +360,12 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.26,
               child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
                 children: [
                   profileCard(),
                   profileCard1(),
@@ -652,6 +703,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   Widget profileCard1() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
@@ -802,7 +854,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image:
-                                AssetImage("assets/page-1/images/rate.png"),
+                                    AssetImage("assets/page-1/images/rate.png"),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -932,6 +984,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   Widget profileCard2() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
@@ -1082,7 +1135,7 @@ class _HomePageState extends State<HomePage> {
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image:
-                                AssetImage("assets/page-1/images/rate.png"),
+                                    AssetImage("assets/page-1/images/rate.png"),
                                 fit: BoxFit.fill,
                               ),
                             ),

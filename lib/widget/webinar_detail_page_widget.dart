@@ -208,7 +208,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

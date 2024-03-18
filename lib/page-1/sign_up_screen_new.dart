@@ -56,6 +56,7 @@ class _Signup extends State<SignupScreenNew> {
     });
   }
 
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     double baseWidth = 430;
@@ -86,7 +87,7 @@ class _Signup extends State<SignupScreenNew> {
                   Container(
                     // autogroupltfbWFK (AXy8yJFgfd4aiSGkjeLtfb)
                     padding:
-                        EdgeInsets.fromLTRB(60 * fem, 32 * fem, 60 * fem, 51 * fem),
+                    EdgeInsets.fromLTRB(60 * fem, 32 * fem, 60 * fem, 51 * fem),
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,7 +95,7 @@ class _Signup extends State<SignupScreenNew> {
                         Container(
                           // autogroups3swDQd (AXy84jvvc4rqKvoPDJs3sw)
                           margin:
-                              EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
+                          EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
                           padding: EdgeInsets.fromLTRB(
                               15 * fem, 15 * fem, 15 * fem, 13 * fem),
                           width: double.infinity,
@@ -113,7 +114,7 @@ class _Signup extends State<SignupScreenNew> {
                               ],
                               decoration: const InputDecoration(
                                 hintStyle:
-                                    TextStyle(color: Colors.black54, fontSize: 15.0),
+                                TextStyle(color: Colors.black54, fontSize: 15.0),
                                 hintText: "Full Name",
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -131,7 +132,7 @@ class _Signup extends State<SignupScreenNew> {
                         Container(
                           // autogrouprbz9U5f (AXy8AQS9uGhFg15ZzJrBz9)
                           margin:
-                              EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
+                          EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
                           padding: EdgeInsets.fromLTRB(
                               15 * fem, 15 * fem, 15 * fem, 13 * fem),
                           width: double.infinity,
@@ -152,7 +153,7 @@ class _Signup extends State<SignupScreenNew> {
                               ],
                               decoration: const InputDecoration(
                                 hintStyle:
-                                    TextStyle(color: Colors.black54, fontSize: 15.0),
+                                TextStyle(color: Colors.black54, fontSize: 15.0),
                                 hintText: "Phone Number",
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -167,37 +168,48 @@ class _Signup extends State<SignupScreenNew> {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            if (check_val()) {
-                              onTapGettingstarted(
-                                  context, phonecontroller.text.toString());
-                            }
-                          },
-                          child: Container(
-                            // autogroupbjvs8AD (AXy8Fjcc4e4weRaT58bjVs)p
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 20 * fem),
-                            width: double.infinity,
-                            height: 40 * fem,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: const Color(0xff000000)),
-                              color: const Color(0xff1f0a68),
-                              borderRadius: BorderRadius.circular(10 * fem),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Register',
-                                textAlign: TextAlign.center,
-                                style: SafeGoogleFont(
-                                  'Roboto',
-                                  fontSize: 20 * ffem,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.1725 * ffem / fem,
-                                  color: const Color(0xffffffff),
-                                ),
+                        Row(
+                          children: [
+                            Container(
+                              height: 8,
+                              child: Checkbox(
+                                value: isChecked,
+                                overlayColor: MaterialStateProperty.all(Color(0xff1F0A68)),
+                                onChanged: (value) {
+                                  setState(() {
+                                    isChecked = value!;
+                                  });
+                                },
                               ),
                             ),
+                            const Text(
+                              'I accept terms and conditions',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8,),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (check_val()) {
+                                onTapGettingstarted(
+                                    context, phonecontroller.text.toString());
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.all(8),
+                                backgroundColor: const Color(0xff1F0A68)),
+                            child: const Text('Register',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
                         ),
                         const Divider(color: Colors.black, endIndent: 60, indent: 60),
@@ -240,20 +252,20 @@ class _Signup extends State<SignupScreenNew> {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      launchUrlString(
-                          'https://sortmycollege.com/terms-and-conditions/');
-                    },
-                    child: Text(
-                      "By continuing , I agree with the Terms and Conditions , Privacy Policy",
-                      style: SafeGoogleFont(
-                        "Roboto",
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     launchUrlString(
+                  //         'https://sortmycollege.com/terms-and-conditions/');
+                  //   },
+                  //   child: Text(
+                  //     "By continuing , I agree with the Terms and Conditions , Privacy Policy",
+                  //     style: SafeGoogleFont(
+                  //       "Roboto",
+                  //       fontSize: 10,
+                  //       fontWeight: FontWeight.w500,
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
@@ -317,3 +329,4 @@ class _Signup extends State<SignupScreenNew> {
       ..indicatorType = EasyLoadingIndicatorType.circle;
   }
 }
+

@@ -11,6 +11,7 @@ import 'package:myapp/phone/phone_otp_screen_new.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../other/constants.dart';
 
 class LoginScreenNew extends StatefulWidget {
@@ -124,24 +125,25 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: isChecked,
-                          overlayColor: MaterialStatePropertyAll(Color(0xff1F0A68)),
-                          onChanged: (value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                        ),
-                        const Text(
-                          'I accept terms and conditions',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Checkbox(
+                    //       value: isChecked,
+                    //       overlayColor: MaterialStatePropertyAll(Color(0xff1F0A68)),
+                    //       onChanged: (value) {
+                    //         setState(() {
+                    //           isChecked = value!;
+                    //         });
+                    //       },
+                    //     ),
+                    //     const Text(
+                    //       'I accept terms and conditions',
+                    //       style: TextStyle(
+                    //           fontSize: 14, fontWeight: FontWeight.bold),
+                    //     ),
+                    //   ],
+                    // ),
+                    const SizedBox(height: 18,),
                     GestureDetector(
                       onTap: () {
                         // if (check_val()) {
@@ -251,6 +253,20 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                         ),
                       ],
                     ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     launchUrlString(
+                    //         'https://sortmycollege.com/terms-and-conditions/');
+                    //   },
+                    //   child: Text(
+                    //     "By continuing , I agree with the Terms and Conditions , Privacy Policy",
+                    //     style: SafeGoogleFont(
+                    //       "Roboto",
+                    //       fontSize: 10,
+                    //       fontWeight: FontWeight.w500,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

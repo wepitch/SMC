@@ -378,7 +378,7 @@ class _CounsellorListPage_offlineState
                                                             width:
                                                                 390 * fem,
                                                             height:
-                                                                280 * fem,
+                                                                224 * fem,
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: const Color(
@@ -685,7 +685,7 @@ class _CounsellorListPage_offlineState
                                                                                 Positioned(
                                                                                   // group127Yc9 (730:56)
                                                                                   left: 15.095703125 * fem,
-                                                                                  top: 140.1729736328 * fem,
+                                                                                  top: 120.1729736328 * fem,
                                                                                   child: SizedBox(
                                                                                     width: 330.19 * fem,
                                                                                     height: 41.88 * fem,
@@ -902,7 +902,7 @@ class _CounsellorListPage_offlineState
                                                                                 Positioned(
                                                                                   // group127Yc9 (730:56)
                                                                                   left: 15.095703125 * fem,
-                                                                                  top: 210.1729736328 * fem,
+                                                                                  top: 180.1729736328 * fem,
                                                                                   child: SizedBox(
                                                                                     width: 330.19 * fem,
                                                                                     height: 41.88 * fem,

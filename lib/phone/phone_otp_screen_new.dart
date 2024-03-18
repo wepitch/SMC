@@ -146,23 +146,40 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                           ),
                         ],
                       ),
-                      Spacer(),
-                      SizedBox(
-                        height: 45,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: isLoading
-                              ? null
-                              : () async {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  try {
-                                    PhoneAuthCredential credential =
-                                        PhoneAuthProvider.credential(
-                                            verificationId: Login.verify,
-                                            smsCode: code);
-                                    await auth.signInWithCredential(credential);
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 34,right: 34),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: isLoading
+                                ? null
+                                : () async {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    try {
+                                      PhoneAuthCredential credential =
+                                          PhoneAuthProvider.credential(
+                                              verificationId: Login.verify,
+                                              smsCode: code);
+                                      await auth.signInWithCredential(credential);
+                                      if (mounted) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                     MyHomePage()));
+                                      }
+                                    } catch (e) {
+                                      if (kDebugMode) {
+                                        print('Error $e');
+                                      }
+                                    } finally {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    }
                                     if (mounted) {
                                       Navigator.push(
                                           context,
@@ -170,43 +187,28 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
                                               builder: (context) =>
                                                    MyHomePage()));
                                     }
-                                  } catch (e) {
-                                    if (kDebugMode) {
-                                      print('Error $e');
-                                    }
-                                  } finally {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                  }
-                                  if (mounted) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                 MyHomePage()));
-                                  }
-                                  // Fluttertoast.showToast(
-                                  //     msg: 'Verify Otp Successfully');
-                                },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorsConst.appBarColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                                    // Fluttertoast.showToast(
+                                    //     msg: 'Verify Otp Successfully');
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorsConst.appBarColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.all(8),
                             ),
-                            padding: const EdgeInsets.all(8),
-                          ),
-                          child: isLoading
-                              ? const Center(
-                                  child: CircularProgressIndicator(
-                                    color: ColorsConst.appBarColor,
+                            child: isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: ColorsConst.appBarColor,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Submit OTP',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
                                   ),
-                                )
-                              : const Text(
-                                  'Submit OTP',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white),
-                                ),
+                          ),
                         ),
                       ),
                     ],
