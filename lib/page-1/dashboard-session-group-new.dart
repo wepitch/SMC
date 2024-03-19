@@ -33,7 +33,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
 //phone pe  members
 // SANDBOX
 // PRODUCTION
-String key = "";
   String environment = "PRODUCTION";
   String appId = "";
   String merchantId = "SORTMYCOLLONLINE";
@@ -56,7 +55,7 @@ String key = "";
   String selectedSessionDate = Jiffy.now().format(pattern: "dd/M/yyyy");
 
   late Razorpay razorpay;
-  TextEditingController amountController = TextEditingController();
+  String key = "";
 
   void startPgTransaction(String? id, String? sessionDate, sessionPrice) {
    /* try {

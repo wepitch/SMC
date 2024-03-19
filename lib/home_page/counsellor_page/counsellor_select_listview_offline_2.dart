@@ -114,22 +114,22 @@ class _CounsellorListPage_offlineState
                               ),
                             ),
                           ),
-                          // Spacer(),
-                          // Expanded(
-                          //   child: Container(
-                          //     // layer2oHK (730:5)
-                          //     margin: EdgeInsets.fromLTRB(
-                          //         8 * fem, 0 * fem, 0 * fem, 0 * fem),
-                          //     width: 70.39 * fem,
-                          //     height: 25 * fem,
-                          //     child: Image.asset(
-                          //       'assets/page-1/images/layer-3.png',
-                          //       width: 26.39 * fem,
-                          //       height: 25 * fem,
-                          //       color: Color(0xff1f0a68),
-                          //     ),
-                          //   ),
-                          // ),
+                          Spacer(),
+                          Expanded(
+                            child: Container(
+                              // layer2oHK (730:5)
+                              margin: EdgeInsets.fromLTRB(
+                                  8 * fem, 0 * fem, 0 * fem, 0 * fem),
+                              width: 70.39 * fem,
+                              height: 25 * fem,
+                              child: Image.asset(
+                                'assets/page-1/images/layer-3.png',
+                                width: 26.39 * fem,
+                                height: 25 * fem,
+                                color: Color(0xff1f0a68),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

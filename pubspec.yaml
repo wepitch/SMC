@@ -76,6 +76,7 @@ dependencies:
   delete_un_used_assets: ^1.0.1
   phonepe_payment_sdk: ^1.1.0
   crypto: ^3.0.3
+  super_bullet_list: ^0.0.3
 
 dev_dependencies:
   flutter_test:

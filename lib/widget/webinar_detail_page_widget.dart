@@ -184,10 +184,10 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                             "assets/page-1/images/clock.png",
                           ),
                           const SizedBox(
-                            width: 5,
+                            width: 6,
                           ),
                           Text(
-                            "02:00 PM Onwards \n 15th Sep",
+                            "02:00 PM Onwards \n15th Sep",
                             style: SafeGoogleFont(
                               "Inter",
                               fontSize: 13,
@@ -208,7 +208,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
+                      padding: const EdgeInsets.fromLTRB(14, 20, 14, 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -221,21 +221,21 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                             ),
                           ),
                           const SizedBox(
-                            height: 9,
+                            height: 10,
                           ),
                           Text(
                             "\u2022 Lorem Ipsum is simply dummy text of the printing\n\u2022 Typesetting industry. Lorem Ipsum has been the\n\u2022 Industry's standard dummy text ever since the 1500s\n\u2022 When an unknown printer took a galley of type and",
                             style: SafeGoogleFont("Inter",
-                                fontSize: 13,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                height: 1.64),
+                                height: 1.90),
                           )
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 19),
+                          horizontal: 20,),
                       child: Text(
                         "What will you Learn?",
                         style: SafeGoogleFont(
@@ -419,7 +419,8 @@ Widget webinarDetailWidget({
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        elevation: 10,
+        elevation: 2,
+        shadowColor: ColorsConst.whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),

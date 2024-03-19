@@ -29,10 +29,10 @@ class _ComingSoonState extends State<ComingSoon> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
+                              backgroundColor: const MaterialStatePropertyAll(
                                 ColorsConst.appBarColor,
                               ),
-                              elevation: MaterialStatePropertyAll(0),
+                              elevation: const MaterialStatePropertyAll(0),
                               shape: MaterialStatePropertyAll(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
@@ -40,8 +40,9 @@ class _ComingSoonState extends State<ComingSoon> {
                               )
                           ),
                           onPressed: () {
+                            Navigator.pop(context);
                           },
-                          child: Text('Go Home',style: TextStyle(color: ColorsConst.whiteColor,fontSize: 16),),
+                          child: const Text('Go Home',style: TextStyle(color: ColorsConst.whiteColor,fontSize: 16),),
                         ),
                       ),
                     ],

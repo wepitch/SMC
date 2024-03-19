@@ -103,33 +103,33 @@ class _ProfilePageState extends State<ProfilePage> {
                         //       ),
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: InkWell(
-                    //     onTap: () async {
-                    //       ImagePicker imagePicker = ImagePicker();
-                    //       XFile? xFile = await imagePicker.pickImage(
-                    //         source: ImageSource.gallery,
-                    //       );
-                    //       if (xFile != null) {
-                    //         path = xFile.path;
-                    //         saveImagePathToPrefs(path!);
-                    //         setState(() {});
-                    //       }
-                    //     },
-                    //     child: Container(
-                    //       padding: const EdgeInsets.all(8),
-                    //       decoration: const BoxDecoration(
-                    //         shape: BoxShape.circle,
-                    //         color: Color(0xff1F0A68),
-                    //       ),
-                    //       child: const Icon(
-                    //         Icons.edit,
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? xFile = await imagePicker.pickImage(
+                            source: ImageSource.gallery,
+                          );
+                          if (xFile != null) {
+                            path = xFile.path;
+                            saveImagePathToPrefs(path!);
+                            setState(() {});
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xff1F0A68),
+                          ),
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
