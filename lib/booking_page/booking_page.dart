@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/booking_page/booking_past.dart';
 import 'package:myapp/booking_page/booking_today.dart';
 import 'package:myapp/booking_page/booking_upcoming.dart';
+import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/utils.dart';
 
 class BookingPage extends StatefulWidget {
@@ -63,11 +65,16 @@ class _BookingPageState extends State<BookingPage> {
             ),
           ),
           actions: [
-            Image.asset(
-              'assets/page-1/images/layer-3.png',
-              width: 20,
-              height: 20,
-              color: Color(0xff1F0A68),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CheckOutScreen()));
+              },
+              child: Image.asset(
+                'assets/page-1/images/layer-3.png',
+                width: 20,
+                height: 20,
+                color: Color(0xff1F0A68),
+              ),
             ),
             const SizedBox(
               width: 22,

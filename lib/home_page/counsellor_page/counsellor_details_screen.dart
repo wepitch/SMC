@@ -4,16 +4,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:myapp/home_page/counsellor_page/counsellor_feed_page.dart';
 import 'package:myapp/model/cousnellor_list_model.dart';
 import 'package:myapp/model/follower_model.dart';
 import 'package:myapp/other/listcontroler.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
-import 'package:myapp/page-1/counslleing_session2.dart';
-import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:myapp/page-1/payment_gateaway.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
@@ -22,7 +18,6 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../other/api_service.dart';
 
 class CounsellorDetailsScreen extends StatefulWidget {
