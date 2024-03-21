@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/other/api_service.dart';
+import 'package:myapp/page-1/otp_screen_new.dart';
 import 'package:myapp/phone/login_screen_n.dart';
+import 'package:myapp/phone/phone_otp_screen_new.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -43,7 +45,7 @@ class _Signup extends State<SignupScreenNew> {
         prefs.setString("name", _nameController.text.toString());
         if (!mounted) return;
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Otp(email)));
+            context, MaterialPageRoute(builder: (context) => OtpScreenNew(email)));
       } else if (value["error"] == "Something went wrong!") {
         EasyLoading.showToast(
           "404 Page Not Found!",

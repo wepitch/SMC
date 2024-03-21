@@ -41,6 +41,5 @@ class ListController extends GetxController
     finally{
       isLoading(false);
     }
-
   }
 }

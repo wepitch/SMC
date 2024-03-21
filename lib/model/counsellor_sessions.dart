@@ -35,7 +35,7 @@ class Sessions {
   int? sessionTime;
   int? sessionDuration;
   String? sessionType;
-  dynamic sessionPrice;
+  double? sessionPrice;
   String? sessionStatus;
   int? sessionSlots;
   String? sessionLink;

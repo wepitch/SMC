@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/model/counsellor_data.dart';
 import 'package:myapp/model/counsellor_detail.dart';
 import 'package:myapp/model/counsellor_sessions.dart';
@@ -54,7 +55,7 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     }
   }
 
-  void fetchCounsellor_details(String id) async {
+  void fetchCounsellor_details() async {
     var counsellors = await ApiService.getCounsellorData();
     isLoading = true;
     if (counsellors.isEmpty) {
@@ -63,7 +64,6 @@ class CounsellorDetailsProvider extends ChangeNotifier {
       counsellorData = counsellors;
       isLoading = false;
     }
-
     notifyListeners();
   }
 
@@ -83,5 +83,33 @@ class CounsellorDetailsProvider extends ChangeNotifier {
       isLoading = false;
     }
     notifyListeners();
+  }
+  List<CounsellorModel> cousnellorlist=[];
+  List<CounsellorData> cousnellorlist_data=[];
+
+  // void fetchCounsellor_data () async {
+  //   try{
+  //     isLoading(true);
+  //     var counsellor = await ApiService.getCounsellorData();
+  //     cousnellorlist_data.assignAll(counsellor);
+  //   }
+  //   finally{
+  //     isLoading(false);
+  //   }
+  // }
+
+   refresh() {
+    return Future.delayed(const Duration(seconds: 1), () {
+      ApiService.getCounsellorData().then((value) {
+        if (value.isNotEmpty) {
+          notifyListeners();
+        }
+        if (value[0].name == "none") {
+          EasyLoading.showToast("404 Page Not Found",
+              toastPosition: EasyLoadingToastPosition.bottom);
+        }
+        notifyListeners();
+      });
+    });
   }
 }

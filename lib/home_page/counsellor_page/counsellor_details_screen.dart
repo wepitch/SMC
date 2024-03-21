@@ -19,6 +19,7 @@ import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../other/api_service.dart';
+import 'package:http/http.dart' as http;
 
 class CounsellorDetailsScreen extends StatefulWidget {
   const CounsellorDetailsScreen({
@@ -37,7 +38,7 @@ class CounsellorDetailsScreen extends StatefulWidget {
 
 class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     with SingleTickerProviderStateMixin {
-  final ListController listController = Get.put(ListController());
+  //final ListController listController = Get.put(ListController());
   late FollowerProvider followerProvider;
   FollowerModel followerModel = FollowerModel();
   TextEditingController controller = TextEditingController();
@@ -50,7 +51,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   bool hasFollowedBefore = false;
   double rating_val = 0;
   String feedback_msg = '';
-
+  bool isImgUrl_valid = false;
   late Razorpay razorpay;
   String key = "";
 
@@ -151,6 +152,21 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     razorpay.clear();
   }
 
+   void checkImageValidity(String imgUrl) async {
+    var url = Uri.parse(imgUrl);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      setState(() {
+        isImgUrl_valid = true;
+      });
+    }
+    else{
+      setState(() {
+        isImgUrl_valid = false;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -160,10 +176,12 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
+    checkImageValidity(counsellorDetailController
+        .cousnellorlist_detail[0].coverImage);
     return Scaffold(
       backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
-
         surfaceTintColor: ColorsConst.whiteColor,
         titleSpacing: -16,
         title: Text(
@@ -179,18 +197,18 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () {
-                Share.share(
-                    'https://play.google.com/store/apps/details?id=com.sortmycollege');
-              },
-              child: Image.asset(
-                "assets/page-1/images/share.png",
-                color: Color(0xff1F0A68),
-                height: 23,
-              ),
-            )
+              padding: EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: () {
+                  Share.share(
+                      'https://play.google.com/store/apps/details?id=com.sortmycollege');
+                },
+                child: Image.asset(
+                  "assets/page-1/images/share.png",
+                  color: Color(0xff1F0A68),
+                  height: 23,
+                ),
+              )
           ),
         ],
         leading: IconButton(
@@ -211,30 +229,28 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
-                        Positioned(
-                          // beautifulbusinesswomanportrait (2958:523)
-                          left: 15.75,
-                          top: 13,
-                          child: Align(
-                            child: SizedBox(
-                              width: 398,
-                              height: 201,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                   counsellorDetailController
-                                          .cousnellorlist_detail[0].coverImage,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    //print("Exception >> ${exception.toString()}");
-                                    return Image.asset(
-                                      'assets/page-1/images/comming_soon.png',
-                                      fit: BoxFit.fill,
-                                    );
-                                  },
-                                ),
+                        Align(
+                          child: SizedBox(
+                            width: 398,
+                            height: 201,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: isImgUrl_valid ? Image.network(
+                                counsellorDetailController
+                                    .cousnellorlist_detail[0].coverImage,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception,
+                                    StackTrace? stackTrace) {
+                                  //print("Exception >> ${exception.toString()}");
+                                  return Image.asset(
+                                    'assets/page-1/images/comming_soon.png',
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              ) : Image.asset(
+                                'assets/page-1/images/comming_soon.png',
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -250,9 +266,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     Text(
                                       widget.name,
                                       style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xff1f0a68),
-                                        fontWeight: FontWeight.w600
+                                          fontSize: 14,
+                                          color: Color(0xff1f0a68),
+                                          fontWeight: FontWeight.w600
                                       ),
                                     ),
                                   ],
@@ -333,8 +349,8 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                         }
                                       } else {
                                         var value =
-                                            await ApiService.Follow_councellor(
-                                                widget.id);
+                                        await ApiService.Follow_councellor(
+                                            widget.id);
                                         if (value["message"] ==
                                             "User is now following the counsellor") {
                                           // EasyLoading.showToast(
@@ -404,7 +420,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     Text(
                                       // followingweY (2958:442)
                                       '$followerCount '
-                                      "Following",
+                                          "Following",
                                       style: SafeGoogleFont(
                                         'Inter',
                                         fontSize: 12,
@@ -483,7 +499,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  '${listController.cousnellorlist_data[0].reviews}',
+                                  '${counsellorDetailController.cousnellorlist_data[0].reviews}',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -599,13 +615,13 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             Text(
                               // uiuxdesignercertificateazurece (2958:484)
                               counsellorDetailController
-                                      .cousnellorlist_detail[0]
-                                      .qualifications
-                                      .isEmpty
+                                  .cousnellorlist_detail[0]
+                                  .qualifications
+                                  .isEmpty
                                   ? "N/A"
                                   : counsellorDetailController
-                                      .cousnellorlist_detail[0].qualifications
-                                      .join(', '),
+                                  .cousnellorlist_detail[0].qualifications
+                                  .join(', '),
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -627,13 +643,13 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             const SizedBox(width: 6),
                             Text(
                               counsellorDetailController
-                                      .cousnellorlist_detail[0]
-                                      .languages!
-                                      .isEmpty
+                                  .cousnellorlist_detail[0]
+                                  .languages!
+                                  .isEmpty
                                   ? "N/A"
                                   : counsellorDetailController
-                                      .cousnellorlist_detail[0].languages!
-                                      .join(","),
+                                  .cousnellorlist_detail[0].languages!
+                                  .join(","),
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -702,12 +718,12 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             Text(
                               // qZz (2958:543)
                               counsellorDetailController
-                                          .cousnellorlist_detail[0].age ==
-                                      null
+                                  .cousnellorlist_detail[0].age ==
+                                  null
                                   ? "N/A"
                                   : counsellorDetailController
-                                      .cousnellorlist_detail[0].age
-                                      .toString(),
+                                  .cousnellorlist_detail[0].age
+                                  .toString(),
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -787,13 +803,13 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 suffixIcon: IconButton(
                                   onPressed: () async {
                                     var value =
-                                        await ApiService.Feedback_councellor(
-                                            widget.id,rating_val,feedback_msg);
+                                    await ApiService.Feedback_councellor(
+                                        widget.id,rating_val,feedback_msg);
                                     if (value["error"] ==
                                         "Feedback is already given by the user") {
                                       EasyLoading.showToast(value["error"],
                                           toastPosition:
-                                              EasyLoadingToastPosition.bottom);
+                                          EasyLoadingToastPosition.bottom);
                                     } else{
                                       (value["message"] ==
                                           "Feedback has been successfully added");
@@ -830,434 +846,166 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                   // autogroupuuww8oz (obZ7jq9Hv3ndwJa9LuuwW)
                   width: double.infinity,
                   height: 113 * fem,
-                  child: Expanded(
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          // frame324GvC (2936:447)
-                          left: 0 * fem,
-                          top: 55 * fem,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(
-                                16 * fem, 8 * fem, 16 * fem, 8 * fem),
-                            width: 430 * fem,
-                            height: 57 * fem,
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: const Color(0x35000000)),
-                            ),
-                            child: SizedBox(
-                              // group370NiL (2936:483)
-                              width: double.infinity,
-                              height: double.infinity,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // group347Kda (2936:448)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 115 * fem, 0 * fem),
-                                    height: double.infinity,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          // group345fBe (2936:458)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 5 * fem, 0 * fem),
-                                          width: 42 * fem,
-                                          height: double.infinity,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                // group298bLC (2936:459)
-                                                left: 0 * fem,
-                                                top: 0 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 42 * fem,
-                                                    height: 41 * fem,
-                                                    child: Image.asset(
-                                                      'assets/page-1/images/group-298.png',
-                                                      width: 42 * fem,
-                                                      height: 41 * fem,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                // conversationi9v (2936:461)
-                                                left: 10.7692871094 * fem,
-                                                top: 9.4614257812 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 21.54 * fem,
-                                                    height: 21.03 * fem,
-                                                    child: Image.asset(
-                                                      'assets/page-1/images/conversation.png',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          // group346qEY (2936:449)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0.5 * fem, 0 * fem, 1 * fem),
-                                          width: 115 * fem,
-                                          height: double.infinity,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                // personalsessionmdz (2936:453)
-                                                left: 0 * fem,
-                                                top: 0 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 97 * fem,
-                                                    height: 15 * fem,
-                                                    child: Text(
-                                                      'Personal Session',
-                                                      style: SafeGoogleFont(
-                                                        'Inter',
-                                                        fontSize: 12 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height:
-                                                            1.2125 * ffem / fem,
-                                                        color: const Color(
-                                                            0xff000000),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                // group344gW4 (2936:454)
-                                                left: 0 * fem,
-                                                top: 14.5 * fem,
-                                                child: SizedBox(
-                                                  width: 115 * fem,
-                                                  height: 25 * fem,
-                                                  child: Expanded(
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                          // rupeebsv (2936:457)
-                                                          margin: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0 * fem,
-                                                                  0 * fem,
-                                                                  2 * fem,
-                                                                  1 * fem),
-                                                          width: 11 * fem,
-                                                          height: 14 * fem,
-                                                          child: Image.asset(
-                                                            'assets/page-1/images/rupee-12.png',
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          // LKi (2936:455)
-                                                          margin: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0 * fem,
-                                                                  0 * fem,
-                                                                  1 * fem,
-                                                                  0 * fem),
-                                                          child: Text(
-                                                            counsellorDetailController
-                                                                        .cousnellorlist_detail[
-                                                                            0]
-                                                                        .personalSessionPrice ==
-                                                                    null
-                                                                ? "0"
-                                                                : counsellorDetailController
-                                                                    .cousnellorlist_detail[
-                                                                        0]
-                                                                    .personalSessionPrice
-                                                                    .toString(),
-                                                            style:
-                                                                SafeGoogleFont(
-                                                              'Inter',
-                                                              fontSize:
-                                                                  20 * ffem,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              height: 1.2125 *
-                                                                  ffem /
-                                                                  fem,
-                                                              color: const Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          // onwardsTfE (2936:456)
-                                                          margin: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0 * fem,
-                                                                  4 * fem,
-                                                                  0 * fem,
-                                                                  0 * fem),
-                                                          child: Text(
-                                                            ' Onwards',
-                                                            style:
-                                                                SafeGoogleFont(
-                                                              'Inter',
-                                                              fontSize:
-                                                                  12 * ffem,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              height: 1.2125 *
-                                                                  ffem /
-                                                                  fem,
-                                                              color: const Color(
-                                                                  0xff6b6b6b),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () async{
-                                      var availableSlots = counsellorSessionProvider.details.sessions![0].sessionAvailableSlots!;
-                                      var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                      var value =
-                                      await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions?[0].sessionPrice,'description','9800000000');
-                                      if (value["error"] ==
-                                          "Order not successfully created") {
-                                        EasyLoading.showToast(value["error"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                      } else{
-                                        (value["message"] ==
-                                            "Order successfully created");
-                                        EasyLoading.showToast(value["message"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                        EasyLoading.showToast(value["data"]["id"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                        if(value["data"]["offer_id"] != null){
-                                          EasyLoading.showToast(value["data"]["offer_id"],
-                                              toastPosition:
-                                              EasyLoadingToastPosition.bottom);
-                                        }
-                                        key = value["data"]["key"];
-                                        print(key);
-                                        openCheckOut(counsellorSessionProvider.details.sessions?[0].sessionPrice);
-                                      }
-                                      if (availableSlots >= 0) {
-                                        EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                      } else if (availableSlots <= totalAvailableSlots) {
-                                      } else{
-                                        EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                      }
-                                    },
-                                    // onTap: () {
-                                    //   Get.to( CounsellingSessionPage2(
-                                    //     name: widget.name,
-                                    //     id: widget.id,
-                                    //   ));
-                                    // },
-                                    child: Container(
-                                      // group349P36 (2936:462)
-                                      width: 116 * fem,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xff1f0a68),
-                                        borderRadius:
-                                            BorderRadius.circular(5 * fem),
-                                      ),
-                                      child: Center(
-                                        child: Center(
-                                          child: Text(
-                                            'Book',
-                                            textAlign: TextAlign.center,
-                                            style: SafeGoogleFont(
-                                              'Inter',
-                                              fontSize: 16 * ffem,
-                                              fontWeight: FontWeight.w400,
-                                              height: 1.2125 * ffem / fem,
-                                              color: const Color(0xffffffff),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        // frame324GvC (2936:447)
+                        left: 0 * fem,
+                        top: 55 * fem,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(
+                              16 * fem, 8 * fem, 16 * fem, 8 * fem),
+                          width: 430 * fem,
+                          height: 57 * fem,
+                          decoration: BoxDecoration(
+                            border:
+                            Border.all(color: const Color(0x35000000)),
                           ),
-                        ),
-                        Positioned(
-                          // frame32649E (2936:484)
-                          left: 0 * fem,
-                          top: 0 * fem,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(
-                                16 * fem, 8 * fem, 16 * fem, 8 * fem),
-                            width: 430 * fem,
-                            height: 57 * fem,
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: const Color(0x35000000)),
-                            ),
-                            child: SizedBox(
-                              // group370y1J (2936:485)
-                              width: double.infinity,
-                              height: double.infinity,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // group347XHi (2936:486)
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 123 * fem, 0 * fem),
-                                    height: double.infinity,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          // autogroupvexiTSG (obZYj7WRacadntT6aVeXi)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0 * fem, 8 * fem, 0 * fem),
-                                          width: 42 * fem,
-                                          height: double.infinity,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                // group345C8x (2936:496)
-                                                left: 0 * fem,
-                                                top: 0 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
+                          child: SizedBox(
+                            // group370NiL (2936:483)
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // group347Kda (2936:448)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 115 * fem, 0 * fem),
+                                  height: double.infinity,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // group345fBe (2936:458)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 5 * fem, 0 * fem),
+                                        width: 42 * fem,
+                                        height: double.infinity,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              // group298bLC (2936:459)
+                                              left: 0 * fem,
+                                              top: 0 * fem,
+                                              child: Align(
+                                                child: SizedBox(
+                                                  width: 42 * fem,
+                                                  height: 41 * fem,
+                                                  child: Image.asset(
+                                                    'assets/page-1/images/group-298.png',
                                                     width: 42 * fem,
                                                     height: 41 * fem,
-                                                    child: Image.asset(
-                                                      'assets/page-1/images/ellipse-47-xPB.png',
-                                                      width: 42 * fem,
-                                                      height: 41 * fem,
-                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                              Positioned(
-                                                // usersgroupJxg (2936:503)
-                                                left: 11 * fem,
-                                                top: 10 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 21 * fem,
-                                                    height: 21 * fem,
-                                                    child: Image.asset(
-                                                      'assets/page-1/images/usergroup.png',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          // group346EbS (2936:487)
-                                          margin: EdgeInsets.fromLTRB(0 * fem,
-                                              0.5 * fem, 0 * fem, 1 * fem),
-                                          width: 105 * fem,
-                                          height: double.infinity,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                // groupsessionZtc (2936:491)
-                                                left: 0 * fem,
-                                                top: 0 * fem,
-                                                child: Align(
-                                                  child: SizedBox(
-                                                    width: 83 * fem,
-                                                    height: 15 * fem,
-                                                    child: Text(
-                                                      'Group Session',
-                                                      style: SafeGoogleFont(
-                                                        'Inter',
-                                                        fontSize: 12 * ffem,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height:
-                                                            1.2125 * ffem / fem,
-                                                        color: const Color(
-                                                            0xff000000),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                // group344UEt (2936:492)
-                                                left: 0 * fem,
-                                                top: 14.5 * fem,
+                                            ),
+                                            Positioned(
+                                              // conversationi9v (2936:461)
+                                              left: 10.7692871094 * fem,
+                                              top: 9.4614257812 * fem,
+                                              child: Align(
                                                 child: SizedBox(
-                                                  width: 105 * fem,
-                                                  height: 25 * fem,
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        // rupeezU8 (2936:495)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0 * fem,
-                                                                0 * fem,
-                                                                2 * fem,
-                                                                1 * fem),
-                                                        width: 11 * fem,
-                                                        height: 14 * fem,
-                                                        child: Image.asset(
-                                                          'assets/page-1/images/rupee-12.png',
-                                                          fit: BoxFit.cover,
-                                                        ),
+                                                  width: 21.54 * fem,
+                                                  height: 21.03 * fem,
+                                                  child: Image.asset(
+                                                    'assets/page-1/images/conversation.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        // group346qEY (2936:449)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0.5 * fem, 0 * fem, 1 * fem),
+                                        width: 115 * fem,
+                                        height: double.infinity,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              // personalsessionmdz (2936:453)
+                                              left: 0 * fem,
+                                              top: 0 * fem,
+                                              child: Align(
+                                                child: SizedBox(
+                                                  width: 97 * fem,
+                                                  height: 15 * fem,
+                                                  child: Text(
+                                                    'Personal Session',
+                                                    style: SafeGoogleFont(
+                                                      'Inter',
+                                                      fontSize: 12 * ffem,
+                                                      fontWeight:
+                                                      FontWeight.w400,
+                                                      height:
+                                                      1.2125 * ffem / fem,
+                                                      color: const Color(
+                                                          0xff000000),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              // group344gW4 (2936:454)
+                                              left: 0 * fem,
+                                              top: 14.5 * fem,
+                                              child: SizedBox(
+                                                width: 115 * fem,
+                                                height: 25 * fem,
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .center,
+                                                  children: [
+                                                    Container(
+                                                      // rupeebsv (2936:457)
+                                                      margin: EdgeInsets
+                                                          .fromLTRB(
+                                                          0 * fem,
+                                                          0 * fem,
+                                                          2 * fem,
+                                                          1 * fem),
+                                                      width: 11 * fem,
+                                                      height: 14 * fem,
+                                                      child: Image.asset(
+                                                        'assets/page-1/images/rupee-12.png',
+                                                        fit: BoxFit.cover,
                                                       ),
-                                                      Text(
-                                                        // vcg (2936:493)
+                                                    ),
+                                                    Container(
+                                                      // LKi (2936:455)
+                                                      margin: EdgeInsets
+                                                          .fromLTRB(
+                                                          0 * fem,
+                                                          0 * fem,
+                                                          1 * fem,
+                                                          0 * fem),
+                                                      child: Text(
                                                         counsellorDetailController
-                                                                    .cousnellorlist_detail[
-                                                                        0]
-                                                                    .groupSessionPrice ==
-                                                                null
+                                                            .cousnellorlist_detail[
+                                                        0]
+                                                            .personalSessionPrice ==
+                                                            null
                                                             ? "0"
                                                             : counsellorDetailController
-                                                                .cousnellorlist_detail[
-                                                                    0]
-                                                                .groupSessionPrice
-                                                                .toString(),
-                                                        style: SafeGoogleFont(
+                                                            .cousnellorlist_detail[
+                                                        0]
+                                                            .personalSessionPrice
+                                                            .toString(),
+                                                        style:
+                                                        SafeGoogleFont(
                                                           'Inter',
-                                                          fontSize: 20 * ffem,
+                                                          fontSize:
+                                                          20 * ffem,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                          FontWeight
+                                                              .w600,
                                                           height: 1.2125 *
                                                               ffem /
                                                               fem,
@@ -1265,116 +1013,380 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                                               0xff000000),
                                                         ),
                                                       ),
-                                                      Container(
-                                                        // onwards5Va (2936:494)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0 * fem,
-                                                                4 * fem,
-                                                                0 * fem,
-                                                                0 * fem),
-                                                        child: Text(
-                                                          ' Onwards',
-                                                          style: SafeGoogleFont(
-                                                            'Inter',
-                                                            fontSize: 12 * ffem,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            height: 1.2125 *
-                                                                ffem /
-                                                                fem,
-                                                            color: const Color(
-                                                                0xff6b6b6b),
-                                                          ),
+                                                    ),
+                                                    Container(
+                                                      // onwardsTfE (2936:456)
+                                                      margin: EdgeInsets
+                                                          .fromLTRB(
+                                                          0 * fem,
+                                                          4 * fem,
+                                                          0 * fem,
+                                                          0 * fem),
+                                                      child: Text(
+                                                        ' Onwards',
+                                                        style:
+                                                        SafeGoogleFont(
+                                                          'Inter',
+                                                          fontSize:
+                                                          12 * ffem,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w500,
+                                                          height: 1.2125 *
+                                                              ffem /
+                                                              fem,
+                                                          color: const Color(
+                                                              0xff6b6b6b),
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () async{
-                                      var availableSlots = counsellorSessionProvider.details.sessions![0].sessionAvailableSlots!;
-                                      var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                      var value =
-                                      await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions?[0].sessionPrice,'description','9800000000');
-                                      if (value["error"] ==
-                                          "Order not successfully created") {
-                                        EasyLoading.showToast(value["error"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                      } else{
-                                        (value["message"] ==
-                                            "Order successfully created");
-                                        EasyLoading.showToast(value["message"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                        EasyLoading.showToast(value["data"]["id"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                        if(value["data"]["offer_id"] != null){
-                                          EasyLoading.showToast(value["data"]["offer_id"],
-                                              toastPosition:
-                                              EasyLoadingToastPosition.bottom);
-                                        }
-                                        key = value["data"]["key"];
-                                        print(key);
-                                        openCheckOut(counsellorSessionProvider.details.sessions?[0].sessionPrice);
-                                      }
-                                      if (availableSlots >= 0) {
-                                        EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                      } else if (availableSlots <= totalAvailableSlots) {
-                                      } else{
-                                        EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                      }
-                                    },
-                                    // onTap: () {
-                                    //   Get.to(
-                                    //      CounsellingSessionPage(
-                                    //       name: widget.name,
-                                    //       id: widget.id,
-                                    //     ),
-                                    //   );
-                                    // },
-                                    child: Container(
-                                      // group349oRa (2936:500)
-                                      width: 116 * fem,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xff1f0a68),
-                                        borderRadius:
-                                            BorderRadius.circular(5 * fem),
-                                      ),
-                                      child: Center(
-                                        child: Center(
-                                          child: Text(
-                                            'Book',
-                                            textAlign: TextAlign.center,
-                                            style: SafeGoogleFont(
-                                              'Inter',
-                                              fontSize: 16 * ffem,
-                                              fontWeight: FontWeight.w400,
-                                              height: 1.2125 * ffem / fem,
-                                              color: const Color(0xffffffff),
                                             ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () async{
+                                    var availableSlots = counsellorSessionProvider.details.sessions![0].sessionAvailableSlots!;
+                                    var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
+                                    var value =
+                                    await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',1,'description','9800000000');
+                                    if (value["error"] ==
+                                        "Order not successfully created") {
+                                      EasyLoading.showToast(value["error"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                    } else{
+                                      (value["message"] ==
+                                          "Order successfully created");
+                                      EasyLoading.showToast(value["message"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                      EasyLoading.showToast(value["data"]["id"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                      if(value["data"]["offer_id"] != null){
+                                        EasyLoading.showToast(value["data"]["offer_id"],
+                                            toastPosition:
+                                            EasyLoadingToastPosition.bottom);
+                                      }
+                                      key = value["data"]["key"];
+                                      print(key);
+                                      openCheckOut(counsellorSessionProvider.details.sessions?[0].sessionPrice);
+                                    }
+                                    if (availableSlots >= 0) {
+                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
+                                    } else if (availableSlots <= totalAvailableSlots) {
+                                    } else{
+                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
+                                    }
+                                  },
+                                  // onTap: () {
+                                  //   Get.to( CounsellingSessionPage2(
+                                  //     name: widget.name,
+                                  //     id: widget.id,
+                                  //   ));
+                                  // },
+                                  child: Container(
+                                    // group349P36 (2936:462)
+                                    width: 116 * fem,
+                                    height: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff1f0a68),
+                                      borderRadius:
+                                      BorderRadius.circular(5 * fem),
+                                    ),
+                                    child: Center(
+                                      child: Center(
+                                        child: Text(
+                                          'Book',
+                                          textAlign: TextAlign.center,
+                                          style: SafeGoogleFont(
+                                            'Inter',
+                                            fontSize: 16 * ffem,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.2125 * ffem / fem,
+                                            color: const Color(0xffffffff),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        // frame32649E (2936:484)
+                        left: 0 * fem,
+                        top: 0 * fem,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(
+                              16 * fem, 8 * fem, 16 * fem, 8 * fem),
+                          width: 430 * fem,
+                          height: 57 * fem,
+                          decoration: BoxDecoration(
+                            border:
+                            Border.all(color: const Color(0x35000000)),
+                          ),
+                          child: SizedBox(
+                            // group370y1J (2936:485)
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  // group347XHi (2936:486)
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 123 * fem, 0 * fem),
+                                  height: double.infinity,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // autogroupvexiTSG (obZYj7WRacadntT6aVeXi)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0 * fem, 8 * fem, 0 * fem),
+                                        width: 42 * fem,
+                                        height: double.infinity,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              // group345C8x (2936:496)
+                                              left: 0 * fem,
+                                              top: 0 * fem,
+                                              child: Align(
+                                                child: SizedBox(
+                                                  width: 42 * fem,
+                                                  height: 41 * fem,
+                                                  child: Image.asset(
+                                                    'assets/page-1/images/ellipse-47-xPB.png',
+                                                    width: 42 * fem,
+                                                    height: 41 * fem,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              // usersgroupJxg (2936:503)
+                                              left: 11 * fem,
+                                              top: 10 * fem,
+                                              child: Align(
+                                                child: SizedBox(
+                                                  width: 21 * fem,
+                                                  height: 21 * fem,
+                                                  child: Image.asset(
+                                                    'assets/page-1/images/usergroup.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        // group346EbS (2936:487)
+                                        margin: EdgeInsets.fromLTRB(0 * fem,
+                                            0.5 * fem, 0 * fem, 1 * fem),
+                                        width: 105 * fem,
+                                        height: double.infinity,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              // groupsessionZtc (2936:491)
+                                              left: 0 * fem,
+                                              top: 0 * fem,
+                                              child: Align(
+                                                child: SizedBox(
+                                                  width: 83 * fem,
+                                                  height: 15 * fem,
+                                                  child: Text(
+                                                    'Group Session',
+                                                    style: SafeGoogleFont(
+                                                      'Inter',
+                                                      fontSize: 12 * ffem,
+                                                      fontWeight:
+                                                      FontWeight.w400,
+                                                      height:
+                                                      1.2125 * ffem / fem,
+                                                      color: const Color(
+                                                          0xff000000),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              // group344UEt (2936:492)
+                                              left: 0 * fem,
+                                              top: 14.5 * fem,
+                                              child: SizedBox(
+                                                width: 105 * fem,
+                                                height: 25 * fem,
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .center,
+                                                  children: [
+                                                    Container(
+                                                      // rupeezU8 (2936:495)
+                                                      margin:
+                                                      EdgeInsets.fromLTRB(
+                                                          0 * fem,
+                                                          0 * fem,
+                                                          2 * fem,
+                                                          1 * fem),
+                                                      width: 11 * fem,
+                                                      height: 14 * fem,
+                                                      child: Image.asset(
+                                                        'assets/page-1/images/rupee-12.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      // vcg (2936:493)
+                                                      counsellorDetailController
+                                                          .cousnellorlist_detail[
+                                                      0]
+                                                          .groupSessionPrice ==
+                                                          null
+                                                          ? "0"
+                                                          : counsellorDetailController
+                                                          .cousnellorlist_detail[
+                                                      0]
+                                                          .groupSessionPrice
+                                                          .toString(),
+                                                      style: SafeGoogleFont(
+                                                        'Inter',
+                                                        fontSize: 20 * ffem,
+                                                        fontWeight:
+                                                        FontWeight.w600,
+                                                        height: 1.2125 *
+                                                            ffem /
+                                                            fem,
+                                                        color: const Color(
+                                                            0xff000000),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      // onwards5Va (2936:494)
+                                                      margin:
+                                                      EdgeInsets.fromLTRB(
+                                                          0 * fem,
+                                                          4 * fem,
+                                                          0 * fem,
+                                                          0 * fem),
+                                                      child: Text(
+                                                        ' Onwards',
+                                                        style: SafeGoogleFont(
+                                                          'Inter',
+                                                          fontSize: 12 * ffem,
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          height: 1.2125 *
+                                                              ffem /
+                                                              fem,
+                                                          color: const Color(
+                                                              0xff6b6b6b),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () async{
+                                    var availableSlots = counsellorSessionProvider.details.sessions![0].sessionAvailableSlots!;
+                                    var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
+                                    var value =
+                                    await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions![0].sessionPrice!,'description','9800000000');
+                                    if (value["error"] ==
+                                        "Order not successfully created") {
+                                      EasyLoading.showToast(value["error"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                    } else{
+                                      (value["message"] ==
+                                          "Order successfully created");
+                                      EasyLoading.showToast(value["message"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                      EasyLoading.showToast(value["data"]["id"],
+                                          toastPosition:
+                                          EasyLoadingToastPosition.bottom);
+                                      if(value["data"]["offer_id"] != null){
+                                        EasyLoading.showToast(value["data"]["offer_id"],
+                                            toastPosition:
+                                            EasyLoadingToastPosition.bottom);
+                                      }
+                                      key = value["data"]["key"];
+                                      print(key);
+                                      openCheckOut(counsellorSessionProvider.details.sessions?[0].sessionPrice);
+                                    }
+                                    if (availableSlots >= 0) {
+                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
+                                    } else if (availableSlots <= totalAvailableSlots) {
+                                    } else{
+                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
+                                    }
+                                  },
+                                  // onTap: () {
+                                  //   Get.to(
+                                  //      CounsellingSessionPage(
+                                  //       name: widget.name,
+                                  //       id: widget.id,
+                                  //     ),
+                                  //   );
+                                  // },
+                                  child: Container(
+                                    // group349oRa (2936:500)
+                                    width: 116 * fem,
+                                    height: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff1f0a68),
+                                      borderRadius:
+                                      BorderRadius.circular(5 * fem),
+                                    ),
+                                    child: Center(
+                                      child: Center(
+                                        child: Text(
+                                          'Book',
+                                          textAlign: TextAlign.center,
+                                          style: SafeGoogleFont(
+                                            'Inter',
+                                            fontSize: 16 * ffem,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.2125 * ffem / fem,
+                                            color: const Color(0xffffffff),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -1443,3 +1455,5 @@ void onTapBook(BuildContext context) {
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => const PaymentGateAway()));
 }
+
+

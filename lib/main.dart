@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:myapp/firebase_options.dart';
+import 'package:myapp/home_page/homepagecontainer.dart';
 import 'package:myapp/home_page/notification_page/news/provider/news_provider1.dart';
 import 'package:myapp/home_page/notification_page/news/service/news_service.dart';
 import 'package:myapp/news/provider/news_provider.dart';
@@ -12,6 +13,7 @@ import 'package:myapp/other/dependency_injection.dart';
 import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
 import 'package:myapp/page-1/shared.dart';
+import 'package:myapp/page-1/splash_screen_2.dart';
 import 'package:myapp/page-1/splash_screen_n.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
@@ -103,8 +105,8 @@ class MyApp extends StatelessWidget {
           //   '/message': (context) => const Notification2(),
           //   // Add your other routes
           // },
-          home: const SplashScreenNew(),
-          // home: isLoggedIn ? const HomePageContainer() : const SplashScreen2(),
+          //home: const HomePageContainer(),
+           home: isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
           builder: EasyLoading.init()),
     );
   }

@@ -700,9 +700,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                       counsellorSessionProvider.details.sessions![index].sessionDate,
                                       counsellorSessionProvider.details.sessions![index].sessionPrice,
                                     );*/
-
                                       var value =
-                                          await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions?[index].sessionPrice,'description','9800000000');
+                                          await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',1,'description','9800000000');
                                       if (value["error"] ==
                                           "Order not successfully created") {
                                         EasyLoading.showToast(value["error"],
