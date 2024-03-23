@@ -30,20 +30,13 @@ class _HomePageContainerState extends State<HomePageContainer> {
   int selectedIndex = 0;
 
   final Widget _home = const HomePage();
-
   final Widget _webNar = const WebinarPage();
-
   final Widget _booking = const BookingPage();
-
   // final Widget _news = CollegeNewsWidget();
   final Widget _news = NewsScreen();
-
   final Widget _profile = const ProfilePage();
-
   /*Widget _news = News();
-
   Widget _profile = Profile();*/
-
   @override
   Widget build(BuildContext context) {
     // double baseWidth = 430;

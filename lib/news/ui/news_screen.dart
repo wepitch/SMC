@@ -80,6 +80,13 @@ class _NewsScreen extends State<NewsScreen> {
                           elevation: 2,
                           shadowColor: ColorsConst.whiteColor,
                           child: TextButton(
+                            style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                            ),
                             onPressed: () {},
                             child: const Text(
                               'Top News',

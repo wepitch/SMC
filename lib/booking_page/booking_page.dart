@@ -67,7 +67,6 @@ class _BookingPageState extends State<BookingPage> {
           actions: [
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CheckOutScreen()));
               },
               child: Image.asset(
                 'assets/page-1/images/layer-3.png',

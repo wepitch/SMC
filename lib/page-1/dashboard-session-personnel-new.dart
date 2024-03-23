@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/utils.dart';
@@ -619,7 +620,7 @@ class _Counseling_Session_PersonnelState
                                                           onTap: () async{
                                                             var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
                                                             var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                                            var value =
+                                                            /*var value =
                                                             await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions![index].sessionPrice!,'description','9800000000');
                                                             if (value["error"] ==
                                                                 "Order not successfully created") {
@@ -643,11 +644,19 @@ class _Counseling_Session_PersonnelState
                                                               key = value["data"]["key"];
                                                               print(key);
                                                               openCheckOut(counsellorSessionProvider.details.sessions?[index].sessionPrice);
-                                                            }
+                                                            }*/
                                                             if (availableSlots >= 0) {
                                                               EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
                                                             } else if (availableSlots <= totalAvailableSlots) {
-
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          CheckOutScreen(
+                                                                              name: widget
+                                                                                  .name,
+                                                                              id: widget
+                                                                                  .id)));
                                                             } else{
                                                               EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
                                                             }

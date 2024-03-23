@@ -32,6 +32,7 @@ class CounsellorDetail {
   Location? location;
   int? personalSessionPrice;
   int? groupSessionPrice;
+  int? reviews;
 
   CounsellorDetail({
     required this.howIWillHelpYou,
@@ -51,6 +52,7 @@ class CounsellorDetail {
     this.location,
     this.personalSessionPrice,
     this.groupSessionPrice,
+    this.reviews,
   });
 
   factory CounsellorDetail.fromJson(Map<String, dynamic> json) =>
@@ -69,6 +71,7 @@ class CounsellorDetail {
           followers: json["followers"] ?? 0,
           languages: json["languages_spoken"] ?? '',
           age: json["age"] ?? 0,
+          reviews: json["reviews"] ?? 0,
           personalSessionPrice: json["personal_session_price"] ?? 0,
           groupSessionPrice: json["group_session_price"] ?? 0,
           location: Location.fromjson(
@@ -86,6 +89,7 @@ class CounsellorDetail {
     "total_sessions_attended": totalSessionsAttended,
     "gender": gender,
     "followers" : followers,
+    "reviews": reviews,
   };
 }
 

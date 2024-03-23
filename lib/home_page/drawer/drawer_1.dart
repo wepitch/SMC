@@ -294,6 +294,7 @@ class _Drawer1State extends State<Drawer1> {
   Future _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("token");
+    prefs.setBool("authLogin", false);
     if (mounted) {
       Navigator.pushAndRemoveUntil(
         context,

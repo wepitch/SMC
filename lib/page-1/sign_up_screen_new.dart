@@ -31,6 +31,14 @@ class _Signup extends State<SignupScreenNew> {
 
   // bool isLoading = false;
   void onTapGettingstarted(BuildContext context, String email) async {
+    if (!isChecked) {
+      EasyLoading.showToast(
+        'Please accept terms and conditions',
+        toastPosition: EasyLoadingToastPosition.bottom,
+      );
+      return;
+    }
+
     await EasyLoading.show(
       dismissOnTap: false,
     );
@@ -57,7 +65,6 @@ class _Signup extends State<SignupScreenNew> {
       }
     });
   }
-
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -156,7 +163,7 @@ class _Signup extends State<SignupScreenNew> {
                               decoration: const InputDecoration(
                                 hintStyle:
                                 TextStyle(color: Colors.black54, fontSize: 15.0),
-                                hintText: "Phone Number",
+                                hintText: "Phone Number/Email ",
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                               ),

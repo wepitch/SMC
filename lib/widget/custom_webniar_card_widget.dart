@@ -150,7 +150,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                               widget.showDuration
                                   // ? "Career Institute : ${widget.duration}"
                                   ? ""
-                                  : "Career Institute : ${widget.duration}\nAllen career institute,by Anshika Mehra - ${widget.participants}",
+                                  : "Career Institute : ${widget.duration}\nAllen career institute,\nby Anshika Mehra - ${widget.participants}",
                               style: SafeGoogleFont(
                                 "Inter",
                                 fontSize: 11,

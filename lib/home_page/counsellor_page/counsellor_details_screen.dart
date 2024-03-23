@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/model/cousnellor_list_model.dart';
 import 'package:myapp/model/follower_model.dart';
 import 'package:myapp/other/listcontroler.dart';
@@ -55,16 +56,17 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   late Razorpay razorpay;
   String key = "";
 
+
   @override
   void initState() {
     super.initState();
+    context.read<CounsellorDetailsProvider>().fetchCounsellor_detail(widget.id);
+    _controller = TabController(length: 2, vsync: this, initialIndex: 0);
+    followerProvider = Provider.of<FollowerProvider>(context, listen: false);
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_detail(widget.id);
-    _controller = TabController(length: 2, vsync: this, initialIndex: 0);
-    followerProvider = Provider.of<FollowerProvider>(context, listen: false);
     //_loadData();
   }
 
@@ -82,6 +84,29 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     prefs.setInt('followerCount', followerCount);
     prefs.setBool('hasFollowedBefore', hasFollowedBefore);
     prefs.setBool('isFollowing', isFollowing);
+  }
+
+
+
+   void checkImageValidity(String imgUrl) async {
+     if(imgUrl.contains("http://")) {
+       //nothing
+     }
+     else{
+       imgUrl="https://$imgUrl";
+     }
+    var url = Uri.parse(imgUrl);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      setState(() {
+        isImgUrl_valid = true;
+      });
+    }
+    else{
+      setState(() {
+        isImgUrl_valid = false;
+      });
+    }
   }
 
   void openCheckOut(amount) async {
@@ -151,22 +176,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     super.dispose();
     razorpay.clear();
   }
-
-   void checkImageValidity(String imgUrl) async {
-    var url = Uri.parse(imgUrl);
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      setState(() {
-        isImgUrl_valid = true;
-      });
-    }
-    else{
-      setState(() {
-        isImgUrl_valid = false;
-      });
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -499,7 +508,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  '${counsellorDetailController.cousnellorlist_data[0].reviews}',
+                                  '${counsellorDetailController.cousnellorlist_detail[0].reviews}',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -1051,47 +1060,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () async{
-                                    var availableSlots = counsellorSessionProvider.details.sessions![0].sessionAvailableSlots!;
-                                    var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                    var value =
-                                    await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',1,'description','9800000000');
-                                    if (value["error"] ==
-                                        "Order not successfully created") {
-                                      EasyLoading.showToast(value["error"],
-                                          toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                    } else{
-                                      (value["message"] ==
-                                          "Order successfully created");
-                                      EasyLoading.showToast(value["message"],
-                                          toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                      EasyLoading.showToast(value["data"]["id"],
-                                          toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                      if(value["data"]["offer_id"] != null){
-                                        EasyLoading.showToast(value["data"]["offer_id"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                      }
-                                      key = value["data"]["key"];
-                                      print(key);
-                                      openCheckOut(counsellorSessionProvider.details.sessions?[0].sessionPrice);
-                                    }
-                                    if (availableSlots >= 0) {
-                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                    } else if (availableSlots <= totalAvailableSlots) {
-                                    } else{
-                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                    }
+                                  onTap: () {
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => CheckOutScreen(name: widget.name,id: widget.id,)));
                                   },
-                                  // onTap: () {
-                                  //   Get.to( CounsellingSessionPage2(
-                                  //     name: widget.name,
-                                  //     id: widget.id,
-                                  //   ));
-                                  // },
                                   child: Container(
                                     // group349P36 (2936:462)
                                     width: 116 * fem,
@@ -1312,49 +1283,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () async{
-                                    var availableSlots = counsellorSessionProvider.details.sessions![0].sessionAvailableSlots!;
-                                    var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                    var value =
-                                    await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions![0].sessionPrice!,'description','9800000000');
-                                    if (value["error"] ==
-                                        "Order not successfully created") {
-                                      EasyLoading.showToast(value["error"],
-                                          toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                    } else{
-                                      (value["message"] ==
-                                          "Order successfully created");
-                                      EasyLoading.showToast(value["message"],
-                                          toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                      EasyLoading.showToast(value["data"]["id"],
-                                          toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                      if(value["data"]["offer_id"] != null){
-                                        EasyLoading.showToast(value["data"]["offer_id"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                      }
-                                      key = value["data"]["key"];
-                                      print(key);
-                                      openCheckOut(counsellorSessionProvider.details.sessions?[0].sessionPrice);
-                                    }
-                                    if (availableSlots >= 0) {
-                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                    } else if (availableSlots <= totalAvailableSlots) {
-                                    } else{
-                                      EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                    }
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CheckOutScreen(name: widget.name,id: widget.id,)));
+
                                   },
-                                  // onTap: () {
-                                  //   Get.to(
-                                  //      CounsellingSessionPage(
-                                  //       name: widget.name,
-                                  //       id: widget.id,
-                                  //     ),
-                                  //   );
-                                  // },
                                   child: Container(
                                     // group349oRa (2936:500)
                                     width: 116 * fem,

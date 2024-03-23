@@ -170,7 +170,7 @@ class ApiService {
       "Authorization": token,
     });
     var data;
-    console.log("Counsellor List : ${response.body}");
+    //console.log("Counsellor List : ${response.body}");
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
       return List<CounsellorData>.from(

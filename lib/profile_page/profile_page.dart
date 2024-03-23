@@ -91,16 +91,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         shape: BoxShape.circle,
                       ),
                       child: ClipOval(
-                        child: Image.asset(
-                          'assets/page-1/images/Ellipse.png',
-                        ),
-                        // child: path != null
-                        //     ? Image.file(File(path!), fit: BoxFit.cover)
-                        //     : const Icon(
-                        //         Icons.person,
-                        //         size: 100,
-                        //         color: Colors.grey,
-                        //       ),
+                        // child: Image.asset(
+                        //   'assets/page-1/images/Ellipse.png',
+                        // ),
+                        child: path != null
+                            ? Image.file(File(path!), fit: BoxFit.cover)
+                            :  Image.asset(
+                            'assets/page-1/images/Ellipse.png',
+                          ),
                       ),
                     ),
                     Padding(

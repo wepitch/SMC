@@ -216,6 +216,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       await SharedPreferences.getInstance();
                                       prefs.setString("token", value["token"]);
                                       prefs.setString("email", widget.email);
+                                      prefs.setBool("authLogin", true);
 
                                       onTapGettingstarted(context);
                                     } else {
