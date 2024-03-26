@@ -36,7 +36,7 @@ class _PhoneOtpScreenNewState extends State<PhoneOtpScreenNew> {
   void initState() {
     super.initState();
     configLoading();
-    startTimer();
+    //startTimer();
   }
 
   void addTime() {

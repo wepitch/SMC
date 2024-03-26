@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:myapp/notify.dart';
+import 'package:myapp/other/api_service.dart';
+import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/widget/webinar_detail_page_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -67,11 +71,14 @@ class CustomWebinarCard1 extends StatefulWidget {
 class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
+  String register_status = '';
 
   @override
   void initState() {
     super.initState();
     _initializeSharedPreferences();
+    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("Today");
+    context.read<CounsellorDetailsProvider>().fetchCounsellor_detail('0');
   }
 
   Future<void> _initializeSharedPreferences() async {
@@ -119,6 +126,9 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Widget cardView(BuildContext context) {
+    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
+    var counsellorDetailController = context.watch<CounsellorDetailsProvider>();
+
     return InkWell(
       onTap: () {
         // Navigator.push(
@@ -143,13 +153,36 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // ClipRRect(
+                //     borderRadius: BorderRadius.circular(8),
+                //     child: Image.network(
+                //         '${counsellorSessionProvider.webinarModel[0].webinarImage}')),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //       left: 10, right: 6, top: 6, bottom: 20),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         '${counsellorSessionProvider.webinarModel[0].webinarBy}',
+                //         style: const TextStyle(
+                //             fontSize: 16, fontWeight: FontWeight.w600),
+                //       ),
+                //       Text(
+                //           '${counsellorSessionProvider.webinarModel[0].webinarDate}'),
+                //       Text(
+                //           '${counsellorSessionProvider.webinarModel[0].webinarTitle}'),
+                //     ],
+                //   ),
+                // ),
                 Container(
                   height: 190,
                   decoration: BoxDecoration(
                     color: ColorsConst.redColor,
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: AssetImage(widget.bannerImg),
+                      image: NetworkImage(
+                          '${counsellorSessionProvider.webinarModel[0].webinarImage}'),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -160,7 +193,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.title,
+                        '${counsellorSessionProvider.webinarModel[0].webinarBy}',
                         style: SafeGoogleFont(
                           "Inter",
                           fontSize: 16,
@@ -175,7 +208,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.time,
+                                '${counsellorSessionProvider.webinarModel[0].webinarDate}',
                                 style: SafeGoogleFont(
                                   "Inter",
                                   fontSize: 12,
@@ -183,10 +216,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                 ),
                               ),
                               Text(
-                                widget.showDuration
-                                    ? "Career Institute : ${widget.duration}\nAllen career institute,by Anshika Mehra - ${widget.participants}"
-                                    //: "Allen career institute,\nby Anshika Mehra - ${widget.participants}",
-                                : '',
+                                '${counsellorSessionProvider.webinarModel[0].webinarTitle}',
                                 style: SafeGoogleFont(
                                   "Inter",
                                   fontSize: 11,
@@ -219,8 +249,9 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
-                              onTap: (){
-                                Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                              onTap: () {
+                                Share.share(
+                                    'https://play.google.com/store/apps/details?id=com.sortmycollege');
                               },
                               child: Center(
                                 child: Image.asset(
@@ -233,41 +264,23 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                             ),
                             customRegisterNowBtn(
                               onPressed: () async {
-                                if (!_isRegistrationStarting) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: const Text(
-                                          'Do you want to register for the webinar?',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-
-                                            },
-                                            child: const Text('Yes'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  Text('has Been Registered');
+                                if (_isRegistrationStarting == true) {
+                                  var value =
+                                      await ApiService.webinar_regiter("65fe5f56f4d4d9b322f8aa2d");
+                                  setState(() {
+                                    register_status = value["webinar_starting_in_days"];
+                                  });
+                                  if (value["message"] == "Registration completed") {
+                                    setState(() {
+                                      _isRegistrationStarting = true;
+                                      register_status = value["webinar_starting_in_days"];
+                                    });
+                                  }
                                 }
                               },
                               title: _isRegistrationStarting
-                                  ? 'Starting in 2 days'
-                                  : 'Register Now',
+                                  ? 'Register Now'
+                                  : 'Starting in $register_status days',
                               isRegisterNow: _isRegistrationStarting,
                             ),
                           ],
@@ -290,8 +303,7 @@ Widget customRegisterNowBtn({
   required String title,
   required bool isRegisterNow,
 }) {
-  Color buttonColor =
-      isRegisterNow ? Colors.white : const Color(0xff1F0A68);
+  Color buttonColor = isRegisterNow ? Colors.white : const Color(0xff1F0A68);
   Color textColor = isRegisterNow ? Colors.black : Colors.white;
 
   return SizedBox(

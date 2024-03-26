@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/booking_model.dart';
+import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/counsellor_data.dart';
 import '../model/counsellor_detail.dart';
@@ -11,6 +12,47 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
+
+  static Future<Map<String, dynamic>> webinar_regiter(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url =
+    Uri.parse('${AppConstants.baseUrl}/admin/webinar/webinars-for-user/$id');
+
+    final response = await http.put(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      return data;
+    }
+    return {};
+  }
+
+
+  static Future<List<WebinarModel>> getWebinarData(String params) async {
+
+    var url = Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinars-for-user/?query=$params");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final response = await http.get(url,headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    //console.log("Counsellor List : ${response.body}");
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<WebinarModel>.from(
+          data.map((x) => WebinarModel.fromJson(x)));
+    }
+    return [];
+  }
+
 
 
   static Future<Map<String, dynamic>> Follow_councellor(String id) async {
@@ -67,8 +109,7 @@ class ApiService {
     return {};
   }
 
-  static Future<Map<String, dynamic>> Feedback_councellor(
-      String id, double rating_val, String feedback_msg) async {
+  static Future<Map<String, dynamic>> Feedback_councellor(String id, double rating_val, String feedback_msg) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
 
@@ -93,8 +134,7 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> counsellor_create_order(String name,
-      String email, double price, String description, String number,) async {
+  static Future<Map<String, dynamic>> counsellor_create_order(String name, String email, double price, String description, String number,) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final body = jsonEncode({
@@ -121,8 +161,7 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> counsellor_create_payment(
-      double price,String paymentId) async {
+  static Future<Map<String, dynamic>> counsellor_create_payment(double price,String paymentId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
 

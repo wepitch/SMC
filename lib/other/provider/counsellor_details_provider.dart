@@ -4,6 +4,7 @@ import 'package:myapp/model/counsellor_data.dart';
 import 'package:myapp/model/counsellor_detail.dart';
 import 'package:myapp/model/counsellor_sessions.dart';
 import 'package:myapp/model/cousnellor_list_model.dart';
+import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../api_service.dart';
@@ -12,11 +13,14 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorDetail> cousnellorlist_detail = [];
   List<CounsellorModel> counsellorModel = [];
   List<CounsellorData> counsellorData = [];
+  List<WebinarModel> webinarModel = [];
+  // WebinarModel webinarModel = WebinarModel();
   late Razorpay razorpay;
 
   CounsellorSessionDetails allDetails = CounsellorSessionDetails();
   CounsellorSessionDetails details = CounsellorSessionDetails();
   bool isLoading = true;
+  bool loader = true;
 
   void fetchCounsellor_detail(String id) async {
     var counsellor = await ApiService.getCounsellor_Detail(id);
@@ -57,15 +61,28 @@ class CounsellorDetailsProvider extends ChangeNotifier {
 
   void fetchCounsellor_details() async {
     var counsellors = await ApiService.getCounsellorData();
-    isLoading = true;
+    loader = true;
     if (counsellors.isEmpty) {
-      isLoading = true;
+      loader = true;
     } else {
       counsellorData = counsellors;
+      loader = false;
+    }
+    notifyListeners();
+  }
+
+  void fetchWebinar_Data(String params) async {
+    var webinar = await ApiService.getWebinarData(params);
+    isLoading = true;
+    if (webinar.isEmpty) {
+      isLoading = true;
+    } else {
+      webinarModel = webinar;
       isLoading = false;
     }
     notifyListeners();
   }
+
 
   void fetchCounsellor_session(
       {required String id, String? date, String? sessionType}) async {

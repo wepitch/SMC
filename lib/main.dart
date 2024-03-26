@@ -29,10 +29,10 @@ final navigatorKey = GlobalKey<NavigatorState>();
 }*/
 
 Future<void> main() async {
-  /*WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );*/
+  );
   bool? isLoggedIn = await MyApp.loggIn();
   runApp(MyApp(isLoggedIn: isLoggedIn!));
   DependencyInjection.init();
