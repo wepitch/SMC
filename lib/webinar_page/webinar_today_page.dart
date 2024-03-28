@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/notify.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
@@ -151,7 +152,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const WebinarDetailsPageWidget()));
+                builder: (context) =>  WebinarDetailsPageWidget(webinarId: widget.webinarModel.id!)));
       },
       child: Column(
         children: [
@@ -277,24 +278,40 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                             ),
                             customRegisterNowBtn(
                               onPressed: () async {
-                                if (_isRegistrationStarting == true) {
-                                  var value =
-                                      await ApiService.webinar_regiter("65fe5f56f4d4d9b322f8aa2d");
-                                  setState(() {
-                                    register_status = value["webinar_starting_in_days"];
+                                _isRegistrationStarting = widget.webinarModel.registered;
+                                if (widget.webinarModel.registered && widget.webinarModel.webnar_startdays == 0) {
+                                  launchUrlString(
+                                      widget.webinarModel.joinUrl!);
+                                } else if(_isRegistrationStarting){
+                                  Fluttertoast.showToast(
+                                      msg: 'Participant is already registered');
+                                } else
+                                {
+                                  var value = await ApiService.webinar_regiter(
+                                      widget.webinarModel.id!);
+                                  /*setState(() {
+                                    _isRegistrationStarting = value["message"] == "Registration completed";
                                   });
-                                  if (value["message"] == "Registration completed") {
-                                    setState(() {
-                                      _isRegistrationStarting = true;
-                                      register_status = value["webinar_starting_in_days"];
-                                    });
+                                  if (_isRegistrationStarting) {
+                                    _isRegistrationStarting = value["message"] == "Registration completed";
+                                  } else {
+                                    _isRegistrationStarting = value["error"] == "Participant is already registered";
+                                  }*/
+                                  if (value["error"] == "Participant is already registered") {
+                                    Fluttertoast.showToast(msg: 'Participant is already registered');
+                                  } else if (value["message"] == "Registration completed") {
+                                    Fluttertoast.showToast(msg: 'Registration completed Thanks for registration');
+                                    Navigator.push(
+                                        context, MaterialPageRoute(
+                                        builder: (context) => WebinarDetailsPageWidget(webinarId: widget.webinarModel.id!,
+                                        )));
                                   }
                                 }
                               },
-                              title: _isRegistrationStarting
-                                  ? 'Register Now'
-                                  : 'Starting in $register_status days',
-                              isRegisterNow: _isRegistrationStarting,
+                              title: widget.webinarModel.registered
+                                  ? (widget.webinarModel.webnar_startdays == 0 ? 'Join Now' : 'Starting in ${widget.webinarModel.webnar_startdays} days')
+                                  : 'Register Now',
+                              isRegisterNow: widget.webinarModel.registered,
                             ),
                           ],
                         ),

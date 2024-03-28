@@ -212,11 +212,11 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                     if (value["message"] == "OTP verified successfully") {
                                       EasyLoading.showToast(value["message"],
                                           toastPosition: EasyLoadingToastPosition.bottom);
-                                      SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
                                       prefs.setString("token", value["token"]);
                                       prefs.setString("email", widget.email);
                                       prefs.setBool("authLogin", true);
+                                      prefs.setString("auth", value["token"]);
 
                                       onTapGettingstarted(context);
                                     } else {

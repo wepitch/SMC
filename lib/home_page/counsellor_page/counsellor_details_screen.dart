@@ -86,8 +86,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     prefs.setBool('isFollowing', isFollowing);
   }
 
-
-
    void checkImageValidity(String imgUrl) async {
      if(imgUrl.contains("http://")) {
        //nothing

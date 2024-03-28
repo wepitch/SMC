@@ -4,6 +4,7 @@ import 'package:myapp/model/counsellor_data.dart';
 import 'package:myapp/model/counsellor_detail.dart';
 import 'package:myapp/model/counsellor_sessions.dart';
 import 'package:myapp/model/cousnellor_list_model.dart';
+import 'package:myapp/webinar_page/model/webinar_details_model.dart';
 import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -14,6 +15,7 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorModel> counsellorModel = [];
   List<CounsellorData> counsellorData = [];
   List<WebinarModel> webinarList = [];
+  List<WebinarDetailsModel> webinarDetailsList = [];
   // WebinarModel webinarModel = WebinarModel();
   late Razorpay razorpay;
 
@@ -79,6 +81,18 @@ class CounsellorDetailsProvider extends ChangeNotifier {
       isLoading = true;
     } else {
       webinarList = webinar;
+      isLoading = false;
+    }
+    notifyListeners();
+  }
+
+  void fetchWebinarDetails_Data(String id) async {
+    var webinarDetails = await ApiService.getWebinarDetailsData(id);
+    isLoading = true;
+    if (webinarDetails.isEmpty) {
+      isLoading = true;
+    } else {
+      webinarDetailsList = webinarDetails;
       isLoading = false;
     }
     notifyListeners();

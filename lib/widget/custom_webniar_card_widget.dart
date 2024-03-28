@@ -302,14 +302,14 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
 
   Widget cardView(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      /*onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const WebinarDetailsPageWidget1(),
           ),
         );
-      },
+      },*/
       child: Column(
         children: [
           Card(
@@ -425,7 +425,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                 color: Color(0xff1F0A68),
                               ),
                             ),
-                            customRegisterNow(
+                            /*customRegisterNow(
                               onPressed: () {
                                 // Fluttertoast.showToast(
                                 //   msg:
@@ -435,7 +435,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                               },
                               title: widget.btnTitle,
                               isRegisterNow: widget.isRegisterNow,
-                            ),
+                            ),*/
                           ],
                         ),
                       ),

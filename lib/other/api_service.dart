@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/booking_model.dart';
+import 'package:myapp/webinar_page/model/webinar_details_model.dart';
 import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/counsellor_data.dart';
@@ -37,7 +38,7 @@ class ApiService {
   static Future<List<WebinarModel>> getWebinarData(String params) async {
     var url = Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/?query=$params");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("token").toString();
+    final token = prefs.getString("auth").toString();
     final response = await http.get(url,headers: {
       //"Content-Type": "application/json",
       "Authorization": token,
@@ -47,6 +48,24 @@ class ApiService {
       data = jsonDecode(response.body.toString());
       return List<WebinarModel>.from(
           data.map((x) => WebinarModel.fromJson(x)));
+    }
+    return [];
+  }
+
+
+  static Future<List<WebinarDetailsModel>> getWebinarDetailsData(String id) async {
+    var url = Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("auth").toString();
+    final response = await http.get(url,headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<WebinarDetailsModel>.from(
+          data.map((x) => WebinarDetailsModel.fromJson(x)));
     }
     return [];
   }
