@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
+import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:myapp/widget/custom_webniar_card_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../other/provider/counsellor_details_provider.dart';
 
 class WebinarPastPage extends StatefulWidget {
   const WebinarPastPage({Key? key}) : super(key: key);
@@ -33,10 +37,19 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("UpComing");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return ListView.builder(
-      itemCount: 1,
+      itemCount: counsellorSessionProvider.webinarList.length,
       itemBuilder: (context, index) {
+        WebinarModel webinarModel = counsellorSessionProvider.webinarList[index];
         return Padding(
           padding:
               EdgeInsets.only(top: index == 0 ? 30 : 27, right: 16, left: 16),
@@ -50,6 +63,7 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
             participants: "Unlimited",
             bannerImg: "assets/page-1/images/webinarBanner.png",
             onRegisterClicked: handleRegisterClick, // Passing callback function
+           webinarModel: webinarModel,
           ),
         );
       },

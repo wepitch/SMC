@@ -7,20 +7,35 @@ import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
+import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:myapp/widget/webinar_detail_page_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class WebinarTodayPage extends StatelessWidget {
+class WebinarTodayPage extends StatefulWidget {
   const WebinarTodayPage({super.key});
 
   @override
+  State<WebinarTodayPage> createState() => _WebinarTodayPageState();
+}
+
+class _WebinarTodayPageState extends State<WebinarTodayPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("Today");
+  }
+  @override
   Widget build(BuildContext context) {
+    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return ListView.builder(
-      itemCount: 10,
+      itemCount: counsellorSessionProvider.webinarList.length,
       itemBuilder: (context, index) {
+        WebinarModel webinarModel = counsellorSessionProvider.webinarList[index];
         return Padding(
           padding:
               EdgeInsets.only(top: index == 0 ? 14 : 2, right: 16, left: 16),
@@ -33,6 +48,7 @@ class WebinarTodayPage extends StatelessWidget {
             duration: "60",
             participants: "Unlimited",
             bannerImg: "assets/page-1/images/webinarBanner.png",
+            webinarModel: webinarModel,
           ),
         );
       },
@@ -52,6 +68,7 @@ class CustomWebinarCard1 extends StatefulWidget {
     required this.title,
     required this.showDuration,
     this.enableAutoScroll = false,
+    required this.webinarModel
   });
 
   final bool isRegisterNow;
@@ -63,6 +80,7 @@ class CustomWebinarCard1 extends StatefulWidget {
   final String bannerImg;
   final bool showDuration;
   final bool enableAutoScroll;
+  final WebinarModel webinarModel;
 
   @override
   State<CustomWebinarCard1> createState() => _CustomWebinarCard1State();
@@ -77,8 +95,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   void initState() {
     super.initState();
     _initializeSharedPreferences();
-    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("Today");
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_detail('0');
   }
 
   Future<void> _initializeSharedPreferences() async {
@@ -126,9 +142,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Widget cardView(BuildContext context) {
-    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
-    var counsellorDetailController = context.watch<CounsellorDetailsProvider>();
-
     return InkWell(
       onTap: () {
         // Navigator.push(
@@ -182,7 +195,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: NetworkImage(
-                          '${counsellorSessionProvider.webinarModel[0].webinarImage}'),
+                          '${widget.webinarModel.webinarImage}'),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -193,7 +206,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${counsellorSessionProvider.webinarModel[0].webinarBy}',
+                        '${widget.webinarModel.webinarBy}',
                         style: SafeGoogleFont(
                           "Inter",
                           fontSize: 16,
@@ -208,7 +221,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${counsellorSessionProvider.webinarModel[0].webinarDate}',
+                                '${widget.webinarModel.webinarDate}',
                                 style: SafeGoogleFont(
                                   "Inter",
                                   fontSize: 12,
@@ -216,7 +229,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                 ),
                               ),
                               Text(
-                                '${counsellorSessionProvider.webinarModel[0].webinarTitle}',
+                                '${widget.webinarModel.webinarTitle}',
                                 style: SafeGoogleFont(
                                   "Inter",
                                   fontSize: 11,

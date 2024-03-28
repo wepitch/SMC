@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/webinar_page/webinar_details_page.dart';
+import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -271,6 +272,8 @@ class CustomWebinarCard1 extends StatefulWidget {
     required this.showDuration,
     this.enableAutoScroll = false,
     required void Function() onRegisterClicked,
+    required this.webinarModel
+
   });
 
   final bool isRegisterNow;
@@ -282,20 +285,13 @@ class CustomWebinarCard1 extends StatefulWidget {
   final String bannerImg;
   final bool showDuration;
   final bool enableAutoScroll;
+  final WebinarModel webinarModel;
 
   @override
   State<CustomWebinarCard1> createState() => _CustomWebinarCard1State();
 }
 
 class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("Past");
-
-  }
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -305,7 +301,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Widget cardView(BuildContext context) {
-    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -326,129 +321,127 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                        '${counsellorSessionProvider.webinarModel[0].webinarImage}')),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 6, top: 6, bottom: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${counsellorSessionProvider.webinarModel[0].webinarBy}',
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                          '${counsellorSessionProvider.webinarModel[0].webinarDate}'),
-                      Text(
-                          '${counsellorSessionProvider.webinarModel[0].webinarTitle}'),
-                    ],
-                  ),
-                ),
-                // Container(
-                //   height: 190,
-                //   // width: 390,
-                //   decoration: BoxDecoration(
-                //     color: Colors.red,
-                //     borderRadius: BorderRadius.circular(10),
-                //     image: DecorationImage(
-                //         image: AssetImage(widget.bannerImg), fit: BoxFit.fill),
-                //   ),
-                // ),
+                // ClipRRect(
+                //     borderRadius: BorderRadius.circular(8),
+                //     child: Image.network(
+                //         '${widget.webinarModel.webinarImage}')),
                 // Padding(
-                //   padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
+                //   padding: const EdgeInsets.only(
+                //       left: 10, right: 6, top: 6, bottom: 20),
                 //   child: Column(
                 //     crossAxisAlignment: CrossAxisAlignment.start,
                 //     children: [
                 //       Text(
-                //         widget.title,
-                //         style: SafeGoogleFont(
-                //           "Inter",
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.w600,
-                //         ),
+                //         '${widget.webinarModel.webinarBy}',
+                //         style: const TextStyle(
+                //             fontSize: 16, fontWeight: FontWeight.w600),
                 //       ),
-                //       const SizedBox(height: 4),
-                //       Row(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         children: [
-                //           Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //               Text(
-                //                 widget.time,
-                //                 style: SafeGoogleFont(
-                //                   "Inter",
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.w500,
-                //                 ),
-                //               ),
-                //               const SizedBox(
-                //                 height: 3,
-                //               ),
-                //               Text(
-                //                 widget.showDuration
-                //                     ? "Career Institute : ${widget.duration}"
-                //                     : "Allen career institute,\n by Anshika Mehra - ${widget.participants}",
-                //                 style: SafeGoogleFont(
-                //                   "Inter",
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.w500,
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //           // customEnrollButton(
-                //           //     onPresssed: () {},
-                //           //     title: "Free Enroll",
-                //           //     context: context)
-                //         ],
-                //       ),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Container(
-                //         height: 1,
-                //         width: double.infinity,
-                //         color: const Color(0xffAFAFAF),
-                //       ),
-                //       const SizedBox(
-                //         height: 14,
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.only(left: 10),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Center(
-                //               child: Image.asset(
-                //                 "assets/page-1/images/group-38-oFX.png",
-                //                 width: 20,
-                //                 height: 20,
-                //                 color: Color(0xff1F0A68),
-                //               ),
-                //             ),
-                //             customRegisterNow(
-                //               onPressed: () {
-                //                 // Fluttertoast.showToast(
-                //                 //   msg:
-                //                 //       'Thankyou for registering your session will start soon',
-                //                 //   gravity: ToastGravity.CENTER,
-                //                 // );
-                //               },
-                //               title: widget.btnTitle,
-                //               isRegisterNow: widget.isRegisterNow,
-                //             ),
-                //           ],
-                //         ),
-                //       ),
+                //       Text(
+                //           '${widget.webinarModel.webinarDate}'),
+                //       Text(
+                //           '${widget.webinarModel.webinarTitle}'),
                 //     ],
                 //   ),
                 // ),
+                Container(
+                  height: 190,
+                  // width: 390,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        image: NetworkImage('${widget.webinarModel.webinarImage}'), fit: BoxFit.cover),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                  '${widget.webinarModel.webinarBy}',
+                        style: SafeGoogleFont(
+                          "Inter",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${widget.webinarModel.webinarDate}',
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                '${widget.webinarModel.webinarTitle}',
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // customEnrollButton(
+                          //     onPresssed: () {},
+                          //     title: "Free Enroll",
+                          //     context: context)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: const Color(0xffAFAFAF),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
+                              child: Image.asset(
+                                "assets/page-1/images/group-38-oFX.png",
+                                width: 20,
+                                height: 20,
+                                color: Color(0xff1F0A68),
+                              ),
+                            ),
+                            customRegisterNow(
+                              onPressed: () {
+                                // Fluttertoast.showToast(
+                                //   msg:
+                                //       'Thankyou for registering your session will start soon',
+                                //   gravity: ToastGravity.CENTER,
+                                // );
+                              },
+                              title: widget.btnTitle,
+                              isRegisterNow: widget.isRegisterNow,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

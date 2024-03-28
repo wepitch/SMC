@@ -9,8 +9,6 @@ import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
 import 'package:myapp/utils.dart';
 
-import '../home_page/homepagecontainer.dart';
-
 class WebinarPage extends StatefulWidget {
   const WebinarPage({super.key});
 
@@ -26,6 +24,7 @@ class _WebinarPageState extends State<WebinarPage> {
     // TODO: implement initState
     super.initState();
     pageController = PageController(initialPage: selectedIndex);
+     SessionDate.dateTimeDif();
   }
 
   int selectedIndex = 1;

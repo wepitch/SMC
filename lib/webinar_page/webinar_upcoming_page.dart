@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
+import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WebinarUpcomingPage extends StatelessWidget {
+class WebinarUpcomingPage extends StatefulWidget {
   const WebinarUpcomingPage({super.key});
 
   @override
+  State<WebinarUpcomingPage> createState() => _WebinarUpcomingPageState();
+}
+
+class _WebinarUpcomingPageState extends State<WebinarUpcomingPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("UpComing");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return ListView.builder(
-        itemCount: 1,
+        itemCount: counsellorSessionProvider.webinarList.length,
         itemBuilder: (context, index) {
+          WebinarModel webinarModel =
+              counsellorSessionProvider.webinarList[index];
           return Padding(
             padding:
                 EdgeInsets.only(top: index == 0 ? 30 : 27, right: 16, left: 16),
-            child: const WebinarUpComingWidget(
+            child: WebinarUpComingWidget(
               showDuration: false,
               title: "Learn more about CUET and IPMAT",
               isRegisterNow: true,
@@ -27,6 +44,7 @@ class WebinarUpcomingPage extends StatelessWidget {
               duration: "60",
               participants: "Unlimited",
               bannerImg: "assets/page-1/images/webinarBanner.png",
+              webinarModel: webinarModel,
             ),
           );
         });
@@ -34,18 +52,18 @@ class WebinarUpcomingPage extends StatelessWidget {
 }
 
 class WebinarUpComingWidget extends StatefulWidget {
-  const WebinarUpComingWidget({
-    super.key,
-    required this.isRegisterNow,
-    required this.btnTitle,
-    required this.time,
-    required this.duration,
-    required this.participants,
-    required this.bannerImg,
-    required this.title,
-    required this.showDuration,
-    this.enableAutoScroll = false,
-  });
+  const WebinarUpComingWidget(
+      {super.key,
+      required this.isRegisterNow,
+      required this.btnTitle,
+      required this.time,
+      required this.duration,
+      required this.participants,
+      required this.bannerImg,
+      required this.title,
+      required this.showDuration,
+      this.enableAutoScroll = false,
+      required this.webinarModel});
 
   final bool isRegisterNow;
   final String btnTitle;
@@ -56,6 +74,7 @@ class WebinarUpComingWidget extends StatefulWidget {
   final String bannerImg;
   final bool showDuration;
   final bool enableAutoScroll;
+  final WebinarModel webinarModel;
 
   @override
   State<WebinarUpComingWidget> createState() => _WebinarUpComingWidgetState();
@@ -64,12 +83,12 @@ class WebinarUpComingWidget extends StatefulWidget {
 class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
+  String register_status = '';
 
   @override
   void initState() {
     super.initState();
     _initializeSharedPreferences();
-    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("UpComing");
   }
 
   Future<void> _initializeSharedPreferences() async {
@@ -91,7 +110,6 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
       }
     }
   }
-
   Future<void> _updateRegistrationStatus(bool isStarting) async {
     setState(() {
       _isRegistrationStarting = isStarting;
@@ -107,6 +125,17 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
     await _prefs.setBool('isRegistrationStarting', isStarting);
   }
 
+  static dateTimeDif() {
+    DateTime dt1 = DateTime.parse("2024-03-28 06:30:00");
+    DateTime dt2 = DateTime.parse("2024-03-28 05:30:00");
+
+    Duration diff = dt1.difference(dt2);
+
+//print(diff.inDays);
+//output (in days): 1198
+
+    print(diff.inMinutes);
+  }
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -116,7 +145,6 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
   }
 
   Widget cardView(BuildContext context) {
-    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -134,131 +162,121 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child:
-            Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                        '${counsellorSessionProvider.webinarModel[0].webinarImage}')),
+                Container(
+                  height: 190,
+                  // width: 390,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        image:
+                            NetworkImage('${widget.webinarModel.webinarImage}'),
+                        fit: BoxFit.cover),
+                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 6, top: 6, bottom: 20),
+                  padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${counsellorSessionProvider.webinarModel[0].webinarBy}',
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                        '${widget.webinarModel.webinarBy}',
+                        style: SafeGoogleFont(
+                          "Inter",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      Text(
-                          '${counsellorSessionProvider.webinarModel[0].webinarDate}'),
-                      Text(
-                          '${counsellorSessionProvider.webinarModel[0].webinarTitle}'),
+                      const SizedBox(height: 4),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${widget.webinarModel.webinarDate}',
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                '${widget.webinarModel.webinarTitle}',
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // customEnrollButton(
+                          //     onPresssed: () {},
+                          //     title: "Free Enroll",
+                          //     context: context)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: const Color(0xffAFAFAF),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Center(
+                              child: Image.asset(
+                                "assets/page-1/images/group-38-oFX.png",
+                                width: 20,
+                                height: 20,
+                                color: Color(0xff1F0A68),
+                              ),
+                            ),
+                            customRegisterNow(
+                              onPressed: () async {
+                                if (_isRegistrationStarting) {
+                                  Fluttertoast.showToast(msg: 'Participant is already registered');
+                                } else {
+                                  var value = await ApiService.webinar_regiter("6603bd350a2bfbd6ae87bddf");
+                                  setState(() {
+                                    register_status = value["webinar_starting_in_days"];
+                                    _isRegistrationStarting = value["message"] == "Registration completed";
+                                  });
+                                  if (_isRegistrationStarting) {
+                                    _isRegistrationStarting = value["message"] == "Registration completed";
+                                  } else {
+                                    _isRegistrationStarting = value["error"] == "Participant is already registered";
+                                  }
+                                }
+                              },
+                              title: _isRegistrationStarting
+                                  ? 'Register Now'
+                                  : (SessionDate.dateTimeDif() <= 60 ? 'Join Now' : 'Starting in $register_status days'),
+                              isRegisterNow: widget.isRegisterNow,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                // Container(
-                //   height: 190,
-                //   // width: 390,
-                //   decoration: BoxDecoration(
-                //     color: Colors.red,
-                //     borderRadius: BorderRadius.circular(10),
-                //     image: DecorationImage(
-                //         image: AssetImage(widget.bannerImg), fit: BoxFit.fill),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text(
-                //         widget.title,
-                //         style: SafeGoogleFont(
-                //           "Inter",
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.w600,
-                //         ),
-                //       ),
-                //       const SizedBox(height: 4),
-                //       Row(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         children: [
-                //           Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //               Text(
-                //                 widget.time,
-                //                 style: SafeGoogleFont(
-                //                   "Inter",
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.w500,
-                //                 ),
-                //               ),
-                //               const SizedBox(
-                //                 height: 3,
-                //               ),
-                //               Text(
-                //                 widget.showDuration
-                //                     ? "Career Institute : ${widget.duration}"
-                //                     : "Allen career institute,\n by Anshika Mehra - ${widget.participants}",
-                //                 style: SafeGoogleFont(
-                //                   "Inter",
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.w500,
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //           // customEnrollButton(
-                //           //     onPresssed: () {},
-                //           //     title: "Free Enroll",
-                //           //     context: context)
-                //         ],
-                //       ),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Container(
-                //         height: 1,
-                //         width: double.infinity,
-                //         color: const Color(0xffAFAFAF),
-                //       ),
-                //       const SizedBox(
-                //         height: 14,
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.only(left: 10),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Center(
-                //               child: Image.asset(
-                //                 "assets/page-1/images/group-38-oFX.png",
-                //                 width: 20,
-                //                 height: 20,
-                //                 color: Color(0xff1F0A68),
-                //               ),
-                //             ),
-                //             customRegisterNow(
-                //               onPressed: () async {
-                //                 // await _updateRegistrationStatus(true);
-                //                 //
-                //                 // Fluttertoast.showToast(msg: 'Starting in 2 days');
-                //               },
-                //               title: widget.btnTitle,
-                //               isRegisterNow: widget.isRegisterNow,
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -272,9 +290,8 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
     required String title,
     required bool isRegisterNow,
   }) {
-    Color buttonColor = isRegisterNow
-        ? const Color(0xff1F0A68)
-        : const Color(0xff1F0A68);
+    Color buttonColor =
+        isRegisterNow ? const Color(0xff1F0A68) : const Color(0xff1F0A68);
     Color textColor = isRegisterNow ? Colors.white : Colors.white;
 
     return SizedBox(
@@ -312,7 +329,8 @@ class WebinarDetailUpComingWidget extends StatefulWidget {
       _WebinarDetailUpComingWidgetState();
 }
 
-class _WebinarDetailUpComingWidgetState extends State<WebinarDetailUpComingWidget> {
+class _WebinarDetailUpComingWidgetState
+    extends State<WebinarDetailUpComingWidget> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
 
@@ -364,8 +382,13 @@ class _WebinarDetailUpComingWidgetState extends State<WebinarDetailUpComingWidge
                                     size: 25,
                                   ),
                                 ),
-                                Text('Webinar Details',style: SafeGoogleFont("Inter",
-                                    fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),),
+                                Text(
+                                  'Webinar Details',
+                                  style: SafeGoogleFont("Inter",
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: ColorsConst.appBarColor),
+                                ),
                                 const Spacer(),
                                 Image.asset(
                                   "assets/page-1/images/share.png",

@@ -13,7 +13,7 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorDetail> cousnellorlist_detail = [];
   List<CounsellorModel> counsellorModel = [];
   List<CounsellorData> counsellorData = [];
-  List<WebinarModel> webinarModel = [];
+  List<WebinarModel> webinarList = [];
   // WebinarModel webinarModel = WebinarModel();
   late Razorpay razorpay;
 
@@ -72,12 +72,13 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   }
 
   void fetchWebinar_Data(String params) async {
+    webinarList.clear();
     var webinar = await ApiService.getWebinarData(params);
     isLoading = true;
     if (webinar.isEmpty) {
       isLoading = true;
     } else {
-      webinarModel = webinar;
+      webinarList = webinar;
       isLoading = false;
     }
     notifyListeners();

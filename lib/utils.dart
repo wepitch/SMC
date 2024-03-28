@@ -7,33 +7,33 @@ import 'package:jiffy/jiffy.dart';
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-    PointerDeviceKind.touch,
-    PointerDeviceKind.mouse,
-  };
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }
 
 TextStyle SafeGoogleFont(
-    String fontFamily, {
-      TextStyle? textStyle,
-      Color? color,
-      Color? backgroundColor,
-      double? fontSize,
-      FontWeight? fontWeight,
-      FontStyle? fontStyle,
-      double? letterSpacing,
-      double? wordSpacing,
-      TextBaseline? textBaseline,
-      double? height,
-      Locale? locale,
-      Paint? foreground,
-      Paint? background,
-      List<Shadow>? shadows,
-      List<FontFeature>? fontFeatures,
-      TextDecoration? decoration,
-      Color? decorationColor,
-      TextDecorationStyle? decorationStyle,
-      double? decorationThickness,
-    }) {
+  String fontFamily, {
+  TextStyle? textStyle,
+  Color? color,
+  Color? backgroundColor,
+  double? fontSize,
+  FontWeight? fontWeight,
+  FontStyle? fontStyle,
+  double? letterSpacing,
+  double? wordSpacing,
+  TextBaseline? textBaseline,
+  double? height,
+  Locale? locale,
+  Paint? foreground,
+  Paint? background,
+  List<Shadow>? shadows,
+  List<FontFeature>? fontFeatures,
+  TextDecoration? decoration,
+  Color? decorationColor,
+  TextDecorationStyle? decorationStyle,
+  double? decorationThickness,
+}) {
   try {
     return GoogleFonts.getFont(
       fontFamily,
@@ -138,6 +138,7 @@ class SessionDate {
 
   static String todayDate = DateFormat("d MMM").format(now);
   static String year = Jiffy.now().format(pattern: "yyyy");
+
   static String get todayDay {
     String day = Jiffy.parse("$todayDate $year", pattern: "d MMM yyyy")
         .format(pattern: 'EEEE')
@@ -146,8 +147,19 @@ class SessionDate {
     return day;
   }
 
-  final List<DateModel> dates = [
-  ];
+  final List<DateModel> dates = [];
+
+  static dateTimeDif() {
+    DateTime dt1 = DateTime.parse("2024-03-28 06:30:00");
+    DateTime dt2 = DateTime.parse("2024-03-28 05:30:00");
+
+    Duration diff = dt1.difference(dt2);
+
+//print(diff.inDays);
+//output (in days): 1198
+
+    print(diff.inMinutes);
+  }
 
   void getDates() {
     var myFormat = DateFormat('d MMM');
