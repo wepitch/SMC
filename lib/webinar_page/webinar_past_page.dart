@@ -324,7 +324,7 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                             height: 9,
                           ),
                           Text(
-                            "\u2022 Lorem Ipsum is simply dummy text of the printing\n\u2022 Typesetting industry. Lorem Ipsum has been the\n\u2022 Industry's standard dummy text ever since the 1500s\n\u2022 When an unknown printer took a galley of type and",
+                            "\u2022 Online seminars establish you as an expert,a\n  trustworthy and reliable source of information\n\u2022 people are demonstrating an interest in what you are\n  offering – they become qualified leads\n\u2022 valuable content for your domain",
                             style: SafeGoogleFont("Inter",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
@@ -350,7 +350,7 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: 3,
                         itemBuilder: (context, index) {
                           return Container(
                             margin: EdgeInsets.only(

@@ -256,12 +256,12 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                               width: 144,
                               decoration: BoxDecoration(
                                 color:
-                                    const Color(0xffD9D9D9).withOpacity(0.65),
+                                const Color(0xffD9D9D9).withOpacity(0.65),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(14, 11, 0, 11),
+                                const EdgeInsets.fromLTRB(14, 11, 0, 11),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -288,9 +288,8 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                                       height: 10,
                                     ),
                                     Text(
-                                      index == 0
-                                          ? "What will you learn?"
-                                          : "Define your personal brand",
+                                      index == 0 ? "Detailed information"
+                                          : index == 1 ? "Upgrade Knowledge" : "Interactive learning",
                                       style: SafeGoogleFont(
                                         "Inter",
                                         fontSize: 12,
@@ -361,8 +360,8 @@ const fontColor = Color(0xff8E8989);
 
 Widget customButton(
     {required BuildContext context,
-    required VoidCallback onPressed,
-    required String title}) {
+      required VoidCallback onPressed,
+      required String title}) {
   return SizedBox(
     width: double.infinity,
     height: 47,

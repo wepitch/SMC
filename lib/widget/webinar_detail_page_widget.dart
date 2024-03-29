@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/other/api_service.dart';
-import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class WebinarDetailsPageWidget extends StatefulWidget {
-  const WebinarDetailsPageWidget({required this.webinarId,super.key});
+  final String? webinarId,
+      webinarImg,
+      webinarTitle,
+      webinarDate,
+      webinarBy,
+      webinarSpeaker,
+      webinarJoinUrl;
 
-  final String webinarId;
+  late bool webinarRegister;
+  final int? webinarStartDays;
+
+  WebinarDetailsPageWidget(
+      {required this.webinarId,
+      required this.webinarImg,
+      required this.webinarTitle,
+      required this.webinarDate,
+      required this.webinarBy,
+      required this.webinarSpeaker,
+      required this.webinarStartDays,
+      required this.webinarRegister,
+      required this.webinarJoinUrl,
+      super.key});
 
   @override
   State<WebinarDetailsPageWidget> createState() =>
@@ -22,25 +40,29 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
 
+  //bool _isRegistrationStarting = false;
+
   @override
   void initState() {
     super.initState();
     _initializeSharedPreferences();
-    context.read<CounsellorDetailsProvider>().fetchWebinarDetails_Data(widget.webinarId);
   }
 
   Future<void> _initializeSharedPreferences() async {
+    // var value = ApiService.getdetailpage(widget.webinarId);
+    //context.read<CounsellorDetailsProvider>().fetchWebinarDetails_Data(widget.webinarId);
+
     _prefs = await SharedPreferences.getInstance();
     bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
 
     setState(() {
-      _isRegistrationStarting = isStarting;
+      widget.webinarRegister = isStarting;
     });
   }
 
   Future<void> _updateRegistrationStatus(bool isStarting) async {
     setState(() {
-      _isRegistrationStarting = isStarting;
+      widget.webinarRegister = isStarting;
     });
 
     if (isStarting) {
@@ -56,7 +78,6 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return Scaffold(
       body: Column(
         children: [
@@ -89,8 +110,13 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                       size: 25,
                                     ),
                                   ),
-                                  Text('Webinar Details',style: SafeGoogleFont("Inter",
-                                      fontSize: 18, fontWeight: FontWeight.w600,color: ColorsConst.appBarColor),),
+                                  Text(
+                                    'Webinar Details',
+                                    style: SafeGoogleFont("Inter",
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: ColorsConst.appBarColor),
+                                  ),
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () {
@@ -121,7 +147,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      counsellorSessionProvider.webinarDetailsList[0].webinarImage ?? '',
+                                      widget.webinarImg!,
                                     ),
                                     fit: BoxFit.cover,
                                   ),
@@ -144,19 +170,12 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Learn more about CUET and IPMAT",
+                                widget.webinarTitle!,
                                 style: SafeGoogleFont("Inter",
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                     color: const Color(0xff414040)),
                               ),
-                              Text(
-                                counsellorSessionProvider.webinarList[0].webinarTitle ?? '',
-                                style: SafeGoogleFont("Inter",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: fontColor),
-                              )
                             ],
                           ),
                         ),
@@ -174,7 +193,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               ),
                             ),
                             Text(
-                              " Allen Career Institute",
+                              widget.webinarBy!,
                               style: SafeGoogleFont("Inter",
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -195,7 +214,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               width: 6,
                             ),
                             Text(
-                              "02:00 PM Onwards \n15th Sep",
+                              widget.webinarDate!,
                               style: SafeGoogleFont(
                                 "Inter",
                                 fontSize: 13,
@@ -232,7 +251,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               height: 10,
                             ),
                             Text(
-                              "\u2022 Lorem Ipsum is simply dummy text of the printing\n\u2022 Typesetting industry. Lorem Ipsum has been the\n\u2022 Industry's standard dummy text ever since the 1500s\n\u2022 When an unknown printer took a galley of type and",
+                              "\u2022 Online seminars establish you as an expert,a\n  trustworthy and reliable source of information\n\u2022 people are demonstrating an interest in what you are\n  offering – they become qualified leads\n\u2022 valuable content for your domain",
                               style: SafeGoogleFont("Inter",
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -243,7 +262,8 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20,),
+                          horizontal: 20,
+                        ),
                         child: Text(
                           "What will you Learn?",
                           style: SafeGoogleFont(
@@ -258,7 +278,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: 5,
+                          itemCount: 3,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: EdgeInsets.only(
@@ -267,11 +287,13 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               height: 88,
                               width: 144,
                               decoration: BoxDecoration(
-                                color: const Color(0xffD9D9D9).withOpacity(0.65),
+                                color:
+                                    const Color(0xffD9D9D9).withOpacity(0.65),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(14, 11, 0, 11),
+                                padding:
+                                    const EdgeInsets.fromLTRB(14, 11, 0, 11),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -299,8 +321,10 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                     ),
                                     Text(
                                       index == 0
-                                          ? "What will you learn?"
-                                          : "Define your personal brand",
+                                          ? "Detailed information"
+                                          : index == 1
+                                              ? "Upgrade Knowledge"
+                                              : "Interactive learning",
                                       style: SafeGoogleFont(
                                         "Inter",
                                         fontSize: 12,
@@ -334,7 +358,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                           height: 8,
                         ),
                         Text(
-                          "Companies of all types and sizes rely on user experience (UX) designers to help..",
+                          widget.webinarSpeaker!,
                           style: SafeGoogleFont(
                             "Inter",
                             fontSize: 13,
@@ -356,7 +380,13 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
               color: Colors.white,
               child: webinarDetailWidget(
                 onPressed: () async {
-                  if (!_isRegistrationStarting) {
+                  _isRegistrationStarting = widget.webinarRegister;
+                  if (widget.webinarRegister && widget.webinarStartDays == 0) {
+                    launchUrlString(widget.webinarJoinUrl!);
+                  } else if (_isRegistrationStarting) {
+                    Fluttertoast.showToast(
+                        msg: 'Participant is already registered');
+                  } else {
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -375,14 +405,31 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                              onPressed: ()async {
-                                launchUrlString(
-                                    'https://app.zoom.us/wc/join/6876923575?fromPWA=1&pwd=GCbNDEgI1W9UmcjX4H3A5NlhJbv0Gs.1&_x_zm_rtaid=dMkrHAzTSv2KH-k63GFIIg.1709188412516.3a0d504b72c1403587e5715af973a35f&_x_zm_rhtaid=220');
-                                if (mounted) {
+                              onPressed: () async {
+                                if (_isRegistrationStarting) {
+                                  Fluttertoast.showToast(
+                                      msg: 'Participant is already registered');
                                   Navigator.pop(context);
+                                } else {
+                                  var value = await ApiService.webinar_regiter(
+                                      widget.webinarId!);
+                                  if (value["error"] ==
+                                      "Participant is already registered") {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            'Participant is already registered');
+                                  } else if (value["message"] ==
+                                      "Registration completed") {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            'Registration completed. Thanks for registering');
+                                    Navigator.pop(context);
+                                  }
+                                  if (mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                  await _updateRegistrationStatus(true);
                                 }
-                                await _updateRegistrationStatus(
-                                    true);
                               },
                               child: const Text('Yes'),
                             ),
@@ -390,14 +437,14 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                         );
                       },
                     );
-                  } else {
-                    Text('has Been Registered');
                   }
                 },
-                title: _isRegistrationStarting
-                    ? 'Starting in 2 days'
+                title: widget.webinarRegister
+                    ? (widget.webinarStartDays == 0
+                        ? 'Join Now'
+                        : 'Starting in ${widget.webinarStartDays} days')
                     : 'Join Now',
-                isRegisterNow: _isRegistrationStarting,
+                isRegisterNow: widget.webinarRegister,
               ),
             ),
           ),
@@ -416,7 +463,7 @@ Widget webinarDetailWidget({
   required bool isRegisterNow,
 }) {
   Color buttonColor =
-      isRegisterNow ? Colors.white : const Color(0xff1F0A68);
+      isRegisterNow ? Color(0xff1F0A68) : const Color(0xff1F0A68);
   Color textColor = isRegisterNow ? Colors.black : Colors.white;
 
   double buttonWidth =
