@@ -334,7 +334,8 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                                   Fluttertoast.showToast(
                                                       msg:
                                                       'Registration completed. Thanks for registering');
-                                                  Navigator.push(
+                                                  widget.webinarModel.registered = true;
+                                                  /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
@@ -367,7 +368,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                                                 .joinUrl,
                                                           ),
                                                     ),
-                                                  );
+                                                  );*/
                                                 }
                                                 if (mounted) {
                                                   Navigator.pop(context);

@@ -261,14 +261,13 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                             ),
                             customRegisterNow(
                                 onPressed: () async {
-                                  _isRegistrationStarting =
-                                      widget.webinarModel.registered;
+                                  _isRegistrationStarting = widget.webinarModel.registered;
                                   if (widget.webinarModel.registered && widget.webinarModel.webnar_startdays == 0) {
                                   launchUrlString(widget.webinarModel.joinUrl!);
                                 } else if (_isRegistrationStarting) {
                                   Fluttertoast.showToast(
                                       msg: 'Participant is already registered');
-                                } else {
+                                  } else {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
@@ -304,10 +303,9 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                                                           'Participant is already registered');
                                                 } else if (value["message"] ==
                                                     "Registration completed") {
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          'Registration completed. Thanks for registering');
-                                                  Navigator.push(
+                                                  Fluttertoast.showToast(msg: 'Registration completed. Thanks for registering');
+                                                  widget.webinarModel.registered = true;
+                                                  /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
@@ -340,7 +338,7 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                                                             .joinUrl,
                                                       ),
                                                     ),
-                                                  );
+                                                  );*/
                                                 }
                                                 if (mounted) {
                                                   Navigator.pop(context);

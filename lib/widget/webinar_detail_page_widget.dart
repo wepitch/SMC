@@ -420,10 +420,12 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                             'Participant is already registered');
                                   } else if (value["message"] ==
                                       "Registration completed") {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            'Registration completed. Thanks for registering');
-                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(msg: 'Registration completed. Thanks for registering');
+                                    setState(() {
+                                      widget.webinarRegister = true;
+                                      _isRegistrationStarting = widget.webinarRegister;
+                                    });
+                                    //Navigator.pop(context);
                                   }
                                   if (mounted) {
                                     Navigator.pop(context);
