@@ -408,12 +408,12 @@ class ApiService {
     }
   }
 
-  Future verify_otp_phone_2({otp, phone}) async {
+  Future verify_otp_phone_2({otp, number}) async {
     //print(phone);
     var headers = {
       'Content-Type': 'application/json',
     };
-    final body = {'otp': otp, 'phone': phone};
+    final body = {'otp': otp, 'phone_number': number};
 
     var data;
     var url =
@@ -468,8 +468,7 @@ class ApiService {
     }
   }
 
-  static Future<CounsellorSessionDetails> getCounsellor_sessions(
-      {String? date, String? sessionType, required String id}) async {
+  static Future<CounsellorSessionDetails> getCounsellor_sessions({String? date, String? sessionType, required String id}) async {
     var params = "?session_date=$date&session_type=$sessionType";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
@@ -521,6 +520,32 @@ class ApiService {
     }
     return {};
   }
+
+  static Future<Map<String, dynamic>> callVerifyOtpByPhone(String number) async {
+    final body = jsonEncode({"phone_number": number});
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final url = Uri.parse("${AppConstants.baseUrl}/user/auth/sendOTPPhone");
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+
+    console.log("Generating Otp  : ${response.body}");
+    if (response.statusCode == 200 || response.statusCode == 500) {
+      var data = jsonDecode(response.body.toString());
+
+      return data;
+    }
+    if (response.statusCode == 404) {
+      return {"error": "Something went wrong!"};
+    }
+    return {};
+  }
+
 
   static Future<Map<String, dynamic>> sessionBooked(String sessionId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

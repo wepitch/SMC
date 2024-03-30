@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/page-1/otp_screen_new.dart';
 import 'package:myapp/phone/login_screen_n.dart';
-import 'package:myapp/phone/phone_otp_screen_new.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../other/constants.dart';
-import 'otp.dart';
 import 'package:flutter/services.dart';
 
 class SignupScreenNew extends StatefulWidget {
@@ -21,7 +18,7 @@ class SignupScreenNew extends StatefulWidget {
 
 class _Signup extends State<SignupScreenNew> {
   final _nameController = TextEditingController();
-  final phonecontroller = TextEditingController();
+  final phonecontroller = TextEditingController(text: '91');
 
   @override
   void initState() {
@@ -30,7 +27,7 @@ class _Signup extends State<SignupScreenNew> {
   }
 
   // bool isLoading = false;
-  void onTapGettingstarted(BuildContext context, String email) async {
+  void onTapGettingstarted(BuildContext context, String phoneNumber) async {
     if (!isChecked) {
       EasyLoading.showToast(
         'Please accept terms and conditions',
@@ -43,24 +40,19 @@ class _Signup extends State<SignupScreenNew> {
       dismissOnTap: false,
     );
 
-    ApiService.callVerifyOtp(email).then((value) async {
+    ApiService.callVerifyOtpByPhone(phoneNumber).then((value) async {
       print(value);
 
-      if (value["message"] == "Email sent successfully") {
-        EasyLoading.showToast(value["message"],
+      if (value["message"]["description"] == "Message in progress") {
+        EasyLoading.showToast(value["message"]["description"],
             toastPosition: EasyLoadingToastPosition.bottom);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("name", _nameController.text.toString());
         if (!mounted) return;
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => OtpScreenNew(email)));
-      } else if (value["error"] == "Something went wrong!") {
-        EasyLoading.showToast(
-          "404 Page Not Found!",
-          toastPosition: EasyLoadingToastPosition.bottom,
-        );
+            context, MaterialPageRoute(builder: (context) => OtpScreenNew(phoneNumber)));
       } else {
-        EasyLoading.showToast(value["error"],
+        EasyLoading.showToast(value["message"]["description"],
             toastPosition: EasyLoadingToastPosition.bottom);
       }
     });
@@ -155,15 +147,15 @@ class _Signup extends State<SignupScreenNew> {
                             child: TextFormField(
                               cursorColor: Colors.black,
                               controller: phonecontroller,
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.phone,
                               // keyboardType: TextInputType.phone, changed for testing purpose
-                              inputFormatters: const [
-                                // LengthLimitingTextInputFormatter(10),changed for testing purpose
+                              inputFormatters:  [
+                                 LengthLimitingTextInputFormatter(12),//changed for testing purpose
                               ],
                               decoration: const InputDecoration(
                                 hintStyle:
                                 TextStyle(color: Colors.black54, fontSize: 15.0),
-                                hintText: "Phone Number/Email ",
+                                hintText: "Phone Number",
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                               ),
@@ -177,26 +169,34 @@ class _Signup extends State<SignupScreenNew> {
                             ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              height: 8,
-                              child: Checkbox(
-                                value: isChecked,
-                                overlayColor: MaterialStateProperty.all(Color(0xff1F0A68)),
-                                onChanged: (value) {
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: (){
+                            setState(() {
+                              isChecked = !isChecked;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                height: 8,
+                                child: Checkbox(
+                                  value: isChecked,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isChecked = value!;
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            const Text(
-                              'I accept terms and conditions',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                              const Text(
+                                'I accept terms and conditions',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 8,),
                         SizedBox(
@@ -261,20 +261,6 @@ class _Signup extends State<SignupScreenNew> {
                       ],
                     ),
                   ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     launchUrlString(
-                  //         'https://sortmycollege.com/terms-and-conditions/');
-                  //   },
-                  //   child: Text(
-                  //     "By continuing , I agree with the Terms and Conditions , Privacy Policy",
-                  //     style: SafeGoogleFont(
-                  //       "Roboto",
-                  //       fontSize: 10,
-                  //       fontWeight: FontWeight.w500,
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
@@ -287,10 +273,6 @@ class _Signup extends State<SignupScreenNew> {
     );
   }
 
-  /*void onTapGettingstarted_login(BuildContext context) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Login()));
-  }*/
 
   bool validateMobile(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
@@ -312,12 +294,6 @@ class _Signup extends State<SignupScreenNew> {
           toastPosition: EasyLoadingToastPosition.bottom);
       isvaluevalid = false;
     }
-
-    // else if (validateMobile(phonecontroller.text.toString().trim())) {
-    //   EasyLoading.showToast(AppConstants.phonenotvalid,
-    //       toastPosition: EasyLoadingToastPosition.bottom);
-    //   isvaluevalid = false;
-    // } // changed for testing purposes
 
     return isvaluevalid;
   }

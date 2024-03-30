@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/other/api_service.dart';
+import 'package:myapp/page-1/otp_screen_new.dart';
 import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/page-1/sign_up_screen_new.dart';
 import 'package:myapp/phone/phone_otp_screen.dart';
@@ -25,7 +26,7 @@ class LoginScreenNew extends StatefulWidget {
 
 class _LoginScreenNewState extends State<LoginScreenNew> {
   TextEditingController countryController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController phoneController = TextEditingController(text: '91');
   TextEditingController nameController = TextEditingController();
   bool isChecked = false;
 
@@ -83,46 +84,42 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
+                      // autogrouprbz9U5f (AXy8AQS9uGhFg15ZzJrBz9)
+                      margin:
+                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 20 * fem),
+                      padding: EdgeInsets.fromLTRB(
+                          15 * fem, 15 * fem, 15 * fem, 13 * fem),
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1.6,
-                          color: ColorsConst.appBarColor,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: ColorsConst.appBarColor,),
+                        color: const Color(0xffffffff),
+                        borderRadius: BorderRadius.circular(10 * fem),
                       ),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 10,
+                      child: SizedBox(
+                        height: 30,
+                        child: TextFormField(
+                          cursorColor: Colors.black,
+                          controller: phoneController,
+                          keyboardType: TextInputType.phone,
+                          // keyboardType: TextInputType.phone, changed for testing purpose
+                          inputFormatters:  [
+                            LengthLimitingTextInputFormatter(12),//changed for testing purpose
+                          ],
+                          decoration: const InputDecoration(
+                            hintStyle:
+                            TextStyle(color: Colors.black54, fontSize: 15.0),
+                            hintText: "Phone Number",
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
                           ),
-                          Expanded(
-                            child: TextField(
-                              cursorColor: Colors.black,
-                              keyboardType: TextInputType.phone,
-                              onChanged: (value) {
-                                phone = value;
-                              },
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(10),
-                              ],
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Colors.black54, fontSize: 15.0),
-                                hintText: "Phone Number",
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                              ),
-                              style: SafeGoogleFont(
-                                backgroundColor: Colors.white,
-                                'Roboto',
-                                fontSize: 18 * ffem,
-                                fontWeight: FontWeight.w400,
-                                height: 1.4010 * ffem / fem,
-                                color: const Color(0xff000000),
-                              ),
-                            ),
+                          style: SafeGoogleFont(
+                            'Roboto',
+                            fontSize: 18 * ffem,
+                            fontWeight: FontWeight.w400,
+                            height: 1.1525 * ffem / fem,
+                            color: const Color(0xff000000),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                     // Row(
@@ -144,73 +141,26 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     //   ],
                     // ),
                     const SizedBox(height: 18,),
-                    GestureDetector(
-                      onTap: () {
-                        // if (check_val()) {
-                        //   onTapGettingstarted(
-                        //       context, phoneController.text.toString());
-                        // }
-                      },
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            // setState(() {
-                            //   isLoading = true;
-                            // });
-                            // try {
-                            //   await FirebaseAuth.instance.verifyPhoneNumber(
-                            //     phoneNumber: countryController.text + phone,
-                            //     verificationCompleted:
-                            //         (PhoneAuthCredential credential) {},
-                            //     verificationFailed: (FirebaseAuthException e) {},
-                            //     codeSent:
-                            //         (String verificationId, int? resendToken) {
-                            //       LoginScreenNew.verify = verificationId;
-                            //       setState(() {
-                            //         isLoading = false;
-                            //       });
-                            //       Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) => PhoneOtpScreen(),
-                            //         ),
-                            //       );
-                            //     },
-                            //     codeAutoRetrievalTimeout:
-                            //         (String verificationId) {},
-                            //   );
-                            // } catch (e) {
-                            //   if (kDebugMode) {
-                            //     print('Error $e');
-                            //   }
-                            // }
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (context) => const PhoneOtpScreenNew()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorsConst.appBarColor,
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (check_val()) {
+                            onTapGettingstarted(
+                                context, phoneController.text.toString());
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(8),
                             ),
+                            foregroundColor: Colors.white,
                             padding: const EdgeInsets.all(8),
-                          ),
-                          child: isLoading
-                              ? CircularProgressIndicator(
-                                color: Colors.pink,
-                              )
-                              : Text(
-                                  'Log in',
-                                  textAlign: TextAlign.center,
-                                  style: SafeGoogleFont(
-                                    'Roboto',
-                                    fontSize: 18 * ffem,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.1725 * ffem / fem,
-                                    color: const Color(0xffffffff),
-                                  ),
-                                ),
-                        ),
+                            backgroundColor: const Color(0xff1F0A68)),
+                        child: const Text('Register',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                     ),
                     const SizedBox(
@@ -277,34 +227,56 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
     );
   }
 
-  void onTapGettingstarted(BuildContext context, String phone) async {
+  void onTapGettingstarted(BuildContext context, String phoneNumber) async {
     await EasyLoading.show(
-      status: "Loading...",
       dismissOnTap: false,
     );
 
-    ApiService.callVerifyOtp(phone).then((value) async {
+    ApiService.callVerifyOtpByPhone(phoneNumber).then((value) async {
       print(value);
 
-      if (value["message"] == "Email sent successfully") {
-        EasyLoading.showToast(value["message"],
-            toastPosition: EasyLoadingToastPosition.bottom,);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("name", nameController.text.toString());
+      if (value["message"]["description"] == "Message in progress") {
+        EasyLoading.showToast(value["message"]["description"],
+            toastPosition: EasyLoadingToastPosition.bottom);
         if (!mounted) return;
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const PhoneOtpScreenNew()));
-      } else if (value["error"] == "Something went wrong!") {
-        EasyLoading.showToast(
-          "404 Page Not Found!",
-          toastPosition: EasyLoadingToastPosition.bottom,
-        );
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => OtpScreenNew(phoneNumber)));
       } else {
-        EasyLoading.showToast(value["error"],
+        EasyLoading.showToast(value["message"]["description"],
             toastPosition: EasyLoadingToastPosition.bottom);
       }
     });
   }
+
+
+  // void onTapGettingstarted(BuildContext context, String phone) async {
+  //   await EasyLoading.show(
+  //     status: "Loading...",
+  //     dismissOnTap: false,
+  //   );
+  //
+  //   ApiService.callVerifyOtp(phone).then((value) async {
+  //     print(value);
+  //
+  //     if (value["message"] == "Email sent successfully") {
+  //       EasyLoading.showToast(value["message"],
+  //           toastPosition: EasyLoadingToastPosition.bottom,);
+  //       SharedPreferences prefs = await SharedPreferences.getInstance();
+  //       prefs.setString("name", nameController.text.toString());
+  //       if (!mounted) return;
+  //       Navigator.pushReplacement(context,
+  //           MaterialPageRoute(builder: (context) => const PhoneOtpScreenNew()));
+  //     } else if (value["error"] == "Something went wrong!") {
+  //       EasyLoading.showToast(
+  //         "404 Page Not Found!",
+  //         toastPosition: EasyLoadingToastPosition.bottom,
+  //       );
+  //     } else {
+  //       EasyLoading.showToast(value["error"],
+  //           toastPosition: EasyLoadingToastPosition.bottom);
+  //     }
+  //   });
+  // }
 
   bool validateMobile(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
@@ -317,23 +289,33 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
 
   bool check_val() {
     bool isvaluevalid = true;
-
-    if (nameController.text.toString().trim().isEmpty) {
-      EasyLoading.showToast(AppConstants.USER_EMAIL,
-          toastPosition: EasyLoadingToastPosition.bottom);
-      isvaluevalid = false;
-    } else if (phoneController.text.toString().trim().isEmpty) {
+     if (phoneController.text.toString().trim().isEmpty) {
       EasyLoading.showToast(AppConstants.phoneerror,
           toastPosition: EasyLoadingToastPosition.bottom);
       isvaluevalid = false;
-    } else if (validateMobile(phoneController.text.toString().trim())) {
-      EasyLoading.showToast(AppConstants.phonenotvalid,
-          toastPosition: EasyLoadingToastPosition.bottom);
-      isvaluevalid = false;
     }
-
     return isvaluevalid;
   }
+
+  // bool check_val() {
+  //   bool isvaluevalid = true;
+  //
+  //   if (nameController.text.toString().trim().isEmpty) {
+  //     EasyLoading.showToast(AppConstants.USER_EMAIL,
+  //         toastPosition: EasyLoadingToastPosition.bottom);
+  //     isvaluevalid = false;
+  //   } else if (phoneController.text.toString().trim().isEmpty) {
+  //     EasyLoading.showToast(AppConstants.phoneerror,
+  //         toastPosition: EasyLoadingToastPosition.bottom);
+  //     isvaluevalid = false;
+  //   } else if (validateMobile(phoneController.text.toString().trim())) {
+  //     EasyLoading.showToast(AppConstants.phonenotvalid,
+  //         toastPosition: EasyLoadingToastPosition.bottom);
+  //     isvaluevalid = false;
+  //   }
+  //
+  //   return isvaluevalid;
+  // }
 
   void configLoading() {
     EasyLoading.instance

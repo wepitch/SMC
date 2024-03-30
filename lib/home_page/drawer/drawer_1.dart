@@ -64,14 +64,19 @@ class _Drawer1State extends State<Drawer1> {
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            'assets/page-1/images/Ellipse.png',
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: path != null
+                                ? Image.file(File(path), fit: BoxFit.cover)
+                                :  Image.asset(
+                              'assets/page-1/images/Ellipse.png',
+                            ),
                           ),
                         ),
                       ],

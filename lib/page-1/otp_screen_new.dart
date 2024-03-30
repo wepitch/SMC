@@ -1,28 +1,17 @@
 import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:myapp/news/provider/news_provider.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/constants.dart';
-import 'package:myapp/page-1/edulevel.dart';
-import 'package:myapp/page-1/selectdob_new.dart';
-import 'package:myapp/page-1/sign-up.dart';
-import 'package:myapp/page-1/sign_up_screen_new.dart';
-import 'package:myapp/phone/login.dart';
-import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/slide_screen.dart';
 import 'package:myapp/utils.dart';
 import 'package:otp_text_field/otp_text_field.dart';
-import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpScreenNew extends StatefulWidget {
-  final String email;
-  const OtpScreenNew(this.email,{super.key});
+  final String phoneNumber;
+  const OtpScreenNew(this.phoneNumber,{super.key});
 
   @override
   State<OtpScreenNew> createState() => _OtpScreenNewState();
@@ -126,6 +115,11 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                   print("Completed: $pin");
                                   otp = pin;
                                 }),
+                            const SizedBox(height: 16),
+
+                            Text(
+                                "${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}"),
+
 
                             Container(
                               // didntreceiveanotpresendotpX1s (437:94)
@@ -135,7 +129,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Don’t receive an OTP? ',
+                                    'Don’t receive an OTP?',
                                     style: SafeGoogleFont(
                                       'Roboto',
                                       fontSize: 15 * ffem,
@@ -144,32 +138,25 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       color: const Color(0xff000000),
                                     ),
                                   ),
+                                  const SizedBox(height: 20),
                                   GestureDetector(
                                     onTap: () {
                                       if (isResendOtpEnabled) {
-                                        EasyLoading.show(status: "Loading...");
-                                        ApiService.callVerifyOtp(widget.email)
+                                        EasyLoading.show();
+                                        ApiService.callVerifyOtpByPhone(widget.phoneNumber)
                                             .then((value) {
-                                          if (value["message"] ==
-                                              "Email sent successfully") {
+                                          if (value["message"]["description"]==
+                                              "Message in progress") {
                                             duration = const Duration(minutes: 2);
-
                                             setState(() {
                                               isResendOtpEnabled = false;
                                             });
                                             startTimer();
-                                            EasyLoading.showToast(value["message"],
+                                            EasyLoading.showToast(value["message"]["description"],
                                                 toastPosition:
                                                 EasyLoadingToastPosition.bottom);
-                                          } else if (value["error"] ==
-                                              "Something went wrong!") {
-                                            EasyLoading.showToast(
-                                              "404 Page Not Found!",
-                                              toastPosition:
-                                              EasyLoadingToastPosition.bottom,
-                                            );
                                           } else {
-                                            EasyLoading.showToast(value["error"],
+                                            EasyLoading.showToast(value["message"]["description"],
                                                 toastPosition:
                                                 EasyLoadingToastPosition.bottom);
                                           }
@@ -177,7 +164,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       } else {}
                                     },
                                     child: Text(
-                                      'Resend OTP',
+                                      ' Resend OTP',
                                       style: SafeGoogleFont(
                                         'Roboto',
                                         fontSize: 15 * ffem,
@@ -202,25 +189,24 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                   EasyLoading.showToast(AppConstants.otperror,
                                       toastPosition: EasyLoadingToastPosition.bottom);
                                 } else {
-                                  await EasyLoading.show(
-                                      status: "Loading...", dismissOnTap: false);
+                                  await EasyLoading.show(dismissOnTap: false);
 
                                   ApiService()
-                                      .verify_otp_2(
-                                      otp: otp.toString().trim(), email: widget.email)
+                                      .verify_otp_phone_2(
+                                      otp: otp.toString().trim(), number: widget.phoneNumber)
                                       .then((value) async {
                                     if (value["message"] == "OTP verified successfully") {
                                       EasyLoading.showToast(value["message"],
                                           toastPosition: EasyLoadingToastPosition.bottom);
                                       SharedPreferences prefs = await SharedPreferences.getInstance();
                                       prefs.setString("token", value["token"]);
-                                      prefs.setString("email", widget.email);
+                                      prefs.setString("phone_number", widget.phoneNumber);
                                       prefs.setBool("authLogin", true);
                                       prefs.setString("auth", value["token"]);
 
                                       onTapGettingstarted(context);
                                     } else {
-                                      EasyLoading.showToast(value["error"],
+                                      EasyLoading.showToast(value["message"],
                                           toastPosition: EasyLoadingToastPosition.bottom);
                                     }
                                   });

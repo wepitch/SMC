@@ -73,9 +73,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      followerCount = prefs.getInt('followerCount') ?? 0;
-      hasFollowedBefore = prefs.getBool('hasFollowedBefore') ?? false;
-      isFollowing = prefs.getBool('isFollowing') ?? false;
+      isFollowing = prefs.getBool(widget.id) ?? false;
     });
   }
 
@@ -84,6 +82,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     prefs.setInt('followerCount', followerCount);
     prefs.setBool('hasFollowedBefore', hasFollowedBefore);
     prefs.setBool('isFollowing', isFollowing);
+  }
+
+  void toggleFollowStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isFollowing = !isFollowing;
+    });
+    prefs.setBool(widget.id, isFollowing);
   }
 
    void checkImageValidity(String imgUrl) async {
@@ -173,6 +179,12 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   void dispose() {
     super.dispose();
     razorpay.clear();
+  }
+
+  Future<void> onPressedAction() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(widget.id, !isFollowing);
+    prefs.setInt('followerCount', followerCount);
   }
 
   @override
@@ -321,73 +333,17 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                   child: TextButton(
                                     onPressed: () async {
-                                      if (isFollowing == true) {
-                                        var value = await ApiService
-                                            .Unfollow_councellor(widget.id);
-                                        if (value["message"] ==
-                                            "User is now unfollowing the counsellor") {
-                                          // EasyLoading.showToast(
-                                          //     value["message"],
-                                          //     toastPosition:
-                                          //         EasyLoadingToastPosition
-                                          //             .bottom);
-                                          setState(() {
-                                            isFollowing = false;
-                                            followerCount--;
-                                          });
-                                        } else if (value["error"] ==
-                                            "Follower not found") {
-                                          // EasyLoading.showToast(value["error"],
-                                          //     toastPosition:
-                                          //         EasyLoadingToastPosition
-                                          //             .bottom);
-                                          setState(() {
-                                            isFollowing = false;
-                                            followerCount--;
-                                          });
-                                        } else {
-                                          // EasyLoading.showToast(value["error"],
-                                          //     toastPosition:
-                                          //         EasyLoadingToastPosition
-                                          //             .bottom);
-                                          setState(() {
-                                            isFollowing = false;
-                                          });
-                                        }
-                                      } else {
-                                        var value =
-                                        await ApiService.Follow_councellor(
-                                            widget.id);
-                                        if (value["message"] ==
-                                            "User is now following the counsellor") {
-                                          // EasyLoading.showToast(
-                                          //     value["message"],
-                                          //     toastPosition:
-                                          //         EasyLoadingToastPosition
-                                          //             .bottom);
-                                          setState(() {
-                                            isFollowing = true;
-                                            followerCount++;
-                                          });
-                                        } else if (value["error"] ==
-                                            "Counsellor is already followed by the user") {
-                                          // EasyLoading.showToast(value["error"],
-                                          //     toastPosition:
-                                          //         EasyLoadingToastPosition
-                                          //             .bottom);
-                                          setState(() {
-                                            isFollowing = true;
-                                            followerCount++;
-                                          });
-                                        } else {
-                                          // EasyLoading.showToast(value["error"],
-                                          //     toastPosition:
-                                          //         EasyLoadingToastPosition
-                                          //             .bottom);
-                                          setState(() {
-                                            isFollowing = false;
-                                          });
-                                        }
+                                      await onPressedAction();
+                                      if(isFollowing){
+                                        setState(() {
+                                          isFollowing = !isFollowing;
+                                           followerCount --;
+                                        });
+                                      } else{
+                                        setState(() {
+                                          isFollowing = !isFollowing;
+                                           followerCount ++;
+                                        });
                                       }
                                     },
                                     style: TextButton.styleFrom(
@@ -401,7 +357,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     ),
                                     child: Center(
                                       child: Text(
-                                        isFollowing ? 'Following' : 'Follow',
+                                        isFollowing ? 'Following' : 'Follow', // This text will change based on the value of isFollowing
                                         style: SafeGoogleFont(
                                           'Inter',
                                           fontSize: 14,
@@ -414,7 +370,78 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       ),
                                     ),
                                   ),
+
                                 ),
+                                // onPressed: () async {
+                                //   if (isFollowing == true) {
+                                //     var value = await ApiService
+                                //         .Unfollow_councellor(widget.id);
+                                //     if (value["message"] ==
+                                //         "User is now unfollowing the counsellor") {
+                                //       // EasyLoading.showToast(
+                                //       //     value["message"],
+                                //       //     toastPosition:
+                                //       //         EasyLoadingToastPosition
+                                //       //             .bottom);
+                                //       setState(() {
+                                //         isFollowing = false;
+                                //         followerCount--;
+                                //       });
+                                //     } else if (value["error"] ==
+                                //         "Follower not found") {
+                                //       // EasyLoading.showToast(value["error"],
+                                //       //     toastPosition:
+                                //       //         EasyLoadingToastPosition
+                                //       //             .bottom);
+                                //       setState(() {
+                                //         isFollowing = false;
+                                //         followerCount--;
+                                //       });
+                                //     } else {
+                                //       // EasyLoading.showToast(value["error"],
+                                //       //     toastPosition:
+                                //       //         EasyLoadingToastPosition
+                                //       //             .bottom);
+                                //       setState(() {
+                                //         isFollowing = false;
+                                //       });
+                                //     }
+                                //   } else {
+                                //     var value =
+                                //     await ApiService.Follow_councellor(
+                                //         widget.id);
+                                //     if (value["message"] ==
+                                //         "User is now following the counsellor") {
+                                //       // EasyLoading.showToast(
+                                //       //     value["message"],
+                                //       //     toastPosition:
+                                //       //         EasyLoadingToastPosition
+                                //       //             .bottom);
+                                //       setState(() {
+                                //         isFollowing = true;
+                                //         followerCount++;
+                                //       });
+                                //     } else if (value["error"] ==
+                                //         "Counsellor is already followed by the user") {
+                                //       // EasyLoading.showToast(value["error"],
+                                //       //     toastPosition:
+                                //       //         EasyLoadingToastPosition
+                                //       //             .bottom);
+                                //       setState(() {
+                                //         isFollowing = true;
+                                //         followerCount++;
+                                //       });
+                                //     } else {
+                                //       // EasyLoading.showToast(value["error"],
+                                //       //     toastPosition:
+                                //       //         EasyLoadingToastPosition
+                                //       //             .bottom);
+                                //       setState(() {
+                                //         isFollowing = false;
+                                //       });
+                                //     }
+                                //   }
+                                // },
                                 const SizedBox(height: 8),
                                 Row(
                                   children: [

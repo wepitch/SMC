@@ -8,7 +8,7 @@ class AppConstants {
   static String sendotpRequest = '/user/auth/sendOTPEmail';
   static String sendotpphoneRequest = '/user/auth/sendOTPPhone';
   static String verifyotpRequest = '/user/auth/verifyOTPEmail';
-  static String verifyotpphoneRequest = '/user/auth/sendOTPPhone';
+  static String verifyotpphoneRequest = '/user/auth/verifyOTPPhone';
   static const imagePath = "assets/page-1/images/";
   static const appName = "sortmycollege";
   static const packageId = "com.sortmycollege";
