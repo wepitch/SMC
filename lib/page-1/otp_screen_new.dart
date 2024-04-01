@@ -64,7 +64,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
               Container(
                 height: 300,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
@@ -199,7 +199,6 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       EasyLoading.showToast(value["message"],
                                           toastPosition: EasyLoadingToastPosition.bottom);
                                       SharedPreferences prefs = await SharedPreferences.getInstance();
-                                      prefs.setString("token", value["token"]);
                                       prefs.setString("phone_number", widget.phoneNumber);
                                       prefs.setBool("authLogin", true);
                                       prefs.setString("auth", value["token"]);

@@ -7,10 +7,13 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/model/cousnellor_list_model.dart';
 import 'package:myapp/model/follower_model.dart';
+import 'package:myapp/notify.dart';
 import 'package:myapp/other/listcontroler.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
+import 'package:myapp/page-1/counslleing_session2.dart';
+import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:myapp/page-1/payment_gateaway.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
@@ -357,7 +360,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     ),
                                     child: Center(
                                       child: Text(
-                                        isFollowing ? 'Following' : 'Follow', // This text will change based on the value of isFollowing
+                                        isFollowing ? 'Following' : 'Follow',
                                         style: SafeGoogleFont(
                                           'Inter',
                                           fontSize: 14,
@@ -597,7 +600,47 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17),
                         ),
-                        ReadMoreText(
+                        Row(
+                          children: [
+                            Text('\u2022 ',style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),),
+                            Text('Evaluate your strengths and weaknesses',style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('\u2022 ',style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),),
+                            Text("significant impact on a student's life by providing\nvaluable guidance, support",style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('\u2022 ',style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),),
+                            Text("Career counseling provides students with\naccurate and up-to-date information about\nvarious career options",style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('\u2022 ',style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),),
+                            Text("career counselor can assist students in setting\nrealistic and achievable goals.",style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('\u2022 ',style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),),
+                            Text("Career counseling can identify areas for skill\ndevelopment and suggest resources or training\nopportunities to enhance those skills",style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),),
+                          ],
+                        ),
+                        /*ReadMoreText(
                           counsellorDetailController
                               .cousnellorlist_detail[0].howIWillHelpYou
                               .map((e) => "\u2022 $e")
@@ -627,7 +670,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             height: 1.5549999555,
                             color: const Color(0xff040404),
                           ),
-                        ),
+                        ),*/
                         const Text(
                           'More Information',
                           style: TextStyle(
@@ -1086,7 +1129,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                   Navigator.push(context, MaterialPageRoute(builder: (context) => CheckOutScreen(name: widget.name,id: widget.id,)));
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => CounsellingSessionPage2(name: widget.name,id: widget.id,)));
                                   },
                                   child: Container(
                                     // group349P36 (2936:462)
@@ -1309,8 +1352,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 ),
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CheckOutScreen(name: widget.name,id: widget.id,)));
-
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CounsellingSessionPage(name: widget.name,id: widget.id,)));
                                   },
                                   child: Container(
                                     // group349oRa (2936:500)

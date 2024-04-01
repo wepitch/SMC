@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
           //   '/message': (context) => const Notification2(),
           //   // Add your other routes
           // },
-           home: const HomePageContainer(),
+           home: const SplashScreenNew(),
            //home: isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
           builder: EasyLoading.init()),
     );

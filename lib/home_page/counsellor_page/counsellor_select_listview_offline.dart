@@ -114,7 +114,7 @@ class _CounsellorListPage_offlineState
                               ),
                             ),
                           ),
-                          Spacer(),
+                         /* Spacer(),
                           Expanded(
                             child: Container(
                               // layer2oHK (730:5)
@@ -129,7 +129,7 @@ class _CounsellorListPage_offlineState
                                 color: Color(0xff1f0a68),
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -144,6 +144,7 @@ class _CounsellorListPage_offlineState
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 20),
                                     Container(
                                       // sliderhqs (742:104)
                                       width: double.infinity,
@@ -281,8 +282,8 @@ class _CounsellorListPage_offlineState
                                           Positioned(
                                             // graduationhataoB (742:114)
                                             left: 290.75 * fem,
-                                            top: 4 * fem,
-                                            bottom: 30,
+                                            top: 0 * fem,
+                                            bottom: 34,
                                             child: Align(
                                               child: SizedBox(
                                                 width: 100.5 * fem,
@@ -341,7 +342,7 @@ class _CounsellorListPage_offlineState
                                                 child: ListView.builder(
                                                   padding: const EdgeInsets
                                                       .symmetric(
-                                                      horizontal: 10),
+                                                      horizontal: 14),
                                                   itemCount: listController
                                                       .cousnellorlist_data
                                                       .length,

@@ -155,7 +155,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               ),
                             ],
                           ),
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -176,7 +176,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
+                          const Column(
                             children: [
                               Text(
                                 'Booking Date',
@@ -187,7 +187,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 'Personal Session',
                                 style: TextStyle(
                                   color: ColorsConst.appBarColor,
@@ -333,7 +333,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             }
                           },
                           child: const Text(
-                            'CheckOut',
+                            'Pay Now',
                             style: TextStyle(color: ColorsConst.whiteColor),
                           )),
                     ),

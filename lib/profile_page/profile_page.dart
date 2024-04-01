@@ -17,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String? path;
   String username = "";
-  String email = "";
+  String phoneNumber = "";
   String dob = "";
   String gender = "";
   String eduLevel = "";
@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     username = prefs.getString("name") ?? "N/A";
-    email = prefs.getString("email") ?? "N/A";
+    phoneNumber = prefs.getString("phone_number") ?? "N/A";
     dob = prefs.getString("date") ?? "N/A";
     gender = prefs.getString("gender") ?? "N/A";
     eduLevel = prefs.getString("edu_level") ?? "N/A";
@@ -133,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               itemProfile('Name', username, CupertinoIcons.person),
               const Divider(),
-              itemProfile('Gmail', email, CupertinoIcons.mail),
+              itemProfile('Phone Number', phoneNumber, CupertinoIcons.phone),
               const Divider(),
               itemProfile('Date Of Birth', dob, CupertinoIcons.calendar),
               const Divider(),

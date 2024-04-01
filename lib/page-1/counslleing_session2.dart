@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/page-1/dashboard-session-group-new.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 
 import 'dashboard-session-personnel-new.dart';
@@ -40,9 +41,11 @@ class _CounsellingSessionPage2State extends State<CounsellingSessionPage2> {
     // double fem = MediaQuery.of(context).size.width / baseWidth;
     // double ffem = fem * 0.97;
     return Scaffold(
+      backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
         backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
+        surfaceTintColor: ColorsConst.whiteColor,
         leading: Padding(
           padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
           child: GestureDetector(

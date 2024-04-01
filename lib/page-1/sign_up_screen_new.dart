@@ -18,7 +18,7 @@ class SignupScreenNew extends StatefulWidget {
 
 class _Signup extends State<SignupScreenNew> {
   final _nameController = TextEditingController();
-  final phonecontroller = TextEditingController(text: '91');
+  final phonecontroller = TextEditingController(text: '+91 ');
 
   @override
   void initState() {
@@ -150,7 +150,7 @@ class _Signup extends State<SignupScreenNew> {
                               keyboardType: TextInputType.phone,
                               // keyboardType: TextInputType.phone, changed for testing purpose
                               inputFormatters:  [
-                                 LengthLimitingTextInputFormatter(12),//changed for testing purpose
+                                 LengthLimitingTextInputFormatter(14),
                               ],
                               decoration: const InputDecoration(
                                 hintStyle:

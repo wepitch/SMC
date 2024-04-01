@@ -26,7 +26,7 @@ class LoginScreenNew extends StatefulWidget {
 
 class _LoginScreenNewState extends State<LoginScreenNew> {
   TextEditingController countryController = TextEditingController();
-  TextEditingController phoneController = TextEditingController(text: '91');
+  TextEditingController phoneController = TextEditingController(text: '+91 ');
   TextEditingController nameController = TextEditingController();
   bool isChecked = false;
 
@@ -103,7 +103,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                           keyboardType: TextInputType.phone,
                           // keyboardType: TextInputType.phone, changed for testing purpose
                           inputFormatters:  [
-                            LengthLimitingTextInputFormatter(12),//changed for testing purpose
+                            LengthLimitingTextInputFormatter(14),
                           ],
                           decoration: const InputDecoration(
                             hintStyle:

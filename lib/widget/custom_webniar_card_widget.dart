@@ -212,7 +212,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                               isRegisterNow: widget.isRegisterNow)
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -295,7 +295,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.45,
       child: cardView(context),
     );
   }

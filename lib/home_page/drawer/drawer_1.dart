@@ -23,18 +23,12 @@ class _Drawer1State extends State<Drawer1> {
   @override
   void initState() {
     getAllInfo();
-    setName();
     super.initState();
   }
 
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     path = prefs.getString("profile_image_path") ?? "N/A";
-    setState(() {});
-  }
-
-  void setName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString("name") ?? "N/A";
     setState(() {});
   }
@@ -74,9 +68,7 @@ class _Drawer1State extends State<Drawer1> {
                             ),
                             child: path != null
                                 ? Image.file(File(path), fit: BoxFit.cover)
-                                :  Image.asset(
-                              'assets/page-1/images/Ellipse.png',
-                            ),
+                                :  const Icon(Icons.person),
                           ),
                         ),
                       ],

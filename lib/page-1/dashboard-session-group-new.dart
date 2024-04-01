@@ -468,7 +468,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                             width: 220 * fem,
                             height: 20 * fem,
                             child: Text(
-                              'Book Your Group Slot',
+                              'Book Your Slot',
                               style: SafeGoogleFont(
                                 'Inter',
                                 fontSize: 20 * ffem,

@@ -298,7 +298,7 @@ class _Counseling_Session_PersonnelState
                             width: 220 * fem,
                             height: 20 * fem,
                             child: Text(
-                              'Book Your Personal Slot',
+                              'Book Your Slot',
                               style: SafeGoogleFont(
                                 'Inter',
                                 fontSize: 20 * ffem,
