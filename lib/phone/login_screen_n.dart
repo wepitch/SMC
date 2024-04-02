@@ -1,18 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/page-1/otp_screen_new.dart';
-import 'package:myapp/page-1/sign-up.dart';
 import 'package:myapp/page-1/sign_up_screen_new.dart';
-import 'package:myapp/phone/phone_otp_screen.dart';
-import 'package:myapp/phone/phone_otp_screen_new.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../other/constants.dart';
 
 class LoginScreenNew extends StatefulWidget {
@@ -158,7 +151,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.all(8),
                             backgroundColor: const Color(0xff1F0A68)),
-                        child: const Text('Register',
+                        child: const Text('Log In',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
                       ),

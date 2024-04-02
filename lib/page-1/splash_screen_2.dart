@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myapp/home_page/homepagecontainer.dart';
 import 'package:myapp/page-1/shared.dart';
 import 'package:myapp/page-1/sign-up.dart';
-import 'package:myapp/phone/login.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
-import '../home_page/counsellor_page/razorpay_payment.dart';
 
 class SplashScreen2 extends StatefulWidget {
   const SplashScreen2({super.key});
