@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/booking_model.dart';
+import 'package:myapp/model/check_out_details_model.dart';
 import 'package:myapp/webinar_page/model/webinar_details_model.dart';
 import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,6 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
-
   static Future<Map<String, dynamic>> webinar_regiter(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
@@ -22,8 +22,8 @@ class ApiService {
       'Content-Type': 'application/json',
       "Authorization": token,
     };
-    final url =
-    Uri.parse('${AppConstants.baseUrl}/admin/webinar/webinars-for-user/$id');
+    final url = Uri.parse(
+        '${AppConstants.baseUrl}/admin/webinar/webinars-for-user/$id');
 
     final response = await http.put(url, headers: headers);
 
@@ -34,30 +34,30 @@ class ApiService {
     return {};
   }
 
-
   static Future<List<WebinarModel>> getWebinarData(String params) async {
-    var url = Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/?query=$params");
+    var url = Uri.parse(
+        "${AppConstants.baseUrl}/admin/webinar/webinar-for-user/?query=$params");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("auth").toString();
-    final response = await http.get(url,headers: {
+    final response = await http.get(url, headers: {
       //"Content-Type": "application/json",
       "Authorization": token,
     });
     var data;
     if (response.statusCode == 200) {
       data = jsonDecode(response.body.toString());
-      return List<WebinarModel>.from(
-          data.map((x) => WebinarModel.fromJson(x)));
+      return List<WebinarModel>.from(data.map((x) => WebinarModel.fromJson(x)));
     }
     return [];
   }
 
-
-  static Future<List<WebinarDetailsModel>> getWebinarDetailsData(String id) async {
-    var url = Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id");
+  static Future<List<WebinarDetailsModel>> getWebinarDetailsData(
+      String id) async {
+    var url =
+        Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("auth").toString();
-    final response = await http.get(url,headers: {
+    final response = await http.get(url, headers: {
       //"Content-Type": "application/json",
       "Authorization": token,
     });
@@ -70,8 +70,6 @@ class ApiService {
     return [];
   }
 
-
-
   static Future<Map<String, dynamic>> Follow_councellor(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
@@ -81,8 +79,7 @@ class ApiService {
       'Content-Type': 'application/json',
       "Authorization": token,
     };
-    final url =
-        Uri.parse('${AppConstants.baseUrl}/counsellor/follower/$id');
+    final url = Uri.parse('${AppConstants.baseUrl}/counsellor/follower/$id');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -108,8 +105,7 @@ class ApiService {
       'Content-Type': 'application/json',
       "Authorization": token,
     };
-    final url =
-        Uri.parse('${AppConstants.baseUrl}/counsellor/follower/$id');
+    final url = Uri.parse('${AppConstants.baseUrl}/counsellor/follower/$id');
 
     final response = await http.put(url, headers: headers, body: body);
 
@@ -126,7 +122,8 @@ class ApiService {
     return {};
   }
 
-  static Future<Map<String, dynamic>> Feedback_councellor(String id, double rating_val, String feedback_msg) async {
+  static Future<Map<String, dynamic>> Feedback_councellor(
+      String id, double rating_val, String feedback_msg) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
 
@@ -136,8 +133,7 @@ class ApiService {
       'Content-Type': 'application/json',
       "Authorization": token,
     };
-    final url =
-        Uri.parse('${AppConstants.baseUrl}/counsellor/feedback');
+    final url = Uri.parse('${AppConstants.baseUrl}/counsellor/feedback');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -151,7 +147,13 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> counsellor_create_order(String name, String email, double price, String description, String number,) async {
+  static Future<Map<String, dynamic>> counsellor_create_order(
+    String name,
+    String email,
+    double price,
+    String description,
+    String number,
+  ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final body = jsonEncode({
@@ -165,8 +167,8 @@ class ApiService {
       'Content-Type': 'application/json',
       "Authorization": token,
     };
-    final url = Uri.parse(
-        '${AppConstants.baseUrl}/admin/payments/create-order');
+    final url =
+        Uri.parse('${AppConstants.baseUrl}/admin/payments/create-order');
     final response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body.toString());
@@ -178,22 +180,20 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> counsellor_create_payment(double price,String paymentId) async {
+  static Future<Map<String, dynamic>> counsellor_create_payment(
+      double price, String paymentId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
 
-    final body = jsonEncode({
-      "amount": price,
-      "payment_id" : paymentId
-    });
+    final body = jsonEncode({"amount": price, "payment_id": paymentId});
 
     final headers = {
       'Content-Type': 'application/json',
       "Authorization": token,
     };
 
-    final url = Uri.parse(
-        '${AppConstants.baseUrl}/admin/payments/create-order');
+    final url =
+        Uri.parse('${AppConstants.baseUrl}/admin/payments/create-order');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -468,7 +468,36 @@ class ApiService {
     }
   }
 
-  static Future<CounsellorSessionDetails> getCounsellor_sessions({String? date, String? sessionType, required String id}) async {
+  static Future<CheckOutDetails> fetchCheckOutDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    var url = Uri.parse(
+        "${AppConstants.baseUrl}/counsellor/sessions/65fbcbb563ee42338a08b939/payment/user/checkout");
+    print(url);
+
+    var response = await http.get(
+      url,
+      headers: {"Content-Type": "application/json",
+        "Authorization": token},
+    );
+    var data;
+
+    console.log(response.body.toString());
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      console.log(data.toString());
+      return CheckOutDetails.fromJson(data);
+    }
+    if (response.statusCode == 404) {
+      return CheckOutDetails();
+    } else {
+      return CheckOutDetails();
+    }
+  }
+
+  static Future<CounsellorSessionDetails> getCounsellor_sessions(
+      {String? date, String? sessionType, required String id}) async {
     var params = "?session_date=$date&session_type=$sessionType";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
@@ -521,7 +550,8 @@ class ApiService {
     return {};
   }
 
-  static Future<Map<String, dynamic>> callVerifyOtpByPhone(String number) async {
+  static Future<Map<String, dynamic>> callVerifyOtpByPhone(
+      String number) async {
     final body = jsonEncode({"phone_number": number});
     final headers = {
       'Content-Type': 'application/json',
@@ -545,7 +575,6 @@ class ApiService {
     }
     return {};
   }
-
 
   static Future<Map<String, dynamic>> sessionBooked(String sessionId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

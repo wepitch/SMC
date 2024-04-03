@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/model/check_out_details_model.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/shared/colors_const.dart';
@@ -366,6 +367,64 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+class CheckoutDetailsPage extends StatefulWidget {
+  const CheckoutDetailsPage({Key? key}) : super(key: key);
+
+  @override
+  _CheckoutDetailsPageState createState() => _CheckoutDetailsPageState();
+}
+
+class _CheckoutDetailsPageState extends State<CheckoutDetailsPage> {
+  late Future<CheckOutDetails> _checkoutDetailsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkoutDetailsFuture = ApiService.fetchCheckOutDetails();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Checkout Details'),
+      ),
+      body: FutureBuilder<CheckOutDetails>(
+        future: _checkoutDetailsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            final checkoutDetails = snapshot.data!;
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Session ID: ${checkoutDetails.sessionId}'),
+                  Text('Session Date: ${checkoutDetails.sessionDate}'),
+                  Text('Session Type: ${checkoutDetails.sessionType}'),
+                  Text('Session Fee: ${checkoutDetails.sessionFee}'),
+                  Text('GST Amount: ${checkoutDetails.gstAmount}'),
+                  Text('Fee with GST: ${checkoutDetails.feeWithGST}'),
+                  Text('Gateway Charge: ${checkoutDetails.gatewayCharge}'),
+                  Text('Total Amount: ${checkoutDetails.totalAmount}'),
+                  Text('Counsellor ID: ${checkoutDetails.counsellorId}'),
+                  Text('Counsellor Name: ${checkoutDetails.counsellorName}'),
+                  Text('Counsellor Profile Pic: ${checkoutDetails.counsellorProfilePic}'),
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }

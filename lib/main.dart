@@ -16,8 +16,6 @@ import 'package:myapp/page-1/splash_screen_n.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool? isLoggedIn = await MyApp.loggIn();
@@ -59,8 +57,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.grey,
           ),
           //home: const TimeDisplay(),
-          home:
-              isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
+          home: isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
           builder: EasyLoading.init(
             builder: (context, child) {
               return Stack(

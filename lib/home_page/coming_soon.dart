@@ -12,46 +12,15 @@ class _ComingSoonState extends State<ComingSoon> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset("assets/page-1/images/comingsoon1.jpg"),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 74,left: 40,right: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Positioned(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: const MaterialStatePropertyAll(
-                                ColorsConst.appBarColor,
-                              ),
-                              elevation: const MaterialStatePropertyAll(0),
-                              shape: MaterialStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  )
-                              )
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Go Home',style: TextStyle(color: ColorsConst.whiteColor,fontSize: 16),),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Image.asset(
+          "assets/page-1/images/comingsoon1.jpg",
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

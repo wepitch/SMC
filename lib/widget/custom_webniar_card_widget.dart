@@ -295,7 +295,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.43,
       child: cardView(context),
     );
   }
@@ -316,8 +316,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
             color: Colors.white,
             surfaceTintColor: Colors.white,
             elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -354,7 +353,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 8, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(10, 8, 20, 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

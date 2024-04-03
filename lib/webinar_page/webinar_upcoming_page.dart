@@ -36,7 +36,7 @@ class _WebinarUpcomingPageState extends State<WebinarUpcomingPage> {
               counsellorSessionProvider.webinarList[index];
           return Padding(
             padding:
-                EdgeInsets.only(top: index == 0 ? 30 : 27, right: 16, left: 16),
+                EdgeInsets.only(top: index == 0 ? 30 : 4, right: 16, left: 16),
             child: WebinarUpComingWidget(
               showDuration: false,
               title: "Learn more about CUET and IPMAT",
@@ -143,7 +143,7 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.47,
       child: cardView(context),
     );
   }

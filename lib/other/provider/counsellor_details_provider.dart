@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:myapp/booking_page/checkout_screen.dart';
+import 'package:myapp/model/check_out_details_model.dart';
 import 'package:myapp/model/counsellor_data.dart';
 import 'package:myapp/model/counsellor_detail.dart';
 import 'package:myapp/model/counsellor_sessions.dart';
@@ -16,6 +18,8 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorData> counsellorData = [];
   List<WebinarModel> webinarList = [];
   List<WebinarDetailsModel> webinarDetailsList = [];
+
+  List<CheckOutDetails> checkOutDetailsList = [];
   // WebinarModel webinarModel = WebinarModel();
   late Razorpay razorpay;
 
@@ -99,8 +103,7 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   }
 
 
-  void fetchCounsellor_session(
-      {required String id, String? date, String? sessionType}) async {
+  void fetchCounsellor_session({required String id, String? date, String? sessionType}) async {
     try {
       isLoading = true;
       if (date != null) {

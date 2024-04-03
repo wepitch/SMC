@@ -52,7 +52,7 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
         WebinarModel webinarModel = counsellorSessionProvider.webinarList[index];
         return Padding(
           padding:
-              EdgeInsets.only(top: index == 0 ? 30 : 27, right: 16, left: 16),
+              EdgeInsets.only(top: index == 0 ? 30 : 6, right: 16, left: 16),
           child: CustomWebinarCard1(
             showDuration: false,
             title: "Learn more about CUET and IPMAT",
