@@ -18,7 +18,7 @@ class SignupScreenNew extends StatefulWidget {
 
 class _Signup extends State<SignupScreenNew> {
   final _nameController = TextEditingController();
-  final phonecontroller = TextEditingController(text: '+91 ');
+  final phonecontroller = TextEditingController(text: '91');
 
   @override
   void initState() {

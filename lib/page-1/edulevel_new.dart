@@ -18,9 +18,19 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
   static List<String> list = [
     "I'm in School",
     "I'm in College",
-    "I Graduated",
+    "I'm in Graduated",
   ];
   String selectedOption = list[0];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void updateValue(){
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +74,7 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
                               itemCount: list.length,
                               itemBuilder: (context, index) {
                                 String title = list[index];
+                              title =  title.replaceAll("I'm in ", '');
                                 return customButton(
                                   onPressed: () {
                                     setState(() {
@@ -113,8 +124,7 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
                         prefs.setString("edu_level", selectedOption);
                         if (!mounted) return;
                         Future.delayed(const Duration(microseconds: 0), () {

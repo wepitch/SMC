@@ -68,7 +68,9 @@ class _Drawer1State extends State<Drawer1> {
                             ),
                             child: path != null
                                 ? Image.file(File(path), fit: BoxFit.cover)
-                                :  const Icon(Icons.person),
+                                :  Image.asset(
+                              'assets/page-1/images/profilepic.jpg',
+                            ),
                           ),
                         ),
                       ],

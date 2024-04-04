@@ -85,8 +85,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.bottomRight,
                   children: [
                     Container(
-                      height: 110,
-                      width: 110,
+                      height: 130,
+                      width: 140,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: path != null
                             ? Image.file(File(path!), fit: BoxFit.cover)
                             :  Image.asset(
-                            'assets/page-1/images/Ellipse.png',
+                            'assets/page-1/images/profilepic.jpg',
                           ),
                       ),
                     ),

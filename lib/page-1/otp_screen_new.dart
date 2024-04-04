@@ -190,7 +190,6 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       toastPosition: EasyLoadingToastPosition.bottom);
                                 } else {
                                   await EasyLoading.show(dismissOnTap: false);
-
                                   ApiService()
                                       .verify_otp_phone_2(
                                       otp: otp.toString().trim(), number: widget.phoneNumber)
@@ -202,6 +201,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       prefs.setString("phone_number", widget.phoneNumber);
                                       prefs.setBool("authLogin", true);
                                       prefs.setString("auth", value["token"]);
+                                      prefs.setString("token", value["token"]);
 
                                       onTapGettingstarted(context);
                                     } else {

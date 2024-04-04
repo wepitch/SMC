@@ -86,6 +86,7 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
   String register_status = '';
+  String webinarData = '';
 
   @override
   void initState() {
@@ -94,6 +95,7 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
   }
 
   Future<void> _initializeSharedPreferences() async {
+
     _prefs = await SharedPreferences.getInstance();
     bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
 
@@ -435,6 +437,8 @@ class _WebinarDetailUpComingWidgetState
     extends State<WebinarDetailUpComingWidget> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
+  var value;
+  var dataList;
 
   @override
   void initState() {
@@ -443,6 +447,10 @@ class _WebinarDetailUpComingWidgetState
   }
 
   Future<void> _initializeSharedPreferences() async {
+     value = await ApiService.getWebinarDetailsData('65fd6df1148105da86d87ca6');
+     List<String> whatWill = ['what_will_you_learn'];
+     dataList = whatWill.length;
+
     _prefs = await SharedPreferences.getInstance();
     bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
 
@@ -538,7 +546,7 @@ class _WebinarDetailUpComingWidgetState
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              widget.title,
+                              value['webinar_title'],
                               style: SafeGoogleFont("Inter",
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -639,7 +647,7 @@ class _WebinarDetailUpComingWidgetState
                             height: 9,
                           ),
                           Text(
-                            "\u2022 Online seminars establish you as an expert,a\n  trustworthy and reliable source of information\n\u2022 people are demonstrating an interest in what you are\n  offering – they become qualified leads\n\u2022 valuable content for your domain",
+                            '',
                             style: SafeGoogleFont("Inter",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
@@ -665,7 +673,7 @@ class _WebinarDetailUpComingWidgetState
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: 2,
                         itemBuilder: (context, index) {
                           return Container(
                             margin: EdgeInsets.only(
@@ -706,9 +714,9 @@ class _WebinarDetailUpComingWidgetState
                                   ),
                                   Text(
                                     index == 0
-                                        ? "Detailed information"
+                                        ? "dfdfgdfg\r\ngf33tt"
                                         : index == 1
-                                            ? "Upgrade Knowledge"
+                                            ? "sdffds"
                                             : "Interactive learning",
                                     style: SafeGoogleFont(
                                       "Inter",

@@ -90,13 +90,13 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchWebinarDetails_Data(String id) async {
-    var webinarDetails = await ApiService.getWebinarDetailsData(id);
+  void fetchCheckOut_Data() async {
+    var a = await ApiService.fetchCheckOutData();
     isLoading = true;
-    if (webinarDetails.isEmpty) {
+    if (a.isEmpty) {
       isLoading = true;
     } else {
-      webinarDetailsList = webinarDetails;
+      checkOutDetailsList = a;
       isLoading = false;
     }
     notifyListeners();

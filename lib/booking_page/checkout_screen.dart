@@ -92,7 +92,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_detail(widget.id);
+    context.read<CounsellorDetailsProvider>().fetchCheckOut_Data();
   }
 
   @override
@@ -102,8 +102,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    var counsellorDetailController = context.watch<CounsellorDetailsProvider>();
     var height = MediaQuery.of(context).size.width;
-    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     return Scaffold(
       backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
@@ -156,21 +156,21 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               ),
                             ],
                           ),
-                          const Column(
+                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Sandeep Mehra',
-                                style: TextStyle(
+                                '${counsellorDetailController.checkOutDetailsList[0].counsellorName}',
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
-                              Text(
+                              const Text(
                                 'Designer at SMC',
                                 style:
                                     TextStyle(color: ColorsConst.black54Color),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(height: 24,),
@@ -227,13 +227,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 child: Container(
                   padding: const EdgeInsets.only(top: 12, left: 10, right: 10,bottom: 12),
                   height: 166,
-                  child: const Column(
+                  child:  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
                         children: [
                           Text(
-                            'Total Cost',
+                            '${counsellorDetailController.checkOutDetailsList[0].gstAmount}',
                             style: TextStyle(color: ColorsConst.black54Color,fontSize: 12),
                           ),
                           Spacer(),
@@ -246,7 +246,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Row(
                         children: [
                           Text(
-                            'GST',
+                            '${counsellorDetailController.checkOutDetailsList[0].feeWithGST}',
                             style: TextStyle(color: ColorsConst.black54Color,fontSize: 12),
                           ),
                           Spacer(),
@@ -259,7 +259,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Row(
                         children: [
                           Text(
-                            'Convenience charge',
+                            '${counsellorDetailController.checkOutDetailsList[0].gatewayCharge}',
                             style: TextStyle(color: ColorsConst.black54Color,fontSize: 12),
                           ),
                           Spacer(),
@@ -272,7 +272,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Row(
                         children: [
                           Text(
-                            'Grade Total',
+                            '${counsellorDetailController.checkOutDetailsList[0].totalAmount}',
                             style: TextStyle(color: ColorsConst.black54Color,fontSize: 12),
                           ),
                           Spacer(),
@@ -367,64 +367,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-
-class CheckoutDetailsPage extends StatefulWidget {
-  const CheckoutDetailsPage({Key? key}) : super(key: key);
-
-  @override
-  _CheckoutDetailsPageState createState() => _CheckoutDetailsPageState();
-}
-
-class _CheckoutDetailsPageState extends State<CheckoutDetailsPage> {
-  late Future<CheckOutDetails> _checkoutDetailsFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkoutDetailsFuture = ApiService.fetchCheckOutDetails();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Checkout Details'),
-      ),
-      body: FutureBuilder<CheckOutDetails>(
-        future: _checkoutDetailsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final checkoutDetails = snapshot.data!;
-            return SingleChildScrollView(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Session ID: ${checkoutDetails.sessionId}'),
-                  Text('Session Date: ${checkoutDetails.sessionDate}'),
-                  Text('Session Type: ${checkoutDetails.sessionType}'),
-                  Text('Session Fee: ${checkoutDetails.sessionFee}'),
-                  Text('GST Amount: ${checkoutDetails.gstAmount}'),
-                  Text('Fee with GST: ${checkoutDetails.feeWithGST}'),
-                  Text('Gateway Charge: ${checkoutDetails.gatewayCharge}'),
-                  Text('Total Amount: ${checkoutDetails.totalAmount}'),
-                  Text('Counsellor ID: ${checkoutDetails.counsellorId}'),
-                  Text('Counsellor Name: ${checkoutDetails.counsellorName}'),
-                  Text('Counsellor Profile Pic: ${checkoutDetails.counsellorProfilePic}'),
-                ],
-              ),
-            );
-          }
-        },
       ),
     );
   }
