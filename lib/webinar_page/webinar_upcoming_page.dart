@@ -162,6 +162,7 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
               date: widget.webinarModel.webinarDate!,
               name: widget.webinarModel.webinarBy!,
               joinUrl: widget.webinarModel.joinUrl!,
+              id:widget.webinarModel.id!,
             ),
           ),
         );
@@ -420,6 +421,8 @@ class WebinarDetailUpComingWidget extends StatefulWidget {
       required this.title,
       required this.date,
       required this.webinarImg,
+      required this.id,
+
       super.key});
 
   String webinarImg;
@@ -427,6 +430,7 @@ class WebinarDetailUpComingWidget extends StatefulWidget {
   String date;
   String name;
   String joinUrl;
+  String id;
 
   @override
   State<WebinarDetailUpComingWidget> createState() =>
@@ -443,11 +447,11 @@ class _WebinarDetailUpComingWidgetState
   @override
   void initState() {
     super.initState();
-    _initializeSharedPreferences();
+    _initializeSharedPreferences(widget.id);
   }
 
-  Future<void> _initializeSharedPreferences() async {
-     value = await ApiService.getWebinarDetailsData('65fd6df1148105da86d87ca6');
+  Future<void> _initializeSharedPreferences(String id) async {
+     value = await ApiService.getWebinarDetailsData(id);
      List<String> whatWill = ['what_will_you_learn'];
      dataList = whatWill.length;
 
@@ -463,298 +467,296 @@ class _WebinarDetailUpComingWidgetState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 320,
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: const Color(0xffffffff).withOpacity(0.8),
-                        width: double.infinity,
-                        height: 280,
-                        child: SafeArea(
-                          child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Color(0xff1F0A68),
-                                    size: 25,
-                                  ),
-                                ),
-                                Text(
-                                  'Webinar Details',
-                                  style: SafeGoogleFont("Inter",
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorsConst.appBarColor),
-                                ),
-                                const Spacer(),
-                                Image.asset(
-                                  "assets/page-1/images/share.png",
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 320,
+                child: Stack(
+                  children: [
+                    Container(
+                      color: const Color(0xffffffff).withOpacity(0.8),
+                      width: double.infinity,
+                      height: 280,
+                      child: SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Icon(
+                                  Icons.arrow_back_ios,
                                   color: Color(0xff1F0A68),
-                                  height: 23,
-                                )
-                              ],
-                            ),
+                                  size: 25,
+                                ),
+                              ),
+                              Text(
+                                'Webinar Details',
+                                style: SafeGoogleFont("Inter",
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorsConst.appBarColor),
+                              ),
+                              const Spacer(),
+                              Image.asset(
+                                "assets/page-1/images/share.png",
+                                color: Color(0xff1F0A68),
+                                height: 23,
+                              )
+                            ],
                           ),
                         ),
                       ),
-                      SafeArea(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 28.0, right: 20, left: 20),
-                            child: Container(
-                              height: 196,
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    widget.webinarImg,
-                                  ),
-                                  fit: BoxFit.cover,
+                    ),
+                    SafeArea(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 28.0, right: 20, left: 20),
+                          child: Container(
+                            height: 196,
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  widget.webinarImg,
                                 ),
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(11, 20, 12, 15),
-                      child: Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              value['webinar_title'],
-                              style: SafeGoogleFont("Inter",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xff414040)),
-                            ),
-                          ],
-                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 11),
+                    )
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(11, 20, 12, 15),
+                    child: Expanded(
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Webinar by",
-                            style: SafeGoogleFont(
-                              "Inter",
-                              fontSize: 12,
-                              color: fontColor,
-                            ),
-                          ),
-                          Text(
-                            widget.name,
+                            widget.title,
                             style: SafeGoogleFont("Inter",
-                                fontSize: 12,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                fontStyle: FontStyle.italic,
-                                color: fontColor),
-                          )
+                                color: const Color(0xff414040)),
+                          ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(11, 9, 15, 8),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            "assets/page-1/images/clock.png",
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 11),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Webinar by",
+                          style: SafeGoogleFont(
+                            "Inter",
+                            fontSize: 12,
+                            color: fontColor,
                           ),
-                          const SizedBox(
-                            width: 5,
+                        ),
+                        Text(
+                          widget.name,
+                          style: SafeGoogleFont("Inter",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.italic,
+                              color: fontColor),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(11, 9, 15, 8),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/page-1/images/clock.png",
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          widget.date,
+                          style: SafeGoogleFont(
+                            "Inter",
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
                           ),
-                          Text(
-                            widget.date,
-                            style: SafeGoogleFont(
-                              "Inter",
+                        ),
+                        // const Spacer(),
+                        // Row(
+                        //   children: [
+                        //     Image.asset(
+                        //       "assets/page-1/images/persons.png",
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 3,
+                        //     ),
+                        //     Text(
+                        //       "44/100",
+                        //       style: SafeGoogleFont(
+                        //         "Inter",
+                        //         fontSize: 12,
+                        //         fontWeight: FontWeight.w500,
+                        //         color: fontColor,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 11),
+                    child: Container(
+                      height: 1,
+                      color: const Color(0xffAFAFAF).withOpacity(0.54),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Details -",
+                          style: SafeGoogleFont(
+                            "Inter",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 9,
+                        ),
+                        Text(
+                          '',
+                          style: SafeGoogleFont("Inter",
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                            ),
+                              height: 1.64),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 19),
+                    child: Text(
+                      "What will you Learn?",
+                      style: SafeGoogleFont(
+                        "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 88,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 2,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                            left: index == 0 ? 20 : 17,
                           ),
-                          // const Spacer(),
-                          // Row(
-                          //   children: [
-                          //     Image.asset(
-                          //       "assets/page-1/images/persons.png",
-                          //     ),
-                          //     const SizedBox(
-                          //       width: 3,
-                          //     ),
-                          //     Text(
-                          //       "44/100",
-                          //       style: SafeGoogleFont(
-                          //         "Inter",
-                          //         fontSize: 12,
-                          //         fontWeight: FontWeight.w500,
-                          //         color: fontColor,
-                          //       ),
-                          //     )
-                          //   ],
-                          // ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 11),
-                      child: Container(
-                        height: 1,
-                        color: const Color(0xffAFAFAF).withOpacity(0.54),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Details -",
-                            style: SafeGoogleFont(
-                              "Inter",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          height: 88,
+                          width: 144,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffD9D9D9).withOpacity(0.65),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          const SizedBox(
-                            height: 9,
-                          ),
-                          Text(
-                            '',
-                            style: SafeGoogleFont("Inter",
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                height: 1.64),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 19),
-                      child: Text(
-                        "What will you Learn?",
-                        style: SafeGoogleFont(
-                          "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 88,
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 2,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(
-                              left: index == 0 ? 20 : 17,
-                            ),
-                            height: 88,
-                            width: 144,
-                            decoration: BoxDecoration(
-                              color: const Color(0xffD9D9D9).withOpacity(0.65),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(14, 11, 0, 11),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    width: 20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "${index + 1}",
-                                        style: SafeGoogleFont(
-                                          "Inter",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 11, 0, 11),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "${index + 1}",
+                                      style: SafeGoogleFont(
+                                        "Inter",
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  index == 0
+                                      ? "dfdfgdfg\r\ngf33tt"
+                                      : index == 1
+                                          ? "sdffds"
+                                          : "Interactive learning",
+                                  style: SafeGoogleFont(
+                                    "Inter",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xff414040),
                                   ),
-                                  Text(
-                                    index == 0
-                                        ? "dfdfgdfg\r\ngf33tt"
-                                        : index == 1
-                                            ? "sdffds"
-                                            : "Interactive learning",
-                                    style: SafeGoogleFont(
-                                      "Inter",
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xff414040),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          );
-                        },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 19, 15, 19),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Speaker Profile",
+                      style: SafeGoogleFont(
+                        "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 8,
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 19, 15, 19),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Speaker Profile",
-                        style: SafeGoogleFont(
-                          "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         // Padding(

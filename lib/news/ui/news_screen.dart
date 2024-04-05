@@ -7,6 +7,9 @@ import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/shared/string_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../other/api_service.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -17,11 +20,22 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreen extends State<NewsScreen> {
   late NewsProvider newsProvider;
+  String name = "";
+  String username = "";
+  var value;
 
   @override
   void initState() {
     newsProvider = Provider.of<NewsProvider>(context, listen: false);
     super.initState();
+  }
+
+  void getAllInfo() async {
+    value = ApiService.get_profile();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("name", value["name"]);
+    username = prefs.getString("name") ?? "N/A";
+    setState(() {});
   }
 
   @override

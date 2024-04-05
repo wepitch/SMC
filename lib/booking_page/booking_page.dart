@@ -5,6 +5,9 @@ import 'package:myapp/booking_page/booking_today.dart';
 import 'package:myapp/booking_page/booking_upcoming.dart';
 import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../other/api_service.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
@@ -16,12 +19,23 @@ class BookingPage extends StatefulWidget {
 class _BookingPageState extends State<BookingPage> {
   int selectedIndex = 1;
   late PageController _controller;
+  var value;
+  String username = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _controller = PageController(initialPage: selectedIndex);
+  }
+
+
+  void getAllInfo() async {
+    value = ApiService.get_profile();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("name", value["name"]);
+    username = prefs.getString("name") ?? "N/A";
+    setState(() {});
   }
 
   @override

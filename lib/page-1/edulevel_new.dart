@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/home_page/homepagecontainer.dart';
 import 'package:myapp/page-1/select_gender_new.dart';
 import 'package:myapp/page-1/selectgender.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../other/api_service.dart';
 import '../utils.dart';
 
 class EducationLevelNew extends StatefulWidget {
@@ -16,21 +18,11 @@ class EducationLevelNew extends StatefulWidget {
 class _EducationLevelNewState extends State<EducationLevelNew> {
   int selectedIndex = 0;
   static List<String> list = [
-    "I'm in School",
+    "I'm in Student",
     "I'm in College",
     "I'm in Graduated",
   ];
   String selectedOption = list[0];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  void updateValue(){
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +66,12 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
                               itemCount: list.length,
                               itemBuilder: (context, index) {
                                 String title = list[index];
-                              title =  title.replaceAll("I'm in ", '');
                                 return customButton(
                                   onPressed: () {
                                     setState(() {
                                       selectedIndex = index;
                                       selectedOption = title;
+                                      selectedOption = selectedOption.replaceAll("I'm in ", '');
                                     });
                                   },
                                   title: title,
@@ -124,16 +116,29 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString("edu_level", selectedOption);
-                        if (!mounted) return;
-                        Future.delayed(const Duration(microseconds: 0), () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const HomePageContainer()));
-                        });
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString("education_level", selectedOption);
+                        var value = await ApiService.save_profile(
+                            prefs.getString("name"),
+                            prefs.getString("date_of_birth"),
+                            prefs.getString("gender"),
+                            prefs.getString("education_level"));
+
+                        if (value["message"] ==
+                            "User registered successfully") {
+                          if (!mounted) return;
+                          Future.delayed(const Duration(microseconds: 0), () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomePageContainer()));
+                          });
+                        } else {
+                          EasyLoading.showToast(value["message"],
+                              toastPosition: EasyLoadingToastPosition.bottom);
+                        }
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(10),

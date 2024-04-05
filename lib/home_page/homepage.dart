@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../other/api_service.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -25,6 +27,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String name = "";
+  String username = "";
+  String path = '';
+  late var value;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   CounsellorDetailsProvider counsellorDetailsProvider =
@@ -40,12 +46,10 @@ class _HomePageState extends State<HomePage> {
         Provider.of<CounsellorDetailsProvider>(context, listen: false);
   }
 
-  String username = "";
-  String path = '';
 
   void getAllInfo() async {
+     ApiService.get_profile();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    username = prefs.getString("name") ?? "N/A";
     path = prefs.getString("profile_image_path") ?? "N/A";
     setState(() {});
   }
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
 
   void setName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString("name") ?? "N/A";
+    username = prefs.getString("name") ?? "N/A";
     setState(() {});
   }
 
@@ -100,7 +104,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Text(
-                'Hello, $username',
+               'Hello, $username',
                 style: const TextStyle(
                     fontSize: 18,
                     color: Color(0xff1F0A68),

@@ -39,16 +39,20 @@ class WebinarDetailsPageWidget extends StatefulWidget {
 class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
-
+  var value;
+  var dataList;
   //bool _isRegistrationStarting = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeSharedPreferences();
+    _initializeSharedPreferences(widget.webinarId!);
   }
 
-  Future<void> _initializeSharedPreferences() async {
+  Future<void> _initializeSharedPreferences(String id) async {
+    value = await ApiService.getWebinarDetailsData(id);
+    List<String> whatWill = ['what_will_you_learn'];
+    dataList = whatWill.length;
     // var value = ApiService.getdetailpage(widget.webinarId);
     //context.read<CounsellorDetailsProvider>().fetchWebinarDetails_Data(widget.webinarId);
 
@@ -278,7 +282,7 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: 3,
+                          itemCount: 2,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: EdgeInsets.only(
@@ -321,10 +325,10 @@ class _WebinarDetailsPageWidgetState extends State<WebinarDetailsPageWidget> {
                                     ),
                                     Text(
                                       index == 0
-                                          ? "Detailed information"
+                                          ? "dfdfgdfg\r\ngf33tt"
                                           : index == 1
-                                              ? "Upgrade Knowledge"
-                                              : "Interactive learning",
+                                          ? "sdffds"
+                                          : "Interactive learning",
                                       style: SafeGoogleFont(
                                         "Inter",
                                         fontSize: 12,

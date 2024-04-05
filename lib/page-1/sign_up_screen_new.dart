@@ -18,7 +18,7 @@ class SignupScreenNew extends StatefulWidget {
 
 class _Signup extends State<SignupScreenNew> {
   final _nameController = TextEditingController();
-  final phonecontroller = TextEditingController(text: '91');
+  final phonecontroller = TextEditingController();
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _Signup extends State<SignupScreenNew> {
       dismissOnTap: false,
     );
 
-    ApiService.callVerifyOtpByPhone(phoneNumber).then((value) async {
+      ApiService.callVerifyOtpByPhone(phoneNumber).then((value) async {
       print(value);
 
       if (value["message"]["description"] == "Message in progress") {

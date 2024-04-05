@@ -311,7 +311,7 @@ class _OtpState extends State<Otp> {
 
   void onTapGettingstarted(BuildContext context) {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) =>  MyHomePage()));
+        MaterialPageRoute(builder: (context) =>  QNAScreen()));
   }
 
   void configLoading() {

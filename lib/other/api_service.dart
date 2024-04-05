@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/model/check_out_details_model.dart';
@@ -277,6 +278,7 @@ class ApiService {
     }
   }
 
+
   static Future<Map<String, dynamic>> counsellor_create_payment(
       double price, String paymentId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -290,7 +292,7 @@ class ApiService {
     };
 
     final url =
-        Uri.parse('${AppConstants.baseUrl}/admin/payments/create-order');
+    Uri.parse('${AppConstants.baseUrl}/admin/payments/create-order');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -303,6 +305,86 @@ class ApiService {
       return {"error": "Something went wrong"};
     }
   }
+
+
+
+
+
+
+  static Future<Map<String, dynamic>> save_profile(
+      String? name, String? dob, String? gender, String? edulevel) async
+   {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final body = jsonEncode(
+        {
+          "name": name,
+          "date_of_birth": dob,
+          "gender": gender,
+          "education_level": edulevel,
+        }
+    );
+
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+
+    final url =
+        Uri.parse('${AppConstants.baseUrl}/user/register');
+
+    final response = await http.put(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      return data;
+    } else if (response.statusCode == 404) {
+      return {"error": "Something went wrong"};
+    } else {
+      return {"error": "Something went wrong"};
+    }
+  }
+
+  static Future<Map<String, dynamic>> readJson() async {
+    final String response = await rootBundle.loadString('assets/page-1/images/sample.json');
+    var data = await json.decode(response);
+    return data;
+  }
+
+  static Future<void> get_profile() async {
+    String phoneNumber = "";
+    String dob = '';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+
+    final url =
+    Uri.parse('${AppConstants.baseUrl}/user/');
+
+    final response = await http.get(url, headers: headers);
+    if (response.statusCode == 200) {
+      var value = jsonDecode(response.body.toString());
+      prefs.setString('name', value['name']);
+      prefs.setString('gender', value['gender']);
+      //prefs.setString('date_of_birth', value['date_of_birth']);
+      prefs.setString('education_level', value['education_level']);
+      //prefs.setString('phone_number', value['phone_number']);
+      prefs.setString('_id', value['_id']);
+      phoneNumber =  value["phone_number"].replaceAll("91", "");
+      final strDob = value["date_of_birth"].split('-');
+      dob = "${strDob[2]}-${strDob[1]}-${strDob[0]}";
+
+      prefs.setString('phone_number', phoneNumber);
+      prefs.setString('date_of_birth', dob);
+
+    }
+  }
+
+
 
   static Future<List<CounsellorModel>> getCounsellor_1() async {
     //var url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
@@ -510,8 +592,11 @@ class ApiService {
     var headers = {
       'Content-Type': 'application/json',
     };
-    // number = number.replaceAll(new RegExp(r'[^\w\s]+'),'');
-    // number = number.replaceAll(' ', '');
+
+    number = number.replaceAll('91', '');
+    number = number.replaceAll(' ', '');
+    number = "91$number";
+
     final body = {'otp': otp, 'phone_number': number};
 
     var data;
@@ -623,12 +708,17 @@ class ApiService {
 
   static Future<Map<String, dynamic>> callVerifyOtpByPhone(
       String number) async {
+
+
+    number = number.replaceAll(new RegExp(r'[^\w\s]+'), '');
+    number = number.replaceAll('91', '');
+    number = number.replaceAll(' ', '');
+    number = "91$number";
+
     final body = jsonEncode({"phone_number": number});
     final headers = {
       'Content-Type': 'application/json',
     };
-    number = number.replaceAll(new RegExp(r'[^\w\s]+'), '');
-    number = number.replaceAll(' ', '');
 
     final url = Uri.parse("${AppConstants.baseUrl}/user/auth/sendOTPPhone");
     final response = await http.post(

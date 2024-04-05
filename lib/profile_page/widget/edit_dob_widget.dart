@@ -16,7 +16,7 @@ class _EditDobWidgetState extends State<EditDobWidget> {
 
   final TextEditingController _dateController = TextEditingController();
 
-  final DateFormat _dateFormatter = DateFormat('MMM/dd/yyyy');
+  final DateFormat _dateFormatter = DateFormat('d/M/yyyy');
 
 
   @override

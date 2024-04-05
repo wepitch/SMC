@@ -95,26 +95,26 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     prefs.setBool(widget.id, isFollowing);
   }
 
-   void checkImageValidity(String imgUrl) async {
-     if(imgUrl.contains("http://")) {
-       //nothing
-     }
-     else{
-       imgUrl="https://$imgUrl";
-     }
-    var url = Uri.parse(imgUrl);
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      setState(() {
-        isImgUrl_valid = true;
-      });
-    }
-    else{
-      setState(() {
-        isImgUrl_valid = false;
-      });
-    }
-  }
+  //  void checkImageValidity(String imgUrl) async {
+  //    if(imgUrl.contains("http://")) {
+  //      //nothing
+  //    }
+  //    else{
+  //      imgUrl="https://$imgUrl";
+  //    }
+  //   var url = Uri.parse(imgUrl);
+  //   final response = await http.get(url);
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       isImgUrl_valid = true;
+  //     });
+  //   }
+  //   else{
+  //     setState(() {
+  //       isImgUrl_valid = false;
+  //     });
+  //   }
+  // }
 
   void openCheckOut(amount) async {
     amount = amount * 100;
@@ -199,8 +199,8 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    checkImageValidity(counsellorDetailController
-        .cousnellorlist_detail[0].coverImage);
+    // checkImageValidity(counsellorDetailController
+    //     .cousnellorlist_detail[0].coverImage);
     return Scaffold(
       backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(

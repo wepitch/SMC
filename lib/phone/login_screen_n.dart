@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/page-1/otp_screen_new.dart';
+import 'package:myapp/page-1/otp_screen_new_login.dart';
 import 'package:myapp/page-1/sign_up_screen_new.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
@@ -19,7 +20,7 @@ class LoginScreenNew extends StatefulWidget {
 
 class _LoginScreenNewState extends State<LoginScreenNew> {
   TextEditingController countryController = TextEditingController();
-  TextEditingController phoneController = TextEditingController(text: '+91 ');
+  TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   bool isChecked = false;
 
@@ -233,7 +234,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
             toastPosition: EasyLoadingToastPosition.bottom);
         if (!mounted) return;
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => OtpScreenNew(phoneNumber)));
+            context, MaterialPageRoute(builder: (context) => OtpScreenNewLogin(phoneNumber)));
       } else {
         EasyLoading.showToast(value["message"]["description"],
             toastPosition: EasyLoadingToastPosition.bottom);

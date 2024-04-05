@@ -58,26 +58,9 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.grey,
           ),
           //home: CheckOutScreen(name: 'abc', id: '65fbcbb563ee42338a08b939'),
-          home: isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
-          builder: EasyLoading.init(
-            builder: (context, child) {
-              return Stack(
-                children: [
-                  child!,
-                  Builder(
-                    builder: (BuildContext context) {
-                      if (isLoggedIn) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Fluttertoast.showToast(msg: 'Already Registered');
-                        });
-                      }
-                      return Container();
-                    },
-                  ),
-                ],
-              );
-            },
-          )),
+          home:
+              isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
+          builder: EasyLoading.init()),
     );
   }
 }

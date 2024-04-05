@@ -7,6 +7,8 @@ import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../other/api_service.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -21,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String dob = "";
   String gender = "";
   String eduLevel = "";
+  var value;
 
   @override
   void initState() {
@@ -30,12 +33,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     username = prefs.getString("name") ?? "N/A";
     phoneNumber = prefs.getString("phone_number") ?? "N/A";
-    dob = prefs.getString("date") ?? "N/A";
+    dob = prefs.getString("date_of_birth") ?? "N/A";
     gender = prefs.getString("gender") ?? "N/A";
-    eduLevel = prefs.getString("edu_level") ?? "N/A";
+    eduLevel = prefs.getString("education_level") ?? "N/A";
     path = prefs.getString("profile_image_path");
+
     setState(() {});
   }
 

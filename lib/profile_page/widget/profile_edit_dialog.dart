@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/other/api_service.dart';
 import 'package:myapp/profile_page/widget/drop_down_dialog.dart';
 import 'package:myapp/profile_page/widget/edit_dob_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,9 +81,14 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   Future<void> saveDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool valueSaved = false;
+    var value = await ApiService.save_profile(
+        prefs.getString("name"),
+        prefs.getString("date_of_birth"),
+        prefs.getString("gender"),
+        prefs.getString("education_level"));
 
     if (currentEducation != null) {
-      prefs.setString('edu_level', currentEducation!);
+      prefs.setString('education_level', currentEducation!);
       valueSaved = true;
     }
 
@@ -91,26 +98,29 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
     }
 
     if (currentDob != null) {
-      prefs.setString('date', currentDob!);
+      prefs.setString('date_of_birth', currentDob!);
       valueSaved = true;
     }
-
     if (valueSaved) {
-      if (mounted) {
-        Navigator.pop(context);
+      if (value["message"] ==
+          "User registered successfully") {
+        if (!mounted) return;
+        Future.delayed(const Duration(microseconds: 0), () {
+          Navigator.pop(context);
+        });
+      } else {
+        EasyLoading.showToast(value["message"],
+            toastPosition: EasyLoadingToastPosition.bottom);
       }
-      Fluttertoast.showToast(
-        msg: "Update Successfully",
-      );
     }
   }
 
 
   void showEducationDropdown(BuildContext context) async {
     List<String> educationList = [
-      "I'm in School",
-      "I'm in College",
-      "I Graduated",
+      "School",
+      "College",
+      "Graduated",
     ];
 
     showDialog<String>(

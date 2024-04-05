@@ -94,7 +94,7 @@ class _SelectGenderNewState extends State<SelectGenderNew> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  MyHomePage()));
+                                  builder: (context) =>  QNAScreen()));
                         });
                       },
                       child: const Padding(

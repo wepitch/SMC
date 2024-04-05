@@ -292,15 +292,13 @@ class _Drawer1State extends State<Drawer1> {
 
   Future _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("token");
-    prefs.setBool("authLogin", false);
+    await prefs.clear();
     if (mounted) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const SplashScreenNew()),
         (route) => false,
       );
-      SharedPre.saveAuthLogin(false);
     }
   }
 }

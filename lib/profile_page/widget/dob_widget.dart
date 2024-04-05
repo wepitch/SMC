@@ -13,12 +13,7 @@ class EditDobWidget extends StatefulWidget {
 class _EditDobWidgetState extends State<EditDobWidget> {
   DateTime _date = DateTime.now();
 
-  final DateFormat _dateFormatter = DateFormat('MMM/dd/yyyy');
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final DateFormat _dateFormatter = DateFormat('DD-MM-YYYY');
 
   @override
   void dispose() {

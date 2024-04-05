@@ -295,7 +295,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.43,
+      height: MediaQuery.of(context).size.height * 0.38,
       child: cardView(context),
     );
   }
@@ -399,44 +399,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                           //     title: "Free Enroll",
                           //     context: context)
                         ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 1,
-                        width: double.infinity,
-                        color: const Color(0xffAFAFAF),
-                      ),
-                      const SizedBox(
-                        height: 14,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Center(
-                              child: Image.asset(
-                                "assets/page-1/images/group-38-oFX.png",
-                                width: 20,
-                                height: 20,
-                                color: Color(0xff1F0A68),
-                              ),
-                            ),
-                            /*customRegisterNow(
-                              onPressed: () {
-                                // Fluttertoast.showToast(
-                                //   msg:
-                                //       'Thankyou for registering your session will start soon',
-                                //   gravity: ToastGravity.CENTER,
-                                // );
-                              },
-                              title: widget.btnTitle,
-                              isRegisterNow: widget.isRegisterNow,
-                            ),*/
-                          ],
-                        ),
                       ),
                     ],
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/other/api_service.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/webinar_page/webinar_model.dart';
@@ -118,6 +119,8 @@ class WebinarDetailsPageWidget1 extends StatefulWidget {
 class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
+  var value;
+  var dataList;
 
   @override
   void initState() {
@@ -126,9 +129,11 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
   }
 
   Future<void> _initializeSharedPreferences() async {
+    value = await ApiService.getWebinarDetailsData('');
+    List<String> whatWill = ['what_will_you_learn'];
+    dataList = whatWill.length;
     _prefs = await SharedPreferences.getInstance();
     bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
-
     setState(() {
       _isRegistrationStarting = isStarting;
     });
@@ -350,7 +355,7 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        itemCount: 3,
+                        itemCount: 2,
                         itemBuilder: (context, index) {
                           return Container(
                             margin: EdgeInsets.only(
@@ -391,8 +396,10 @@ class _WebinarDetailsPageWidget1State extends State<WebinarDetailsPageWidget1> {
                                   ),
                                   Text(
                                     index == 0
-                                        ? "What will you learn?"
-                                        : "Define your personal brand",
+                                        ? "dfdfgdfg\r\ngf33tt"
+                                        : index == 1
+                                        ? "sdffds"
+                                        : "Interactive learning",
                                     style: SafeGoogleFont(
                                       "Inter",
                                       fontSize: 12,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/constants.dart';
-import 'package:myapp/phone/login_screen_n.dart';
 import 'package:myapp/slide_screen.dart';
 import 'package:myapp/utils.dart';
 import 'package:otp_text_field/otp_text_field.dart';
@@ -12,15 +11,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../home_page/homepagecontainer.dart';
 
-class OtpScreenNew extends StatefulWidget {
+class OtpScreenNewLogin extends StatefulWidget {
   final String phoneNumber;
-  const OtpScreenNew(this.phoneNumber,{super.key});
+  const OtpScreenNewLogin(this.phoneNumber,{super.key});
 
   @override
-  State<OtpScreenNew> createState() => _OtpScreenNewState();
+  State<OtpScreenNewLogin> createState() => _OtpScreenNewLoginState();
 }
 
-class _OtpScreenNewState extends State<OtpScreenNew> {
+class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
   OtpFieldController otpController = OtpFieldController();
 
   String otp = "";
@@ -198,26 +197,25 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                       otp: otp.toString().trim(), number: widget.phoneNumber)
                                       .then((value) async {
                                     if (value["message"] == "OTP verified successfully" && value["already_registered"] == true) {
-                                      EasyLoading.showToast("You are already registered user please go to login page",
+                                      EasyLoading.showToast("You are login now",
                                           toastPosition: EasyLoadingToastPosition.bottom );
-                                      /*SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
                                       prefs.setString("phone_number", widget.phoneNumber);
                                       prefs.setBool("authLogin", true);
                                       prefs.setString("auth", value["token"]);
-                                      prefs.setString("token", value["token"]);*/
+                                      prefs.setString("token", value["token"]);
 
 
 
                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder: (context) =>  LoginScreenNew()));
+                                          MaterialPageRoute(builder: (context) =>  HomePageContainer()));
 
                                       /*Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (context) =>  MyHomePage()));*/
-
                                     }
                                     else if(value["message"] == "OTP verified successfully" && value["already_registered"] == false)
                                     {
-                                      EasyLoading.showToast(value["message"],
+                                      EasyLoading.showToast("You are register now thanks for register",
                                           toastPosition: EasyLoadingToastPosition.bottom );
 
                                       SharedPreferences prefs = await SharedPreferences.getInstance();

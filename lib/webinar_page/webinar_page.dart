@@ -8,6 +8,7 @@ import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
 import 'package:myapp/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WebinarPage extends StatefulWidget {
   const WebinarPage({super.key});
@@ -18,16 +19,31 @@ class WebinarPage extends StatefulWidget {
 
 class _WebinarPageState extends State<WebinarPage> {
   late PageController pageController;
+  int selectedIndex = 1;
+  String name = "";
+  String username = "";
+  var value;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getAllInfo();
     pageController = PageController(initialPage: selectedIndex);
      SessionDate.dateTimeDif();
   }
 
-  int selectedIndex = 1;
+
+
+  void getAllInfo() async {
+    value = ApiService.get_profile();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("name", value["name"]);
+    username = prefs.getString("name") ?? "N/A";
+
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +76,13 @@ class _WebinarPageState extends State<WebinarPage> {
           ),
         ),
         actions: [
-          Image.asset(
-            'assets/page-1/images/layer-3.png',
-            width: 20,
-            height: 20,
-            color: Color(0xff1F0A68),
+          Center(
+            child: Image.asset(
+              "assets/page-1/images/group-38-oFX.png",
+              width: 20,
+              height: 20,
+              color: const Color(0xff1F0A68),
+            ),
           ),
           const SizedBox(
             width: 28,

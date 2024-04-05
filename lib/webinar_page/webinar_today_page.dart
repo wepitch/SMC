@@ -93,6 +93,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   String register_status = '';
   String webinarData = '';
 
+
   @override
   void initState() {
     super.initState();
@@ -100,9 +101,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Future<void> _initializeSharedPreferences() async {
-    var value = await ApiService.getWebinarDetails(widget.webinarModel.id!);
-    webinarData = value["webinar_title"];
-    print('Webinar Data: $webinarData');
 
     _prefs = await SharedPreferences.getInstance();
     bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
@@ -127,7 +125,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
     setState(() {
       _isRegistrationStarting = isStarting;
     });
-
     if (isStarting) {
       await _prefs.setInt(
         'startingTimestamp',

@@ -14,6 +14,7 @@ class SelectDobNew extends StatefulWidget {
 
 class _SelectDobNewState extends State<SelectDobNew> {
   String date = "Select DOB";
+  String dob="";
 
   openDatePicker() async {
     var now = DateTime.now();
@@ -163,7 +164,9 @@ class _SelectDobNewState extends State<SelectDobNew> {
                               toastPosition: EasyLoadingToastPosition.bottom);
                         } else {
                           var prefs = await SharedPreferences.getInstance();
-                          prefs.setString("date", date);
+                          final splittedate = date.split('/');
+                          dob = "${splittedate[2]}-${splittedate[1]}-${splittedate[0]}";
+                          prefs.setString("date_of_birth", dob);
                           if (!mounted) return;
                           Future.delayed(const Duration(microseconds: 0), () {
                             Navigator.pushReplacement(
