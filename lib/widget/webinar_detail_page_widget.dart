@@ -470,7 +470,7 @@ Widget webinarDetailWidget({
 }) {
   Color buttonColor =
       isRegisterNow ? Color(0xff1F0A68) : const Color(0xff1F0A68);
-  Color textColor = isRegisterNow ? Colors.black : Colors.white;
+  Color textColor = isRegisterNow ? Colors.white : Colors.white;
 
   double buttonWidth =
       title.contains('Starting in 2 days') ? double.infinity : 200.0;

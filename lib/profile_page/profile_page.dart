@@ -33,7 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     username = prefs.getString("name") ?? "N/A";
     phoneNumber = prefs.getString("phone_number") ?? "N/A";
     dob = prefs.getString("date_of_birth") ?? "N/A";

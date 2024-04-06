@@ -282,8 +282,8 @@ class _CounsellorListPage_offlineState
                                           Positioned(
                                             // graduationhataoB (742:114)
                                             left: 290.75 * fem,
-                                            top: 0 * fem,
-                                            bottom: 34,
+                                            top: 20* fem,
+                                            bottom: 6,
                                             child: Align(
                                               child: SizedBox(
                                                 width: 100.5 * fem,

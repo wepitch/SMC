@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/constants.dart';
 import 'package:myapp/page-1/dashboard-session-group-new.dart';
@@ -25,9 +26,11 @@ class CounsellingSessionPage extends StatefulWidget {
 class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
   late PageController _controller;
   int selectedIndex = 0;
+
   // late Razorpay razorpay;
   TextEditingController amountController = TextEditingController();
   String email = '';
+  var data;
 
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -82,23 +85,19 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
     }
   }
 
-  void handlePaymentSuccess(PaymentSuccessResponse response)async {
+  void handlePaymentSuccess(PaymentSuccessResponse response) async {
     Fluttertoast.showToast(
         msg: "Payment Success ${response.paymentId!}",
         toastLength: Toast.LENGTH_SHORT);
     var value =
-        await    ApiService.counsellor_create_payment(10,response.paymentId!);
-    if (value["error"] ==
-        "payment not successfully done") {
+        await ApiService.counsellor_create_payment(10, response.paymentId!);
+    if (value["error"] == "payment not successfully done") {
       EasyLoading.showToast(value["error"],
-          toastPosition:
-          EasyLoadingToastPosition.bottom);
-    } else{
-      (value["message"] ==
-          "payment successfully done");
+          toastPosition: EasyLoadingToastPosition.bottom);
+    } else {
+      (value["message"] == "payment successfully done");
       EasyLoading.showToast(value["message"],
-          toastPosition:
-          EasyLoadingToastPosition.bottom);
+          toastPosition: EasyLoadingToastPosition.bottom);
     }
   }
 
@@ -138,10 +137,23 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
           ),
         ),
         titleSpacing: -5,
-        title: Text(
-          widget.name,
-          style: SafeGoogleFont("Inter",
-              fontSize: 22, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
+        title: GestureDetector(
+          onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    CheckOutScreen(name: widget.name, id: widget.id,),
+              ),
+            );
+          },
+          child: Text(
+            widget.name,
+            style: SafeGoogleFont("Inter",
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: Color(0xff1F0A68)),
+          ),
         ),
       ),
       body: Column(

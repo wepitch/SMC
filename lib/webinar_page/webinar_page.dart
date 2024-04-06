@@ -75,19 +75,6 @@ class _WebinarPageState extends State<WebinarPage> {
                 fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
           ),
         ),
-        actions: [
-          Center(
-            child: Image.asset(
-              "assets/page-1/images/group-38-oFX.png",
-              width: 20,
-              height: 20,
-              color: const Color(0xff1F0A68),
-            ),
-          ),
-          const SizedBox(
-            width: 28,
-          ),
-        ],
       ),
       body: Scaffold(
         backgroundColor: ColorsConst.whiteColor,

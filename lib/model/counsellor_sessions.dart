@@ -35,7 +35,7 @@ class Sessions {
   int? sessionTime;
   int? sessionDuration;
   String? sessionType;
-  double? sessionPrice;
+  num? sessionPrice;
   String? sessionStatus;
   int? sessionSlots;
   String? sessionLink;

@@ -186,8 +186,9 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: (){
-                              Share.share('https://play.google.com/store/apps/details?id=com.sortmycollege');
+                            onTap: () {
+                              Share.share(
+                                  'https://play.google.com/store/apps/details?id=com.sortmycollege');
                             },
                             child: Center(
                               child: Image.asset(
@@ -229,9 +230,8 @@ Widget registerNowWidget({
   required String title,
   required bool isRegisterNow,
 }) {
-  Color buttonColor = isRegisterNow
-      ? const Color(0xFF1F0A68)
-      : const Color(0xFF1F0A68);
+  Color buttonColor =
+      isRegisterNow ? const Color(0xFF1F0A68) : const Color(0xFF1F0A68);
   Color textColor = isRegisterNow ? Colors.white : Colors.white;
 
   return SizedBox(
@@ -260,21 +260,19 @@ Widget registerNowWidget({
 }
 
 class CustomWebinarCard1 extends StatefulWidget {
-  const CustomWebinarCard1({
-    super.key,
-    required this.isRegisterNow,
-    required this.btnTitle,
-    required this.time,
-    required this.duration,
-    required this.participants,
-    required this.bannerImg,
-    required this.title,
-    required this.showDuration,
-    this.enableAutoScroll = false,
-    required void Function() onRegisterClicked,
-    required this.webinarModel
-
-  });
+  const CustomWebinarCard1(
+      {super.key,
+      required this.isRegisterNow,
+      required this.btnTitle,
+      required this.time,
+      required this.duration,
+      required this.participants,
+      required this.bannerImg,
+      required this.title,
+      required this.showDuration,
+      this.enableAutoScroll = false,
+      required void Function() onRegisterClicked,
+      required this.webinarModel});
 
   final bool isRegisterNow;
   final String btnTitle;
@@ -295,7 +293,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.38,
+      height: MediaQuery.of(context).size.height * 0.45,
       child: cardView(context),
     );
   }
@@ -316,7 +314,8 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
             color: Colors.white,
             surfaceTintColor: Colors.white,
             elevation: 2,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -349,7 +348,9 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                        image: NetworkImage('${widget.webinarModel.webinarImage}'), fit: BoxFit.cover),
+                        image:
+                            NetworkImage('${widget.webinarModel.webinarImage}'),
+                        fit: BoxFit.cover),
                   ),
                 ),
                 Padding(
@@ -358,7 +359,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                  '${widget.webinarModel.webinarBy}',
+                        '${widget.webinarModel.webinarBy}',
                         style: SafeGoogleFont(
                           "Inter",
                           fontSize: 16,
@@ -399,6 +400,52 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                           //     title: "Free Enroll",
                           //     context: context)
                         ],
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: const Color(0xffAFAFAF),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Share.share(
+                                    'https://play.google.com/store/apps/details?id=com.sortmycollege');
+                              },
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/page-1/images/group-38-oFX.png",
+                                  width: 20,
+                                  height: 20,
+                                  color: Color(0xFF1F0A68),
+                                ),
+                              ),
+                            ),
+                            registerNowWidget(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const WebinarDetailsPage(),
+                                    ),
+                                  );
+                                },
+                                title: widget.btnTitle,
+                                isRegisterNow: widget.isRegisterNow)
+                          ],
+                        ),
                       ),
                     ],
                   ),

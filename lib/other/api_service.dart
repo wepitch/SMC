@@ -248,7 +248,7 @@ class ApiService {
   static Future<Map<String, dynamic>> counsellor_create_order(
     String name,
     String email,
-    double price,
+    double? price,
     String description,
     String number,
   ) async {
@@ -345,7 +345,7 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> readJson() async {
+  static Future<Map<String, dynamic>> readCheckOutAPi() async {
     final String response = await rootBundle.loadString('assets/page-1/images/sample.json');
     var data = await json.decode(response);
     return data;
@@ -658,8 +658,8 @@ class ApiService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
 
-    var url = Uri.parse(
-        "${AppConstants.baseUrl}/counsellor/$id/sessions${date != null ? params : ''}");
+    // var url = Uri.parse("${AppConstants.baseUrl}/counsellor/$id/sessions${date != null ? params : ''}");
+    var url = Uri.parse("https://sortmycollegeapp.com/counsellor/65f97eaec5894941bf7c96eb/sessions");
     print(url);
 
     var response = await http.get(
