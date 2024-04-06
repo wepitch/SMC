@@ -290,7 +290,9 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
         TabController(length: sessionDate.dates.length, vsync: this);
     configLoading();
     fetchDataFromApi();
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_session(id: widget.id);
+    context
+        .read<CounsellorDetailsProvider>()
+        .fetchCounsellor_session(id: widget.id);
   }
 
   void configLoading() {
@@ -723,7 +725,16 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                   ),
                                                   GestureDetector(
                                                     onTap: () async {
-                                                      var availableSlots =
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  CheckOutScreen(
+                                                                      name: widget
+                                                                          .name,
+                                                                      id: widget
+                                                                          .id)));
+                                                      /* var availableSlots =
                                                           counsellorSessionProvider
                                                               .details
                                                               .sessions![index]
@@ -794,7 +805,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                             toastPosition:
                                                                 EasyLoadingToastPosition
                                                                     .bottom);
-                                                      }
+                                                      }*/
                                                     },
                                                     child: Container(
                                                       width: 96,
