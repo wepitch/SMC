@@ -1,39 +1,28 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/home_page/homepage.dart';
+import 'package:myapp/home_page/model/tranding_webinar_model.dart';
+import 'package:myapp/other/api_service.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:myapp/webinar_page/webinar_details_page.dart';
 import 'package:myapp/webinar_page/webinar_model.dart';
+import 'package:myapp/webinar_page/webinar_page.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../other/provider/counsellor_details_provider.dart';
 
 class CustomWebinarCard extends StatefulWidget {
-  const CustomWebinarCard({
+   CustomWebinarCard({
     super.key,
-    required this.isRegisterNow,
-    required this.btnTitle,
-    required this.time,
-    required this.duration,
-    required this.participants,
-    required this.bannerImg,
-    required this.title,
-    required this.showDuration,
-    this.enableAutoScroll = false,
+    required this.trandingWebinarModel,
   });
 
-  final bool isRegisterNow;
-  final String btnTitle;
-  final String title;
-  final String time;
-  final String duration;
-  final String participants;
-  final String bannerImg;
-  final bool showDuration;
-  final bool enableAutoScroll;
+  TrandingWebinarModel trandingWebinarModel;
 
   @override
   State<CustomWebinarCard> createState() => _CustomWebinarCardState();
@@ -47,10 +36,10 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
   @override
   void initState() {
     super.initState();
-    if (widget.enableAutoScroll) {
-      //_startTimer();
-      _pageController = PageController(initialPage: _currentIndex);
-    }
+    // if (widget.enableAutoScroll) {
+    //   //_startTimer();
+    //   _pageController = PageController(initialPage: _currentIndex);
+    // }
   }
 
   @override
@@ -84,7 +73,6 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
         children: [
           cardView(context),
         ],
-
         // controller: _pageController,
         // onPageChanged: (index) {
         //   setState(() {
@@ -103,8 +91,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
           color: Colors.white,
           surfaceTintColor: Colors.white,
           elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -115,7 +102,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: AssetImage(widget.bannerImg), fit: BoxFit.fill),
+                      image: NetworkImage(widget.trandingWebinarModel.webinarImage!), fit: BoxFit.fill),
                 ),
               ),
               Padding(
@@ -124,7 +111,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.title,
+                      widget.trandingWebinarModel.webinarBy!,
                       style: SafeGoogleFont(
                         "Inter",
                         fontSize: 16,
@@ -140,7 +127,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.time,
+                              widget.trandingWebinarModel.webinarDate!,
                               style: SafeGoogleFont(
                                 "Inter",
                                 fontSize: 12,
@@ -151,10 +138,7 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                               height: 3,
                             ),
                             Text(
-                              widget.showDuration
-                                  // ? "Career Institute : ${widget.duration}"
-                                  ? ""
-                                  : "Career Institute : ${widget.duration}\nAllen career institute,\nby Anshika Mehra - ${widget.participants}",
+                              widget.trandingWebinarModel.webinarTitle!,
                               style: SafeGoogleFont(
                                 "Inter",
                                 fontSize: 11,
@@ -200,17 +184,75 @@ class _CustomWebinarCardState extends State<CustomWebinarCard> {
                             ),
                           ),
                           registerNowWidget(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const WebinarDetailsPage(),
-                                  ),
+                            onPressed: () async {
+                              if (!widget.trandingWebinarModel.registered!) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                        'Do you want to register for the webinar?',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            if (widget.trandingWebinarModel.registered! &&
+                                                widget.trandingWebinarModel.webinarStartingInDays == 0) {
+                                              launchUrlString(widget.trandingWebinarModel.webinarJoinUrl!);
+                                            } else if (widget.trandingWebinarModel.registered!) {
+                                              Fluttertoast.showToast(
+                                                  msg: 'Participant is already registered');
+                                            } else {
+                                              var value = await ApiService.webinar_regiter(
+                                                  widget.trandingWebinarModel.id!);
+
+                                              if (value["error"] ==
+                                                  "Participant is already registered") {
+                                                Fluttertoast.showToast(
+                                                    msg: 'Participant is already registered');
+                                              } else if (value["message"] ==
+                                                  "Registration completed") {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                    'Registration completed Thanks for registration');
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => const HomePage(),
+                                                  ),
+                                                );
+                                              }
+                                            }
+                                            if (mounted) {
+                                              Navigator.pop(context);
+                                            }
+                                            //await _updateRegistrationStatus(true);
+                                          },
+                                          child: const Text('Yes'),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
-                              },
-                              title: widget.btnTitle,
-                              isRegisterNow: widget.isRegisterNow)
+                              } else {
+                                Text('has Been Registered');
+                              }
+                            },
+                            title: widget.trandingWebinarModel.registered!
+                                ? (widget.trandingWebinarModel.webinarStartingInDays == 0
+                                ? 'Join Now'
+                                : 'Starting in ${widget.trandingWebinarModel.webinarStartingInDays} days')
+                                : 'Join Now',
+                            isRegisterNow: widget.trandingWebinarModel.registered!,)
                         ],
                       ),
                     ),

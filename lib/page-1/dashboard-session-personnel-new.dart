@@ -5,6 +5,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 
 import 'package:provider/provider.dart';
@@ -352,6 +353,8 @@ class _Counseling_Session_PersonnelState
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0),
                                       child: Card(
+                                        color: ColorsConst.whiteColor,
+                                        surfaceTintColor: ColorsConst.whiteColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -372,7 +375,7 @@ class _Counseling_Session_PersonnelState
                                                     'Coming soon',
                                                     style: TextStyle(
                                                       color: Color(0xFF1F0A68),
-                                                      fontSize: 20,
+                                                      fontSize: 16,
                                                       fontFamily: 'Inter',
                                                       fontWeight:
                                                           FontWeight.w600,

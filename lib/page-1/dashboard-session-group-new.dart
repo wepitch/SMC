@@ -290,9 +290,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
         TabController(length: sessionDate.dates.length, vsync: this);
     configLoading();
     fetchDataFromApi();
-    context
-        .read<CounsellorDetailsProvider>()
-        .fetchCounsellor_session(id: widget.id);
+    context.read<CounsellorDetailsProvider>().fetchCounsellor_session(id: widget.id);
   }
 
   void configLoading() {
@@ -554,7 +552,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     'Coming soon',
                                                     style: TextStyle(
                                                       color: Color(0xFF1F0A68),
-                                                      fontSize: 20,
+                                                      fontSize: 16,
                                                       fontFamily: 'Inter',
                                                       fontWeight:
                                                           FontWeight.w600,

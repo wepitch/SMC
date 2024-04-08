@@ -28,7 +28,7 @@ class _Drawer1State extends State<Drawer1> {
 
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    path = prefs.getString("profile_image_path") ?? "N/A";
+    path = prefs.getString("profile_image_path") ?? " ";
     name = prefs.getString("name") ?? "N/A";
     setState(() {});
   }
@@ -66,7 +66,7 @@ class _Drawer1State extends State<Drawer1> {
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: path != null
+                            child: path != " "
                                 ? Image.file(File(path), fit: BoxFit.cover)
                                 :  Image.asset(
                               'assets/page-1/images/profilepic.jpg',
@@ -80,7 +80,7 @@ class _Drawer1State extends State<Drawer1> {
                     height: 11,
                   ),
                   Text(
-                    'DAKSH',
+                  name,
                     style: SafeGoogleFont(
                       "Inter",
                       color: Color(0xff1F0A68),

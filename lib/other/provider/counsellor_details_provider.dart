@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:myapp/booking_page/checkout_screen.dart';
+import 'package:myapp/home_page/model/banner_image_model.dart';
+import 'package:myapp/home_page/model/popular_workshop_model.dart';
+import 'package:myapp/home_page/model/tranding_webinar_model.dart';
 import 'package:myapp/model/check_out_details_model.dart';
 import 'package:myapp/model/counsellor_data.dart';
 import 'package:myapp/model/counsellor_detail.dart';
@@ -18,6 +21,10 @@ class CounsellorDetailsProvider extends ChangeNotifier {
   List<CounsellorData> counsellorData = [];
   List<WebinarModel> webinarList = [];
   List<WebinarDetailsModel> webinarDetailsList = [];
+
+  List<BannerImageModel> bannerImageList = [];
+  List<TrandingWebinarModel> trendingWebinarList = [];
+  List<PopularWorkShopModel> popularWorkShopList = [];
 
   List<CheckOutDetails> checkOutDetailsList = [];
   // WebinarModel webinarModel = WebinarModel();
@@ -77,6 +84,32 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void fetchBannerImage() async {
+    bannerImageList.clear();
+    var webinar = await ApiService.getBannerImage();
+    isLoading = true;
+    if (webinar.isEmpty) {
+      isLoading = true;
+    } else {
+      bannerImageList = webinar;
+      isLoading = false;
+    }
+    notifyListeners();
+  }
+
+  void fetchMyWebinar() async {
+    webinarList.clear();
+    var webinar = await ApiService.getMyWebinarData();
+    isLoading = true;
+    if (webinar.isEmpty) {
+      isLoading = true;
+    } else {
+      webinarList = webinar;
+      isLoading = false;
+    }
+    notifyListeners();
+  }
+
   void fetchWebinar_Data(String params) async {
     webinarList.clear();
     var webinar = await ApiService.getWebinarData(params);
@@ -85,6 +118,32 @@ class CounsellorDetailsProvider extends ChangeNotifier {
       isLoading = true;
     } else {
       webinarList = webinar;
+      isLoading = false;
+    }
+    notifyListeners();
+  }
+
+  void fetchTrendingWebinar() async {
+    trendingWebinarList.clear();
+    var webinar = await ApiService.getTrendingWebinar();
+    isLoading = true;
+    if (webinar.isEmpty) {
+      isLoading = true;
+    } else {
+      trendingWebinarList = webinar;
+      isLoading = false;
+    }
+    notifyListeners();
+  }
+
+  void fetchPopularWorkShop() async {
+    popularWorkShopList.clear();
+    var webinar = await ApiService.getPopularWorkShop();
+    isLoading = true;
+    if (webinar.isEmpty) {
+      isLoading = true;
+    } else {
+      popularWorkShopList = webinar;
       isLoading = false;
     }
     notifyListeners();

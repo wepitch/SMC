@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/home_page/model/banner_image_model.dart';
+import 'package:myapp/home_page/model/popular_workshop_model.dart';
+import 'package:myapp/home_page/model/tranding_webinar_model.dart';
 import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/model/check_out_details_model.dart';
 import 'package:myapp/webinar_page/model/webinar_details_model.dart';
@@ -62,6 +65,39 @@ class ApiService {
     return {};
   }
 
+  static Future<List<BannerImageModel>> getBannerImage() async {
+    var url = Uri.parse("https://sortmycollegeapp.com/admin/home-page-banner");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("auth").toString();
+    final response = await http.get(url, headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<BannerImageModel>.from(data.map((x) => BannerImageModel.fromJson(x)));
+    }
+    return [];
+  }
+
+  static Future<List<WebinarModel>> getMyWebinarData() async {
+    var url = Uri.parse(
+        "${AppConstants.baseUrl}/admin/webinar/webinar-for-user/my-webinars");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("auth").toString();
+    final response = await http.get(url, headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<WebinarModel>.from(data.map((x) => WebinarModel.fromJson(x)));
+    }
+    return [];
+  }
+
   static Future<List<WebinarModel>> getWebinarData(String params) async {
     var url = Uri.parse(
         "${AppConstants.baseUrl}/admin/webinar/webinar-for-user/?query=$params");
@@ -78,6 +114,39 @@ class ApiService {
     }
     return [];
   }
+
+  static Future<List<TrandingWebinarModel>> getTrendingWebinar() async {
+    var url = Uri.parse("https://sortmycollegeapp.com/admin/webinar/webinar-for-user/trending-webinars");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("auth").toString();
+    final response = await http.get(url, headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<TrandingWebinarModel>.from(data.map((x) => TrandingWebinarModel.fromJson(x)));
+    }
+    return [];
+  }
+
+  static Future<List<PopularWorkShopModel>> getPopularWorkShop() async {
+    var url = Uri.parse("https://sortmycollegeapp.com/counsellor/session/sessions/popular-workshops");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("auth").toString();
+    final response = await http.get(url, headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<PopularWorkShopModel>.from(data.map((x) => PopularWorkShopModel.fromJson(x)));
+    }
+    return [];
+  }
+
 
   static Future<Map<String, dynamic>> getWebinarDetails(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -248,7 +317,7 @@ class ApiService {
   static Future<Map<String, dynamic>> counsellor_create_order(
     String name,
     String email,
-    double? price,
+    num? price,
     String description,
     String number,
   ) async {
@@ -377,7 +446,6 @@ class ApiService {
       phoneNumber =  value["phone_number"].replaceAll("91", "");
       final strDob = value["date_of_birth"].split('-');
       dob = "${strDob[2]}-${strDob[1]}-${strDob[0]}";
-
       prefs.setString('phone_number', phoneNumber);
       prefs.setString('date_of_birth', dob);
 

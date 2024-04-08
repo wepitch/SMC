@@ -39,8 +39,7 @@ class _WebinarPageState extends State<WebinarPage> {
     value = ApiService.get_profile();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("name", value["name"]);
-    username = prefs.getString("name") ?? "N/A";
-
+    username = prefs.getString("name") ?? "";
     setState(() {});
   }
 

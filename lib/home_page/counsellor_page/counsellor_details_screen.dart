@@ -211,8 +211,8 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
           widget.name,
           style: SafeGoogleFont(
             'Inter',
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
             height: 1.2125,
             color: const Color(0xff1f0a68),
           ),
@@ -600,6 +600,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: [
                             Text('\u2022 ',style: TextStyle(
@@ -671,6 +674,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             color: const Color(0xff040404),
                           ),
                         ),*/
+                        const SizedBox(height: 12),
                         const Text(
                           'More Information',
                           style: TextStyle(
@@ -877,6 +881,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 contentPadding: const EdgeInsets.only(
                                     left: 8.0, top: 14, bottom: 10),
                                 hintText: 'commit',
+                                hintStyle: TextStyle(color: Colors.black45),
                                 suffixIcon: IconButton(
                                   onPressed: () async {
                                     var value =

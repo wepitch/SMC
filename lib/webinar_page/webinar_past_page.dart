@@ -41,7 +41,7 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<CounsellorDetailsProvider>().fetchWebinar_Data("UpComing");
+    context.read<CounsellorDetailsProvider>().fetchMyWebinar();
   }
 
   @override
@@ -52,8 +52,7 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
       itemBuilder: (context, index) {
         WebinarModel webinarModel = counsellorSessionProvider.webinarList[index];
         return Padding(
-          padding:
-              EdgeInsets.only(top: index == 0 ? 30 : 6, right: 16, left: 16),
+          padding: EdgeInsets.only(top: index == 0 ? 30 : 6, right: 16, left: 16),
           child: CustomWebinarCard1(
             showDuration: false,
             title: "Learn more about CUET and IPMAT",

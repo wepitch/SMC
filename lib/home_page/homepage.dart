@@ -1,13 +1,19 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home_page/coming_soon.dart';
+import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
 import 'package:myapp/home_page/drawer/drawer_1.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
+import 'package:myapp/home_page/model/popular_workshop_model.dart';
+import 'package:myapp/home_page/model/tranding_webinar_model.dart';
 import 'package:myapp/home_page/notification_page/noti.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
+import 'package:myapp/page-1/dashboard_session_page.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -40,29 +46,26 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     //_startTimer();
-    setName();
     getAllInfo();
     counsellorDetailsProvider =
         Provider.of<CounsellorDetailsProvider>(context, listen: false);
+    // context.read<CounsellorDetailsProvider>().fetchBannerImage();
+    context.read<CounsellorDetailsProvider>().fetchTrendingWebinar();
+    context.read<CounsellorDetailsProvider>().fetchPopularWorkShop();
   }
 
-
   void getAllInfo() async {
-     ApiService.get_profile();
+    ApiService.get_profile();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    path = prefs.getString("profile_image_path") ?? "N/A";
-    setState(() {});
+    path = prefs.getString("profile_image_path") ?? " ";
+    setState(() {
+      username = prefs.getString("name") ?? "";
+    });
   }
 
   void saveImagePathToPrefs(String path) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("profile_image_path", path);
-  }
-
-  void setName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    username = prefs.getString("name") ?? "N/A";
-    setState(() {});
   }
 
   int _currentIndex = 0;
@@ -86,8 +89,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  var str;
+
   @override
   Widget build(BuildContext context) {
+    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -104,7 +110,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: Text(
-               'Hello, $username',
+                'Hello, $username',
                 style: const TextStyle(
                     fontSize: 18,
                     color: Color(0xff1F0A68),
@@ -272,11 +278,12 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Expanded(
                             child: GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const ComingSoon()));
+                                        builder: (context) =>
+                                            const ComingSoon()));
                               },
                               child: Container(
                                 width: 140 * fem,
@@ -362,21 +369,17 @@ class _HomePageState extends State<HomePage> {
               height: 4,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.26,
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                children: [
-                  profileCard(),
-                  profileCard1(),
-                  profileCard2(),
-                ],
-              ),
-            ),
+                height: MediaQuery.of(context).size.height * 0.26,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount:
+                        counsellorSessionProvider.popularWorkShopList.length,
+                    itemBuilder: (context, index) {
+                      PopularWorkShopModel popular =
+                          counsellorSessionProvider.popularWorkShopList[index];
+                      return profileCard(popular);
+                    })),
             const SizedBox(
               height: 10,
             ),
@@ -400,13 +403,14 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding:
                   const EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 2),
-              child: Column(
-                children: [
-                  buildCustomWebinarCard(),
-                  buildCustomWebinarCard(),
-                  buildCustomWebinarCard(),
-                ],
-              ),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount:
+                      counsellorSessionProvider.trendingWebinarList.length,
+                  itemBuilder: (context, index) {
+                    TrandingWebinarModel trending = counsellorSessionProvider.trendingWebinarList[index];
+                    return buildCustomWebinarCard(trending);
+                  }),
             ),
           ],
         ),
@@ -414,20 +418,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  CustomWebinarCard buildCustomWebinarCard() {
-    return const CustomWebinarCard(
-        enableAutoScroll: true,
-        showDuration: false,
-        title: "Learn more about CUET and IPMAT",
-        isRegisterNow: true,
-        btnTitle: "Register Now",
-        time: "15 Sep @ 2:00 PM Onwards",
-        duration: "60",
-        participants: "Unlimited",
-        bannerImg: "assets/page-1/images/webinarBanner.png");
+  CustomWebinarCard buildCustomWebinarCard(TrandingWebinarModel trending) {
+    return CustomWebinarCard(
+      trandingWebinarModel: trending,
+    );
   }
 
-  Widget profileCard() {
+  Widget profileCard(PopularWorkShopModel popularWorkShopModel) {
+    var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
+    str = counsellorSessionProvider.popularWorkShopList[0].sessionDate
+        ?.split('T');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
       child: Card(
@@ -459,8 +459,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            'Anshika Mehra',
+                          Text(
+                            popularWorkShopModel.sessionUser ?? "N/A",
                             style: TextStyle(
                               color: Color(0xFF1F0A68),
                               fontSize: 15,
@@ -517,10 +517,10 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             width: 4,
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 121.13,
                             child: Text(
-                              ' Session at 8:00pm',
+                              '${popularWorkShopModel.sessionTime}',
                               style: TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
@@ -551,10 +551,10 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             width: 6,
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 121.13,
                             child: Text(
-                              '27th Dec 2023',
+                              str[0],
                               style: TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
@@ -585,10 +585,10 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             width: 4,
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 121.13,
                             child: Text(
-                              ' 10/-',
+                              '${popularWorkShopModel.sessionFee}',
                               style: TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
@@ -609,68 +609,91 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 height: 0.47,
-                width: double.infinity,
+                width: 300,
                 color: const Color(0xffAFAFAF).withOpacity(.78),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    width: 120.14,
-                    height: 30,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 0.50,
-                          color: Colors.black.withOpacity(0.7400000095367432),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CounsellorDetailsScreen(
+                                  id: popularWorkShopModel.sId!,
+                                  name: popularWorkShopModel.sessionUser ??
+                                      "N/A")));
+                    },
+                    child: Container(
+                      width: 120.14,
+                      height: 30,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 0.50,
+                            color: Colors.black.withOpacity(0.7400000095367432),
+                          ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        borderRadius: BorderRadius.circular(16),
                       ),
-                    ),
-                    child: const SizedBox(
-                      width: 119.09,
-                      height: 16.05,
-                      child: Center(
-                        child: Text(
-                          'Visit Profile',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF262626),
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0.07,
+                      child: const SizedBox(
+                        width: 119.09,
+                        height: 16.05,
+                        child: Center(
+                          child: Text(
+                            'Visit Profile',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF262626),
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.07,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    height: 30,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xff1F0A68),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                  SizedBox(width: 14),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CounsellingSessionPage(
+                                    name: 'N/A',
+                                    id: popularWorkShopModel.sId!,
+                                  )));
+                    },
+                    child: Container(
+                      width: 120,
+                      height: 30,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xff1F0A68),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                       ),
-                    ),
-                    child: const SizedBox(
-                      width: 119.09,
-                      height: 14.05,
-                      child: Center(
-                        child: Text(
-                          'Book Now',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0.07,
+                      child: const SizedBox(
+                        width: 119.09,
+                        height: 14.05,
+                        child: Center(
+                          child: Text(
+                            'Book Now',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.07,
+                            ),
                           ),
                         ),
                       ),
@@ -678,10 +701,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 2,
-              ),
-              Row(
+              const SizedBox(height: 3),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -1277,8 +1298,6 @@ class _HomePageState extends State<HomePage> {
 }
 
 List<String> dummyImagesSlider = [
-  "https://res.cloudinary.com/drqangxt5/image/upload/v1707392532/vwoxcoxnthnqzf6gr6dk.png",
-  "https://res.cloudinary.com/drqangxt5/image/upload/v1707395734/hg6qrgwoxunplx8nulyo.png",
-  "https://res.cloudinary.com/drqangxt5/image/upload/v1707470820/hw3dtgyzidkdxmfn9okf.png",
-  "https://res.cloudinary.com/drqangxt5/image/upload/v1707388826/ivt6y17a9pknj5fvdp8t.png",
+  "https://res.cloudinary.com/dlbmxyxmv/image/upload/v1711108531/banner-images/banner-image-1711108530031.png",
+  "https://res.cloudinary.com/dlbmxyxmv/image/upload/v1711007145/banner-images/banner-image-1711007144752.png"
 ];
