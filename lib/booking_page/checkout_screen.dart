@@ -23,8 +23,14 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
+  DateTime now = DateTime.now();
   late Razorpay razorpay;
   String key = "";
+  String oderId = '';
+  var str;
+  String phoneNumber = '';
+  var amount;
+  var name;
 
   void openCheckOut(amount) async {
     amount = amount * 100;
@@ -56,16 +62,36 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     Fluttertoast.showToast(
         msg: "Payment Success ${response.paymentId!}",
         toastLength: Toast.LENGTH_SHORT);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const CounsellorListPage_offline()));
-    var value =
-        await ApiService.counsellor_create_payment(1, response.paymentId!);
+    var value = await ApiService.counsellor_create_payment(
+      widget.id,
+      oderId,
+      response.paymentId!,
+      'order',
+      amount,
+      '0',
+      amount,
+      'INR',
+      'abc@gmail.com',
+      "",
+      'created',
+      0,
+      now.toString(),
+      key,
+      name,
+      'abc@gmail.com',
+      phoneNumber,
+      'session booking',
+    );
     if (value["error"] == "Order not successfully created") {
       EasyLoading.showToast(value["error"],
           toastPosition: EasyLoadingToastPosition.bottom);
     } else if (value["message"] == "Order successfully created") {
       EasyLoading.showToast(value["message"],
           toastPosition: EasyLoadingToastPosition.bottom);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const CounsellorListPage_offline()));
     } else {
       EasyLoading.showToast(value["error"],
           toastPosition: EasyLoadingToastPosition.bottom);
@@ -84,7 +110,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         toastLength: Toast.LENGTH_SHORT);
   }
 
-  var str;
 
   @override
   void initState() {
@@ -95,15 +120,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
     context.read<CounsellorDetailsProvider>().fetchCheckOut_Data();
+    getAllInfo();
   }
 
-  String phoneNumber = '';
 
   @override
   void dispose() {
     super.dispose();
     razorpay.clear();
-    getAllInfo();
   }
 
   void getAllInfo() async {
@@ -117,6 +141,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     var counsellorDetailController = context.watch<CounsellorDetailsProvider>();
     str = counsellorDetailController.checkOutDetailsList[0].sessionDate
         ?.split('T');
+    amount = counsellorDetailController.checkOutDetailsList[0].totalAmount
+        .toString();
+    name = counsellorDetailController.checkOutDetailsList[0].counsellorName;
     var height = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: ColorsConst.whiteColor,
@@ -380,10 +407,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             var value =
                                 await ApiService.counsellor_create_order(
                                     widget.name,
-                                    'test@gmail.com',
+                                    'abc@gmail.com',
                                     counsellorDetailController
                                         .checkOutDetailsList[0].totalAmount,
-                                    'description',
+                                    'session booking',
                                     phoneNumber);
                             if (value["error"] ==
                                 "Order not successfully created") {
@@ -405,6 +432,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                         EasyLoadingToastPosition.bottom);
                               }
                               key = value["data"]["key"];
+                              oderId = value["data"]["id"];
                               print(key);
                               openCheckOut(counsellorDetailController
                                   .checkOutDetailsList[0].totalAmount);
@@ -437,7 +465,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             'Cancel',
                             style: TextStyle(color: ColorsConst.whiteColor),
                           )),
-                    )
+                    ),
                   ],
                 ),
               ),

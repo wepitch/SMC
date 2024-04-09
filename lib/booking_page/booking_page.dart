@@ -78,21 +78,6 @@ class _BookingPageState extends State<BookingPage> {
                   fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
             ),
           ),
-          actions: [
-            GestureDetector(
-              onTap: (){
-              },
-              child: Image.asset(
-                'assets/page-1/images/layer-3.png',
-                width: 20,
-                height: 20,
-                color: Color(0xff1F0A68),
-              ),
-            ),
-            const SizedBox(
-              width: 22,
-            )
-          ],
         ),
         body: SafeArea(
           child: Column(

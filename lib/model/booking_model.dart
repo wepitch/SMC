@@ -85,8 +85,8 @@ class BookingData {
     id = json["_id"];
     sessionCounsellor = json["session_counsellor"];
     sessionUser = json["session_user"];
-    sessionDate = json["session_date"];
-    sessionTime = json["session_time"];
+    sessionDate = json["session_date"] ?? "";
+    sessionTime = json["session_time"] ?? "";
     sessionDuration = json["session_duration"];
     sessionType = json["session_type"];
     sessionFee = json["session_fee"];
@@ -139,7 +139,6 @@ class BookedEntity {
   int? averageRating;
   List<dynamic>? sessions;
   List<dynamic>? howWillIHelp;
-  List<dynamic>? followers;
   List<dynamic>? degreeFocused;
   List<String>? locationsFocused;
   List<String>? coursesFocused;
@@ -172,7 +171,6 @@ class BookedEntity {
       this.averageRating,
       this.sessions,
       this.howWillIHelp,
-      this.followers,
       this.degreeFocused,
       this.locationsFocused,
       this.coursesFocused,
@@ -210,7 +208,6 @@ class BookedEntity {
     averageRating = json["average_rating"];
     sessions = json["sessions"] ?? [];
     howWillIHelp = json["how_will_i_help"] ?? [];
-    followers = json["followers"] ?? [];
     degreeFocused = null;
 
     locationsFocused = json["locations_focused"] == null
@@ -263,9 +260,6 @@ class BookedEntity {
     }
     if (howWillIHelp != null) {
       data["how_will_i_help"] = howWillIHelp;
-    }
-    if (followers != null) {
-      data["followers"] = followers;
     }
     if (degreeFocused != null) {
       data["degree_focused"] = degreeFocused;

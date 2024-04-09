@@ -525,7 +525,7 @@ class _WebinarDetailUpComingWidgetState
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                bottom: 0.0, right: 20, left: 20,top: 20),
+                                bottom: 20.0, right: 20, left: 20,top: 20),
                             child: Container(
                               height: 190,
                               width: double.maxFinite,

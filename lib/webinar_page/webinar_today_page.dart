@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:myapp/notify.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
@@ -14,6 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../other/listcontroler.dart';
 
 class WebinarTodayPage extends StatefulWidget {
   const WebinarTodayPage({super.key});
@@ -88,11 +92,11 @@ class CustomWebinarCard1 extends StatefulWidget {
 }
 
 class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
+  final ListController listController = Get.put(ListController());
   late SharedPreferences _prefs;
   bool _isRegistrationStarting = false;
   String register_status = '';
   String webinarData = '';
-
 
   @override
   void initState() {
@@ -101,7 +105,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   }
 
   Future<void> _initializeSharedPreferences() async {
-
     _prefs = await SharedPreferences.getInstance();
     bool isStarting = _prefs.getBool('isRegistrationStarting') ?? false;
 
@@ -140,7 +143,22 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.45,
-      child: cardView(context),
+      child: listController.cousnellorlist_data.isEmpty
+          ? Container(
+              // height: double.maxFinite,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                // alignment: Alignment.bottomCenter,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height / 3.5,
+                  ),
+                  const Text("Data not Found")
+                ],
+              ),
+            )
+          : cardView(context),
     );
   }
 
@@ -292,7 +310,8 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                               onPressed: () async {
                                 _isRegistrationStarting =
                                     widget.webinarModel.registered;
-                                if (widget.webinarModel.registered && widget.webinarModel.webnar_startdays == 0) {
+                                if (widget.webinarModel.registered &&
+                                    widget.webinarModel.webnar_startdays == 0) {
                                   launchUrlString(widget.webinarModel.joinUrl!);
                                 } else if (_isRegistrationStarting) {
                                   Fluttertoast.showToast(
@@ -320,23 +339,24 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                               if (_isRegistrationStarting) {
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                    'Participant is already registered');
+                                                        'Participant is already registered');
                                                 Navigator.pop(context);
                                               } else {
                                                 var value = await ApiService
                                                     .webinar_regiter(widget
-                                                    .webinarModel.id!);
+                                                        .webinarModel.id!);
                                                 if (value["error"] ==
                                                     "Participant is already registered") {
                                                   Fluttertoast.showToast(
                                                       msg:
-                                                      'Participant is already registered');
+                                                          'Participant is already registered');
                                                 } else if (value["message"] ==
                                                     "Registration completed") {
                                                   Fluttertoast.showToast(
                                                       msg:
-                                                      'Registration completed. Thanks for registering');
-                                                  widget.webinarModel.registered = true;
+                                                          'Registration completed. Thanks for registering');
+                                                  widget.webinarModel
+                                                      .registered = true;
                                                   /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -389,8 +409,8 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                               },
                               title: widget.webinarModel.registered
                                   ? (widget.webinarModel.webnar_startdays == 0
-                                  ? 'Join Now'
-                                  : 'Starting in ${widget.webinarModel.webnar_startdays} days')
+                                      ? 'Join Now'
+                                      : 'Starting in ${widget.webinarModel.webnar_startdays} days')
                                   : 'Register Now',
                               isRegisterNow: widget.webinarModel.registered,
                             ),

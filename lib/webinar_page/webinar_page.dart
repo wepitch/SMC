@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/booking_page/booking_page.dart';
-import 'package:myapp/home_page/homepage.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/shared/colors_const.dart';
-import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
@@ -30,10 +28,8 @@ class _WebinarPageState extends State<WebinarPage> {
     super.initState();
     getAllInfo();
     pageController = PageController(initialPage: selectedIndex);
-     SessionDate.dateTimeDif();
+    SessionDate.dateTimeDif();
   }
-
-
 
   void getAllInfo() async {
     value = ApiService.get_profile();
@@ -42,7 +38,6 @@ class _WebinarPageState extends State<WebinarPage> {
     username = prefs.getString("name") ?? "";
     setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +66,9 @@ class _WebinarPageState extends State<WebinarPage> {
           child: Text(
             "Webinar",
             style: SafeGoogleFont("Inter",
-                fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Color(0xff1F0A68)),
           ),
         ),
       ),
@@ -115,15 +112,16 @@ class _WebinarPageState extends State<WebinarPage> {
               ],
             ),
             Expanded(
-                child: PageView(
-              controller: pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                WebinarPastPage(),
-                WebinarTodayPage(),
-                WebinarUpcomingPage(),
-              ],
-            ))
+              child: PageView(
+                controller: pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: const [
+                  WebinarPastPage(),
+                  WebinarTodayPage(),
+                  WebinarUpcomingPage(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
