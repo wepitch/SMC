@@ -18,4 +18,17 @@ class UserBookingProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void fetchUserBookingsAll(
+      {required bool past, required bool today, required bool upcoming}) async {
+    isLoading = true;
+    try {
+      var userBookings = await ApiService.getUserBookingAll(
+          today: today, past: past, upcoming: upcoming);
+      userBooking = userBookings;
+    } finally {
+      isLoading = false;
+    }
+    notifyListeners();
+  }
 }

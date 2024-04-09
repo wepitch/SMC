@@ -20,20 +20,19 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
     super.initState();
     context
         .read<UserBookingProvider>()
-        .fetchUserBookings(past: false, today: false, upcoming: true);
+        .fetchUserBookingsAll(past: false, today: false, upcoming: true);
   }
 
   Future<void> _refresh() async {
     return context
         .read<UserBookingProvider>()
-        .fetchUserBookings(past: false, today: false, upcoming: true);
+        .fetchUserBookingsAll(past: false, today: false, upcoming: true);
   }
 
   @override
   Widget build(BuildContext context) {
     var userBookings = context.watch<UserBookingProvider>().userBooking;
     bool isLoading = context.watch<UserBookingProvider>().isLoading;
-
     // String title = "Session starts in";
     // String time = "25:15";
     var mWidth = MediaQuery.sizeOf(context).width;

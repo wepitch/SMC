@@ -7,14 +7,15 @@ class BookingModel {
   String? createdAt;
   String? updatedAt;
 
-  BookingModel(
-      {this.id,
-      this.bookedEntity,
-      this.bookingType,
-      this.bookingData,
-      this.v,
-      this.createdAt,
-      this.updatedAt});
+  BookingModel({
+    this.id,
+    this.bookedEntity,
+    this.bookingType,
+    this.bookingData,
+    this.v,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   BookingModel.fromJson(Map<String, dynamic> json) {
     id = json["_id"];
@@ -85,8 +86,8 @@ class BookingData {
     id = json["_id"];
     sessionCounsellor = json["session_counsellor"];
     sessionUser = json["session_user"];
-    sessionDate = json["session_date"] ?? "";
-    sessionTime = json["session_time"] ?? "";
+    sessionDate = json["session_date"].toString();
+    sessionTime = json["session_time"].toString();
     sessionDuration = json["session_duration"];
     sessionType = json["session_type"];
     sessionFee = json["session_fee"];
