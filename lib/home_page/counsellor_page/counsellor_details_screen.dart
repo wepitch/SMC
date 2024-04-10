@@ -174,19 +174,18 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                counsellorDetailController
-                                    .cousnellorlist_detail[0].coverImage,
+                                (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].coverImage != null)
+                                    ? counsellorDetailController.cousnellorlist_detail[0].coverImage
+                                    : '',
                                 fit: BoxFit.cover,
-                                errorBuilder: (BuildContext context,
-                                    Object exception,
-                                    StackTrace? stackTrace) {
-                                  //print("Exception >> ${exception.toString()}");
+                                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                                   return Image.asset(
                                     'assets/page-1/images/comming_soon.png',
                                     fit: BoxFit.cover,
                                   );
                                 },
                               ),
+
                             ),
                           ),
                         ),
@@ -397,11 +396,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  '${counsellorDetailController.cousnellorlist_detail[0].experienceInYears} + yrs',
+                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].experienceInYears != null)
+                                      ? '${counsellorDetailController.cousnellorlist_detail[0].experienceInYears} + yrs'
+                                      : '',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
+
                               ],
                             ),
                             Column(
@@ -415,7 +417,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  '${counsellorDetailController.cousnellorlist_detail[0].totalSessionsAttended}',
+                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].totalSessionsAttended != null)
+                                      ? '${counsellorDetailController.cousnellorlist_detail[0].totalSessionsAttended}'
+                                      : '',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -432,7 +436,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  '${counsellorDetailController.cousnellorlist_detail[0].averageRating}',
+                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].averageRating != null)
+                                      ? '${counsellorDetailController.cousnellorlist_detail[0].averageRating}'
+                                      : 'N/A', // Or any other placeholder text to indicate absence of rating
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -449,7 +455,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  '${counsellorDetailController.cousnellorlist_detail[0].reviews}',
+                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].reviews != null)
+                                      ? '${counsellorDetailController.cousnellorlist_detail[0].reviews}'
+                                      : 'No reviews', // Or any other placeholder text to indicate absence of reviews
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -607,15 +615,11 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              // uiuxdesignercertificateazurece (2958:484)
-                              counsellorDetailController
-                                  .cousnellorlist_detail[0]
-                                  .qualifications
-                                  .isEmpty
-                                  ? "N/A"
-                                  : counsellorDetailController
-                                  .cousnellorlist_detail[0].qualifications
-                                  .join(', '),
+                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty &&
+                                  counsellorDetailController.cousnellorlist_detail[0].qualifications != null &&
+                                  counsellorDetailController.cousnellorlist_detail[0].qualifications.isNotEmpty)
+                                  ? counsellorDetailController.cousnellorlist_detail[0].qualifications.join(', ')
+                                  : 'N/A',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -623,6 +627,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
+
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -636,14 +641,11 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              counsellorDetailController
-                                  .cousnellorlist_detail[0]
-                                  .languages!
-                                  .isEmpty
-                                  ? "N/A"
-                                  : counsellorDetailController
-                                  .cousnellorlist_detail[0].languages!
-                                  .join(","),
+                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty &&
+                                  counsellorDetailController.cousnellorlist_detail[0].languages != null &&
+                                  counsellorDetailController.cousnellorlist_detail[0].languages!.isNotEmpty)
+                                  ? counsellorDetailController.cousnellorlist_detail[0].languages!.join(",")
+                                  : "N/A",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -651,6 +653,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
+
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -665,7 +668,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              "${counsellorDetailController.cousnellorlist_detail[0].location?.state},${counsellorDetailController.cousnellorlist_detail[0].location?.city},${counsellorDetailController.cousnellorlist_detail[0].location?.country},${counsellorDetailController.cousnellorlist_detail[0].location?.pincode}",
+                              counsellorDetailController.cousnellorlist_detail.isNotEmpty ? '${counsellorDetailController.cousnellorlist_detail[0].location?.state ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.city ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.country ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.pincode ?? ''}' : '',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -673,6 +676,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
+
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -687,8 +691,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              counsellorDetailController
-                                  .cousnellorlist_detail[0].gender,
+                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].gender != null)
+                                  ? counsellorDetailController.cousnellorlist_detail[0].gender
+                                  : "N/A",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -696,6 +701,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
+
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -710,21 +716,17 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              // qZz (2958:543)
-                              counsellorDetailController
-                                  .cousnellorlist_detail[0].age ==
-                                  null
-                                  ? "N/A"
-                                  : counsellorDetailController
-                                  .cousnellorlist_detail[0].age
-                                  .toString(),
+                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].age != null)
+                                  ? counsellorDetailController.cousnellorlist_detail[0].age.toString()
+                                  : "N/A",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 height: 1.2125,
                                 color: Color(0xff8e8989),
                               ),
-                            ),
+                            )
+
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -925,10 +927,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                             Positioned(
                                               // personalsessionmdz (2936:453)
                                               left: 0 * fem,
-                                              top: 0 * fem,
+                                              top: 14 * fem,
                                               child: Align(
                                                 child: SizedBox(
-                                                  width: 97 * fem,
+                                                  width: 100 * fem,
                                                   height: 15 * fem,
                                                   child: Text(
                                                     'Personal Session',
@@ -946,99 +948,86 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                                 ),
                                               ),
                                             ),
-                                            Positioned(
-                                              // group344gW4 (2936:454)
-                                              left: 0 * fem,
-                                              top: 14.5 * fem,
-                                              child: SizedBox(
-                                                width: 115 * fem,
-                                                height: 25 * fem,
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .center,
-                                                  children: [
-                                                    Container(
-                                                      // rupeebsv (2936:457)
-                                                      margin: EdgeInsets
-                                                          .fromLTRB(
-                                                          0 * fem,
-                                                          0 * fem,
-                                                          2 * fem,
-                                                          1 * fem),
-                                                      width: 11 * fem,
-                                                      height: 14 * fem,
-                                                      child: Image.asset(
-                                                        'assets/page-1/images/rupee-12.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      // LKi (2936:455)
-                                                      margin: EdgeInsets
-                                                          .fromLTRB(
-                                                          0 * fem,
-                                                          0 * fem,
-                                                          1 * fem,
-                                                          0 * fem),
-                                                      child: Text(
-                                                        counsellorDetailController
-                                                            .cousnellorlist_detail[
-                                                        0]
-                                                            .personalSessionPrice ==
-                                                            null
-                                                            ? "0"
-                                                            : counsellorDetailController
-                                                            .cousnellorlist_detail[
-                                                        0]
-                                                            .personalSessionPrice
-                                                            .toString(),
-                                                        style:
-                                                        SafeGoogleFont(
-                                                          'Inter',
-                                                          fontSize:
-                                                          20 * ffem,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w600,
-                                                          height: 1.2125 *
-                                                              ffem /
-                                                              fem,
-                                                          color: const Color(
-                                                              0xff000000),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      // onwardsTfE (2936:456)
-                                                      margin: EdgeInsets
-                                                          .fromLTRB(
-                                                          0 * fem,
-                                                          4 * fem,
-                                                          0 * fem,
-                                                          0 * fem),
-                                                      child: Text(
-                                                        ' Onwards',
-                                                        style:
-                                                        SafeGoogleFont(
-                                                          'Inter',
-                                                          fontSize:
-                                                          12 * ffem,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          height: 1.2125 *
-                                                              ffem /
-                                                              fem,
-                                                          color: const Color(
-                                                              0xff6b6b6b),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
+                                            // Positioned(
+                                            //   // group344gW4 (2936:454)
+                                            //   left: 0 * fem,
+                                            //   top: 14.5 * fem,
+                                            //   child: SizedBox(
+                                            //     width: 115 * fem,
+                                            //     height: 25 * fem,
+                                            //     child: Row(
+                                            //       crossAxisAlignment:
+                                            //       CrossAxisAlignment
+                                            //           .center,
+                                            //       children: [
+                                            //         Container(
+                                            //           // rupeebsv (2936:457)
+                                            //           margin: EdgeInsets
+                                            //               .fromLTRB(
+                                            //               0 * fem,
+                                            //               0 * fem,
+                                            //               2 * fem,
+                                            //               1 * fem),
+                                            //           width: 11 * fem,
+                                            //           height: 14 * fem,
+                                            //           child: Image.asset(
+                                            //             'assets/page-1/images/rupee-12.png',
+                                            //             fit: BoxFit.cover,
+                                            //           ),
+                                            //         ),
+                                            //         Container(
+                                            //           // LKi (2936:455)
+                                            //           margin: EdgeInsets
+                                            //               .fromLTRB(
+                                            //               0 * fem,
+                                            //               0 * fem,
+                                            //               1 * fem,
+                                            //               0 * fem),
+                                            //           child: Text(
+                                            //             (counsellorDetailController.cousnellorlist_detail.isNotEmpty &&
+                                            //                 counsellorDetailController.cousnellorlist_detail[0].personalSessionPrice != null)
+                                            //                 ? counsellorDetailController.cousnellorlist_detail[0].personalSessionPrice.toString()
+                                            //                 : "0",
+                                            //             style: SafeGoogleFont(
+                                            //               'Inter',
+                                            //               fontSize: 20 * ffem,
+                                            //               fontWeight: FontWeight.w600,
+                                            //               height: 1.2125 * ffem / fem,
+                                            //               color: const Color(0xff000000),
+                                            //             ),
+                                            //           ),
+                                            //
+                                            //         ),
+                                            //         Container(
+                                            //           // onwardsTfE (2936:456)
+                                            //           margin: EdgeInsets
+                                            //               .fromLTRB(
+                                            //               0 * fem,
+                                            //               4 * fem,
+                                            //               0 * fem,
+                                            //               0 * fem),
+                                            //           child: Text(
+                                            //             ' Onwards',
+                                            //             style:
+                                            //             SafeGoogleFont(
+                                            //               'Inter',
+                                            //               fontSize:
+                                            //               12 * ffem,
+                                            //               fontWeight:
+                                            //               FontWeight
+                                            //                   .w500,
+                                            //               height: 1.2125 *
+                                            //                   ffem /
+                                            //                   fem,
+                                            //               color: const Color(
+                                            //                   0xff6b6b6b),
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       ],
+                                            //     ),
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                       ),
@@ -1162,10 +1151,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                             Positioned(
                                               // groupsessionZtc (2936:491)
                                               left: 0 * fem,
-                                              top: 0 * fem,
+                                              top: 14 * fem,
                                               child: Align(
                                                 child: SizedBox(
-                                                  width: 83 * fem,
+                                                  width: 100 * fem,
                                                   height: 15 * fem,
                                                   child: Text(
                                                     'Group Session',
@@ -1183,85 +1172,73 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                                 ),
                                               ),
                                             ),
-                                            Positioned(
-                                              // group344UEt (2936:492)
-                                              left: 0 * fem,
-                                              top: 14.5 * fem,
-                                              child: SizedBox(
-                                                width: 105 * fem,
-                                                height: 25 * fem,
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .center,
-                                                  children: [
-                                                    Container(
-                                                      // rupeezU8 (2936:495)
-                                                      margin:
-                                                      EdgeInsets.fromLTRB(
-                                                          0 * fem,
-                                                          0 * fem,
-                                                          2 * fem,
-                                                          1 * fem),
-                                                      width: 11 * fem,
-                                                      height: 14 * fem,
-                                                      child: Image.asset(
-                                                        'assets/page-1/images/rupee-12.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      // vcg (2936:493)
-                                                      counsellorDetailController
-                                                          .cousnellorlist_detail[
-                                                      0]
-                                                          .groupSessionPrice ==
-                                                          null
-                                                          ? "0"
-                                                          : counsellorDetailController
-                                                          .cousnellorlist_detail[
-                                                      0]
-                                                          .groupSessionPrice
-                                                          .toString(),
-                                                      style: SafeGoogleFont(
-                                                        'Inter',
-                                                        fontSize: 20 * ffem,
-                                                        fontWeight:
-                                                        FontWeight.w600,
-                                                        height: 1.2125 *
-                                                            ffem /
-                                                            fem,
-                                                        color: const Color(
-                                                            0xff000000),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      // onwards5Va (2936:494)
-                                                      margin:
-                                                      EdgeInsets.fromLTRB(
-                                                          0 * fem,
-                                                          4 * fem,
-                                                          0 * fem,
-                                                          0 * fem),
-                                                      child: Text(
-                                                        ' Onwards',
-                                                        style: SafeGoogleFont(
-                                                          'Inter',
-                                                          fontSize: 12 * ffem,
-                                                          fontWeight:
-                                                          FontWeight.w500,
-                                                          height: 1.2125 *
-                                                              ffem /
-                                                              fem,
-                                                          color: const Color(
-                                                              0xff6b6b6b),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
+                                            // Positioned(
+                                            //   // group344UEt (2936:492)
+                                            //   left: 0 * fem,
+                                            //   top: 14.5 * fem,
+                                            //   child: SizedBox(
+                                            //     width: 105 * fem,
+                                            //     height: 25 * fem,
+                                            //     child: Row(
+                                            //       crossAxisAlignment:
+                                            //       CrossAxisAlignment
+                                            //           .center,
+                                            //       children: [
+                                            //         Container(
+                                            //           // rupeezU8 (2936:495)
+                                            //           margin:
+                                            //           EdgeInsets.fromLTRB(
+                                            //               0 * fem,
+                                            //               0 * fem,
+                                            //               2 * fem,
+                                            //               1 * fem),
+                                            //           width: 11 * fem,
+                                            //           height: 14 * fem,
+                                            //           child: Image.asset(
+                                            //             'assets/page-1/images/rupee-12.png',
+                                            //             fit: BoxFit.cover,
+                                            //           ),
+                                            //         ),
+                                            //         Text(
+                                            //           (counsellorDetailController.cousnellorlist_detail.isNotEmpty &&
+                                            //               counsellorDetailController.cousnellorlist_detail[0].groupSessionPrice != null)
+                                            //               ? counsellorDetailController.cousnellorlist_detail[0].groupSessionPrice.toString()
+                                            //               : "0",
+                                            //           style: SafeGoogleFont(
+                                            //             'Inter',
+                                            //             fontSize: 20 * ffem,
+                                            //             fontWeight: FontWeight.w600,
+                                            //             height: 1.2125 * ffem / fem,
+                                            //             color: const Color(0xff000000),
+                                            //           ),
+                                            //         ),
+                                            //         Container(
+                                            //           // onwards5Va (2936:494)
+                                            //           margin:
+                                            //           EdgeInsets.fromLTRB(
+                                            //               0 * fem,
+                                            //               4 * fem,
+                                            //               0 * fem,
+                                            //               0 * fem),
+                                            //           child: Text(
+                                            //             ' Onwards',
+                                            //             style: SafeGoogleFont(
+                                            //               'Inter',
+                                            //               fontSize: 12 * ffem,
+                                            //               fontWeight:
+                                            //               FontWeight.w500,
+                                            //               height: 1.2125 *
+                                            //                   ffem /
+                                            //                   fem,
+                                            //               color: const Color(
+                                            //                   0xff6b6b6b),
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       ],
+                                            //     ),
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                       ),

@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_select_listview_offline.dart';
-import 'package:myapp/model/check_out_details_model.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/shared/colors_const.dart';
@@ -110,7 +108,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         toastLength: Toast.LENGTH_SHORT);
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -122,7 +119,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     context.read<CounsellorDetailsProvider>().fetchCheckOut_Data();
     getAllInfo();
   }
-
 
   @override
   void dispose() {
@@ -139,11 +135,26 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     var counsellorDetailController = context.watch<CounsellorDetailsProvider>();
-    str = counsellorDetailController.checkOutDetailsList[0].sessionDate
-        ?.split('T');
-    amount = counsellorDetailController.checkOutDetailsList[0].totalAmount
-        .toString();
-    name = counsellorDetailController.checkOutDetailsList[0].counsellorName;
+
+    str = counsellorDetailController.checkOutDetailsList.isNotEmpty
+        ? counsellorDetailController.checkOutDetailsList[0].sessionDate
+            ?.split('T')
+        : '';
+
+    var amount = '';
+    if (counsellorDetailController.checkOutDetailsList.isNotEmpty) {
+      num? totalAmount =
+          counsellorDetailController.checkOutDetailsList[0].totalAmount;
+      if (totalAmount != null) {
+        amount = totalAmount.toString();
+      }
+    }
+
+    String name = '';
+    if (counsellorDetailController.checkOutDetailsList.isNotEmpty) {
+      name = counsellorDetailController.checkOutDetailsList[0].counsellorName ??
+          '';
+    }
     var height = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: ColorsConst.whiteColor,
@@ -200,9 +211,17 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${counsellorDetailController.checkOutDetailsList[0].counsellorName}',
+                                counsellorDetailController
+                                        .checkOutDetailsList.isNotEmpty
+                                    ? counsellorDetailController
+                                            .checkOutDetailsList[0]
+                                            .counsellorName ??
+                                        "N/A"
+                                    : "N/A",
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                               const Text(
                                 'Designer at SMC',
@@ -226,13 +245,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 12),
                               ),
-                              Text(str[0]),
+                              Text(str.isNotEmpty ? str[0] : ''),
                             ],
                           ),
                           Column(
                             children: [
                               Text(
-                                '${counsellorDetailController.checkOutDetailsList[0].sessionType} Session',
+                                '${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].sessionType ?? "N/A" : "N/A"} Session',
                                 style: TextStyle(
                                   color: ColorsConst.appBarColor,
                                 ),
@@ -297,10 +316,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Spacer(),
                           Text(
-                            '${counsellorDetailController.checkOutDetailsList[0].sessionType}',
+                            '${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].sessionType ?? "N/A" : "N/A"}',
                             style: TextStyle(
-                                color: ColorsConst.black54Color, fontSize: 13),
-                          ),
+                              color: ColorsConst.black54Color,
+                              fontSize: 13,
+                            ),
+                          )
                         ],
                       ),
                       Row(
@@ -312,10 +333,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Spacer(),
                           Text(
-                            '\u{20B9}${counsellorDetailController.checkOutDetailsList[0].sessionFee}',
+                            '\u{20B9}${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].sessionFee ?? "N/A" : "N/A"}',
                             style: TextStyle(
-                                color: ColorsConst.black54Color, fontSize: 13),
-                          ),
+                              color: ColorsConst.black54Color,
+                              fontSize: 13,
+                            ),
+                          )
                         ],
                       ),
                       Row(
@@ -327,10 +350,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Spacer(),
                           Text(
-                            '\u{20B9}${counsellorDetailController.checkOutDetailsList[0].gstAmount}',
+                            '\u{20B9}${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].gstAmount ?? "N/A" : "N/A"}',
                             style: TextStyle(
-                                color: ColorsConst.black54Color, fontSize: 13),
-                          ),
+                              color: ColorsConst.black54Color,
+                              fontSize: 13,
+                            ),
+                          )
                         ],
                       ),
                       Row(
@@ -342,9 +367,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Spacer(),
                           Text(
-                            '\u{20B9}${counsellorDetailController.checkOutDetailsList[0].feeWithGST}',
+                            '\u{20B9}${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].feeWithGST ?? "N/A" : "N/A"}',
                             style: TextStyle(
-                                color: ColorsConst.black54Color, fontSize: 13),
+                              color: ColorsConst.black54Color,
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       ),
@@ -357,9 +384,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Spacer(),
                           Text(
-                            '\u{20B9}${counsellorDetailController.checkOutDetailsList[0].gatewayCharge}',
+                            '\u{20B9}${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].gatewayCharge ?? "N/A" : "N/A"}',
                             style: TextStyle(
-                                color: ColorsConst.black54Color, fontSize: 13),
+                              color: ColorsConst.black54Color,
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       ),
@@ -372,12 +401,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Spacer(),
                           Text(
-                            '\u{20B9}${counsellorDetailController.checkOutDetailsList[0].totalAmount}',
+                            '\u{20B9}${counsellorDetailController.checkOutDetailsList.isNotEmpty ? counsellorDetailController.checkOutDetailsList[0].totalAmount ?? "N/A" : "N/A"}',
                             style: TextStyle(
-                                color: ColorsConst.blackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold),
-                          ),
+                              color: ColorsConst.blackColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
                         ],
                       ),
                     ],

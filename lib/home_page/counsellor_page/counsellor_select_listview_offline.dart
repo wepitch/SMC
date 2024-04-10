@@ -912,15 +912,13 @@ class _CounsellorListPage_offlineState
                                                                                       children: [
                                                                                         GestureDetector(
                                                                                           onTap: () {
-                                                                                            String id = listController.cousnellorlist_data[index].id;
-                                                                                            String name = listController.cousnellorlist_data[index].name;
                                                                                             Navigator.push(
                                                                                                 context,
                                                                                                 MaterialPageRoute(
                                                                                                     builder: (context) =>
                                                                                                         CounsellorDetailsScreen(
-                                                                                                            id: id,
-                                                                                                            name: name)));
+                                                                                                            id: listController.cousnellorlist_data[index].id,
+                                                                                                            name: listController.cousnellorlist_data[index].name)));
                                                                                           },
                                                                                           child: Container(
                                                                                             width: 100.14,
