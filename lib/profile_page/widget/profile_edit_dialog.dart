@@ -129,7 +129,16 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
         return DropDownDialog(
           callback: (value) {
             setState(() {
-              currentEducation = value;
+              if (value == "School") {
+                currentEducation = "Student";
+              } else {
+                currentEducation = value;
+              }
+              if (value == "Graduated") {
+                currentEducation = "Graduation";
+              } else {
+                currentEducation = value;
+              }
             });
           },
           itemList: educationList,
@@ -138,6 +147,7 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
       },
     );
   }
+
 
   void showGenderDropdown(BuildContext context) async {
     List<String> genderList = ['Male', 'Female', 'Other'];

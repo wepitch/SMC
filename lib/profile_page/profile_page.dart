@@ -7,8 +7,6 @@ import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../other/api_service.dart';
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -39,7 +37,6 @@ class _ProfilePageState extends State<ProfilePage> {
     gender = prefs.getString("gender") ?? "N/A";
     eduLevel = prefs.getString("education_level") ?? "N/A";
     path = prefs.getString("profile_image_path");
-
     setState(() {});
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +11,9 @@ import 'package:myapp/webinar_page/webinar_page.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
 import 'package:myapp/widget/webinar_detail_page_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class WebinarUpcomingPage extends StatefulWidget {
@@ -258,12 +261,17 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Center(
-                              child: Image.asset(
-                                "assets/page-1/images/group-38-oFX.png",
-                                width: 20,
-                                height: 20,
-                                color: Color(0xff1F0A68),
+                            GestureDetector(
+                              onTap: (){
+                                Share.share(widget.webinarModel.joinUrl!);
+                              },
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/page-1/images/group-38-oFX.png",
+                                  width: 20,
+                                  height: 20,
+                                  color: Color(0xff1F0A68),
+                                ),
                               ),
                             ),
                             customRegisterNow(

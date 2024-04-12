@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.asset(
-                            "assets/page-1/images/WhatsApp Image 2024-03-18 at 2.07.29 PM.jpeg",
+                            "assets/page-1/images/councellor.jpeg",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -201,12 +201,11 @@ class _HomePageState extends State<HomePage> {
                                   builder: (context) => const ComingSoon()));
                         },
                         child: Container(
-                          padding: EdgeInsets.only(left: 10, bottom: 0),
                           width: 110 * fem,
                           height: 120 * fem,
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
-                            color: const Color(0xffE86C86),
+                            color: Color(0xffffffff),
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
@@ -216,13 +215,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Image.asset(
-                                "assets/page-1/images/Group 793.png",
-                              ),
-                            ],
+                          child: Image.asset(
+                            "assets/page-1/images/Group 793.png",
                           ),
                         ),
                       ),
@@ -369,17 +363,23 @@ class _HomePageState extends State<HomePage> {
               height: 4,
             ),
             SizedBox(
-                height: MediaQuery.of(context).size.height * 0.26,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount:
-                        counsellorSessionProvider.popularWorkShopList.length,
-                    itemBuilder: (context, index) {
-                      PopularWorkShopModel popular =
-                          counsellorSessionProvider.popularWorkShopList[index];
-                      return profileCard(popular);
-                    })),
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: const PageScrollPhysics(),
+                  itemCount: counsellorSessionProvider.popularWorkShopList.length,
+                  itemBuilder: (context, index) {
+                    PopularWorkShopModel popular = counsellorSessionProvider.popularWorkShopList[index];
+                    return profileCard(
+                        popular,
+                        index,
+                        counsellorSessionProvider.popularWorkShopList.length
+                    );
+                  }
+              ),
+            ),
+
             const SizedBox(
               height: 10,
             ),
@@ -401,13 +401,16 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 2),
+              padding:
+                  const EdgeInsets.only(left: 14, right: 14, bottom: 0, top: 2),
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: counsellorSessionProvider.trendingWebinarList.length,
+                  itemCount:
+                      counsellorSessionProvider.trendingWebinarList.length,
                   itemBuilder: (context, index) {
-                    TrandingWebinarModel trending = counsellorSessionProvider.trendingWebinarList[index];
+                    TrandingWebinarModel trending =
+                        counsellorSessionProvider.trendingWebinarList[index];
                     return Column(
                       children: [
                         Card(
@@ -415,7 +418,8 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.white,
                           surfaceTintColor: Colors.white,
                           elevation: 2,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -426,11 +430,14 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.red,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
-                                      image: NetworkImage(trending.webinarImage!), fit: BoxFit.fill),
+                                      image:
+                                          NetworkImage(trending.webinarImage!),
+                                      fit: BoxFit.fill),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 8, 20, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 8, 20, 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -444,11 +451,14 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     const SizedBox(height: 4),
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               trending.webinarDate!,
@@ -491,7 +501,8 @@ class _HomePageState extends State<HomePage> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 10),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           GestureDetector(
                                             onTap: () {
@@ -523,45 +534,65 @@ class _HomePageState extends State<HomePage> {
                                                       actions: [
                                                         TextButton(
                                                           onPressed: () {
-                                                            Navigator.pop(context);
+                                                            Navigator.pop(
+                                                                context);
                                                           },
-                                                          child: const Text('Cancel'),
+                                                          child: const Text(
+                                                              'Cancel'),
                                                         ),
                                                         TextButton(
                                                           onPressed: () async {
-                                                            if (trending.registered! &&
-                                                                trending.webinarStartingInDays == 0) {
-                                                              launchUrlString(trending.webinarJoinUrl!);
-                                                            } else if (trending.registered!) {
-                                                              Fluttertoast.showToast(
-                                                                  msg: 'Participant is already registered');
+                                                            if (trending
+                                                                    .registered! &&
+                                                                trending.webinarStartingInDays ==
+                                                                    0) {
+                                                              launchUrlString(
+                                                                  trending
+                                                                      .webinarJoinUrl!);
+                                                            } else if (trending
+                                                                .registered!) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          'Participant is already registered');
                                                             } else {
-                                                              var value = await ApiService.webinar_regiter(
-                                                                  trending.id!);
+                                                              var value = await ApiService
+                                                                  .webinar_regiter(
+                                                                      trending
+                                                                          .id!);
 
-                                                              if (value["error"] ==
+                                                              if (value[
+                                                                      "error"] ==
                                                                   "Participant is already registered") {
-                                                                Fluttertoast.showToast(
-                                                                    msg: 'Participant is already registered');
-                                                              } else if (value["message"] ==
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            'Participant is already registered');
+                                                              } else if (value[
+                                                                      "message"] ==
                                                                   "Registration completed") {
-                                                                Fluttertoast.showToast(
-                                                                    msg:
-                                                                    'Registration completed Thanks for registration');
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            'Registration completed Thanks for registration');
                                                                 Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                    builder: (context) => const HomePage(),
+                                                                    builder:
+                                                                        (context) =>
+                                                                            const HomePage(),
                                                                   ),
                                                                 );
                                                               }
                                                             }
                                                             if (mounted) {
-                                                              Navigator.pop(context);
+                                                              Navigator.pop(
+                                                                  context);
                                                             }
                                                             //await _updateRegistrationStatus(true);
                                                           },
-                                                          child: const Text('Yes'),
+                                                          child:
+                                                              const Text('Yes'),
                                                         ),
                                                       ],
                                                     );
@@ -572,11 +603,13 @@ class _HomePageState extends State<HomePage> {
                                               }
                                             },
                                             title: trending.registered!
-                                                ? (trending.webinarStartingInDays == 0
-                                                ? 'Join Now'
-                                                : 'Starting in ${trending.webinarStartingInDays} days')
+                                                ? (trending.webinarStartingInDays ==
+                                                        0
+                                                    ? 'Join Now'
+                                                    : 'Starting in ${trending.webinarStartingInDays} days')
                                                 : 'Join Now',
-                                            isRegisterNow: trending.registered!,),
+                                            isRegisterNow: trending.registered!,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -596,13 +629,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  CustomWebinarCard buildCustomWebinarCard(TrandingWebinarModel trending) {
+  CustomWebinarCard buildCustomWebinarCard(
+    TrandingWebinarModel trending,
+  ) {
     return CustomWebinarCard(
       trandingWebinarModel: trending,
     );
   }
 
-  Widget profileCard(PopularWorkShopModel popularWorkShopModel) {
+  Widget profileCard(PopularWorkShopModel popularWorkShopModel, int cardIndex,
+      int totalCards) {
     var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
     str = counsellorSessionProvider.popularWorkShopList[0].sessionDate
         ?.split('T');
@@ -614,7 +650,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 5, 12, 18),
+          padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
           child: Column(
             children: [
               Row(
@@ -639,7 +675,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(
                             popularWorkShopModel.sessionUser ?? "N/A",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF1F0A68),
                               fontSize: 15,
                               fontFamily: 'Inter',
@@ -666,7 +702,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 2,
+                        height: 3,
                       ),
                       const SizedBox(
                         width: 190.25,
@@ -682,7 +718,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 2,
+                        height: 4,
                       ),
                       Row(
                         children: [
@@ -698,7 +734,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 121.13,
                             child: Text(
-                              '${popularWorkShopModel.sessionTime}',
+                              ' ${popularWorkShopModel.sessionTime}',
                               style: TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
@@ -711,7 +747,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 3,
+                        height: 4,
                       ),
                       Row(
                         children: [
@@ -745,7 +781,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(
-                        height: 3,
+                        height: 4,
                       ),
                       Row(
                         children: [
@@ -766,8 +802,8 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 121.13,
                             child: Text(
-                              '${popularWorkShopModel.sessionFee}',
-                              style: TextStyle(
+                              ' ${popularWorkShopModel.sessionFee}',
+                              style: const TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -791,7 +827,7 @@ class _HomePageState extends State<HomePage> {
                 color: const Color(0xffAFAFAF).withOpacity(.78),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.014,
               ),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -879,26 +915,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 3),
-              const Row(
+              const SizedBox(height: 6),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.circle,
-                    color: Color(0xff1F0A68),
-                    size: 10,
-                  ),
-                  Icon(
-                    Icons.circle_outlined,
-                    color: Color(0xff1F0A68),
-                    size: 10,
-                  ),
-                  Icon(
-                    Icons.circle_outlined,
-                    color: Color(0xff1F0A68),
-                    size: 10,
-                  ),
-                ],
+                children: List.generate(totalCards, (index) {
+                  return Icon(
+                    index == cardIndex ? Icons.circle : Icons.circle_outlined,
+                    color: const Color(0xff1F0A68),
+                    size: 8,
+                  );
+                }),
               ),
             ],
           ),

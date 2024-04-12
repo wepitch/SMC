@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home_page/homepagecontainer.dart';
 import 'package:myapp/page-1/select_gender_new.dart';
 import 'package:myapp/page-1/selectgender.dart';
@@ -18,9 +19,9 @@ class EducationLevelNew extends StatefulWidget {
 class _EducationLevelNewState extends State<EducationLevelNew> {
   int selectedIndex = 0;
   static List<String> list = [
-    "I'm in Student",
+    "I'm in School",
     "I'm in College",
-    "I'm in Graduated",
+    "I'm in Graduation",
   ];
   String selectedOption = list[0];
 
@@ -69,9 +70,22 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
                                 return customButton(
                                   onPressed: () {
                                     setState(() {
-                                      selectedIndex = index;
-                                      selectedOption = title;
-                                      selectedOption = selectedOption.replaceAll("I'm in ", '');
+                                      if (index == 0) {
+                                        selectedOption = "I'm in Student";
+                                        selectedIndex = index;
+                                        selectedOption = selectedOption
+                                            .replaceAll("I'm in ", '');
+                                      } else if (index == 2) {
+                                        selectedOption = "I'm in Graduated";
+                                        selectedIndex = index;
+                                        selectedOption = selectedOption
+                                            .replaceAll("I'm in ", '');
+                                      } else {
+                                        selectedOption = title;
+                                        selectedIndex = index;
+                                        selectedOption = selectedOption
+                                            .replaceAll("I'm in ", '');
+                                      }
                                     });
                                   },
                                   title: title,
@@ -127,6 +141,7 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
 
                         if (value["message"] ==
                             "User registered successfully") {
+                          Fluttertoast.showToast(msg: 'User registered successfully');
                           if (!mounted) return;
                           Future.delayed(const Duration(microseconds: 0), () {
                             Navigator.pushReplacement(

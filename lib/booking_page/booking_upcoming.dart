@@ -20,13 +20,13 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
     super.initState();
     context
         .read<UserBookingProvider>()
-        .fetchUserBookingsAll(past: false, today: false, upcoming: true);
+        .fetchUserBookings(past: false, today: false, upcoming: true);
   }
 
   Future<void> _refresh() async {
     return context
         .read<UserBookingProvider>()
-        .fetchUserBookingsAll(past: false, today: false, upcoming: true);
+        .fetchUserBookings(past: false, today: false, upcoming: true);
   }
 
   @override

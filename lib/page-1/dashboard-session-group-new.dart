@@ -223,9 +223,14 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     tabController =
         TabController(length: sessionDate.dates.length, vsync: this);
     configLoading();
-    //fetchDataFromApi();
-    fetchDataFromApiAll();
+    fetchDataFromApi();
+    //fetchDataFromApiAll();
     context.read<CounsellorDetailsProvider>().fetchCounsellor_session(id: widget.id);
+  }
+
+  @override
+  void onResume() {
+    Fluttertoast.showToast(msg: 'abc');
   }
 
   void configLoading() {

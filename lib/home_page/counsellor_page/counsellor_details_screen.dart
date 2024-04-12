@@ -930,7 +930,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                               top: 14 * fem,
                                               child: Align(
                                                 child: SizedBox(
-                                                  width: 100 * fem,
+                                                  width: 120 * fem,
                                                   height: 15 * fem,
                                                   child: Text(
                                                     'Personal Session',
@@ -1154,7 +1154,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                               top: 14 * fem,
                                               child: Align(
                                                 child: SizedBox(
-                                                  width: 100 * fem,
+                                                  width: 120 * fem,
                                                   height: 15 * fem,
                                                   child: Text(
                                                     'Group Session',

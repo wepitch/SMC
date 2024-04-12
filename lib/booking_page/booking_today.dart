@@ -21,13 +21,13 @@ class _BookingTodayState extends State<BookingToday> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<UserBookingProvider>().fetchUserBookingsAll(past: false, today: true, upcoming: false);
+    context.read<UserBookingProvider>().fetchUserBookings(past: false, today: true, upcoming: false);
     todayTime = DateTime.now();
   }
 
   Future<void> _refresh() async {
     return Future.delayed(const Duration(seconds: 1), () {
-      context.read<UserBookingProvider>().fetchUserBookingsAll(past: false, today: true, upcoming: false);
+      context.read<UserBookingProvider>().fetchUserBookings(past: false, today: true, upcoming: false);
     });
   }
 

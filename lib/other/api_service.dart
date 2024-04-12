@@ -924,7 +924,6 @@ class ApiService {
     } else if (response.statusCode == 404) {
       return [BookingModel(v: -1)];
     }
-
     return [];
   }
 

@@ -11,7 +11,7 @@ import 'package:myapp/other/dependency_injection.dart';
 import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
 import 'package:myapp/page-1/shared.dart';
-import 'package:myapp/page-1/splash_screen_n.dart';
+import 'package:myapp/page-1/splash_screen_1.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -56,8 +56,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.grey,
           ),
           //home: CheckOutScreen(name: 'abc', id: '65fbcbb563ee42338a08b939'),
-          home:
-              isLoggedIn ? const HomePageContainer() : const SplashScreenNew(),
+          home: SplashScreen1(isLoggedIn: isLoggedIn),
           builder: EasyLoading.init()),
     );
   }

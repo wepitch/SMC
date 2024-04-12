@@ -921,7 +921,7 @@ class _CounsellorListPage_offlineState
                                                                                                             name: listController.cousnellorlist_data[index].name)));
                                                                                           },
                                                                                           child: Container(
-                                                                                            width: 100.14,
+                                                                                            width: 120.14,
                                                                                             height: 30,
                                                                                             decoration: ShapeDecoration(
                                                                                               color: Colors.white,
@@ -942,7 +942,7 @@ class _CounsellorListPage_offlineState
                                                                                                   textAlign: TextAlign.center,
                                                                                                   style: TextStyle(
                                                                                                     color: Color(0xFF262626),
-                                                                                                    fontSize: 14,
+                                                                                                    fontSize: 13,
                                                                                                     fontFamily: 'Inter',
                                                                                                     fontWeight: FontWeight.w700,
                                                                                                     height: 0.07,
@@ -965,7 +965,7 @@ class _CounsellorListPage_offlineState
                                                                                                             name: name)));
                                                                                           },
                                                                                           child: Container(
-                                                                                            width: 100,
+                                                                                            width: 120,
                                                                                             height: 30,
                                                                                             decoration: ShapeDecoration(
                                                                                               color: const Color(0xff1F0A68),
@@ -974,7 +974,7 @@ class _CounsellorListPage_offlineState
                                                                                               ),
                                                                                             ),
                                                                                             child: const SizedBox(
-                                                                                              width: 100.09,
+                                                                                              width: 110.09,
                                                                                               height: 16.05,
                                                                                               child: Center(
                                                                                                 child: Text(
@@ -982,7 +982,7 @@ class _CounsellorListPage_offlineState
                                                                                                   textAlign: TextAlign.center,
                                                                                                   style: TextStyle(
                                                                                                     color: Colors.white,
-                                                                                                    fontSize: 14,
+                                                                                                    fontSize: 13,
                                                                                                     fontFamily: 'Inter',
                                                                                                     fontWeight: FontWeight.w700,
                                                                                                     height: 0.07,

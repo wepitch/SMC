@@ -82,7 +82,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                 ),
               ),
               Container(
-                height: 460,
+                height: ffem * 500,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Color(0xffF6F7F7),
@@ -127,7 +127,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                             Container(
                               // didntreceiveanotpresendotpX1s (437:94)
                               margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 60 * fem, 27 * fem, 15 * fem),
+                                  0 * fem, 60 * fem, 2 * fem, 15 * fem),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

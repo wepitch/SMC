@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:myapp/booking_page/booking_past.dart';
 import 'package:myapp/booking_page/booking_today.dart';
 import 'package:myapp/booking_page/booking_upcoming.dart';
-import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -203,7 +202,7 @@ class CustomTab extends StatelessWidget {
             backgroundColor:
                 isSelected ? const Color(0xff1F0A68) :  Colors.white,
           ),
-          child: Text(title)),
+          child: Text(title,style: const TextStyle(fontSize: 10),)),
     );
   }
 }

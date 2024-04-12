@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/booking_page/booking_confirmatoin_page_1.dart';
 import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
@@ -20,13 +21,13 @@ class _BookingPastState extends State<BookingPast> {
     super.initState();
     context
         .read<UserBookingProvider>()
-        .fetchUserBookingsAll(past: true, today: false, upcoming: false);
+        .fetchUserBookings(past: true, today: false, upcoming: false);
   }
 
   Future<void> _refresh() async {
     return context
         .read<UserBookingProvider>()
-        .fetchUserBookingsAll(past: true, today: false, upcoming: false);
+        .fetchUserBookings(past: true, today: false, upcoming: false);
   }
 
   @override
@@ -65,6 +66,9 @@ class _BookingPastState extends State<BookingPast> {
                                 alignment: Alignment.bottomCenter,
                                 children: [
                                   Card(
+                                    color: Colors.white,
+                                    surfaceTintColor: Colors.white,
+                                    shadowColor: Colors.white,
                                     // semanticContainer: false,
                                     margin: const EdgeInsets.only(top: 5),
                                     elevation: 5,
@@ -204,7 +208,7 @@ class _BookingPastState extends State<BookingPast> {
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder: (context) =>
-                                                                      BookingConfirmationPage(
+                                                                      BookingConfirmationPage1(
                                                                           remainingTime:
                                                                               const Duration(), // has to change,
                                                                           isUpcoming:

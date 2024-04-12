@@ -185,7 +185,7 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
               backgroundColor:
                   isPressed ? const Color(0xff1F0A68) : Colors.transparent),
           onPressed: onPressed,
-          child: Text(title)),
+          child: Text(title,style: TextStyle(fontSize: 12),)),
     );
   }
 }
