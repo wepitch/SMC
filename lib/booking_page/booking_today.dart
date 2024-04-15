@@ -75,10 +75,8 @@ class _BookingTodayState extends State<BookingToday> {
                         itemCount: userBookings.length,
                         itemBuilder: (context, index) {
                           var details = userBookings[index];
-                          apiTime =
-                              parseTiming(details.bookingData!.sessionTime!);
-                          Duration remainingTime =
-                              apiTime.difference(todayTime);
+                          apiTime = parseTiming(details.bookingData!.sessionTime!);
+                          Duration remainingTime = apiTime.difference(todayTime);
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Container(

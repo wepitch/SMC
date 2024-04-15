@@ -9,4 +9,5 @@ class ColorsConst {
   static const Color black12Color = Colors.black12;
   static const Color black54Color = Colors.black54;
   static const Color black26Color = Colors.black26;
+  static const Color grayColor = Colors.grey;
 }

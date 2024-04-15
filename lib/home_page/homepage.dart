@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home_page/coming_soon.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
@@ -21,7 +18,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
 import '../other/api_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     getAllInfo();
     counsellorDetailsProvider =
         Provider.of<CounsellorDetailsProvider>(context, listen: false);
-    // context.read<CounsellorDetailsProvider>().fetchBannerImage();
+    context.read<CounsellorDetailsProvider>().fetchBannerImage();
     context.read<CounsellorDetailsProvider>().fetchTrendingWebinar();
     context.read<CounsellorDetailsProvider>().fetchPopularWorkShop();
   }
@@ -91,9 +87,18 @@ class _HomePageState extends State<HomePage> {
 
   var str;
 
+  //var imgUrl;
+
+  List<String> imgUrlList = [];
+
   @override
   Widget build(BuildContext context) {
     var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
+
+    if (counsellorSessionProvider.bannerImageList.isNotEmpty) {
+      imgUrlList.add(counsellorSessionProvider.bannerImageList[0].url ?? '');
+    }
+
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
@@ -179,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                           onTapgotocounsellor(context);
                         },
                         child: Container(
-                          height: 94,
+                          height: fem * 90,
                           decoration: BoxDecoration(
                             color: const Color(0xffffffff),
                             borderRadius: BorderRadius.circular(10),
@@ -200,23 +205,26 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                   builder: (context) => const ComingSoon()));
                         },
-                        child: Container(
-                          width: 110 * fem,
-                          height: 120 * fem,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            color: Color(0xffffffff),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 4),
-                                blurRadius: 4,
-                                color: Colors.black.withOpacity(0.1),
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            "assets/page-1/images/Group 793.png",
+                        child: Visibility(
+                          visible: false,
+                          child: Container(
+                            width: 110 * fem,
+                            height: 120 * fem,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              color: Color(0xffffffff),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 4,
+                                  color: Colors.black.withOpacity(0.1),
+                                ),
+                              ],
+                            ),
+                            child: Image.asset(
+                              "assets/page-1/images/Group 793.png",
+                            ),
                           ),
                         ),
                       ),
@@ -225,85 +233,88 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 112 * fem,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ComingSoon()));
-                        },
-                        child: Container(
-                          width: 110 * fem,
-                          height: 120 * fem,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            color: Color(0xff6450A8),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0, 4),
-                                blurRadius: 4,
-                                color: Colors.black.withOpacity(0.1),
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            "assets/page-1/images/Group 794.png",
+            Visibility(
+              visible: false,
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 112 * fem,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ComingSoon()));
+                          },
+                          child: Container(
+                            width: 110 * fem,
+                            height: 120 * fem,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              color: Color(0xff6450A8),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 4,
+                                  color: Colors.black.withOpacity(0.1),
+                                ),
+                              ],
+                            ),
+                            child: Image.asset(
+                              "assets/page-1/images/Group 794.png",
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 34,
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ComingSoon()));
-                              },
-                              child: Container(
-                                width: 140 * fem,
-                                height: 140 * fem,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xff5273B4),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0, 4),
-                                      blurRadius: 4,
-                                      color: Colors.black.withOpacity(0.1),
-                                    ),
-                                  ],
-                                ),
-                                child: Image.asset(
-                                  "assets/page-1/images/Group 795.png",
+                      const SizedBox(
+                        width: 34,
+                      ),
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ComingSoon()));
+                                },
+                                child: Container(
+                                  width: 140 * fem,
+                                  height: 140 * fem,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff5273B4),
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 4),
+                                        blurRadius: 4,
+                                        color: Colors.black.withOpacity(0.1),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Image.asset(
+                                    "assets/page-1/images/Group 795.png",
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -325,17 +336,25 @@ class _HomePageState extends State<HomePage> {
                   isLoop: true,
                   indicatorColor: Colors.black,
                   indicatorBackgroundColor: Colors.white,
-                  children: dummyImagesSlider
-                      .map((e) => Container(
-                            width: 390 * fem,
-                            height: 120 * fem,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16)),
-                              image: DecorationImage(image: NetworkImage(e)),
-                            ),
-                          ))
-                      .toList(),
+                  children: [
+                    Container(
+                      width: 390 * fem,
+                      height: 120 * fem,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        image: DecorationImage(
+                            image: NetworkImage(counsellorSessionProvider
+                                        .bannerImageList.isNotEmpty &&
+                                    counsellorDetailsProvider
+                                            .bannerImageList[0].url !=
+                                        null
+                                ? counsellorSessionProvider
+                                    .bannerImageList[0].url!
+                                : "")),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -368,18 +387,15 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   physics: const PageScrollPhysics(),
-                  itemCount: counsellorSessionProvider.popularWorkShopList.length,
+                  itemCount:
+                      counsellorSessionProvider.popularWorkShopList.length,
                   itemBuilder: (context, index) {
-                    PopularWorkShopModel popular = counsellorSessionProvider.popularWorkShopList[index];
-                    return profileCard(
-                        popular,
-                        index,
-                        counsellorSessionProvider.popularWorkShopList.length
-                    );
-                  }
-              ),
+                    PopularWorkShopModel popular =
+                        counsellorSessionProvider.popularWorkShopList[index];
+                    return profileCard(popular, index,
+                        counsellorSessionProvider.popularWorkShopList.length);
+                  }),
             ),
-
             const SizedBox(
               height: 10,
             ),
@@ -650,7 +666,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Column(
             children: [
               Row(
@@ -938,8 +954,3 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(builder: (context) => const HomePageContainer_2()));
   }
 }
-
-List<String> dummyImagesSlider = [
-  "https://res.cloudinary.com/dlbmxyxmv/image/upload/v1711108531/banner-images/banner-image-1711108530031.png",
-  "https://res.cloudinary.com/dlbmxyxmv/image/upload/v1711007145/banner-images/banner-image-1711007144752.png"
-];

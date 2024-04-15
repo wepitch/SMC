@@ -59,7 +59,7 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
         showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(
-            label: "Counsellor",
+            label: "Home",
             icon: Icon(
               Icons.home_outlined,
               size: 26,
@@ -67,9 +67,8 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
           ),
           BottomNavigationBarItem(
             label: "Webinar",
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/online-video-1-1-vXj.png"),
-            ),
+            icon: Icon(Icons.smart_display_outlined,size: 26,),
+
           ),
           BottomNavigationBarItem(
               label: "Booking",
@@ -88,9 +87,7 @@ class _HomePageContainer_2State extends State<HomePageContainer_2> {
             label: "News",
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage("assets/page-1/images/user-1-1-J3b.png"),
-            ),
+            icon: Icon(Icons.account_circle_outlined,size: 26),
             label: "Profile",
           )
         ],

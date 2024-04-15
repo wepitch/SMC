@@ -22,6 +22,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
   void initState() {
     Future.delayed(const Duration(seconds: 3), () async {
       bool? isLoggedIn = await SplashScreen1.loggIn();
+
       if (isLoggedIn == true) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const HomePageContainer()));
@@ -29,6 +30,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const SplashScreenNew()));
       }
+     
     });
     super.initState();
   }

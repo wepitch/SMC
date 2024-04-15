@@ -91,8 +91,8 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 40, left: 20, right: 20, bottom: 180),
+                  padding:  EdgeInsets.only(
+                      top: 40, left: 20, right: 20, bottom: ffem*50),
                   child: Column(
                     children: [
                       Container(

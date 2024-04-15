@@ -47,8 +47,9 @@ class _Counseling_Session_PersonnelState
     tabController =
         TabController(length: sessionDate.dates.length, vsync: this);
     configLoading();
-    //fetchDataFromApi();
-    fetchDataFromApiAll();
+    fetchDataFromApi();
+
+    //fetchDataFromApiAll();
     context
         .read<CounsellorDetailsProvider>()
         .fetchCounsellor_session(id: widget.id);
@@ -313,7 +314,7 @@ class _Counseling_Session_PersonnelState
                                                     CrossAxisAlignment.end,
                                                 children: [
                                                   const Text(
-                                                    'Coming soon',
+                                                    'Session',
                                                     style: TextStyle(
                                                       color: Color(0xFF1F0A68),
                                                       fontSize: 16,

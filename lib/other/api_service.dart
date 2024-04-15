@@ -6,7 +6,6 @@ import 'package:myapp/home_page/model/popular_workshop_model.dart';
 import 'package:myapp/home_page/model/tranding_webinar_model.dart';
 import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/model/check_out_details_model.dart';
-import 'package:myapp/webinar_page/model/webinar_details_model.dart';
 import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/counsellor_data.dart';
@@ -118,7 +117,7 @@ class ApiService {
 
   static Future<List<TrandingWebinarModel>> getTrendingWebinar() async {
     var url = Uri.parse(
-        "https://sortmycollegeapp.com/admin/webinar/webinar-for-user/trending-webinars");
+        "${AppConstants.baseUrl}/admin/webinar/webinar-for-user/trending-webinars");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("auth").toString();
     final response = await http.get(url, headers: {
@@ -136,7 +135,8 @@ class ApiService {
 
   static Future<List<PopularWorkShopModel>> getPopularWorkShop() async {
     var url = Uri.parse(
-        "https://sortmycollegeapp.com/counsellor/session/sessions/popular-workshops");
+        "${AppConstants.baseUrl}/counsellor/session/sessions/popular-workshops");
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("auth").toString();
     final response = await http.get(url, headers: {
@@ -223,9 +223,9 @@ class ApiService {
   //   }
   // }
 
-  static Future<List<CheckOutDetails>> fetchCheckOutData() async {
+  static Future<List<CheckOutDetails>> fetchCheckOutData(String id) async {
     var url = Uri.parse(
-        "${AppConstants.baseUrl}/counsellor/sessions/65fbcbb563ee42338a08b939/payment/user/checkout");
+        "${AppConstants.baseUrl}/counsellor/sessions/$id/payment/user/checkout");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("auth").toString();
     final response = await http.get(url, headers: {
@@ -467,10 +467,27 @@ class ApiService {
     final url = Uri.parse('${AppConstants.baseUrl}/user/');
 
     final response = await http.get(url, headers: headers);
+    print(response);
     if (response.statusCode == 200) {
       var value = jsonDecode(response.body.toString());
-      prefs.setString('name', value['name']);
-      prefs.setString('gender', value['gender']);
+      if(value.containsKey(value['name']))
+       {
+         prefs.setString('name', value['name']);
+       }
+      else{
+        prefs.setString('name', "user");
+      }
+
+      if(value.containsKey(value['gender']))
+      {
+        prefs.setString('gender', value['gender']);
+      }
+      else{
+        prefs.setString('gender', "Male");
+      }
+
+
+
       //prefs.setString('date_of_birth', value['date_of_birth']);
       prefs.setString('education_level', value['education_level']);
       //prefs.setString('phone_number', value['phone_number']);
@@ -479,7 +496,16 @@ class ApiService {
       final strDob = value["date_of_birth"].split('-');
       dob = "${strDob[2]}-${strDob[1]}-${strDob[0]}";
       prefs.setString('phone_number', phoneNumber);
-      prefs.setString('date_of_birth', dob);
+
+      if(value.containsKey(value['date_of_birth']))
+      {
+        prefs.setString('date_of_birth', value['date_of_birth']);
+      }
+      else{
+        prefs.setString('date_of_birth', "01-01-2000");
+      }
+
+
     }
   }
 

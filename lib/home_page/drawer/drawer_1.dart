@@ -311,7 +311,7 @@ class _Drawer1State extends State<Drawer1> {
 // children: [
 // GestureDetector(
 // onTap: () {
-// EasyLoading.showToast("Coming Soon",
+// EasyLoading.showToast("",
 // toastPosition:
 // EasyLoadingToastPosition.bottom);
 // },

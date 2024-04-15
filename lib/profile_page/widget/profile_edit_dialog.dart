@@ -81,7 +81,7 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   Future<void> saveDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool valueSaved = false;
-    var value = await ApiService.save_profile(
+     ApiService.save_profile(
         prefs.getString("name"),
         prefs.getString("date_of_birth"),
         prefs.getString("gender"),
@@ -102,16 +102,7 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
       valueSaved = true;
     }
     if (valueSaved) {
-      if (value["message"] ==
-          "User registered successfully") {
-        if (!mounted) return;
-        Future.delayed(const Duration(microseconds: 0), () {
           Navigator.pop(context);
-        });
-      } else {
-        EasyLoading.showToast(value["message"],
-            toastPosition: EasyLoadingToastPosition.bottom);
-      }
     }
   }
 

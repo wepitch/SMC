@@ -149,8 +149,8 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchCheckOut_Data() async {
-    var a = await ApiService.fetchCheckOutData();
+  void fetchCheckOut_Data(String id) async {
+    var a = await ApiService.fetchCheckOutData(id);
     isLoading = true;
     if (a.isEmpty) {
       isLoading = true;

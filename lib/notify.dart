@@ -543,7 +543,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     CrossAxisAlignment.end,
                                                 children: [
                                                   const Text(
-                                                    'Coming soon',
+                                                    'Session',
                                                     style: TextStyle(
                                                       color: Color(0xFF1F0A68),
                                                       fontSize: 20,

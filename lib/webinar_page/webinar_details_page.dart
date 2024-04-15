@@ -220,7 +220,7 @@ class _WebinarDetailsPageState extends State<WebinarDetailsPage> {
                               height: 9,
                             ),
                             Text(
-                              "\u2022 Lorem Ipsum is simply dummy text of the printing\n\u2022 Typesetting industry. Lorem Ipsum has been the\n\u2022 Industry's standard dummy text ever since the 1500s\n\u2022 When an unknown printer took a galley of type and",
+                              "\u2022 Guideline will always give right direction in carrier path \n\u2022 Our Councillor is experienced and having industry experience \n\u2022 Session will give you confidence and carrier boost in competitive world\n\u2022 This will open new gateway  for you future journey",
                               style: SafeGoogleFont("Inter",
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,

@@ -11,6 +11,7 @@ import 'package:myapp/shared/app_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/counsellor_sessions.dart';
 import '../other/provider/counsellor_details_provider.dart';
@@ -220,12 +221,15 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     //PhonePayInit();
     // body = getCheckSum();
     sessionDate.getDates();
-    tabController =
-        TabController(length: sessionDate.dates.length, vsync: this);
+    tabController = TabController(length: sessionDate.dates.length, vsync: this);
     configLoading();
     fetchDataFromApi();
+
+    Fluttertoast.showToast(msg: "abc");
+
     //fetchDataFromApiAll();
     context.read<CounsellorDetailsProvider>().fetchCounsellor_session(id: widget.id);
+
   }
 
   @override
@@ -467,8 +471,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                   child: Text("No Sessions Available"),
                                 )
                               : ListView.builder(
-                                  itemCount: counsellorSessionProvider
-                                      .details.sessions!.length,
+                                  itemCount: counsellorSessionProvider.details.sessions!.length,
                                   physics: const ScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
@@ -494,8 +497,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.end,
                                                 children: [
-                                                  const Text(
-                                                    'Coming soon',
+                                                   Text(
+                                                    counsellorSessionProvider.details.sessions![index].sessionUser ?? 'Session' ,
                                                     style: TextStyle(
                                                       color: Color(0xFF1F0A68),
                                                       fontSize: 16,
@@ -669,6 +672,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                   ),
                                                   GestureDetector(
                                                     onTap: () async {
+                                                      SharedPreferences sPref = await SharedPreferences.getInstance();
+                                                      sPref.setString('sessionid', widget.id);
                                                       Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
@@ -676,8 +681,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                                   CheckOutScreen(
                                                                       name: widget
                                                                           .name,
-                                                                      id: widget
-                                                                          .id)));
+                                                                      id: widget.id)));
                                                       /* var availableSlots =
                                                           counsellorSessionProvider
                                                               .details

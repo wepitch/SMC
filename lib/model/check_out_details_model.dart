@@ -5,7 +5,7 @@ class CheckOutDetails {
   int? sessionFee;
   int? gstAmount;
   int? feeWithGST;
-  int? gatewayCharge;
+  double? gatewayCharge;
   num? totalAmount;
   String? counsellorId;
   String? counsellorName;

@@ -56,6 +56,11 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
+    double mHeight = MediaQuery.sizeOf(context).height;
+    double mWidth = MediaQuery.sizeOf(context).width;
+
+
     var code = '';
     return Scaffold(
       body: SingleChildScrollView(
@@ -90,8 +95,8 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 40, left: 20, right: 20, bottom: 180),
+                  padding:  EdgeInsets.only(
+                      top: 40, left: 20, right: 20, bottom: ffem*1),
                   child: Column(
                     children: [
                       Container(
@@ -196,6 +201,7 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
                                       otp: otp.toString().trim(), number: widget.phoneNumber)
                                       .then((value) async {
                                     if (value["message"] == "OTP verified successfully" && value["already_registered"] == true) {
+                                      EasyLoading.dismiss();
                                       EasyLoading.showToast("You are login now",
                                           toastPosition: EasyLoadingToastPosition.bottom );
                                       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -214,6 +220,7 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
                                     }
                                     else if(value["message"] == "OTP verified successfully" && value["already_registered"] == false)
                                     {
+                                      EasyLoading.dismiss();
                                       EasyLoading.showToast("You are register now thanks for register",
                                           toastPosition: EasyLoadingToastPosition.bottom );
 
@@ -227,11 +234,12 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
                                           MaterialPageRoute(builder: (context) =>  QNAScreen()));
 
                                     }
-
                                     else {
-                                      EasyLoading.showToast(value["message"],
+                                      EasyLoading.dismiss();
+                                      EasyLoading.showToast(value["error"],
                                           toastPosition: EasyLoadingToastPosition.bottom);
                                     }
+                                    EasyLoading.dismiss();
                                   });
                                 }
                               },
