@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/other/api_service.dart';
@@ -10,6 +11,7 @@ import 'package:myapp/utils.dart';
 
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/counsellor_sessions.dart';
 import '../other/provider/counsellor_details_provider.dart';
@@ -386,9 +388,11 @@ class _Counseling_Session_PersonnelState
                                                       const SizedBox(
                                                         height: 5,
                                                       ),
-                                                      const Text(
-                                                        '2:00 PM - 03:00 PM',
-                                                        style: TextStyle(
+                                                       Text(
+                                                          counsellorSessionProvider.details.sessions?[index].sessionTime != null
+                                                              ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(counsellorSessionProvider.details.sessions![index].sessionTime!))
+                                                              : 'N/A',
+                                                        style: const TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 12,
                                                           fontFamily: 'Inter',
@@ -558,40 +562,23 @@ class _Counseling_Session_PersonnelState
                                                       child: Center(
                                                         child: GestureDetector(
                                                           onTap: () async {
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    CheckOutScreen(
-                                                                        name: widget.name,
-                                                                        id: widget.id));
-                                                            /* var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
+                                                            SharedPreferences sPref =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                            var id =
+                                                                counsellorSessionProvider.details.sessions?[index].id;
+                                                            sPref.setString(
+                                                                'sessionid', id!);
+
+                                                            var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
                                                             var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
-                                                            /*var value =
-                                                            await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',counsellorSessionProvider.details.sessions![index].sessionPrice!,'description','9800000000');
-                                                            if (value["error"] ==
-                                                                "Order not successfully created") {
-                                                              EasyLoading.showToast(value["error"],
-                                                                  toastPosition:
-                                                                  EasyLoadingToastPosition.bottom);
-                                                            } else{
-                                                              (value["message"] ==
-                                                                  "Order successfully created");
-                                                              EasyLoading.showToast(value["message"],
-                                                                  toastPosition:
-                                                                  EasyLoadingToastPosition.bottom);
-                                                              EasyLoading.showToast(value["data"]["id"],
-                                                                  toastPosition:
-                                                                  EasyLoadingToastPosition.bottom);
-                                                              if(value["data"]["offer_id"] != null){
-                                                                EasyLoading.showToast(value["data"]["offer_id"],
-                                                                    toastPosition:
-                                                                    EasyLoadingToastPosition.bottom);
-                                                              }
-                                                              key = value["data"]["key"];
-                                                              print(key);
-                                                              openCheckOut(counsellorSessionProvider.details.sessions?[index].sessionPrice);
-                                                            }*/
+
                                                             if (availableSlots >= 0) {
-                                                              EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
+                                                              EasyLoading.showToast(
+                                                                  'There are no booking slots available in this session, please book another session',
+                                                                  toastPosition:
+                                                                  EasyLoadingToastPosition
+                                                                      .bottom);
                                                             } else if (availableSlots <= totalAvailableSlots) {
                                                               Navigator.push(
                                                                   context,
@@ -600,11 +587,14 @@ class _Counseling_Session_PersonnelState
                                                                           CheckOutScreen(
                                                                               name: widget
                                                                                   .name,
-                                                                              id: widget
-                                                                                  .id)));
-                                                            } else{
-                                                              EasyLoading.showToast('There are no booking slots available in this session, please book another session', toastPosition: EasyLoadingToastPosition.bottom);
-                                                            }*/
+                                                                              id: id)));
+                                                            } else {
+                                                              EasyLoading.showToast(
+                                                                  'There are no booking slots available in this session, please book another session',
+                                                                  toastPosition:
+                                                                  EasyLoadingToastPosition
+                                                                      .bottom);
+                                                            }
                                                           },
                                                           child: const Text(
                                                             'Book',

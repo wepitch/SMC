@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:myapp/home_page/coming_soon.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
 import 'package:myapp/home_page/drawer/drawer_1.dart';
@@ -422,11 +423,9 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount:
-                      counsellorSessionProvider.trendingWebinarList.length,
+                  itemCount: counsellorSessionProvider.trendingWebinarList.length,
                   itemBuilder: (context, index) {
-                    TrandingWebinarModel trending =
-                        counsellorSessionProvider.trendingWebinarList[index];
+                    TrandingWebinarModel trending = counsellorSessionProvider.trendingWebinarList[index];
                     return Column(
                       children: [
                         Card(
@@ -443,7 +442,6 @@ class _HomePageState extends State<HomePage> {
                                 height: 190,
                                 // width: 390,
                                 decoration: BoxDecoration(
-                                  color: Colors.red,
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                       image:
@@ -675,7 +673,7 @@ class _HomePageState extends State<HomePage> {
                   const CircleAvatar(
                     radius: 38,
                     backgroundImage: AssetImage(
-                      "assets/page-1/images/Rectangle 101.png",
+                      'assets/page-1/images/comming_soon.png',
                     ),
                   ),
                   const SizedBox(
@@ -720,10 +718,10 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 3,
                       ),
-                      const SizedBox(
+                       SizedBox(
                         width: 190.25,
                         child: Text(
-                          'Importance of CUET',
+                          popularWorkShopModel.sessionType!,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -750,8 +748,10 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 121.13,
                             child: Text(
-                              ' ${popularWorkShopModel.sessionTime}',
-                              style: TextStyle(
+                                popularWorkShopModel.sessionTime != null
+                                    ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(popularWorkShopModel.sessionTime!))
+                                    : 'N/A',
+                              style: const TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
                                 fontFamily: 'Inter',
@@ -785,7 +785,7 @@ class _HomePageState extends State<HomePage> {
                             width: 121.13,
                             child: Text(
                               str[0],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF414040),
                                 fontSize: 12,
                                 fontFamily: 'Inter',

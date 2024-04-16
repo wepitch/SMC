@@ -222,7 +222,6 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                 Container(
                   height: 190,
                   decoration: BoxDecoration(
-                    color: ColorsConst.redColor,
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image:

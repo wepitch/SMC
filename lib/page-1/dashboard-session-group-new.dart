@@ -3,6 +3,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:myapp/booking_page/checkout_screen.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
@@ -221,15 +222,17 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     //PhonePayInit();
     // body = getCheckSum();
     sessionDate.getDates();
-    tabController = TabController(length: sessionDate.dates.length, vsync: this);
+    tabController =
+        TabController(length: sessionDate.dates.length, vsync: this);
     configLoading();
     fetchDataFromApi();
 
     Fluttertoast.showToast(msg: "abc");
 
     //fetchDataFromApiAll();
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_session(id: widget.id);
-
+    context
+        .read<CounsellorDetailsProvider>()
+        .fetchCounsellor_session(id: widget.id);
   }
 
   @override
@@ -471,7 +474,8 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                   child: Text("No Sessions Available"),
                                 )
                               : ListView.builder(
-                                  itemCount: counsellorSessionProvider.details.sessions!.length,
+                                  itemCount: counsellorSessionProvider
+                                      .details.sessions!.length,
                                   physics: const ScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
@@ -497,8 +501,12 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.end,
                                                 children: [
-                                                   Text(
-                                                    counsellorSessionProvider.details.sessions![index].sessionUser ?? 'Session' ,
+                                                  Text(
+                                                    counsellorSessionProvider
+                                                            .details
+                                                            .sessions![index]
+                                                            .sessionUser ??
+                                                        'Session',
                                                     style: TextStyle(
                                                       color: Color(0xFF1F0A68),
                                                       fontSize: 16,
@@ -570,14 +578,15 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                       const SizedBox(
                                                         height: 5,
                                                       ),
-                                                      const Text(
-                                                        '2:00 PM - 03:00 PM',
-                                                        style: TextStyle(
+                                                      Text(
+                                                        counsellorSessionProvider.details.sessions?[index].sessionTime != null
+                                                            ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(counsellorSessionProvider.details.sessions![index].sessionTime!))
+                                                            : 'N/A',
+                                                        style: const TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 12,
                                                           fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w400,
+                                                          fontWeight: FontWeight.w400,
                                                           height: 0,
                                                         ),
                                                       ),
@@ -672,72 +681,21 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                   ),
                                                   GestureDetector(
                                                     onTap: () async {
-                                                      SharedPreferences sPref = await SharedPreferences.getInstance();
-                                                      sPref.setString('sessionid', widget.id);
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  CheckOutScreen(
-                                                                      name: widget
-                                                                          .name,
-                                                                      id: widget.id)));
-                                                      /* var availableSlots =
-                                                          counsellorSessionProvider
-                                                              .details
-                                                              .sessions![index]
-                                                              .sessionAvailableSlots!;
-                                                      var totalAvailableSlots =
-                                                          counsellorSessionProvider
-                                                              .allDetails
-                                                              .totalAvailableSlots!;
-                                                      // call first create order api it success call razorpay with amount
-                                                      // after razorpay success call create payment api
-                                                      /*startPgTransaction(
-                                      counsellorSessionProvider.details.sessions![index].id,
-                                      counsellorSessionProvider.details.sessions![index].sessionDate,
-                                      counsellorSessionProvider.details.sessions![index].sessionPrice,
-                                    );*/
-                                                      /*var value =
-                                          await    ApiService.counsellor_create_order(widget.name,'test@gmail.com',1,'description','9800000000');
-                                      if (value["error"] ==
-                                          "Order not successfully created") {
-                                        EasyLoading.showToast(value["error"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                      } else{
-                                        (value["message"] ==
-                                            "Order successfully created");
-                                        EasyLoading.showToast(value["message"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                        EasyLoading.showToast(value["data"]["id"],
-                                            toastPosition:
-                                            EasyLoadingToastPosition.bottom);
-                                        if(value["data"]["offer_id"] != null){
-                                          EasyLoading.showToast(value["data"]["offer_id"],
-                                              toastPosition:
-                                              EasyLoadingToastPosition.bottom);
-                                        }
-                                        key = value["data"]["key"];
-                                        print(key);
-                                        openCheckOut(counsellorSessionProvider.details.sessions?[index].sessionPrice);
-                                      }*/
+                                                      SharedPreferences sPref =
+                                                          await SharedPreferences
+                                                              .getInstance();
+                                                      var id = counsellorSessionProvider.details.sessions?[index].id;
+                                                      sPref.setString('sessionid', id!);
+
+                                                      var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
+                                                      var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots;
+
                                                       if (availableSlots >= 0) {
                                                         EasyLoading.showToast(
                                                             'There are no booking slots available in this session, please book another session',
                                                             toastPosition:
                                                                 EasyLoadingToastPosition
                                                                     .bottom);
-                                                      } else if (availableSlots <=
-                                                          totalAvailableSlots) {
-                                                        /* call first create order api it success call razorpay with amount
-                                       after razorpay success call create payment api*/
-                                                        /*startPgTransaction(
-                                        counsellorSessionProvider.details.sessions![index].id,
-                                        counsellorSessionProvider.details.sessions![index].sessionDate,
-                                        counsellorSessionProvider.details.sessions![index].sessionPrice,
-                                      );*/
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -745,15 +703,23 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                                     CheckOutScreen(
                                                                         name: widget
                                                                             .name,
-                                                                        id: widget
-                                                                            .id)));
+                                                                        id: id)));
+                                                      } else if (availableSlots <= totalAvailableSlots!) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    CheckOutScreen(
+                                                                        name: widget
+                                                                            .name,
+                                                                        id: id)));
                                                       } else {
                                                         EasyLoading.showToast(
                                                             'There are no booking slots available in this session, please book another session',
                                                             toastPosition:
                                                                 EasyLoadingToastPosition
                                                                     .bottom);
-                                                      }*/
+                                                      }
                                                     },
                                                     child: Container(
                                                       width: 96,

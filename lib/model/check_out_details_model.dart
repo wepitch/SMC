@@ -5,9 +5,9 @@ class CheckOutDetails {
   int? sessionFee;
   int? gstAmount;
   int? feeWithGST;
-  double? gatewayCharge;
-  num? totalAmount;
-  String? counsellorId;
+  num? gatewayCharge;
+  double? totalAmount;
+  int? counsellorId;
   String? counsellorName;
   String? counsellorProfilePic;
 

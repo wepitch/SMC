@@ -242,8 +242,12 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                                     height: 1),
                               ),
                               Text(
-                                widget.counsellorDetails.qualifications?[2] ??
-                                    "N/A".toString(),
+                                widget.counsellorDetails.qualifications!
+                                    .isNotEmpty &&
+                                    widget.counsellorDetails
+                                        .qualifications![0] != null
+                                    ? widget.counsellorDetails.qualifications![0]
+                                    : 'N/A'.toString(),
                                 style: SafeGoogleFont(
                                   "Inter",
                                   fontSize: 13,

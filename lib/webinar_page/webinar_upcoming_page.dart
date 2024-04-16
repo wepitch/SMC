@@ -189,7 +189,6 @@ class _WebinarUpComingWidgetState extends State<WebinarUpComingWidget> {
                   height: 190,
                   // width: 390,
                   decoration: BoxDecoration(
-                    color: Colors.red,
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                         image:

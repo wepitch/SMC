@@ -59,17 +59,17 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
 
-  void sessionId()async{
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    id = pref.getString('sessionid');
-  }
+  // void sessionId()async{
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   id = pref.getString('sessionid');
+  // }
 
   void handlePaymentSuccess(PaymentSuccessResponse response) async {
     Fluttertoast.showToast(
         msg: "Payment Success ${response.paymentId!}",
         toastLength: Toast.LENGTH_SHORT);
     var value = await ApiService.counsellor_create_payment(
-      id,
+      widget.id!,
       oderId,
       response.paymentId!,
       'order',
@@ -137,7 +137,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   void getAllInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     phoneNumber = prefs.getString("phone_number") ?? "N/A";
-    id= prefs.getString('sessionid');
+    id = prefs.getString('sessionid');
     context.read<CounsellorDetailsProvider>().fetchCheckOut_Data(id);
     setState(() {});
   }
@@ -145,8 +145,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     var counsellorDetailController = context.watch<CounsellorDetailsProvider>();
-
-    
 
     str = counsellorDetailController.checkOutDetailsList.isNotEmpty
         ? counsellorDetailController.checkOutDetailsList[0].sessionDate
@@ -158,7 +156,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     var amount = '';
     if (counsellorDetailController.checkOutDetailsList.isNotEmpty) {
-      num? totalAmount =
+      double? totalAmount =
           counsellorDetailController.checkOutDetailsList[0].totalAmount;
       if (totalAmount != null) {
         amount = totalAmount.toString();
@@ -287,7 +285,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CounsellorDetailsScreen(
-                                                    id: id,
+                                                    id: widget.id!,
                                                     name: widget.name)));
                                   },
                                   child: Container(

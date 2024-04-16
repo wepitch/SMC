@@ -795,7 +795,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 border: InputBorder.none,
                                 contentPadding: const EdgeInsets.only(
                                     left: 8.0, top: 14, bottom: 10),
-                                hintText: 'commit',
+                                hintText: 'comment',
                                 hintStyle: TextStyle(color: Colors.black45),
                                 suffixIcon: IconButton(
                                   onPressed: () async {

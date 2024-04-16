@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/booking_page/booking_confirmatoin_page.dart';
+import 'package:myapp/booking_page/booking_confirmatoin_page_2.dart';
 import 'package:provider/provider.dart';
 
 import '../model/booking_model.dart';
@@ -205,7 +206,7 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder: (context) =>
-                                                                      BookingConfirmationPage(
+                                                                      BookingConfirmationPage2(
                                                                           remainingTime:
                                                                               const Duration(), // has to change
                                                                           isUpcoming:

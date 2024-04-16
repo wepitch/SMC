@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myapp/booking_page/booking_confirmatoin_page_1.dart';
 import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/utils.dart';
@@ -21,13 +22,13 @@ class _BookingPastState extends State<BookingPast> {
     super.initState();
     context
         .read<UserBookingProvider>()
-        .fetchUserBookings(past: true, today: false, upcoming: false);
+        .fetchUserBookingsAll(past: true, today: false, upcoming: false);
   }
 
   Future<void> _refresh() async {
     return context
         .read<UserBookingProvider>()
-        .fetchUserBookings(past: true, today: false, upcoming: false);
+        .fetchUserBookingsAll(past: true, today: false, upcoming: false);
   }
 
   @override
@@ -160,9 +161,9 @@ class _BookingPastState extends State<BookingPast> {
                                                       text: TextSpan(
                                                         children: <TextSpan>[
                                                           TextSpan(
-                                                              text: details
-                                                                  .bookingData
-                                                                  ?.sessionTime,
+                                                      text: details.bookingData?.sessionTime != null
+                                                                  ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(int.parse(details.bookingData!.sessionTime.toString()),))
+                                                                  : 'N/A',
                                                               style: SafeGoogleFont(
                                                                   "Inter",
                                                                   fontWeight:
@@ -210,7 +211,7 @@ class _BookingPastState extends State<BookingPast> {
                                                                   builder: (context) =>
                                                                       BookingConfirmationPage1(
                                                                           remainingTime:
-                                                                              const Duration(), // has to change,
+                                                                              const Duration(),
                                                                           isUpcoming:
                                                                               false,
                                                                           bookingData: details.bookingData ??

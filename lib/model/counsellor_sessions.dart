@@ -1,5 +1,5 @@
 class CounsellorSessionDetails {
-  int? totalAvailableSlots;
+  num? totalAvailableSlots;
   List<Sessions>? sessions;
 
   CounsellorSessionDetails({this.totalAvailableSlots, this.sessions});

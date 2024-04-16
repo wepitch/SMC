@@ -8,15 +8,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../utils.dart';
 
-class BookingConfirmationPage1 extends StatefulWidget {
-  const BookingConfirmationPage1(
+class BookingConfirmationPage2 extends StatefulWidget {
+  const BookingConfirmationPage2(
       {super.key,
-      required this.isUpcoming,
-      required this.isConfirmed,
-      required this.time,
-      required this.bookingData,
-      required this.counsellorDetails,
-      required this.remainingTime});
+        required this.isUpcoming,
+        required this.isConfirmed,
+        required this.time,
+        required this.bookingData,
+        required this.counsellorDetails,
+        required this.remainingTime});
 
   final Duration remainingTime;
   final bool isUpcoming;
@@ -27,17 +27,17 @@ class BookingConfirmationPage1 extends StatefulWidget {
   final BookedEntity counsellorDetails;
 
   @override
-  State<BookingConfirmationPage1> createState() =>
-      _BookingConfirmationPage1State();
+  State<BookingConfirmationPage2> createState() =>
+      _BookingConfirmationPage2State();
 }
 
-class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
+class _BookingConfirmationPage2State extends State<BookingConfirmationPage2> {
   bool isExpired = false;
 
   @override
   Widget build(BuildContext context) {
     isExpired = (widget.remainingTime.inMinutes +
-            (widget.bookingData.sessionDuration ?? 0)) <
+        (widget.bookingData.sessionDuration ?? 0)) <
         0;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -70,9 +70,9 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
         decoration: const BoxDecoration(
             border: Border(
                 right: BorderSide(
-          width: 0.5,
-          color: Colors.grey,
-        ))),
+                  width: 0.5,
+                  color: Colors.grey,
+                ))),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,40 +129,40 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                             ),
                             widget.isUpcoming
                                 ? Text(
-                                    "${widget.time} pm",
-                                    style: SafeGoogleFont(
-                                      "Inter",
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      decorationColor: Colors.red,
-                                      decoration: widget.isConfirmed
-                                          ? TextDecoration.none
-                                          : TextDecoration.lineThrough,
-                                    ),
-                                  )
+                              "${widget.time} pm",
+                              style: SafeGoogleFont(
+                                "Inter",
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                decorationColor: Colors.red,
+                                decoration: widget.isConfirmed
+                                    ? TextDecoration.none
+                                    : TextDecoration.lineThrough,
+                              ),
+                            )
                                 : Row(
-                                    children: [
-                                      Text(
-                                        "${widget.remainingTime.inHours < 0 ? "" : widget.remainingTime.inHours}:${widget.remainingTime.inMinutes.remainder(60) < 0 ? '0' : widget.remainingTime.inMinutes.remainder(60)}",
-                                        style: SafeGoogleFont(
-                                          "Inter",
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        "min",
-                                        style: SafeGoogleFont(
-                                          "Inter",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      )
-                                    ],
+                              children: [
+                                Text(
+                                  "${widget.remainingTime.inHours < 0 ? "" : widget.remainingTime.inHours}:${widget.remainingTime.inMinutes.remainder(60) < 0 ? '0' : widget.remainingTime.inMinutes.remainder(60)}",
+                                  style: SafeGoogleFont(
+                                    "Inter",
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
                                   ),
+                                ),
+                                const SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  "min",
+                                  style: SafeGoogleFont(
+                                    "Inter",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                         Column(
@@ -170,7 +170,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                             customButton(
                                 context: context,
                                 onPressed: () {
-                                  Fluttertoast.showToast(msg: 'Event is has been done');
+                                  Fluttertoast.showToast(msg: 'Event is upcoming please wait..');
                                   // if (!((widget.remainingTime.inMinutes +
                                   //         (widget.bookingData.sessionDuration ??
                                   //             0)) <
@@ -187,12 +187,12 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                             widget.isUpcoming
                                 ? const SizedBox()
                                 : Text(
-                                    "Host has joined",
-                                    style: SafeGoogleFont("Inter",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: const Color(0xff1F0A68)),
-                                  )
+                              "Host has joined",
+                              style: SafeGoogleFont("Inter",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xff1F0A68)),
+                            )
                           ],
                         ),
                       ],
@@ -218,7 +218,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                         CircleAvatar(
                           radius: 30,
                           backgroundImage: NetworkImage(widget
-                                  .counsellorDetails.profilePic ??
+                              .counsellorDetails.profilePic ??
                               "https://media.gettyimages.com/id/1334712074/vector/coming-soon-message.jpg?s=612x612&w=0&k=20&c=0GbpL-k_lXkXC4LidDMCFGN_Wo8a107e5JzTwYteXaw="),
                         ),
                         const SizedBox(
@@ -236,9 +236,9 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                             ),
                             Text(
                               widget.counsellorDetails.qualifications!
-                                          .isNotEmpty &&
-                                      widget.counsellorDetails
-                                              .qualifications![0] != null
+                                  .isNotEmpty &&
+                                  widget.counsellorDetails
+                                      .qualifications![0] != null
                                   ? widget.counsellorDetails.qualifications![0]
                                   : 'N/A'.toString(),
                               style: SafeGoogleFont(
@@ -514,9 +514,9 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
 
 Widget customButton(
     {required BuildContext context,
-    required VoidCallback onPressed,
-    required String title,
-    required bool isActive}) {
+      required VoidCallback onPressed,
+      required String title,
+      required bool isActive}) {
   return SizedBox(
       width: 137,
       height: 38,
@@ -524,7 +524,7 @@ Widget customButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
               foregroundColor:
-                  isActive ? const Color(0xff9C9A9A) : Colors.white,
+              isActive ? const Color(0xff9C9A9A) : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

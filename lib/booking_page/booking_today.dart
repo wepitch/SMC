@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/intl.dart';
 import 'package:myapp/model/booking_model.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
 import 'package:myapp/booking_page/booking_confirmatoin_page.dart';
@@ -16,18 +17,23 @@ class BookingToday extends StatefulWidget {
 class _BookingTodayState extends State<BookingToday> {
   late var apiTime;
   late var todayTime;
+  var currentTime;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<UserBookingProvider>().fetchUserBookings(past: false, today: true, upcoming: false);
+    context
+        .read<UserBookingProvider>()
+        .fetchUserBookings(past: false, today: true, upcoming: false);
     todayTime = DateTime.now();
   }
 
   Future<void> _refresh() async {
     return Future.delayed(const Duration(seconds: 1), () {
-      context.read<UserBookingProvider>().fetchUserBookings(past: false, today: true, upcoming: false);
+      context
+          .read<UserBookingProvider>()
+          .fetchUserBookings(past: false, today: true, upcoming: false);
     });
   }
 
@@ -75,8 +81,15 @@ class _BookingTodayState extends State<BookingToday> {
                         itemCount: userBookings.length,
                         itemBuilder: (context, index) {
                           var details = userBookings[index];
-                          apiTime = parseTiming(details.bookingData!.sessionTime!);
+                          currentTime = DateFormat('h:mm')
+                              .format(DateTime.fromMillisecondsSinceEpoch(
+                            int.parse(
+                                details.bookingData!.sessionTime.toString()),
+                          ));
+                          apiTime = parseTiming(currentTime);
                           Duration remainingTime = apiTime.difference(todayTime);
+                          print('Minutes${remainingTime.inHours}');
+
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Container(
@@ -135,9 +148,9 @@ class _BookingTodayState extends State<BookingToday> {
                                                                 FontWeight.w600,
                                                           ),
                                                         ),
-                                                        Text(
+                                                        Text(details.bookedEntity!.qualifications!.isNotEmpty && details.bookedEntity!.qualifications![0] !=null ?
                                                           details.bookedEntity!
-                                                              .qualifications![2],
+                                                              .qualifications![0] : 'N/A',
                                                           // textAlign: TextAlign.left,
 
                                                           style: SafeGoogleFont(
@@ -179,7 +192,10 @@ class _BookingTodayState extends State<BookingToday> {
                                                         children: <TextSpan>[
                                                           TextSpan(
                                                               text:
-                                                                  "${remainingTime.inHours < 0 ? "" : remainingTime.inHours}${remainingTime.inMinutes.remainder(60) < 0 ? '0' : ": ${remainingTime.inMinutes.remainder(60)}"}",
+                                                                  // "${remainingTime.inHours < 0 ? "" : remainingTime.inHours}${remainingTime.inMinutes.remainder(60) < 0 ? '0' : ": ${remainingTime.inMinutes.remainder(60)}"} ",
+                                                              details.bookingData?.sessionTime != null
+                                                                  ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(int.parse(details.bookingData!.sessionTime.toString()),))
+                                                                  : 'N/A',
                                                               style: SafeGoogleFont(
                                                                   "Inter",
                                                                   fontWeight:
@@ -188,16 +204,6 @@ class _BookingTodayState extends State<BookingToday> {
                                                                   fontSize: 20,
                                                                   color: Colors
                                                                       .black)),
-                                                          TextSpan(
-                                                              text: "min",
-                                                              style: SafeGoogleFont(
-                                                                  "Inter",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black))
                                                         ],
                                                       ),
                                                     )

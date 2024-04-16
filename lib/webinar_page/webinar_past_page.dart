@@ -6,7 +6,6 @@ import 'package:myapp/webinar_page/webinar_model.dart';
 import 'package:myapp/widget/custom_webniar_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../other/provider/counsellor_details_provider.dart';
 
 class WebinarPastPage extends StatefulWidget {
