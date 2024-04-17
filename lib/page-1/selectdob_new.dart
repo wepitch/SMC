@@ -6,19 +6,25 @@ import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectDobNew extends StatefulWidget {
-  const SelectDobNew({super.key});
+  const SelectDobNew({Key? key}) : super(key: key);
 
   @override
   State<SelectDobNew> createState() => _SelectDobNewState();
 }
 
 class _SelectDobNewState extends State<SelectDobNew> {
-  String date = "Select DOB";
-  String dob="";
+  late String date;
+  String dob = "";
+
+  @override
+  void initState() {
+    super.initState();
+    date = "DD/MM/YYYY";
+  }
 
   openDatePicker() async {
     var now = DateTime.now();
-    var firstDate = DateTime(1999);
+    var firstDate = DateTime(now.year - 12); // Minimum age 12 years
     showDatePicker(
       builder: (context, child) {
         return Column(
@@ -61,8 +67,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding:
-        const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +75,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
             children: [
               const Text('Question 1/3'),
               Image.asset('assets/page-1/images/dob.jpg'),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
                   height: 400,
@@ -80,7 +85,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 26, left: 20, right: 20,bottom: 140),
+                        top: 26, left: 20, right: 20, bottom: 140),
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,50 +105,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
                           ),
                           const Spacer(),
                           customButton(
-                            onPressed: () {
-                              var now = DateTime.now();
-                              var firstDate = DateTime(1999);
-                              showDatePicker(
-                                builder: (context, child) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 460,
-                                        width: 340,
-                                        child: Theme(
-                                          data: Theme.of(context).copyWith(
-                                            colorScheme: const ColorScheme.light(
-                                              primary: Colors.white,
-                                              onPrimary: Colors.black,
-                                              onSurface: Colors.black,
-                                            ),
-                                            textButtonTheme:
-                                            TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                foregroundColor: Colors
-                                                    .black, // button text color
-                                              ),
-                                            ),
-                                          ),
-                                          child: child!,
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                                context: context,
-                                firstDate: firstDate,
-                                lastDate: now,
-                              ).then((value) {
-                                if (value != null) {
-                                  date = DateFormat("d/M/yyyy")
-                                      .format(value)
-                                      .toString();
-                                  setState(() {});
-                                }
-                              });
-                            },
+                            onPressed: openDatePicker,
                             title: date,
                           ),
                         ],
@@ -153,27 +115,35 @@ class _SelectDobNewState extends State<SelectDobNew> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 40,top: 20,right: 10),
+                padding: const EdgeInsets.only(bottom: 40, top: 20, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
                       onTap: () async {
                         if (date == "DD/MM/YYYY") {
-                          EasyLoading.showToast("Please Select the date...",
+                          EasyLoading.showToast("Please select your date of birth.",
                               toastPosition: EasyLoadingToastPosition.bottom);
                         } else {
-                          var prefs = await SharedPreferences.getInstance();
-                          final splittedate = date.split('/');
-                          dob = "${splittedate[2]}-${splittedate[1]}-${splittedate[0]}";
-                          prefs.setString("date_of_birth", dob);
-                          if (!mounted) return;
-                          Future.delayed(const Duration(microseconds: 0), () {
+                          var selectedDate = DateFormat("d/M/yyyy").parse(date);
+                          var now = DateTime.now();
+                          var twelveYearsAgo = now.subtract(const Duration(days: 12 * 365));
+                          if (selectedDate.isBefore(twelveYearsAgo)) {
+                            var prefs = await SharedPreferences.getInstance();
+                            final splittedate = date.split('/');
+                            dob = "${splittedate[2]}-${splittedate[1]}-${splittedate[0]}";
+                            prefs.setString("date_of_birth", dob);
+                            if (!mounted) return;
                             Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SelectGenderNew()));
-                          });
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SelectGenderNew(),
+                              ),
+                            );
+                          } else {
+                            EasyLoading.showToast("You must be at least 12 years old to proceed.",
+                                toastPosition: EasyLoadingToastPosition.bottom);
+                          }
                         }
                       },
                       child: const Icon(
@@ -205,17 +175,18 @@ class _SelectDobNewState extends State<SelectDobNew> {
         child: OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-              elevation: 0,
-              side: const BorderSide(color: Color(0xff1F0A68)),
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              )),
+            elevation: 0,
+            side: const BorderSide(color: Color(0xff1F0A68)),
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
           child: Text(
             title,
-            style: SafeGoogleFont(
-              "Montserrat",
+            style: TextStyle(
+              fontFamily: "Montserrat",
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),

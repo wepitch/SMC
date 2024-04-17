@@ -132,7 +132,7 @@ class _OtpScreenNewState extends State<OtpScreenNew> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Don’t receive an OTP?',
+                                    'Did not receive an OTP?',
                                     style: SafeGoogleFont(
                                       'Roboto',
                                       fontSize: 15 * ffem,

@@ -9,10 +9,14 @@ import 'dashboard-session-personnel-new.dart';
 
 class CounsellingSessionPage extends StatefulWidget {
   const CounsellingSessionPage(
-      {super.key, required this.name, required this.id});
+      {super.key,
+      required this.name,
+      required this.id,
+      required this.designation});
 
   final String name;
   final String id;
+  final String designation;
 
   @override
   State<CounsellingSessionPage> createState() => _CounsellingSessionPageState();
@@ -76,12 +80,15 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
         ),
         titleSpacing: -5,
         title: GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    CheckOutScreen(name: widget.name, id: widget.id,),
+                builder: (context) => CheckOutScreen(
+                  name: widget.name,
+                  id: widget.id,
+                  designation: '',
+                ),
               ),
             );
           },
@@ -143,6 +150,7 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
                 Counseling_Session_group(
                   name: widget.name,
                   id: widget.id,
+                  designation: widget.designation,
                 ),
                 Counseling_Session_Personnel(
                   id: widget.id,
@@ -185,7 +193,10 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
               backgroundColor:
                   isPressed ? const Color(0xff1F0A68) : Colors.transparent),
           onPressed: onPressed,
-          child: Text(title,style: TextStyle(fontSize: 12),)),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 12),
+          )),
     );
   }
 }

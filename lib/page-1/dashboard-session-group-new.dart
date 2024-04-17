@@ -20,10 +20,11 @@ import 'dart:developer' as console show log;
 
 class Counseling_Session_group extends StatefulWidget {
   const Counseling_Session_group(
-      {super.key, required this.name, required this.id});
+      {super.key, required this.name, required this.id, required this.designation});
 
   final String name;
   final String id;
+  final String designation;
 
   @override
   State<Counseling_Session_group> createState() =>
@@ -701,6 +702,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                             MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     CheckOutScreen(
+                                                                      designation: widget.designation,
                                                                         name: widget
                                                                             .name,
                                                                         id: id)));
@@ -710,6 +712,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                             MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     CheckOutScreen(
+                                                                        designation: widget.designation,
                                                                         name: widget
                                                                             .name,
                                                                         id: id)));

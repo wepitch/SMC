@@ -126,7 +126,6 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
 
                             Text(
                                 "${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}"),
-
                             Container(
                               // didntreceiveanotpresendotpX1s (437:94)
                               margin: EdgeInsets.fromLTRB(
@@ -135,7 +134,7 @@ class _OtpScreenNewLoginState extends State<OtpScreenNewLogin> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Don’t receive an OTP?',
+                                    'Did not receive an OTP?',
                                     style: SafeGoogleFont(
                                       'Roboto',
                                       fontSize: 15 * ffem,

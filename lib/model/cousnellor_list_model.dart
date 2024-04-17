@@ -32,6 +32,8 @@ class CounsellorModel {
   DateTime updatedAt;
   int v;
   List<String> clientTestimonials;
+  bool following;
+  String followersCount;
 
   CounsellorModel({
     required this.personalInfo,
@@ -54,6 +56,8 @@ class CounsellorModel {
     required this.updatedAt,
     required this.v,
     required this.clientTestimonials,
+    required this.following,
+    required this.followersCount,
   });
 
   factory CounsellorModel.fromJson(Map<String, dynamic> json) =>
@@ -83,6 +87,8 @@ class CounsellorModel {
         v: json["__v"],
         clientTestimonials:
             List<String>.from(json["client_testimonials"].map((x) => x)),
+        following: json["following"],
+        followersCount: json["followers"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -107,6 +113,8 @@ class CounsellorModel {
         "__v": v,
         "client_testimonials":
             List<dynamic>.from(clientTestimonials.map((x) => x)),
+    "following" : following,
+    "followers" : followersCount,
       };
 }
 

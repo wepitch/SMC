@@ -113,7 +113,7 @@ class _CounsellingSessionPage2State extends State<CounsellingSessionPage2> {
               children: [
                 Counseling_Session_group(
                   name: widget.name,
-                  id: widget.id,
+                  id: widget.id, designation: '',
                 ),
                 Counseling_Session_Personnel(
                   id: widget.id,

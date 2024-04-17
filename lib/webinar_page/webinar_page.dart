@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/booking_page/booking_page.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/shared/colors_const.dart';
@@ -41,88 +42,94 @@ class _WebinarPageState extends State<WebinarPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffffffff),
-        foregroundColor: Colors.white,
-        // titleSpacing: 60,
-        // leading: Padding(
-        //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       Navigator.pushReplacement(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => const HomePageContainer()));
-        //     },
-        //     child: Image.asset(
-        //       'assets/page-1/images/back.png',
-        //     ),
-        //   ),
-        // ),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Text(
-            "Webinar",
-            style: SafeGoogleFont("Inter",
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff1F0A68)),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xffffffff),
+          foregroundColor: Colors.white,
+          // titleSpacing: 60,
+          // leading: Padding(
+          //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.pushReplacement(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) => const HomePageContainer()));
+          //     },
+          //     child: Image.asset(
+          //       'assets/page-1/images/back.png',
+          //     ),
+          //   ),
+          // ),
+          title: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              "Webinar",
+              style: SafeGoogleFont("Inter",
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff1F0A68)),
+            ),
           ),
         ),
-      ),
-      body: Scaffold(
-        backgroundColor: ColorsConst.whiteColor,
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 12,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomTab(
-                    onPressed: () {
-                      setState(() {
-                        selectedIndex = 0;
-                      });
-                      pageController.jumpToPage(selectedIndex);
-                    },
-                    title: "My Webinar",
-                    isSelected: selectedIndex == 0),
-                CustomTab(
-                    onPressed: () {
-                      setState(() {
-                        selectedIndex = 1;
-                      });
-                      pageController.jumpToPage(selectedIndex);
-                    },
-                    title: "Today",
-                    isSelected: selectedIndex == 1),
-                CustomTab(
-                    onPressed: () {
-                      setState(() {
-                        selectedIndex = 2;
-                      });
-                      pageController.jumpToPage(selectedIndex);
-                    },
-                    title: "Upcoming",
-                    isSelected: selectedIndex == 2),
-              ],
-            ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  WebinarPastPage(),
-                  WebinarTodayPage(),
-                  WebinarUpcomingPage(),
+        body: Scaffold(
+          backgroundColor: ColorsConst.whiteColor,
+          body: Column(
+            children: [
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CustomTab(
+                      onPressed: () {
+                        setState(() {
+                          selectedIndex = 0;
+                        });
+                        pageController.jumpToPage(selectedIndex);
+                      },
+                      title: "My Webinar",
+                      isSelected: selectedIndex == 0),
+                  CustomTab(
+                      onPressed: () {
+                        setState(() {
+                          selectedIndex = 1;
+                        });
+                        pageController.jumpToPage(selectedIndex);
+                      },
+                      title: "Today",
+                      isSelected: selectedIndex == 1),
+                  CustomTab(
+                      onPressed: () {
+                        setState(() {
+                          selectedIndex = 2;
+                        });
+                        pageController.jumpToPage(selectedIndex);
+                      },
+                      title: "Upcoming",
+                      isSelected: selectedIndex == 2),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: PageView(
+                  controller: pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: const [
+                    WebinarPastPage(),
+                    WebinarTodayPage(),
+                    WebinarUpcomingPage(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

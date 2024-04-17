@@ -11,10 +11,11 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckOutScreen extends StatefulWidget {
-  CheckOutScreen({required this.name, required this.id, super.key});
+  CheckOutScreen({required this.designation,required this.name, required this.id, super.key});
 
   String name;
   String? id;
+  String designation;
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -156,7 +157,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     var amount = '';
     if (counsellorDetailController.checkOutDetailsList.isNotEmpty) {
-      double? totalAmount =
+      dynamic? totalAmount =
           counsellorDetailController.checkOutDetailsList[0].totalAmount;
       if (totalAmount != null) {
         amount = totalAmount.toString();
@@ -242,10 +243,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                     fontSize: 16,
                                   ),
                                 ),
-                                const Text(
-                                  'Designer at SMC',
+                                 Text(
+                                  widget.designation,
                                   style:
-                                      TextStyle(color: ColorsConst.black54Color),
+                                      const TextStyle(color: ColorsConst.black54Color),
                                 ),
                               ],
                             ),

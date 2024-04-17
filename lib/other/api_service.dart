@@ -470,7 +470,7 @@ class ApiService {
     print(response);
     if (response.statusCode == 200) {
       var value = jsonDecode(response.body.toString());
-      if(value.containsKey(value['name']))
+      if(value.containsKey(value['name'].toString()))
        {
          prefs.setString('name', value['name']);
        }
@@ -544,7 +544,8 @@ class ApiService {
             experienceInYears: 2,
             totalSessions: 3,
             rewardPoints: 4,
-            reviews: 5)
+            reviews: 5, designation: "",
+        )
       ];
     }
     return [];
@@ -575,7 +576,8 @@ class ApiService {
             experienceInYears: 2,
             totalSessions: 3,
             rewardPoints: 4,
-            reviews: 5)
+            reviews: 5, designation: "",
+        )
       ];
     }
     return [];

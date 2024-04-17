@@ -525,7 +525,7 @@ class _CounsellorListPage_offlineState
                                                                                                     ),
                                                                                                     Text(
                                                                                                       // productdesignerwepitchd2h (730:38)
-                                                                                                      "N/A",
+                                                                                                      listController.cousnellorlist_data[index].designation,
                                                                                                       style: SafeGoogleFont(
                                                                                                         'Inter',
                                                                                                         fontSize: 12 * ffem,
@@ -956,13 +956,14 @@ class _CounsellorListPage_offlineState
                                                                                           onTap: () {
                                                                                             String id = listController.cousnellorlist_data[index].id;
                                                                                             String name = listController.cousnellorlist_data[index].name;
+                                                                                            String designation = listController.cousnellorlist_data[index].designation;
                                                                                             Navigator.push(
                                                                                                 context,
                                                                                                 MaterialPageRoute(
                                                                                                     builder: (context) =>
                                                                                                         CounsellingSessionPage(
                                                                                                             id: id,
-                                                                                                            name: name)));
+                                                                                                            name: name, designation: designation,)));
                                                                                           },
                                                                                           child: Container(
                                                                                             width: 120,
@@ -1107,13 +1108,13 @@ class _CounsellorListPage_offlineState
     );
   }
 
-  void onTapgotocounsellor(BuildContext context,
+  /*void onTapgotocounsellor(BuildContext context,
       {required String name, required String id}) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => CounsellingSessionPage(name: name, id: id)));
-  }
+  }*/
 
   Future<bool> _onBackPressed() async {
     Navigator.pushReplacement(context,

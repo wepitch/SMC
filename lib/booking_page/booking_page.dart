@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/booking_page/booking_past.dart';
 import 'package:myapp/booking_page/booking_today.dart';
 import 'package:myapp/booking_page/booking_upcoming.dart';
@@ -49,104 +50,110 @@ class _BookingPageState extends State<BookingPage> {
     // double baseWidth = 430;
     // double fem = MediaQuery.of(context).size.width;
     // double ffem = fem * 0.97;
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xffffffff),
-          foregroundColor: Colors.white,
-          // leading: Padding(
-          //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       Navigator.pushReplacement(
-          //           context,
-          //           MaterialPageRoute(
-          //               builder: (context) => const HomePageContainer()));
-          //     },
-          //     child: Image.asset(
-          //       'assets/page-1/images/back.png',
-          //     ),
-          //   ),
-          // ),
-          //titleSpacing: 108,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
-              "My Booking",
-              style: SafeGoogleFont("Inter",
-                  fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return true;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: const Color(0xffffffff),
+            foregroundColor: Colors.white,
+            // leading: Padding(
+            //   padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       Navigator.pushReplacement(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => const HomePageContainer()));
+            //     },
+            //     child: Image.asset(
+            //       'assets/page-1/images/back.png',
+            //     ),
+            //   ),
+            // ),
+            //titleSpacing: 108,
+            title: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(
+                "My Booking",
+                style: SafeGoogleFont("Inter",
+                    fontSize: 18, fontWeight: FontWeight.w600,color: Color(0xff1F0A68)),
+              ),
             ),
           ),
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 19,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                    // isScrollable: true,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTab(
-                        onPressed: () {
-                          selectedIndex = 0;
-                          setState(() {});
-                          _controller.jumpToPage(
-                            selectedIndex,
-                          );
-                        },
-                        title: "Past",
-                        isSelected: selectedIndex == 0,
-                      ),
-                      CustomTab(
-                        onPressed: () {
-                          selectedIndex = 1;
-                          setState(() {});
-                          _controller.jumpToPage(
-                            selectedIndex,
-                          );
-                        },
-                        title: "Today",
-                        isSelected: selectedIndex == 1,
-                      ),
-                      CustomTab(
-                        onPressed: () {
-                          selectedIndex = 2;
-                          setState(() {});
-                          _controller.jumpToPage(
-                            selectedIndex,
-                          );
-                        },
-                        title: "Upcoming",
-                        isSelected: selectedIndex == 2,
-                      ),
-                    ]),
-              ),
-              const SizedBox(
-                height: 36,
-              ),
-              Expanded(
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _controller,
-                  onPageChanged: (value) {
-                    selectedIndex = value;
-
-                    setState(() {});
-                  },
-                  children: const [
-                    BookingPast(),
-                    BookingToday(),
-                    BookingUpcoming()
-                  ],
+          body: SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 19,
                 ),
-              )
-            ],
-          ),
-        ),backgroundColor: Colors.white,);
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                      // isScrollable: true,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomTab(
+                          onPressed: () {
+                            selectedIndex = 0;
+                            setState(() {});
+                            _controller.jumpToPage(
+                              selectedIndex,
+                            );
+                          },
+                          title: "Past",
+                          isSelected: selectedIndex == 0,
+                        ),
+                        CustomTab(
+                          onPressed: () {
+                            selectedIndex = 1;
+                            setState(() {});
+                            _controller.jumpToPage(
+                              selectedIndex,
+                            );
+                          },
+                          title: "Today",
+                          isSelected: selectedIndex == 1,
+                        ),
+                        CustomTab(
+                          onPressed: () {
+                            selectedIndex = 2;
+                            setState(() {});
+                            _controller.jumpToPage(
+                              selectedIndex,
+                            );
+                          },
+                          title: "Upcoming",
+                          isSelected: selectedIndex == 2,
+                        ),
+                      ]),
+                ),
+                const SizedBox(
+                  height: 36,
+                ),
+                Expanded(
+                  child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _controller,
+                    onPageChanged: (value) {
+                      selectedIndex = value;
+
+                      setState(() {});
+                    },
+                    children: const [
+                      BookingPast(),
+                      BookingToday(),
+                      BookingUpcoming()
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),backgroundColor: Colors.white,),
+    );
 
   }
 

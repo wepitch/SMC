@@ -587,7 +587,7 @@ class _Counseling_Session_PersonnelState
                                                                           CheckOutScreen(
                                                                               name: widget
                                                                                   .name,
-                                                                              id: id)));
+                                                                              id: id, designation: '',)));
                                                             } else {
                                                               EasyLoading.showToast(
                                                                   'There are no booking slots available in this session, please book another session',

@@ -17,6 +17,7 @@ class CounsellorData {
   int totalSessions;
   int rewardPoints;
   int reviews;
+  String designation;
 
   CounsellorData({
     required this.id,
@@ -27,6 +28,7 @@ class CounsellorData {
     required this.totalSessions,
     required this.rewardPoints,
     required this.reviews,
+    required this.designation,
   });
 
   factory CounsellorData.fromJson(Map<String, dynamic> json) => CounsellorData(
@@ -38,6 +40,7 @@ class CounsellorData {
     totalSessions: json["total_sessions"],
     rewardPoints: json["reward_points"],
     reviews: json["reviews"],
+    designation: json["designation"].toString(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +52,6 @@ class CounsellorData {
     "total_sessions": totalSessions,
     "reward_points": rewardPoints,
     "reviews": reviews,
+    "designation" : designation
   };
 }

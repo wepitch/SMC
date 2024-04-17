@@ -99,7 +99,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
   //   }
   // }
 
-
   Future<void> onPressedAction() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(widget.id, !isFollowing);
@@ -114,6 +113,17 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+    isFollowing = counsellorDetailController.counsellorModel.isNotEmpty &&
+            counsellorDetailController.counsellorModel[0].following != null
+        ? counsellorDetailController.counsellorModel[0].following
+        : false;
+
+    followerCount = int.parse(counsellorDetailController
+                .counsellorModel.isNotEmpty &&
+            counsellorDetailController.counsellorModel[0].followersCount.toString() != null
+        ? counsellorDetailController.counsellorModel[0].followersCount
+            .toString()
+        : '0');
 
     // checkImageValidity(counsellorDetailController
     //     .cousnellorlist_detail[0].coverImage);
@@ -146,8 +156,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                   color: Color(0xff1F0A68),
                   height: 23,
                 ),
-              )
-          ),
+              )),
         ],
         leading: IconButton(
             onPressed: () {
@@ -174,18 +183,24 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].coverImage != null)
-                                    ? counsellorDetailController.cousnellorlist_detail[0].coverImage
+                                (counsellorDetailController
+                                            .cousnellorlist_detail.isNotEmpty &&
+                                        counsellorDetailController
+                                                .cousnellorlist_detail[0]
+                                                .coverImage !=
+                                            null)
+                                    ? counsellorDetailController
+                                        .cousnellorlist_detail[0].coverImage
                                     : '',
                                 fit: BoxFit.cover,
-                                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
                                   return Image.asset(
                                     'assets/page-1/images/comming_soon.png',
                                     fit: BoxFit.cover,
                                   );
                                 },
                               ),
-
                             ),
                           ),
                         ),
@@ -202,8 +217,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       style: const TextStyle(
                                           fontSize: 14,
                                           color: Color(0xff1f0a68),
-                                          fontWeight: FontWeight.w600
-                                      ),
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ],
                                 ),
@@ -224,8 +238,16 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       height: 15.27,
                                     ),
                                     const SizedBox(width: 6),
-                                    const Text(
-                                      'Today 14 Sessions',
+                                    Text(
+                                      (counsellorDetailController
+                                                  .cousnellorlist_detail
+                                                  .isNotEmpty &&
+                                              counsellorDetailController
+                                                      .cousnellorlist_detail[0]
+                                                      .totalSessionsAttended !=
+                                                  null)
+                                          ? 'Total ${counsellorDetailController.cousnellorlist_detail[0].totalSessionsAttended} Session Attended'
+                                          : '',
                                       style: TextStyle(fontSize: 12),
                                     ),
                                   ],
@@ -248,17 +270,73 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                   child: TextButton(
                                     onPressed: () async {
-                                      await onPressedAction();
-                                      if(isFollowing){
-                                        setState(() {
-                                          isFollowing = !isFollowing;
-                                           followerCount --;
-                                        });
-                                      } else{
-                                        setState(() {
-                                          isFollowing = !isFollowing;
-                                           followerCount ++;
-                                        });
+                                      if (isFollowing == true) {
+                                        var value = await ApiService
+                                            .Unfollow_councellor(widget.id);
+                                        if (value["message"] ==
+                                            "User is now unfollowing the counsellor") {
+                                          EasyLoading.showToast(
+                                              value["message"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                            followerCount--;
+                                          });
+                                        } else if (value["error"] ==
+                                            "Follower not found") {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                            followerCount--;
+                                          });
+                                        } else {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                          });
+                                        }
+                                      } else {
+                                        var value =
+                                            await ApiService.Follow_councellor(
+                                                widget.id);
+                                        if (value["message"] ==
+                                            "User is now following the counsellor") {
+                                          EasyLoading.showToast(
+                                              value["message"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = true;
+                                            followerCount++;
+                                          });
+                                        } else if (value["error"] ==
+                                            "Counsellor is already followed by the user") {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = true;
+                                            followerCount++;
+                                          });
+                                        } else {
+                                          EasyLoading.showToast(value["error"],
+                                              toastPosition:
+                                                  EasyLoadingToastPosition
+                                                      .bottom);
+                                          setState(() {
+                                            isFollowing = false;
+                                          });
+                                        }
                                       }
                                     },
                                     style: TextButton.styleFrom(
@@ -285,7 +363,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       ),
                                     ),
                                   ),
-
                                 ),
                                 // onPressed: () async {
                                 //   if (isFollowing == true) {
@@ -369,7 +446,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     Text(
                                       // followingweY (2958:442)
                                       '$followerCount '
-                                          "Following",
+                                      "Following",
                                       style: SafeGoogleFont(
                                         'Inter',
                                         fontSize: 12,
@@ -396,19 +473,28 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].experienceInYears != null)
+                                  (counsellorDetailController
+                                              .cousnellorlist_detail
+                                              .isNotEmpty &&
+                                          counsellorDetailController
+                                                  .cousnellorlist_detail[0]
+                                                  .experienceInYears !=
+                                              null)
                                       ? '${counsellorDetailController.cousnellorlist_detail[0].experienceInYears} + yrs'
                                       : '',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
-
                               ],
                             ),
                             Column(
                               children: [
-                                Text('|',style: TextStyle(fontSize: 28,color: Colors.black54),),
+                                Text(
+                                  '|',
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.black54),
+                                ),
                               ],
                             ),
                             Column(
@@ -417,7 +503,13 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].totalSessionsAttended != null)
+                                  (counsellorDetailController
+                                              .cousnellorlist_detail
+                                              .isNotEmpty &&
+                                          counsellorDetailController
+                                                  .cousnellorlist_detail[0]
+                                                  .totalSessionsAttended !=
+                                              null)
                                       ? '${counsellorDetailController.cousnellorlist_detail[0].totalSessionsAttended}'
                                       : '',
                                   style: const TextStyle(
@@ -425,9 +517,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
-                            ), Column(
+                            ),
+                            Column(
                               children: [
-                                Text('|',style: TextStyle(fontSize: 28,color: Colors.black54),),
+                                Text(
+                                  '|',
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.black54),
+                                ),
                               ],
                             ),
                             Column(
@@ -436,17 +533,29 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].averageRating != null)
+                                  (counsellorDetailController
+                                              .cousnellorlist_detail
+                                              .isNotEmpty &&
+                                          counsellorDetailController
+                                                  .cousnellorlist_detail[0]
+                                                  .averageRating !=
+                                              null)
                                       ? '${counsellorDetailController.cousnellorlist_detail[0].averageRating}'
-                                      : 'N/A', // Or any other placeholder text to indicate absence of rating
+                                      : 'N/A',
+                                  // Or any other placeholder text to indicate absence of rating
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
-                            ), Column(
+                            ),
+                            Column(
                               children: [
-                                Text('|',style: TextStyle(fontSize: 28,color: Colors.black54),),
+                                Text(
+                                  '|',
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.black54),
+                                ),
                               ],
                             ),
                             Column(
@@ -455,9 +564,16 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     style: TextStyle(
                                         color: ColorsConst.black54Color)),
                                 Text(
-                                  (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].reviews != null)
+                                  (counsellorDetailController
+                                              .cousnellorlist_detail
+                                              .isNotEmpty &&
+                                          counsellorDetailController
+                                                  .cousnellorlist_detail[0]
+                                                  .reviews !=
+                                              null)
                                       ? '${counsellorDetailController.cousnellorlist_detail[0].reviews}'
-                                      : 'No reviews', // Or any other placeholder text to indicate absence of reviews
+                                      : 'No reviews',
+                                  // Or any other placeholder text to indicate absence of reviews
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -526,42 +642,72 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                         ),
                         Row(
                           children: [
-                            Text('\u2022 ',style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),),
-                            Text('Evaluate your strengths and weaknesses',style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 13),),
+                            Text(
+                              '\u2022 ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Text(
+                              'Evaluate your strengths and weaknesses',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 13),
+                            ),
                           ],
                         ),
                         Row(
                           children: [
-                            Text('\u2022 ',style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),),
-                            Text("significant impact on a student's life by providing\nvaluable guidance, support",style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 13),),
+                            Text(
+                              '\u2022 ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Text(
+                              "significant impact on a student's life by providing\nvaluable guidance, support",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 13),
+                            ),
                           ],
                         ),
                         Row(
                           children: [
-                            Text('\u2022 ',style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),),
-                            Text("Career counseling provides students with\naccurate and up-to-date information about\nvarious career options",style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 13),),
+                            Text(
+                              '\u2022 ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Text(
+                              "Career counseling provides students with\naccurate and up-to-date information about\nvarious career options",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 13),
+                            ),
                           ],
                         ),
                         Row(
                           children: [
-                            Text('\u2022 ',style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),),
-                            Text("career counselor can assist students in setting\nrealistic and achievable goals.",style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 13),),
+                            Text(
+                              '\u2022 ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Text(
+                              "career counselor can assist students in setting\nrealistic and achievable goals.",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 13),
+                            ),
                           ],
                         ),
                         Row(
                           children: [
-                            Text('\u2022 ',style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),),
-                            Text("Career counseling can identify areas for skill\ndevelopment and suggest resources or training\nopportunities to enhance those skills",style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 13),),
+                            Text(
+                              '\u2022 ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Text(
+                              "Career counseling can identify areas for skill\ndevelopment and suggest resources or training\nopportunities to enhance those skills",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 13),
+                            ),
                           ],
                         ),
                         /*ReadMoreText(
@@ -615,10 +761,19 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty &&
-                                  counsellorDetailController.cousnellorlist_detail[0].qualifications != null &&
-                                  counsellorDetailController.cousnellorlist_detail[0].qualifications.isNotEmpty)
-                                  ? counsellorDetailController.cousnellorlist_detail[0].qualifications.join(', ')
+                              (counsellorDetailController
+                                          .cousnellorlist_detail.isNotEmpty &&
+                                      counsellorDetailController
+                                              .cousnellorlist_detail[0]
+                                              .qualifications !=
+                                          null &&
+                                      counsellorDetailController
+                                          .cousnellorlist_detail[0]
+                                          .qualifications
+                                          .isNotEmpty)
+                                  ? counsellorDetailController
+                                      .cousnellorlist_detail[0].qualifications
+                                      .join(', ')
                                   : 'N/A',
                               style: const TextStyle(
                                 fontSize: 14,
@@ -627,7 +782,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
-
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -641,10 +795,19 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty &&
-                                  counsellorDetailController.cousnellorlist_detail[0].languages != null &&
-                                  counsellorDetailController.cousnellorlist_detail[0].languages!.isNotEmpty)
-                                  ? counsellorDetailController.cousnellorlist_detail[0].languages!.join(",")
+                              (counsellorDetailController
+                                          .cousnellorlist_detail.isNotEmpty &&
+                                      counsellorDetailController
+                                              .cousnellorlist_detail[0]
+                                              .languages !=
+                                          null &&
+                                      counsellorDetailController
+                                          .cousnellorlist_detail[0]
+                                          .languages!
+                                          .isNotEmpty)
+                                  ? counsellorDetailController
+                                      .cousnellorlist_detail[0].languages!
+                                      .join(",")
                                   : "N/A",
                               style: const TextStyle(
                                 fontSize: 14,
@@ -653,7 +816,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
-
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -668,7 +830,10 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              counsellorDetailController.cousnellorlist_detail.isNotEmpty ? '${counsellorDetailController.cousnellorlist_detail[0].location?.state ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.city ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.country ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.pincode ?? ''}' : '',
+                              counsellorDetailController
+                                      .cousnellorlist_detail.isNotEmpty
+                                  ? '${counsellorDetailController.cousnellorlist_detail[0].location?.state ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.city ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.country ?? ''},${counsellorDetailController.cousnellorlist_detail[0].location?.pincode ?? ''}'
+                                  : '',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -676,7 +841,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
-
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -691,8 +855,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].gender != null)
-                                  ? counsellorDetailController.cousnellorlist_detail[0].gender
+                              (counsellorDetailController
+                                          .cousnellorlist_detail.isNotEmpty &&
+                                      counsellorDetailController
+                                              .cousnellorlist_detail[0]
+                                              .gender !=
+                                          null)
+                                  ? counsellorDetailController
+                                      .cousnellorlist_detail[0].gender
                                   : "N/A",
                               style: const TextStyle(
                                 fontSize: 14,
@@ -701,7 +871,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             ),
-
                           ],
                         ),
                         const SizedBox(height: 14),
@@ -716,8 +885,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              (counsellorDetailController.cousnellorlist_detail.isNotEmpty && counsellorDetailController.cousnellorlist_detail[0].age != null)
-                                  ? counsellorDetailController.cousnellorlist_detail[0].age.toString()
+                              (counsellorDetailController
+                                          .cousnellorlist_detail.isNotEmpty &&
+                                      counsellorDetailController
+                                              .cousnellorlist_detail[0].age !=
+                                          null)
+                                  ? counsellorDetailController
+                                      .cousnellorlist_detail[0].age
+                                      .toString()
                                   : "N/A",
                               style: const TextStyle(
                                 fontSize: 14,
@@ -726,7 +901,6 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 color: Color(0xff8e8989),
                               ),
                             )
-
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -800,19 +974,21 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 suffixIcon: IconButton(
                                   onPressed: () async {
                                     var value =
-                                    await ApiService.Feedback_councellor(
-                                        widget.id,rating_val,feedback_msg);
+                                        await ApiService.Feedback_councellor(
+                                            widget.id,
+                                            rating_val,
+                                            feedback_msg);
                                     if (value["error"] ==
                                         "Feedback is already given by the user") {
                                       EasyLoading.showToast(value["error"],
                                           toastPosition:
-                                          EasyLoadingToastPosition.bottom);
-                                    } else{
+                                              EasyLoadingToastPosition.bottom);
+                                    } else {
                                       (value["message"] ==
                                           "Feedback has been successfully added");
                                       EasyLoading.showToast(value["message"],
                                           toastPosition:
-                                          EasyLoadingToastPosition.bottom);
+                                              EasyLoadingToastPosition.bottom);
                                     }
                                     controller.clear();
                                   },
@@ -855,8 +1031,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                           width: 430 * fem,
                           height: 57 * fem,
                           decoration: BoxDecoration(
-                            border:
-                            Border.all(color: const Color(0x35000000)),
+                            border: Border.all(color: const Color(0x35000000)),
                           ),
                           child: SizedBox(
                             // group370NiL (2936:483)
@@ -872,12 +1047,12 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   height: double.infinity,
                                   child: Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
                                         // group345fBe (2936:458)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 5 * fem, 0 * fem),
+                                        margin: EdgeInsets.fromLTRB(
+                                            0 * fem, 0 * fem, 5 * fem, 0 * fem),
                                         width: 42 * fem,
                                         height: double.infinity,
                                         child: Stack(
@@ -938,9 +1113,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                                       'Inter',
                                                       fontSize: 12 * ffem,
                                                       fontWeight:
-                                                      FontWeight.w400,
+                                                          FontWeight.w400,
                                                       height:
-                                                      1.2125 * ffem / fem,
+                                                          1.2125 * ffem / fem,
                                                       color: const Color(
                                                           0xff000000),
                                                     ),
@@ -1036,7 +1211,14 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                   Navigator.push(context, MaterialPageRoute(builder: (context) => CounsellingSessionPage2(name: widget.name,id: widget.id,)));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CounsellingSessionPage2(
+                                                  name: widget.name,
+                                                  id: widget.id,
+                                                )));
                                   },
                                   child: Container(
                                     // group349P36 (2936:462)
@@ -1045,7 +1227,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     decoration: BoxDecoration(
                                       color: const Color(0xff1f0a68),
                                       borderRadius:
-                                      BorderRadius.circular(5 * fem),
+                                          BorderRadius.circular(5 * fem),
                                     ),
                                     child: Center(
                                       child: Center(
@@ -1079,8 +1261,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                           width: 430 * fem,
                           height: 57 * fem,
                           decoration: BoxDecoration(
-                            border:
-                            Border.all(color: const Color(0x35000000)),
+                            border: Border.all(color: const Color(0x35000000)),
                           ),
                           child: SizedBox(
                             // group370y1J (2936:485)
@@ -1096,12 +1277,12 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   height: double.infinity,
                                   child: Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
                                         // autogroupvexiTSG (obZYj7WRacadntT6aVeXi)
-                                        margin: EdgeInsets.fromLTRB(0 * fem,
-                                            0 * fem, 8 * fem, 0 * fem),
+                                        margin: EdgeInsets.fromLTRB(
+                                            0 * fem, 0 * fem, 8 * fem, 0 * fem),
                                         width: 42 * fem,
                                         height: double.infinity,
                                         child: Stack(
@@ -1162,9 +1343,9 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                                       'Inter',
                                                       fontSize: 12 * ffem,
                                                       fontWeight:
-                                                      FontWeight.w400,
+                                                          FontWeight.w400,
                                                       height:
-                                                      1.2125 * ffem / fem,
+                                                          1.2125 * ffem / fem,
                                                       color: const Color(
                                                           0xff000000),
                                                     ),
@@ -1246,8 +1427,16 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CounsellingSessionPage(name: widget.name,id: widget.id,)));
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CounsellingSessionPage(
+                                                  name: widget.name,
+                                                  id: widget.id,
+                                                  designation: '',
+                                                )));
                                   },
                                   child: Container(
                                     // group349oRa (2936:500)
@@ -1256,7 +1445,7 @@ class _CounsellorDetailsScreenState extends State<CounsellorDetailsScreen>
                                     decoration: BoxDecoration(
                                       color: const Color(0xff1f0a68),
                                       borderRadius:
-                                      BorderRadius.circular(5 * fem),
+                                          BorderRadius.circular(5 * fem),
                                     ),
                                     child: Center(
                                       child: Center(
@@ -1349,5 +1538,3 @@ void onTapBook(BuildContext context) {
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => const PaymentGateAway()));
 }
-
-

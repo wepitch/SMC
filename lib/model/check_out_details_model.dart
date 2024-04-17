@@ -6,8 +6,8 @@ class CheckOutDetails {
   int? gstAmount;
   int? feeWithGST;
   num? gatewayCharge;
-  double? totalAmount;
-  int? counsellorId;
+  dynamic? totalAmount;
+  String? counsellorId;
   String? counsellorName;
   String? counsellorProfilePic;
 
