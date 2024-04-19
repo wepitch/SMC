@@ -272,7 +272,7 @@ class _BookingConfirmationPage2State extends State<BookingConfirmationPage2> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Importance of CUET",
+                      "Session Details",
                       style: SafeGoogleFont(
                         "Inter",
                         fontSize: 24,

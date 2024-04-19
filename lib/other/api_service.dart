@@ -446,12 +446,12 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> readCheckOutAPi() async {
+  /*static Future<Map<String, dynamic>> readCheckOutAPi() async {
     final String response =
         await rootBundle.loadString('assets/page-1/images/sample.json');
     var data = await json.decode(response);
     return data;
-  }
+  }*/
 
   static Future<void> get_profile() async {
     String phoneNumber = "";
@@ -922,6 +922,51 @@ class ApiService {
     return {};
   }
 
+  static Future<List<BookingModel>> readCheckOutAPi() async {
+    final String response =
+    await rootBundle.loadString('assets/page-1/images/sample.json');
+    List data = await json.decode(response);
+    List<BookingModel> bookingDetails = [];
+    //console.log("Yess");
+    for (final element in data) {
+      bookingDetails.add(BookingModel.fromJson(element));
+    }
+    return List.from(data.map((e) => BookingModel.fromJson(e)));
+  }
+
+  static Future<List<BookingModel>> getUserBooking1(
+      {required bool past, required bool today, required bool upcoming}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final url = today
+        ? Uri.parse("${AppConstants.baseUrl}/user/booking")
+        : Uri.parse(
+        "${AppConstants.baseUrl}/user/booking?past=$past&today=$today&upcoming=$upcoming");
+    // final url = Uri.parse("${AppConstants.baseUrl}/user/booking");
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Authorization": token,
+    };
+    final response = await http.get(url, headers: headers);
+
+    console.log("gettingAllBookings : ${response.body}");
+
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body.toString());
+      List<BookingModel> bookingDetails = [];
+      //console.log("Yess");
+      for (final element in data) {
+        bookingDetails.add(BookingModel.fromJson(element));
+      }
+
+      return List.from(data.map((e) => BookingModel.fromJson(e)));
+    } else if (response.statusCode == 404) {
+      return [BookingModel(v: -1)];
+    }
+    return [];
+  }
+
   static Future<List<BookingModel>> getUserBooking(
       {required bool past, required bool today, required bool upcoming}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -938,7 +983,7 @@ class ApiService {
     };
     final response = await http.get(url, headers: headers);
 
-    //console.log("gettingAllBookings : ${response.body}");
+    console.log("gettingAllBookings : ${response.body}");
 
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body.toString());

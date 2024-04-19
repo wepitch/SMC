@@ -19,15 +19,13 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context
-        .read<UserBookingProvider>()
-        .fetchUserBookings(past: false, today: false, upcoming: true);
+     context.read<UserBookingProvider>().fetchUserBookings(past: false, today: false, upcoming: true);
+    //context.read<UserBookingProvider>().fetchUserBookingsTest();
   }
 
   Future<void> _refresh() async {
-    return context
-        .read<UserBookingProvider>()
-        .fetchUserBookings(past: false, today: false, upcoming: true);
+     return context.read<UserBookingProvider>().fetchUserBookings(past: false, today: false, upcoming: true);
+    //return context.read<UserBookingProvider>().fetchUserBookingsTest();
   }
 
   @override
@@ -207,8 +205,8 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
                                                               MaterialPageRoute(
                                                                   builder: (context) =>
                                                                       BookingConfirmationPage2(
-                                                                          remainingTime:
-                                                                              const Duration(), // has to change
+                                                                          // remainingTime: const Duration(), // has to change
+                                                                        remainingTime: parseDuration(details.bookingData!.sessionTime.toString()),
                                                                           isUpcoming:
                                                                               false,
                                                                           bookingData: details.bookingData ??
@@ -945,6 +943,15 @@ class _BookingUpcomingState extends State<BookingUpcoming> {
     //     ),
     //   ],
     // );
+  }
+  parseDuration(String durationString) {
+    List<String> components = durationString.split(':');
+
+    int hours = int.parse(components[0]);
+    int minutes = int.parse(components[1]);
+    //int seconds = int.parse(components[2]);
+
+    return Duration(hours: hours, minutes: minutes, seconds: 0);
   }
 }
 

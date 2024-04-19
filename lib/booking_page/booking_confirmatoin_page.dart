@@ -158,17 +158,17 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(
-                                          "min",
-                                          style: SafeGoogleFont(
-                                            "Inter",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        )
+                                        // const SizedBox(
+                                        //   width: 2,
+                                        // ),
+                                        // Text(
+                                        //   "min",
+                                        //   style: SafeGoogleFont(
+                                        //     "Inter",
+                                        //     fontSize: 12,
+                                        //     fontWeight: FontWeight.w600,
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                             ],

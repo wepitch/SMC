@@ -62,7 +62,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
           style: SafeGoogleFont("Inter",
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Color(0xff1F0A68)),
+              color: const Color(0xff1F0A68)),
         ),
       ),
       body: Container(
@@ -84,7 +84,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                     height: 11,
                   ),
                   Image.asset(
-                    "${AppConstants.imagePath}${widget.bookingData.sessionStatus == "Available" || widget.bookingData.sessionStatus == "Booked" ? "booking-confirm.png" : "booking-cancel.png"}",
+                    "${AppConstants.imagePath}${widget.bookingData.sessionStatus == "Available" || widget.bookingData.sessionStatus == "Booked" ? "bookingimg.png" : "bookingimg.png"}",
                     height: 105,
                     width: 105,
                   ),
@@ -93,7 +93,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                   ),
                   Text(
                     widget.isConfirmed
-                        ? "BOOKING CONFIRMED"
+                        ? "BOOKING CLOSED"
                         : "BOOKING CANCELED",
                     style: SafeGoogleFont("Inter", fontSize: 14),
                   ),
@@ -120,7 +120,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                             Text(
                               widget.isUpcoming
                                   ? "Meeting starts at"
-                                  : "Session starts in",
+                                  : "Session Started",
                               style: SafeGoogleFont(
                                 "Inter",
                                 fontSize: 12,
@@ -143,7 +143,8 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                                 : Row(
                                     children: [
                                       Text(
-                                        "${widget.remainingTime.inHours < 0 ? "" : widget.remainingTime.inHours}:${widget.remainingTime.inMinutes.remainder(60) < 0 ? '0' : widget.remainingTime.inMinutes.remainder(60)}",
+                                         "${widget.remainingTime.inHours < 0 ? "" : widget.remainingTime.inHours}:${widget.remainingTime.inMinutes.remainder(60) < 0 ? '0' : widget.remainingTime.inMinutes.remainder(60)}",
+                                        //'${widget.remainingTime}',
                                         style: SafeGoogleFont(
                                           "Inter",
                                           fontSize: 18,
@@ -154,7 +155,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                                         width: 2,
                                       ),
                                       Text(
-                                        "min",
+                                        "",
                                         style: SafeGoogleFont(
                                           "Inter",
                                           fontSize: 12,
@@ -191,7 +192,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                                     style: SafeGoogleFont("Inter",
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: const Color(0xff1F0A68)),
+                                        color: Colors.grey),
                                   )
                           ],
                         ),
@@ -272,7 +273,7 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Importance of CUET",
+                      "Session Details",
                       style: SafeGoogleFont(
                         "Inter",
                         fontSize: 24,
@@ -404,7 +405,8 @@ class _BookingConfirmationPage1State extends State<BookingConfirmationPage1> {
                           ),
                         ),
                         Text(
-                          " : ${widget.bookingData.sessionStatus}",
+                          // " : ${widget.bookingData.sessionStatus} Closed",
+                          " : Booking Closed",
                           style: SafeGoogleFont(
                             "Inter",
                             fontSize: 14,

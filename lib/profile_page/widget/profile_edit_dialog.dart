@@ -81,11 +81,12 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   Future<void> saveDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool valueSaved = false;
-     ApiService.save_profile(
-        prefs.getString("name"),
-        prefs.getString("date_of_birth"),
-        prefs.getString("gender"),
-        prefs.getString("education_level"));
+    ApiService.save_profile(
+      prefs.getString("name"),
+      prefs.getString("date_of_birth"),
+      prefs.getString("gender"),
+      prefs.getString("education_level"),
+    );
 
     if (currentEducation != null) {
       prefs.setString('education_level', currentEducation!);
@@ -102,10 +103,9 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
       valueSaved = true;
     }
     if (valueSaved) {
-          Navigator.pop(context);
+      Navigator.pop(context);
     }
   }
-
 
   void showEducationDropdown(BuildContext context) async {
     List<String> educationList = [
@@ -138,7 +138,6 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
       },
     );
   }
-
 
   void showGenderDropdown(BuildContext context) async {
     List<String> genderList = ['Male', 'Female', 'Other'];

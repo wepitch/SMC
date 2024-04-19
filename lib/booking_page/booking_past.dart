@@ -20,15 +20,13 @@ class _BookingPastState extends State<BookingPast> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context
-        .read<UserBookingProvider>()
-        .fetchUserBookingsAll(past: true, today: false, upcoming: false);
+    context.read<UserBookingProvider>().fetchUserBookings(past: true, today: false, upcoming: false);
+    //context.read<UserBookingProvider>().fetchUserBookingsTest();
   }
 
   Future<void> _refresh() async {
-    return context
-        .read<UserBookingProvider>()
-        .fetchUserBookingsAll(past: true, today: false, upcoming: false);
+    return context.read<UserBookingProvider>().fetchUserBookings(past: true, today: false, upcoming: false);
+    //return context.read<UserBookingProvider>().fetchUserBookingsTest();
   }
 
   @override
@@ -119,9 +117,8 @@ class _BookingPastState extends State<BookingPast> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          "designer at wepitch",
+                                                          details.bookedEntity?.email ?? 'N/A',
                                                           // textAlign: TextAlign.left,
-
                                                           style: SafeGoogleFont(
                                                             "Inter",
                                                             color: const Color(
@@ -161,9 +158,10 @@ class _BookingPastState extends State<BookingPast> {
                                                       text: TextSpan(
                                                         children: <TextSpan>[
                                                           TextSpan(
-                                                      text: details.bookingData?.sessionTime != null
-                                                                  ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(int.parse(details.bookingData!.sessionTime.toString()),))
-                                                                  : 'N/A',
+                                                      // text: details.bookingData?.sessionTime != null
+                                                      //             ? DateFormat('h:mm a').format(DateTime.fromMillisecondsSinceEpoch(int.parse(details.bookingData!.sessionTime.toString()),))
+                                                      //             : 'N/A',
+                                                              text: details.bookingData?.sessionTime,
                                                               style: SafeGoogleFont(
                                                                   "Inter",
                                                                   fontWeight:
@@ -210,8 +208,8 @@ class _BookingPastState extends State<BookingPast> {
                                                               MaterialPageRoute(
                                                                   builder: (context) =>
                                                                       BookingConfirmationPage1(
-                                                                          remainingTime:
-                                                                              const Duration(),
+                                                                          // remainingTime: const Duration(),
+                                                                        remainingTime: parseDuration(details.bookingData!.sessionTime.toString()),
                                                                           isUpcoming:
                                                                               false,
                                                                           bookingData: details.bookingData ??
@@ -774,6 +772,15 @@ class _BookingPastState extends State<BookingPast> {
     //     ),
     //   ],
     // );
+  }
+  parseDuration(String durationString) {
+    List<String> components = durationString.split(':');
+
+    int hours = int.parse(components[0]);
+    int minutes = int.parse(components[1]);
+    //int seconds = int.parse(components[2]);
+
+    return Duration(hours: hours, minutes: minutes, seconds: 0);
   }
 }
 
