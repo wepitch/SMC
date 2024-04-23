@@ -10,12 +10,12 @@ import '../utils.dart';
 class BookingConfirmationPage extends StatefulWidget {
   const BookingConfirmationPage(
       {super.key,
-      required this.isUpcoming,
-      required this.isConfirmed,
-      required this.time,
-      required this.bookingData,
-      required this.counsellorDetails,
-      required this.remainingTime});
+        required this.isUpcoming,
+        required this.isConfirmed,
+        required this.time,
+        required this.bookingData,
+        required this.counsellorDetails,
+        required this.remainingTime});
   final Duration remainingTime;
   final bool isUpcoming;
   final String time;
@@ -42,7 +42,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     isExpired = (widget.remainingTime.inMinutes +
-            (widget.bookingData.sessionDuration ?? 0)) <
+        (widget.bookingData.sessionDuration ?? 0)) <
         0;
 
     return PopScope(
@@ -60,7 +60,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
             padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
             child: GestureDetector(
               onTap: () =>
-                Navigator.of(context).pop(),
+                  Navigator.of(context).pop(),
               child: Image.asset(
                 'assets/page-1/images/back.png',
                 color: Color(0xff1F0A68),
@@ -78,9 +78,9 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
           decoration: const BoxDecoration(
               border: Border(
                   right: BorderSide(
-            width: 0.5,
-            color: Colors.grey,
-          ))),
+                    width: 0.5,
+                    color: Colors.grey,
+                  ))),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,40 +137,40 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                               ),
                               widget.isUpcoming
                                   ? Text(
-                                      "${widget.time} pm",
-                                      style: SafeGoogleFont(
-                                        "Inter",
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        decorationColor: Colors.red,
-                                        decoration: widget.isConfirmed
-                                            ? TextDecoration.none
-                                            : TextDecoration.lineThrough,
-                                      ),
-                                    )
+                                "${widget.time} pm",
+                                style: SafeGoogleFont(
+                                  "Inter",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  decorationColor: Colors.red,
+                                  decoration: widget.isConfirmed
+                                      ? TextDecoration.none
+                                      : TextDecoration.lineThrough,
+                                ),
+                              )
                                   : Row(
-                                      children: [
-                                        Text(
-                                          "${widget.remainingTime.inHours < 0 ? "" : widget.remainingTime.inHours}:${widget.remainingTime.inMinutes.remainder(60) < 0 ? '0' : widget.remainingTime.inMinutes.remainder(60)}",
-                                          style: SafeGoogleFont(
-                                            "Inter",
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        // const SizedBox(
-                                        //   width: 2,
-                                        // ),
-                                        // Text(
-                                        //   "min",
-                                        //   style: SafeGoogleFont(
-                                        //     "Inter",
-                                        //     fontSize: 12,
-                                        //     fontWeight: FontWeight.w600,
-                                        //   ),
-                                        // )
-                                      ],
+                                children: [
+                                  Text(
+                                    "${widget.remainingTime.inHours < 0 ? "" : widget.remainingTime.inHours}:${widget.remainingTime.inMinutes.remainder(60) < 0 ? '0' : widget.remainingTime.inMinutes.remainder(60)}",
+                                    style: SafeGoogleFont(
+                                      "Inter",
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
                                     ),
+                                  ),
+                                  // const SizedBox(
+                                  //   width: 2,
+                                  // ),
+                                  // Text(
+                                  //   "min",
+                                  //   style: SafeGoogleFont(
+                                  //     "Inter",
+                                  //     fontSize: 12,
+                                  //     fontWeight: FontWeight.w600,
+                                  //   ),
+                                  // )
+                                ],
+                              ),
                             ],
                           ),
                           Column(
@@ -178,13 +178,17 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                               customButton(
                                   context: context,
                                   onPressed: () {
-                                    if (!((widget.remainingTime.inMinutes +
-                                            (widget.bookingData.sessionDuration ??
-                                                0)) <
+
+                                    _launchURL(widget.bookingData.sessionLink!,
+                                        context);
+
+                                    /*if (!((widget.remainingTime.inMinutes +
+                                        (widget.bookingData.sessionDuration ??
+                                            0)) <
                                         0)) {
                                       _launchURL(widget.bookingData.sessionLink!,
                                           context);
-                                    }
+                                    }*/
                                   },
                                   title: "JOIN NOW",
                                   isActive: isExpired),
@@ -194,12 +198,12 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                               widget.isUpcoming
                                   ? const SizedBox()
                                   : Text(
-                                      "Host has joined",
-                                      style: SafeGoogleFont("Inter",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: const Color(0xff1F0A68)),
-                                    ),
+                                "Host has joined",
+                                style: SafeGoogleFont("Inter",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xff1F0A68)),
+                              ),
                             ],
                           ),
                         ],
@@ -225,7 +229,7 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                           CircleAvatar(
                             radius: 30,
                             backgroundImage: NetworkImage(widget
-                                    .counsellorDetails.profilePic ??
+                                .counsellorDetails.profilePic ??
                                 "https://media.gettyimages.com/id/1334712074/vector/coming-soon-message.jpg?s=612x612&w=0&k=20&c=0GbpL-k_lXkXC4LidDMCFGN_Wo8a107e5JzTwYteXaw="),
                           ),
                           const SizedBox(
@@ -279,10 +283,10 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Importance of CUET",
+                        "Session Detail",
                         style: SafeGoogleFont(
                           "Inter",
-                          fontSize: 24,
+                          fontSize: 22,
                           color: const Color(0xff1F0A68),
                           fontWeight: FontWeight.w300,
                         ),
@@ -522,9 +526,9 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
 
 Widget customButton(
     {required BuildContext context,
-    required VoidCallback onPressed,
-    required String title,
-    required bool isActive}) {
+      required VoidCallback onPressed,
+      required String title,
+      required bool isActive}) {
   return SizedBox(
       width: 137,
       height: 38,
@@ -532,12 +536,12 @@ Widget customButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
               foregroundColor:
-                  isActive ? const Color(0xff9C9A9A) : Colors.white,
+              isActive ? const Color(0xff9C9A9A) : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               backgroundColor:
-                  isActive ? const Color(0xffDFDFDF) : const Color(0xff1F0A68)),
+              isActive ? const Color(0xffDFDFDF) : const Color(0xff1F0A68)),
           child: Text(
             title,
             style: SafeGoogleFont(
@@ -565,10 +569,22 @@ void configLoading() {
 
 
 void _launchURL(String url, BuildContext context) async {
-  EasyLoading.show(status: "Loading...", dismissOnTap: false);
+  EasyLoading.show(status: "Loading...", dismissOnTap: true);
   var uri = Uri.parse(url);
-  if (!await canLaunchUrl(uri)) {
-    await launchUrl(uri).then((value) {
+  await launchUrl(uri).then((value)
+  {
+    if (value) {
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.showToast("Unable to Open..",
+          toastPosition: EasyLoadingToastPosition.bottom);
+    }
+  });
+
+  /*if (!await canLaunchUrl(uri))
+  {
+    await launchUrl(uri).then((value)
+    {
       if (value) {
         EasyLoading.dismiss();
       } else {
@@ -576,5 +592,6 @@ void _launchURL(String url, BuildContext context) async {
             toastPosition: EasyLoadingToastPosition.bottom);
       }
     });
-  }
+  }*/
+
 }

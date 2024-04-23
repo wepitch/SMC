@@ -24,8 +24,10 @@ class _SelectDobNewState extends State<SelectDobNew> {
 
   openDatePicker() async {
     var now = DateTime.now();
-    var firstDate = DateTime(now.year - 12); // Minimum age 12 years
+    var twelveYearsAgo = now.subtract(const Duration(days: 12 * 365));
+    var firstDate = DateTime(twelveYearsAgo.year - 12);
     showDatePicker(
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       builder: (context, child) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +44,7 @@ class _SelectDobNewState extends State<SelectDobNew> {
                   ),
                   textButtonTheme: TextButtonThemeData(
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.black, // button text color
+                      foregroundColor: Colors.black,
                     ),
                   ),
                 ),

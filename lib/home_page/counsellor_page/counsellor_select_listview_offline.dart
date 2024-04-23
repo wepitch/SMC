@@ -629,8 +629,11 @@ class _CounsellorListPage_offlineState
                                                                                                 onTap: () {
                                                                                                   String id = listController.cousnellorlist_data[index].id;
                                                                                                   String name = listController.cousnellorlist_data[index].name;
+                                                                                                  String designation = listController.cousnellorlist_data[index].designation;
 
-                                                                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CounsellorDetailsScreen(id: id, name: name)));
+
+                                                                                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                                                                                      CounsellorDetailsScreen(id: id, name: name, designation: designation,)));
                                                                                                 },
                                                                                                 child: const SizedBox(
                                                                                                   width: 130.85,
@@ -918,7 +921,8 @@ class _CounsellorListPage_offlineState
                                                                                                     builder: (context) =>
                                                                                                         CounsellorDetailsScreen(
                                                                                                             id: listController.cousnellorlist_data[index].id,
-                                                                                                            name: listController.cousnellorlist_data[index].name)));
+                                                                                                            name: listController.cousnellorlist_data[index].name,
+                                                                                                            designation: listController.cousnellorlist_data[index].designation,  )));
                                                                                           },
                                                                                           child: Container(
                                                                                             width: 120.14,
@@ -962,8 +966,8 @@ class _CounsellorListPage_offlineState
                                                                                                 MaterialPageRoute(
                                                                                                     builder: (context) =>
                                                                                                         CounsellingSessionPage(
-                                                                                                            id: id,
-                                                                                                            name: name, designation: designation,)));
+                                                                                                            id: listController.cousnellorlist_data[index].id,
+                                                                                                            name: name, designation: designation,selectedIndex_get: 0,)));
                                                                                           },
                                                                                           child: Container(
                                                                                             width: 120,

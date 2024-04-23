@@ -75,13 +75,13 @@ class _Counseling_Session_PersonnelState
 
   void fetchDataFromApi() {
     var date = Jiffy.now().format(pattern: "yyyy-M-d");
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_session(
+    context.read<CounsellorDetailsProvider>().fetchCounsellor_session_perssonel(
         id: widget.id, date: date, sessionType: "Personal");
   }
 
   void fetchDataFromApiAll() {
     var date = Jiffy.now().format(pattern: "yyyy-M-d");
-    context.read<CounsellorDetailsProvider>().fetchCounsellor_session_all(
+    context.read<CounsellorDetailsProvider>().fetchCounsellor_session_perssonel(
         id: widget.id, date: date, sessionType: "Personal");
   }
 
@@ -293,6 +293,7 @@ class _Counseling_Session_PersonnelState
                                   physics: const ScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
+                                    dynamic  bookedslot =  counsellorSessionProvider.details.sessions![index].sessionSlots - counsellorSessionProvider.details.sessions![index].sessionAvailableSlots;
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0),
@@ -341,7 +342,7 @@ class _Counseling_Session_PersonnelState
                                                     ),
                                                     child: Center(
                                                       child: Text(
-                                                        '${counsellorSessionProvider.details.sessions![index].sessionAvailableSlots}/${counsellorSessionProvider.details.sessions![index].sessionSlots}',
+                                                        ' ${bookedslot.toString()} / ${counsellorSessionProvider.details.sessions![index].sessionSlots}',
                                                         style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 13,
@@ -490,8 +491,11 @@ class _Counseling_Session_PersonnelState
                                                           : const SizedBox()
                                                     ],
                                                   ),
+
                                                   GestureDetector(
-                                                    onTap: () {
+
+                                                    /*onTap: ()
+                                                    {
                                                       EasyLoading.show(
                                                           status: "Loading...",
                                                           dismissOnTap: false);
@@ -541,7 +545,7 @@ class _Counseling_Session_PersonnelState
                                                                       .bottom);
                                                         }
                                                       });
-                                                    },
+                                                    },*/
                                                     child: Container(
                                                       width: 96,
                                                       height: 38,
@@ -570,16 +574,19 @@ class _Counseling_Session_PersonnelState
                                                             sPref.setString(
                                                                 'sessionid', id!);
 
-                                                            var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
-                                                            var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots!;
+                                                            var sessionSlots = counsellorSessionProvider.details.sessions![index].sessionSlots!;
+                                                            var sessionAvailableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
 
-                                                            if (availableSlots >= 0) {
+                                                            if (sessionAvailableSlots <= 0!)
+                                                            {
                                                               EasyLoading.showToast(
                                                                   'There are no booking slots available in this session, please book another session',
                                                                   toastPosition:
                                                                   EasyLoadingToastPosition
                                                                       .bottom);
-                                                            } else if (availableSlots <= totalAvailableSlots) {
+                                                            }
+                                                            else
+                                                            {
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
@@ -588,12 +595,6 @@ class _Counseling_Session_PersonnelState
                                                                               name: widget
                                                                                   .name,
                                                                               id: id, designation: '',)));
-                                                            } else {
-                                                              EasyLoading.showToast(
-                                                                  'There are no booking slots available in this session, please book another session',
-                                                                  toastPosition:
-                                                                  EasyLoadingToastPosition
-                                                                      .bottom);
                                                             }
                                                           },
                                                           child: const Text(
@@ -612,10 +613,13 @@ class _Counseling_Session_PersonnelState
                                                               height: 0,
                                                             ),
                                                           ),
+
+
                                                         ),
                                                       ),
                                                     ),
                                                   ),
+
                                                 ],
                                               ),
                                             ],

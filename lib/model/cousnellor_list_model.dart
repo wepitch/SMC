@@ -84,11 +84,13 @@ class CounsellorModel {
         degreeFocused: json["degree_focused"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        following: json["following"],
+        followersCount: json["followers"],
+
         v: json["__v"],
         clientTestimonials:
             List<String>.from(json["client_testimonials"].map((x) => x)),
-        following: json["following"],
-        followersCount: json["followers"],
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -110,11 +112,12 @@ class CounsellorModel {
         "degree_focused": degreeFocused,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
+        "following" : following,
+        "followers" : followersCount,
         "__v": v,
         "client_testimonials":
             List<dynamic>.from(clientTestimonials.map((x) => x)),
-    "following" : following,
-    "followers" : followersCount,
+
       };
 }
 

@@ -8,6 +8,8 @@ import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../other/api_service.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -31,6 +33,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void getAllInfo() async {
+
+    ApiService.get_profile().then((value) => loaddefaultvalue());
+
+  }
+
+  void loaddefaultvalue() async
+  {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     username = prefs.getString("name") ?? "N/A";
     phoneNumber = prefs.getString("phone_number") ?? "N/A";
@@ -48,10 +57,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked : (didPop){
+        // logic
         SystemNavigator.pop();
-        return true;
       },
       child: Scaffold(
         backgroundColor: ColorsConst.whiteColor,

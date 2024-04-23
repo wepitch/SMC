@@ -81,6 +81,7 @@ class _CounsellorFeedPageState extends State<CounsellorFeedPage>
                               builder: (context) => CounsellorDetailsScreen(
                                     id: widget.id,
                                     name: widget.name,
+                                    designation: "",
                                   )));
                     }
                   },
@@ -304,6 +305,7 @@ Future<bool> _onBackPressed(
           builder: (context) => CounsellorDetailsScreen(
                 id: id,
                 name: name,
+                designation: "",
               )));
   return true;
 }

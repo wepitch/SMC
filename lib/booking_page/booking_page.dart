@@ -50,10 +50,11 @@ class _BookingPageState extends State<BookingPage> {
     // double baseWidth = 430;
     // double fem = MediaQuery.of(context).size.width;
     // double ffem = fem * 0.97;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked : (didPop){
+        // logic
         SystemNavigator.pop();
-        return true;
       },
       child: Scaffold(
           appBar: AppBar(

@@ -1,6 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:myapp/home_page/entrance_preparation/entrance_preparation_details_screen.dart';
+import 'package:myapp/other/api_service.dart';
+import 'package:myapp/other/listcontroler.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/utils.dart';
 
@@ -14,6 +20,29 @@ class EntrancePreparationScreen extends StatefulWidget {
 
 class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
   int selectedIndex = 0;
+
+  final ListController listController = Get.put(ListController());
+
+  @override
+  void initState() {
+    super.initState();
+    ApiService.getEPListData();
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(const Duration(seconds: 1), () {
+      ApiService.getEPListData().then((value) {
+        if (value.isNotEmpty) {
+          setState(() {});
+        }
+        if (value[0].name == "none") {
+          EasyLoading.showToast("404 Page Not Found",
+              toastPosition: EasyLoadingToastPosition.bottom);
+        }
+        setState(() {});
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +79,10 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Obx(
+    () => listController.isLoading.value
+    ? const Center(child: CircularProgressIndicator())
+        : Column(
           children: [
             Container(
               // sliderhqs (742:104)
@@ -179,10 +211,15 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                   ),
                 ],
               ),
-            ),
+            ),listController.epModelList.isEmpty ? const Center(
+              child: Text(
+                  "Something went wrong!"),
+            ):
             ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 14),
-              itemCount: 4,
+              itemCount: listController
+                  .epModelList
+                  .length,
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               primary: false,
@@ -192,18 +229,27 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                   surfaceTintColor: ColorsConst.whiteColor,
                   child: Container(
                     padding:
-                        EdgeInsets.only(top: 10, left: 4, right: 4, bottom: 10),
+                        EdgeInsets.only(top: 10, left: 2, right: 4, bottom: 10),
                     child: Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
+                             Column(
                               children: [
-                                Icon(
-                                  Icons.account_circle_outlined,
-                                  size: 100,
-                                  color: Colors.grey,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(75 * fem),
+                                  child: Image.network(
+                                    listController.epModelList[index].profilePic.toString(),
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                      //print("Exception >> ${exception.toString()}");
+                                      return Image.asset(
+                                        'assets/page-1/images/comming_soon.png',
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -211,15 +257,15 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
+                                 Row(
                                   children: [
                                     Text(
-                                      'Allen Career Institute',
+                                      listController.epModelList[index].name.toString(),
                                       style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600),
                                     ),
-                                    const SizedBox(width: 26),
+                                    SizedBox(width: 26),
                                     Icon(
                                       Icons.share,
                                       color: ColorsConst.appBarColor,
@@ -237,12 +283,15 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                                     SizedBox(width: 4),
                                     Text(
                                       '4.5',
-                                      style: TextStyle(fontSize: 12),
+                                      style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500
+                                      ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 6,
+                                  height: 8,
                                 ),
                                 Row(
                                   children: [
@@ -258,7 +307,9 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                                         'CUET',
                                         style: TextStyle(
                                             color: ColorsConst.whiteColor,
-                                            fontSize: 10),
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w400
+                                             ),
                                       )),
                                     ),
                                     const SizedBox(width: 4),
@@ -314,40 +365,80 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                                 const SizedBox(
                                   height: 6,
                                 ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.location_on_sharp,
-                                      size: 20,
-                                    ),
-                                    Text(' C-Scheme Jaipur'),
-                                  ],
+                                 Padding(
+                                  padding: EdgeInsets.fromLTRB(0,0,0,0),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_sharp,
+                                        size: 20,
+                                      ),
+                                      Text('${listController.epModelList[index].address!.buildingNumber.toString()} ',
+                                      style: const TextStyle(
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w400),
+                                      ),
+                                      Text('${listController.epModelList[index].address!.area.toString()} ',
+                                        style: const TextStyle(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text('${listController.epModelList[index].address!.state.toString()} ',
+                                        style: const TextStyle(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text('${listController.epModelList[index].address!.city.toString()} ',
+                                        style: const TextStyle(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(listController.epModelList[index].address!.pinCode.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(
-                                  height: 4,
+                                  height: 3,
                                 ),
-                                Row(
+                                const Row(
                                   children: [
                                     Icon(
                                       Icons.access_time_outlined,
                                       size: 18,
                                     ),
                                     Text(
-                                      ' Open until 9:00 PM',
-                                      style: TextStyle(color: Colors.green),
+                                      'Open until 9:00 PM',
+                                      style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400
+
+                                      ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 4,
+                                  height: 5,
                                 ),
-                                Row(
+                                 const Row(
+
                                   children: [
                                     Icon(
-                                      Icons.calendar_month_outlined,
-                                      size: 18,
+                                        size:15,
+                                        Icons.work
                                     ),
-                                    Text(' 10+ Yrs In Business'),
+                                    Text('10+ Yrs In Business',
+                                        style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600
+
+                                    ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -360,14 +451,15 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                           children: [
                             InkWell(
                               onTap: () {
+                                String name = listController.epModelList[index].name.toString();
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const EntrancePreparationDetailsScreen()));
+                                             EntrancePreparationDetailsScreen(name: name ,)));
                               },
                               child: Container(
-                                height: 34,
+                                height: 36,
                                 width: 100,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -382,7 +474,7 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
                               ),
                             ),
                             Container(
-                              height: 34,
+                              height: 36,
                               width: 100,
                               decoration: BoxDecoration(
                                   color: ColorsConst.appBarColor,
@@ -408,6 +500,7 @@ class _EntrancePreparationScreenState extends State<EntrancePreparationScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

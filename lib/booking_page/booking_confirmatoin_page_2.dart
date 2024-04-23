@@ -171,6 +171,11 @@ class _BookingConfirmationPage2State extends State<BookingConfirmationPage2> {
                                 context: context,
                                 onPressed: () {
                                   Fluttertoast.showToast(msg: 'Event is upcoming please wait..');
+
+                                 /* _launchURL(widget.bookingData.sessionLink!,
+                                            context);*/
+
+
                                   // if (!((widget.remainingTime.inMinutes +
                                   //         (widget.bookingData.sessionDuration ??
                                   //             0)) <
@@ -542,7 +547,16 @@ Widget customButton(
 void _launchURL(String url, BuildContext context) async {
   EasyLoading.show(status: "Loading...", dismissOnTap: false);
   var uri = Uri.parse(url);
-  if (!await canLaunchUrl(uri)) {
+  await launchUrl(uri).then((value) {
+    if (value) {
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.showToast("Unable to Open..",
+          toastPosition: EasyLoadingToastPosition.bottom);
+    }
+  });
+
+  /*if (!await canLaunchUrl(uri)) {
     await launchUrl(uri).then((value) {
       if (value) {
         EasyLoading.dismiss();
@@ -550,6 +564,6 @@ void _launchURL(String url, BuildContext context) async {
         EasyLoading.showToast("Unable to Open..",
             toastPosition: EasyLoadingToastPosition.bottom);
       }
-    });
-  }
+    });*/
+
 }

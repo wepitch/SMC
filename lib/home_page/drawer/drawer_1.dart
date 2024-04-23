@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myapp/home_page/drawer/image_saved_screen.dart';
 import 'package:myapp/home_page/help_screen.dart';
+import 'package:myapp/home_page/homepage.dart';
 import 'package:myapp/page-1/shared.dart';
 import 'package:myapp/page-1/splash_screen_2.dart';
 import 'package:myapp/page-1/splash_screen_n.dart';
 import 'package:myapp/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../homepagecontainer.dart';
 
 class Drawer1 extends StatefulWidget {
   const Drawer1({super.key});
@@ -98,7 +101,11 @@ class _Drawer1State extends State<Drawer1> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      //Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePageContainer()));
                     },
                     child: ListTile(
                       leading: Image.asset(

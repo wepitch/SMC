@@ -18,6 +18,25 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   String? currentGender;
   String? currentDob;
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loaddefaultValue();
+
+  }
+
+  void loaddefaultValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    currentEducation = prefs.getString('education_level');
+    currentGender = prefs.getString('gender');
+    currentDob = prefs.getString('date_of_birth');
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -81,12 +100,6 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
   Future<void> saveDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool valueSaved = false;
-    ApiService.save_profile(
-      prefs.getString("name"),
-      prefs.getString("date_of_birth"),
-      prefs.getString("gender"),
-      prefs.getString("education_level"),
-    );
 
     if (currentEducation != null) {
       prefs.setString('education_level', currentEducation!);
@@ -102,16 +115,22 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
       prefs.setString('date_of_birth', currentDob!);
       valueSaved = true;
     }
-    if (valueSaved) {
-      Navigator.pop(context);
-    }
+
+
+    ApiService.save_profile(
+        prefs.getString("name"),
+        prefs.getString("date_of_birth"),
+        prefs.getString("gender"),
+        prefs.getString("education_level")).then((value) => Navigator.pop(context));
+
   }
+
 
   void showEducationDropdown(BuildContext context) async {
     List<String> educationList = [
       "School",
       "College",
-      "Graduated",
+      "Graduation",
     ];
 
     showDialog<String>(
@@ -125,8 +144,8 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
               } else {
                 currentEducation = value;
               }
-              if (value == "Graduated") {
-                currentEducation = "Graduation";
+              if (value == "Graduation") {
+                currentEducation = "Graduated";
               } else {
                 currentEducation = value;
               }
@@ -138,6 +157,7 @@ class _ProfileEditDialogState extends State<ProfileEditDialog> {
       },
     );
   }
+
 
   void showGenderDropdown(BuildContext context) async {
     List<String> genderList = ['Male', 'Female', 'Other'];

@@ -41,10 +41,11 @@ class _NewsScreen extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked : (didPop){
+        // logic
         SystemNavigator.pop();
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(

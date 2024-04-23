@@ -37,11 +37,11 @@ class Sessions {
   String? sessionType;
   num? sessionPrice;
   String? sessionStatus;
-  int? sessionSlots;
+  dynamic? sessionSlots;
   String? sessionLink;
   String? createdAt;
   String? updatedAt;
-  int? sessionAvailableSlots;
+  dynamic? sessionAvailableSlots;
   int? v;
   String? sessionMassagedDate;
 

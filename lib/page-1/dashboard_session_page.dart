@@ -12,17 +12,20 @@ class CounsellingSessionPage extends StatefulWidget {
       {super.key,
       required this.name,
       required this.id,
-      required this.designation});
+      required this.designation,
+      required this.selectedIndex_get});
 
   final String name;
   final String id;
   final String designation;
+  final int selectedIndex_get;
 
   @override
   State<CounsellingSessionPage> createState() => _CounsellingSessionPageState();
 }
 
 class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
+
   late PageController _controller;
   int selectedIndex = 0;
 
@@ -32,8 +35,14 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
   var data;
 
   void getEmail() async {
+    print(widget.id);
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("cid", widget.id);
+
+
+
     email = prefs.getString("email") ?? "N/A";
+
     setState(() {});
   }
 
@@ -43,7 +52,9 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(widget.id);
     getEmail();
+    selectedIndex = widget.selectedIndex_get;
     _controller = PageController(initialPage: selectedIndex);
   }
 
@@ -66,6 +77,17 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
         surfaceTintColor: AppColors.whiteColor,
         backgroundColor: const Color(0xffffffff),
         foregroundColor: Colors.white,
+        title: Text(
+          // anshikamehra7w6 (2608:501)
+          widget.name,
+          style: SafeGoogleFont(
+            'Inter',
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            height: 1.2125,
+            color: const Color(0xff1f0a68),
+          ),
+        ),
         leading: Padding(
           padding: const EdgeInsets.only(left: 0, top: 18, bottom: 18),
           child: GestureDetector(
@@ -79,27 +101,7 @@ class _CounsellingSessionPageState extends State<CounsellingSessionPage> {
           ),
         ),
         titleSpacing: -5,
-        title: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CheckOutScreen(
-                  name: widget.name,
-                  id: widget.id,
-                  designation: '',
-                ),
-              ),
-            );
-          },
-          child: Text(
-            widget.name,
-            style: SafeGoogleFont("Inter",
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff1F0A68)),
-          ),
-        ),
+
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

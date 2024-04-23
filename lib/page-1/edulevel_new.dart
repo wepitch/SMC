@@ -21,7 +21,7 @@ class _EducationLevelNewState extends State<EducationLevelNew> {
   static List<String> list = [
     "I'm in School",
     "I'm in College",
-    "I'm in Graduation",
+    "I'm in Graduated",
   ];
   String selectedOption = list[0];
 

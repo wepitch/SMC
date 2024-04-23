@@ -20,7 +20,7 @@ class SplashScreen1 extends StatefulWidget {
 class _SplashScreen1State extends State<SplashScreen1> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () async {
+    Future.delayed(const Duration(milliseconds: 20), () async {
       bool? isLoggedIn = await SplashScreen1.loggIn();
 
       if (isLoggedIn == true) {

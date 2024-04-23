@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/home_page/entrance_preparation/model/ep_model.dart';
 import 'package:myapp/home_page/model/banner_image_model.dart';
 import 'package:myapp/home_page/model/popular_workshop_model.dart';
 import 'package:myapp/home_page/model/tranding_webinar_model.dart';
@@ -17,6 +18,48 @@ import 'constants.dart';
 import 'dart:developer' as console show log;
 
 class ApiService {
+
+  static Future<Map<String, dynamic>> updateBookingSession(String sessionId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url = Uri.parse('${AppConstants.baseUrl}/counsellor/sessions/$sessionId/book');
+
+    final response = await http.put(url, headers: headers);
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      //print('Counsellor updated successfully');
+      var data = jsonDecode(response.body.toString());
+      return data;
+    }
+    else{
+      return jsonDecode(response.body.toString());
+    }
+  }
+
+  static Future<Map<String, dynamic>> bookValidationSession(String sessionId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final headers = {
+      'Content-Type': 'application/json',
+      "Authorization": token,
+    };
+    final url = Uri.parse('${AppConstants.baseUrl}/counsellor/sessions/$sessionId/book-validation');
+    final response = await http.put(url, headers: headers);
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      //print('Counsellor updated successfully');
+      var data = jsonDecode(response.body.toString());
+      return data;
+    }
+    else{
+       return {"error": "Something went wrong"};
+    }
+  }
+
   static Future<Map<String, dynamic>> updateProfileDetails(
       String name, String dob, String gender, String eduLevel) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -162,7 +205,7 @@ class ApiService {
     };
 
     final url =
-        Uri.parse('${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id');
+    Uri.parse('${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id');
 
     final response = await http.post(url, headers: headers);
 
@@ -178,7 +221,7 @@ class ApiService {
 
   static Future<Map<String, dynamic>> getWebinarDetailsData(String id) async {
     var url =
-        Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id");
+    Uri.parse("${AppConstants.baseUrl}/admin/webinar/webinar-for-user/$id");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("auth").toString();
     final response = await http.get(url, headers: {
@@ -222,6 +265,8 @@ class ApiService {
   //     return CheckOutDetails();
   //   }
   // }
+
+
 
   static Future<List<CheckOutDetails>> fetchCheckOutData(String id) async {
     var url = Uri.parse(
@@ -293,6 +338,8 @@ class ApiService {
     return {};
   }
 
+
+
   static Future<Map<String, dynamic>> Feedback_councellor(
       String id, double rating_val, String feedback_msg) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -319,12 +366,12 @@ class ApiService {
   }
 
   static Future<Map<String, dynamic>> counsellor_create_order(
-    String name,
-    String email,
-    double? price,
-    String description,
-    String number,
-  ) async {
+      String name,
+      String email,
+      dynamic? price,
+      String description,
+      String number,
+      ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     final body = jsonEncode({
@@ -339,7 +386,7 @@ class ApiService {
       "Authorization": token,
     };
     final url =
-        Uri.parse('${AppConstants.baseUrl}/admin/payments/create-order');
+    Uri.parse('${AppConstants.baseUrl}/admin/payments/create-order');
     final response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body.toString());
@@ -352,31 +399,33 @@ class ApiService {
   }
 
   static Future<Map<String, dynamic>> counsellor_create_payment(
-    String paymentTo,
-    String oderId,
-    String paymentId,
-    String entity,
-    String amount,
-    String amountPaid,
-    String amountDue,
-    String currency,
-    String receipt,
-    String offerId,
-    String status,
-    int attempts,
-    String createdAt,
-    String key,
-    String name,
-    String email,
-    String phoneNo,
-    String description,
-  ) async {
+      String paymentTo,
+      String paymentFrom,
+      String oderId,
+      String paymentId,
+      String entity,
+      String amount,
+      String amountPaid,
+      String amountDue,
+      String currency,
+      String receipt,
+      String offerId,
+      String status,
+      int attempts,
+      String createdAt,
+      String key,
+      String name,
+      String email,
+      String phoneNo,
+      String description,
+      ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
     print(token);
 
     final body = jsonEncode({
-      "payment_to": paymentTo,
+      "payment_to": "65fc080025aa77341212017d",
+      "payment_from":paymentFrom,
       "order_id": oderId,
       "payment_id": paymentId,
       "entity": entity,
@@ -384,12 +433,12 @@ class ApiService {
       "amount_paid": amountPaid,
       "amount_due": amountDue,
       "currency": currency,
-      "receipt": receipt,
-      "offer_id": offerId,
+      /*"email": receipt,*/
+      /*"offer_id": offerId,*/
       "status": status,
-      "attempts": attempts,
+      /*"attempts": attempts,*/
       "created_at": createdAt,
-      "key": key,
+      /*"key": key,*/
       "name": name,
       "email": email,
       "phone_no": phoneNo,
@@ -402,7 +451,7 @@ class ApiService {
     };
 
     final url =
-        Uri.parse('${AppConstants.baseUrl}/admin/payments/create-payment');
+    Uri.parse('${AppConstants.baseUrl}/admin/payments/create-payment');
 
     final response = await http.post(url, headers: headers, body: body);
 
@@ -446,12 +495,12 @@ class ApiService {
     }
   }
 
-  /*static Future<Map<String, dynamic>> readCheckOutAPi() async {
+  static Future<Map<String, dynamic>> readCheckOutAPi() async {
     final String response =
-        await rootBundle.loadString('assets/page-1/images/sample.json');
+    await rootBundle.loadString('assets/page-1/images/sample.json');
     var data = await json.decode(response);
     return data;
-  }*/
+  }
 
   static Future<void> get_profile() async {
     String phoneNumber = "";
@@ -470,40 +519,51 @@ class ApiService {
     print(response);
     if (response.statusCode == 200) {
       var value = jsonDecode(response.body.toString());
-      if(value.containsKey(value['name'].toString()))
-       {
-         prefs.setString('name', value['name']);
-       }
-      else{
+
+
+
+      if(value[0]['name'] == null)
+      {
         prefs.setString('name', "user");
       }
-
-      if(value.containsKey(value['gender']))
-      {
-        prefs.setString('gender', value['gender']);
-      }
       else{
+        prefs.setString('name', value[0]['name'].toString());
+      }
+
+      if(value[0]['gender'] == null)
+      {
         prefs.setString('gender', "Male");
       }
+      else{
+        prefs.setString('gender', value[0]['gender']);
+      }
 
-
-
+      if(value[0]['date_of_birth'] == null)
+      {
+        prefs.setString('date_of_birth', "01-01-2000");
+      }
+      else{
+        prefs.setString('date_of_birth', value[0]['date_of_birth']);
+      }
       //prefs.setString('date_of_birth', value['date_of_birth']);
-      prefs.setString('education_level', value['education_level']);
-      //prefs.setString('phone_number', value['phone_number']);
-      prefs.setString('_id', value['_id']);
-      phoneNumber = value["phone_number"].replaceAll("91", "");
-      final strDob = value["date_of_birth"].split('-');
-      dob = "${strDob[2]}-${strDob[1]}-${strDob[0]}";
+
+      prefs.setString('_id', value[0]['_id'].toString());
+      prefs.setString('education_level', value[0]['education_level'].toString());
+      phoneNumber = value[0]["phone_number"].toString().replaceAll("91", "");
       prefs.setString('phone_number', phoneNumber);
 
-      if(value.containsKey(value['date_of_birth']))
+
+      /*final strDob = value["date_of_birth"].split('-');
+      dob = "${strDob[2]}-${strDob[1]}-${strDob[0]}";*/
+
+
+      /*if(value.containsKey(value['date_of_birth']))
       {
         prefs.setString('date_of_birth', value['date_of_birth']);
       }
       else{
         prefs.setString('date_of_birth', "01-01-2000");
-      }
+      }*/
 
 
     }
@@ -513,7 +573,7 @@ class ApiService {
     //var url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
     var url = Uri.parse("http://13.127.234.0:9000//counsellor/");
     final response =
-        await http.get(url, headers: {"Content-Type": "application/json"});
+    await http.get(url, headers: {"Content-Type": "application/json"});
     // var data = json.decode(response.body);
     return List<CounsellorModel>.from(
         json.decode(response.body).map((x) => CounsellorModel.fromJson(x)));
@@ -537,19 +597,46 @@ class ApiService {
     if (response.statusCode == 404) {
       return [
         CounsellorData(
-            id: "0",
-            name: "none",
-            profilePic: "",
-            averageRating: 1,
-            experienceInYears: 2,
-            totalSessions: 3,
-            rewardPoints: 4,
-            reviews: 5, designation: "",
+          id: "0",
+          name: "none",
+          profilePic: "",
+          averageRating: 1,
+          experienceInYears: 2,
+          totalSessions: 3,
+          rewardPoints: 4,
+          reviews: 5, designation: "",
         )
       ];
     }
     return [];
   }
+
+  static Future<List<EPModel>> getEPListData() async {
+    var url = Uri.parse("${AppConstants.baseUrl}/ep/institute/user");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+    final response = await http.get(url, headers: {
+      //"Content-Type": "application/json",
+      "Authorization": token,
+    });
+    var data;
+    //console.log("Counsellor List : ${response.body}");
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      return List<EPModel>.from(
+          data.map((x) => EPModel.fromJson(x)));
+    }
+    if (response.statusCode == 404) {
+      return [
+        EPModel(
+          name: "none",
+          profilePic: "",
+        )
+      ];
+    }
+    return [];
+  }
+
 
   static Future<List<CounsellorData>> getCounsellor_() async {
     var url = Uri.parse("${AppConstants.baseUrl}/counsellor/");
@@ -569,14 +656,14 @@ class ApiService {
     if (response.statusCode == 404) {
       return [
         CounsellorData(
-            id: "0",
-            name: "none",
-            profilePic: "",
-            averageRating: 1,
-            experienceInYears: 2,
-            totalSessions: 3,
-            rewardPoints: 4,
-            reviews: 5, designation: "",
+          id: "0",
+          name: "none",
+          profilePic: "",
+          averageRating: 1,
+          experienceInYears: 2,
+          totalSessions: 3,
+          rewardPoints: 4,
+          reviews: 5, designation: "",
         )
       ];
     }
@@ -623,7 +710,7 @@ class ApiService {
     var data;
     var url = Uri.parse(AppConstants.baseUrl + AppConstants.sendotpRequest);
     final response =
-        await http.get(url, headers: {"Content-Type": "application/json"});
+    await http.get(url, headers: {"Content-Type": "application/json"});
     data = json.decode(response.body);
     return ResponseModel.fromJson(data);
   }
@@ -631,9 +718,9 @@ class ApiService {
   static Future<ResponseModel> call_phone_otp_1() async {
     var data;
     var url =
-        Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
+    Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
     final response =
-        await http.get(url, headers: {"Content-Type": "application/json"});
+    await http.get(url, headers: {"Content-Type": "application/json"});
     data = json.decode(response.body);
     return ResponseModel.fromJson(data);
   }
@@ -671,7 +758,7 @@ class ApiService {
 
     var data;
     var url =
-        Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
+    Uri.parse(AppConstants.baseUrl + AppConstants.sendotpphoneRequest);
     final response = await http.post(
       url,
       headers: headers,
@@ -726,7 +813,7 @@ class ApiService {
 
     var data;
     var url =
-        Uri.parse(AppConstants.baseUrl + AppConstants.verifyotpphoneRequest);
+    Uri.parse(AppConstants.baseUrl + AppConstants.verifyotpphoneRequest);
     final response = await http.post(
       url,
       headers: headers,
@@ -784,7 +871,8 @@ class ApiService {
     final token = prefs.getString("token").toString();
 
     var url = Uri.parse(
-        "${AppConstants.baseUrl}/counsellor/$id/sessions${date != null ? params : ''}");
+        "${AppConstants.baseUrl}/counsellor/$id/sessions${date != null ? params : ""}");
+
     print(url);
 
     var response = await http.get(
@@ -801,10 +889,52 @@ class ApiService {
     }
     if (response.statusCode == 404) {
       return CounsellorSessionDetails(totalAvailableSlots: -1);
-    } else {
+    }
+    else if (response.statusCode == 500) {
+      return CounsellorSessionDetails(totalAvailableSlots: -1);
+    }
+    else {
       return CounsellorSessionDetails();
     }
   }
+
+
+  static Future<CounsellorSessionDetails> getCounsellor_sessions_perssonel(
+      {String? date, String? sessionType, required String id}) async {
+    var params = "?session_date=$date&session_type=$sessionType";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token").toString();
+
+    var url = Uri.parse(
+        "${AppConstants.baseUrl}/counsellor/$id/sessions${date != null ? params : params}");
+
+    print(url);
+
+    var response = await http.get(
+      url,
+      headers: {"Content-Type": "application/json", "Authorization": token},
+    );
+    var data;
+
+    console.log(response.body.toString());
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body.toString());
+      console.log(data.toString());
+      return CounsellorSessionDetails.fromJson(data);
+    }
+    if (response.statusCode == 404) {
+      return CounsellorSessionDetails(totalAvailableSlots: -1);
+    }
+    else if (response.statusCode == 500) {
+      return CounsellorSessionDetails(totalAvailableSlots: -1);
+    }
+    else {
+      return CounsellorSessionDetails();
+    }
+  }
+
+
+
 
   static Future<CounsellorSessionDetails> getCounsellor_sessions_all(
       {String? date, String? sessionType, required String id}) async {
@@ -916,25 +1046,13 @@ class ApiService {
     if (response.statusCode == 400) {
       return {
         "error":
-            "There are no booking slots available in this session, please book another session"
+        "There are no booking slots available in this session, please book another session"
       };
     }
     return {};
   }
 
-  static Future<List<BookingModel>> readCheckOutAPi() async {
-    final String response =
-    await rootBundle.loadString('assets/page-1/images/sample.json');
-    List data = await json.decode(response);
-    List<BookingModel> bookingDetails = [];
-    //console.log("Yess");
-    for (final element in data) {
-      bookingDetails.add(BookingModel.fromJson(element));
-    }
-    return List.from(data.map((e) => BookingModel.fromJson(e)));
-  }
-
-  static Future<List<BookingModel>> getUserBooking1(
+  static Future<List<BookingModel>> getUserBooking(
       {required bool past, required bool today, required bool upcoming}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
@@ -950,40 +1068,7 @@ class ApiService {
     };
     final response = await http.get(url, headers: headers);
 
-    console.log("gettingAllBookings : ${response.body}");
-
-    if (response.statusCode == 200) {
-      List data = jsonDecode(response.body.toString());
-      List<BookingModel> bookingDetails = [];
-      //console.log("Yess");
-      for (final element in data) {
-        bookingDetails.add(BookingModel.fromJson(element));
-      }
-
-      return List.from(data.map((e) => BookingModel.fromJson(e)));
-    } else if (response.statusCode == 404) {
-      return [BookingModel(v: -1)];
-    }
-    return [];
-  }
-
-  static Future<List<BookingModel>> getUserBooking(
-      {required bool past, required bool today, required bool upcoming}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("token").toString();
-    final url = today
-        ? Uri.parse("${AppConstants.baseUrl}/user/booking")
-        : Uri.parse(
-            "${AppConstants.baseUrl}/user/booking?past=$past&today=$today&upcoming=$upcoming");
-   // final url = Uri.parse("${AppConstants.baseUrl}/user/booking");
-
-    final headers = {
-      "Content-Type": "application/json",
-      "Authorization": token,
-    };
-    final response = await http.get(url, headers: headers);
-
-    console.log("gettingAllBookings : ${response.body}");
+    //console.log("gettingAllBookings : ${response.body}");
 
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body.toString());
@@ -1004,11 +1089,13 @@ class ApiService {
       {required bool past, required bool today, required bool upcoming}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("token").toString();
-    /*final url = today
+
+    final url = today
         ? Uri.parse("${AppConstants.baseUrl}/user/booking")
         : Uri.parse(
-        "${AppConstants.baseUrl}/user/booking?past=$past&today=$today&upcoming=$upcoming");*/
-     final url = Uri.parse("${AppConstants.baseUrl}/user/booking");
+        "${AppConstants.baseUrl}/user/booking?past=$past&today=$today&upcoming=$upcoming");
+
+    //final url = Uri.parse("${AppConstants.baseUrl}/user/booking");
 
     final headers = {
       "Content-Type": "application/json",

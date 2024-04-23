@@ -10,10 +10,13 @@ import 'package:myapp/other/provider/counsellor_details_provider.dart';
 import 'package:myapp/other/dependency_injection.dart';
 import 'package:myapp/other/provider/follower_provider.dart';
 import 'package:myapp/other/provider/user_booking_provider.dart';
+import 'package:myapp/page-1/selectdob_new.dart';
 import 'package:myapp/page-1/shared.dart';
 import 'package:myapp/page-1/splash_screen_1.dart';
 import 'package:myapp/utils.dart';
 import 'package:provider/provider.dart';
+
+import 'home_page/entrance_preparation/entrance_preparation_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +59,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.grey,
           ),
           //home: CheckOutScreen(name: 'abc', id: '65fbcbb563ee42338a08b939'),
-          home: SplashScreen1(isLoggedIn: isLoggedIn),
+          home: /*SelectDobNew()*/ SplashScreen1(isLoggedIn: isLoggedIn),
           builder: EasyLoading.init()),
     );
   }

@@ -19,13 +19,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../other/api_service.dart';
 
 class EntrancePreparationDetailsScreen extends StatefulWidget {
-  const EntrancePreparationDetailsScreen({
+   EntrancePreparationDetailsScreen({
+    required this.name,
     super.key,
   });
+  String name;
 
   @override
-  State<EntrancePreparationDetailsScreen> createState() =>
-      _EntrancePreparationDetailsScreenState();
+  State<EntrancePreparationDetailsScreen> createState() => _EntrancePreparationDetailsScreenState();
 }
 
 class _EntrancePreparationDetailsScreenState
@@ -66,11 +67,11 @@ class _EntrancePreparationDetailsScreenState
         titleSpacing: -16,
         title: Text(
           // anshikamehra7w6 (2608:501)
-          'Allen Career Institute',
+          widget.name,
           style: SafeGoogleFont(
             'Inter',
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
             height: 1.2125,
             color: const Color(0xff1f0a68),
           ),
@@ -133,7 +134,13 @@ class _EntrancePreparationDetailsScreenState
                                       Icons.location_on_sharp,
                                       size: 20,
                                     ),
-                                    Text(' C-Scheme Jaipur'),
+                                    Text(' C-Scheme Jaipur',
+                                        style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400
+
+                                    ) ),
                                   ],
                                 ),
                                 SizedBox(
@@ -147,7 +154,11 @@ class _EntrancePreparationDetailsScreenState
                                     ),
                                     Text(
                                       ' Open until 9:00 PM',
-                                      style: TextStyle(color: Colors.green),
+                                      style: TextStyle(
+                                          color: Colors.green,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -157,7 +168,13 @@ class _EntrancePreparationDetailsScreenState
                                 Row(
                                   children: [
                                     Icon(Icons.star,color: Colors.amber,size: 18,),
-                                    Text(' 4.9 (986)'),
+                                    Text(' 4.9 (986)',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400
+                                        )
+                                    ),
                                   ],
                                 ), SizedBox(
                                   height: 4,
@@ -483,22 +500,25 @@ class _EntrancePreparationDetailsScreenState
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Card(
                                 color: ColorsConst.whiteColor,
                                 surfaceTintColor: ColorsConst.whiteColor,
+                                elevation: 1,
                                 child: Container(
-                                  padding: const EdgeInsets.only(left: 20,top: 12,right: 20),
-                                  width: 328,
+                                  padding: const EdgeInsets.only(left: 0,top: 10,right: 0),
+                                  width: 220,
                                   height: 70,
                                   decoration: const BoxDecoration(),
                                   child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Column(
                                         children: [
-                                          Text('Dr.kumar',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                                          Text('MBBS and MS in',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                                          Text('Dr.kumar',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500),),
+                                          Text('MBBS and MS in',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500),),
                                         ],
                                       ),
                                       Icon(Icons.account_circle,size: 50,color: ColorsConst.blueColor,),
@@ -729,7 +749,7 @@ Text('Key Features', style: TextStyle(
                                     child: Container(
                                       // group349P36 (2936:462)
                                       width: 116 * fem,
-                                      height: double.infinity,
+                                      height: 20 * double.infinity,
                                       decoration: BoxDecoration(
                                         borderRadius:
                                         BorderRadius.circular(5 * fem),
@@ -737,7 +757,7 @@ Text('Key Features', style: TextStyle(
                                       child: Center(
                                         child: Center(
                                           child: Text(
-                                            'Interested?',
+                                            'Interested ?',
                                             textAlign: TextAlign.center,
                                             style: SafeGoogleFont(
                                               'Inter',
@@ -760,7 +780,7 @@ Text('Key Features', style: TextStyle(
                                     child: Container(
                                       // group349P36 (2936:462)
                                       width: 116 * fem,
-                                      height: double.infinity,
+                                      height: 60 * fem,
                                       decoration: BoxDecoration(
                                         color: const Color(0xff1f0a68),
                                         borderRadius:
@@ -773,8 +793,8 @@ Text('Key Features', style: TextStyle(
                                             textAlign: TextAlign.center,
                                             style: SafeGoogleFont(
                                               'Inter',
-                                              fontSize: 16 * ffem,
-                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18 * ffem,
+                                              fontWeight: FontWeight.w500,
                                               height: 1.2125 * ffem / fem,
                                               color: const Color(0xffffffff),
                                             ),

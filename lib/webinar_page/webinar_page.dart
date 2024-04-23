@@ -4,6 +4,7 @@ import 'package:myapp/booking_page/booking_page.dart';
 import 'package:myapp/other/api_service.dart';
 import 'package:myapp/shared/colors_const.dart';
 import 'package:myapp/webinar_page/webinar_past_page.dart';
+import 'package:myapp/webinar_page/webinar_pastwebnar_page.dart';
 import 'package:myapp/webinar_page/webinar_today_page.dart';
 import 'package:myapp/webinar_page/webinar_upcoming_page.dart';
 import 'package:myapp/utils.dart';
@@ -42,10 +43,11 @@ class _WebinarPageState extends State<WebinarPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked : (didPop){
+        // logic
         SystemNavigator.pop();
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -122,7 +124,8 @@ class _WebinarPageState extends State<WebinarPage> {
                   controller: pageController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: const [
-                    WebinarPastPage(),
+                    //WebinarPastPage(),
+                    WebinarPastDataPage(),
                     WebinarTodayPage(),
                     WebinarUpcomingPage(),
                   ],

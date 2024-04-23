@@ -179,6 +179,24 @@ class CounsellorDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  void fetchCounsellor_session_perssonel({required String id, String? date, String? sessionType}) async {
+    try {
+      isLoading = true;
+      if (date != null) {
+        var counsellor = await ApiService.getCounsellor_sessions_perssonel(
+            date: date, sessionType: sessionType, id: id);
+        details = counsellor;
+      } else {
+        var counsellor = await ApiService.getCounsellor_sessions_perssonel(id: id);
+        allDetails = counsellor;
+      }
+    } finally {
+      isLoading = false;
+    }
+    notifyListeners();
+  }
+
   void fetchCounsellor_session_all({required String id, String? date, String? sessionType}) async {
     try {
       isLoading = true;

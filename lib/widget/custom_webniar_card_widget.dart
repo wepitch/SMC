@@ -275,6 +275,8 @@ Widget registerNowWidget({
 }) {
   Color buttonColor =
       isRegisterNow ? const Color(0xFF1F0A68) : const Color(0xFF1F0A68);
+      /*isRegisterNow ? ColorsConst.grayColor : ColorsConst.grayColor;*/
+
   Color textColor = isRegisterNow ? Colors.white : Colors.white;
 
   return SizedBox(
@@ -359,14 +361,14 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
 
   Widget cardView(BuildContext context) {
     return GestureDetector(
-      /*onTap: () {
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const WebinarDetailsPageWidget1(),
           ),
         );
-      },*/
+      },
       child: Column(
         children: [
           Card(
@@ -506,7 +508,7 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                           title: const Text(
                                             'Do you want to register for the webinar?',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                             ),
                                           ),
                                           actions: [
@@ -589,7 +591,8 @@ class _CustomWebinarCard1State extends State<CustomWebinarCard1> {
                                 title: widget.webinarModel.registered
                                     ? (widget.webinarModel.webnar_startdays == 0
                                     ? 'Join Now'
-                                    : 'Starting in ${widget.webinarModel.webnar_startdays} days')
+                                    : 'Starting ${widget.webinarModel.webnar_startdays} ago')
+                                    //: 'Occurred ${widget.webinarModel.webnar_startdays} days ago')
                                     : 'Register Now',
                                 isRegisterNow: widget.webinarModel.registered)
                           ],

@@ -40,6 +40,7 @@ class _WebinarPastPageState extends State<WebinarPastPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //context.read<CounsellorDetailsProvider>().fetchWebinar_Data("Past");
     context.read<CounsellorDetailsProvider>().fetchMyWebinar();
   }
 

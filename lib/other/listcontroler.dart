@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:myapp/home_page/entrance_preparation/model/ep_model.dart';
 import 'package:myapp/other/api_service.dart';
 
 import '../model/counsellor_data.dart';
@@ -8,6 +9,7 @@ class ListController extends GetxController
   var isLoading = true.obs;
   List<CounsellorModel> cousnellorlist=[];
   List<CounsellorData> cousnellorlist_data=[];
+  List<EPModel> epModelList = [];
 
   @override
   void onInit() {
@@ -15,6 +17,7 @@ class ListController extends GetxController
     super.onInit();
     //fetchCounsellor();
     fetchCounsellor_data();
+    fetchEpList_data();
 
   }
 
@@ -37,6 +40,17 @@ class ListController extends GetxController
       isLoading(true);
       var counsellor = await ApiService.getCounsellorData();
       cousnellorlist_data.assignAll(counsellor);
+    }
+    finally{
+      isLoading(false);
+    }
+  }
+
+  void fetchEpList_data () async {
+    try{
+      isLoading(true);
+      var ep = await ApiService.getEPListData();
+      epModelList.assignAll(ep);
     }
     finally{
       isLoading(false);

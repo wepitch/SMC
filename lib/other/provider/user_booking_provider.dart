@@ -31,15 +31,4 @@ class UserBookingProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  void fetchUserBookingsTest() async {
-    isLoading = true;
-    try {
-      var userBookings = await ApiService.readCheckOutAPi();
-      userBooking = userBookings;
-    } finally {
-      isLoading = false;
-    }
-    notifyListeners();
-  }
 }

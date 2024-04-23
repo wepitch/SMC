@@ -307,6 +307,7 @@ Future<bool> _onBackPressed(
           builder: (context) => CounsellorDetailsScreen(
                 id: id,
                 name: name,
+                designation: "",
               )));
   return true;
 }

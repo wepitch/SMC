@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:myapp/home_page/coming_soon.dart';
 import 'package:myapp/home_page/counsellor_page/counsellor_details_screen.dart';
 import 'package:myapp/home_page/drawer/drawer_1.dart';
+import 'package:myapp/home_page/entrance_preparation/entrance_preparation_screen.dart';
 import 'package:myapp/home_page/homepagecontainer_2.dart';
 import 'package:myapp/home_page/model/popular_workshop_model.dart';
 import 'package:myapp/home_page/model/tranding_webinar_model.dart';
@@ -50,17 +51,16 @@ class _HomePageState extends State<HomePage> {
     context.read<CounsellorDetailsProvider>().fetchBannerImage();
     context.read<CounsellorDetailsProvider>().fetchTrendingWebinar();
     context.read<CounsellorDetailsProvider>().fetchPopularWorkShop();
-
-
+    imgUrlList.clear();
   }
 
   void getAllInfo() async {
-    ApiService.get_profile();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     path = prefs.getString("profile_image_path") ?? " ";
-    setState(() {
-      username = prefs.getString("name") ?? "";
-    });
+
+    ApiService.get_profile().whenComplete(() =>
+    username = prefs.getString("name") ?? ""
+    );
   }
 
   void saveImagePathToPrefs(String path) async {
@@ -91,15 +91,11 @@ class _HomePageState extends State<HomePage> {
 
   var str;
   List<String> imgUrlList = [];
-
   //var imgUrl;
-
-
-
   @override
   Widget build(BuildContext context) {
     var counsellorSessionProvider = context.watch<CounsellorDetailsProvider>();
-    imgUrlList.clear();
+    //imgUrlList.clear();
     if (counsellorSessionProvider.bannerImageList.isNotEmpty) {
       for(int i=0; i < counsellorSessionProvider.bannerImageList.length; i++)
       {
@@ -110,10 +106,11 @@ class _HomePageState extends State<HomePage> {
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked : (didPop){
+        // logic
         SystemNavigator.pop();
-        return true;
       },
       child: Scaffold(
         drawer: const Drawer1(),
@@ -224,28 +221,25 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ComingSoon()));
+                                    builder: (context) => const EntrancePreparationScreen()));
                           },
-                          child: Visibility(
-                            visible: false,
-                            child: Container(
-                              width: 110 * fem,
-                              height: 120 * fem,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                color: Color(0xffffffff),
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 4),
-                                    blurRadius: 4,
-                                    color: Colors.black.withOpacity(0.1),
-                                  ),
-                                ],
-                              ),
-                              child: Image.asset(
-                                "assets/page-1/images/Group 793.png",
-                              ),
+                          child: Container(
+                            width: 110 * fem,
+                            height: 120 * fem,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              color: Color(0xffffffff),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 4,
+                                  color: Colors.black.withOpacity(0.1),
+                                ),
+                              ],
+                            ),
+                            child: Image.asset(
+                              "assets/page-1/images/Group 793.png",
                             ),
                           ),
                         ),
@@ -355,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                   child:
                   ImageSlideshow(
                     autoPlayInterval: 6000,
-                    isLoop: true,
+                    isLoop: false,
                     indicatorColor: Colors.black,
                     indicatorBackgroundColor: Colors.white,
                     children: imgUrlList
@@ -737,7 +731,7 @@ class _HomePageState extends State<HomePage> {
                         width: 190.25,
                         child: Text(
                           popularWorkShopModel.sessionType!,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -870,8 +864,10 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => CounsellorDetailsScreen(
                                   id: popularWorkShopModel.sId!,
+                                  designation: "designation",
                                   name: popularWorkShopModel.sessionUser ??
-                                      "N/A")));
+                                      "N/A"
+                                  )));
                     },
                     child: Container(
                       width: 120.14,
@@ -913,7 +909,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => CounsellingSessionPage(
                                     name: 'N/A',
-                                    id: popularWorkShopModel.sId!, designation: '',
+                                    id: popularWorkShopModel.sId!, designation: '',selectedIndex_get: 0,
                                   )));
                     },
                     child: Container(

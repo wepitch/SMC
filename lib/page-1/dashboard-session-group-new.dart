@@ -36,6 +36,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
 //phone pe  members
 // SANDBOX
 // PRODUCTION
+  late int bookedslot;
   String environment = "PRODUCTION";
   String appId = "";
   String merchantId = "SORTMYCOLLONLINE";
@@ -228,7 +229,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     configLoading();
     fetchDataFromApi();
 
-    Fluttertoast.showToast(msg: "abc");
+   // Fluttertoast.showToast(msg: "abc");
 
     //fetchDataFromApiAll();
     context
@@ -238,7 +239,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
 
   @override
   void onResume() {
-    Fluttertoast.showToast(msg: 'abc');
+    //Fluttertoast.showToast(msg: 'abc');
   }
 
   void configLoading() {
@@ -275,6 +276,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
+
     return counsellorSessionProvider.isLoading
         ? const Center(child: CircularProgressIndicator())
         : Container(
@@ -480,6 +482,7 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                   physics: const ScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
+                                   dynamic  bookedslot =  counsellorSessionProvider.details.sessions![index].sessionSlots - counsellorSessionProvider.details.sessions![index].sessionAvailableSlots;
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0),
@@ -532,7 +535,9 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                     ),
                                                     child: Center(
                                                       child: Text(
-                                                        '${counsellorSessionProvider.details.sessions![index].sessionAvailableSlots}/${counsellorSessionProvider.details.sessions![index].sessionSlots}',
+
+                                                        ' ${bookedslot.toString()} / ${counsellorSessionProvider.details.sessions![index].sessionSlots}',
+
                                                         style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 13,
@@ -687,26 +692,28 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                               .getInstance();
                                                       var id = counsellorSessionProvider.details.sessions?[index].id;
                                                       sPref.setString('sessionid', id!);
+                                                      /*Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  CheckOutScreen(
+                                                                      designation: widget.designation,
+                                                                      name: widget
+                                                                          .name,
+                                                                      id: id)));*/
 
-                                                      var availableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
-                                                      var totalAvailableSlots = counsellorSessionProvider.allDetails.totalAvailableSlots;
+                                                       var sessionSlots = counsellorSessionProvider.details.sessions![index].sessionSlots!;
+                                                       var sessionAvailableSlots = counsellorSessionProvider.details.sessions![index].sessionAvailableSlots!;
 
-                                                      if (availableSlots >= 0) {
+                                                      if (sessionAvailableSlots <= 0!) {
                                                         EasyLoading.showToast(
                                                             'There are no booking slots available in this session, please book another session',
                                                             toastPosition:
                                                                 EasyLoadingToastPosition
                                                                     .bottom);
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    CheckOutScreen(
-                                                                      designation: widget.designation,
-                                                                        name: widget
-                                                                            .name,
-                                                                        id: id)));
-                                                      } else if (availableSlots <= totalAvailableSlots!) {
+
+                                                      }
+                                                      else {
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -716,12 +723,6 @@ class _Counseling_Session_groupState extends State<Counseling_Session_group>
                                                                         name: widget
                                                                             .name,
                                                                         id: id)));
-                                                      } else {
-                                                        EasyLoading.showToast(
-                                                            'There are no booking slots available in this session, please book another session',
-                                                            toastPosition:
-                                                                EasyLoadingToastPosition
-                                                                    .bottom);
                                                       }
                                                     },
                                                     child: Container(
